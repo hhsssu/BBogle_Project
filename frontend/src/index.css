@@ -13,7 +13,7 @@
 }
 
 @font-face {
-    font-family: "Pretendard-SemiBold";
+    font-family: "Pretendard-Medium";
     src: url("/frontend/src/fonts/pretendard/Pretendard-Medium.woff") format("woff");
     font-weight: 500;
     font-style: normal;
@@ -34,7 +34,7 @@
 }
 
 :root {
-    font-family: "Pretendard", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: "Pretendard-Regular", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
     font-synthesis: none;

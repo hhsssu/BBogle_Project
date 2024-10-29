@@ -1,4 +1,4 @@
-package com.bbogle.backend;
+package com.ssafy.bbogle;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -44,3 +44,7 @@
   font-weight: 400;
   font-synthesis: none;
 }
+
+* {
+	margin:0;
+}

@@ -12,7 +12,8 @@
 }
 
 .description {
-  font-family: 'Pretendard-SemiBold';
+  font-family: 'Pretendard';
+  font-weight: 600;
   font-size: 28px;
   margin-bottom: 80px;
 }

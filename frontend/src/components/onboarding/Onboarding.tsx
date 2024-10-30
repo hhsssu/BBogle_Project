@@ -1,12 +1,14 @@
-import KakaoLogin from '../../assets/image/KakaoLogin.png';
+import Logo from '/public/Logo_bubbles.svg';
 import style from './Onboarding.module.css';
+import KakaoLogin from '../../assets/image/KakaoLogin.png';
 
 function Onboarding() {
   return (
-    <>
-      <div>매일의 기록으로, 자소서를 더 쉽게</div>
+    <div className={style['onboarding-container']}>
+      <img className={style['logo']} src={Logo} alt="Logo" />
+      <div className={style['description']}>매일의 기록으로, 자소서를 더 쉽게</div>
       <img className={style['kakao-login']} src={KakaoLogin} alt="Kakao Login" />
-    </>
+    </div>
   )
 }
 

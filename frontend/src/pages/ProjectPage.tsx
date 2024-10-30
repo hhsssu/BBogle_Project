@@ -1,5 +1,11 @@
+import { Outlet } from 'react-router-dom';
+
 function ProjectPage() {
-    return <></>;
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 }
 
 export default ProjectPage;

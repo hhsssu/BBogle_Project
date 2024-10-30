@@ -1,4 +1,4 @@
-package com.ssafy.bbogle.global.config;
+package com.ssafy.bbogle.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

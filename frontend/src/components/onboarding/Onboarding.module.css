@@ -1,3 +1,22 @@
+.onboarding-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.logo {
+  width: 24rem;
+  margin-bottom: 30px;
+}
+
+.description {
+  font-family: 'Pretendard-SemiBold';
+  font-size: 28px;
+  margin-bottom: 80px;
+}
+
 .kakao-login {
-  width: 10rem;
+  width: 15rem;
 }

@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "printWidth": 80,
   "semi": true,
   "singleQuote": true,
@@ -8,14 +7,4 @@
   "bracketSpacing": true,
   "endOfLine": "auto",
   "useTabs": false
-=======
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "tabWidth": 2,
-    "bracketSpacing": true,
-    "endOfLine": "auto",
-    "useTabs": false
->>>>>>> a2ea2f9d69fb80c2cd8c0665107d083dfb523fef
 }

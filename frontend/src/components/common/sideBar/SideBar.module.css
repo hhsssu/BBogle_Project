@@ -1,10 +1,14 @@
 .sidebar-container {
+  padding: 30px 0;
   position: fixed;
   left: 0;
   top: 0;
-  padding: 14;
   background-color: black ;
   transition: width 0.3s ease;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sidebar-container.open {
@@ -13,4 +17,39 @@
 
 .sidebar-container.closed {
   width: 70px;
+}
+
+.fold-button {
+  position: fixed;
+  top: 35px;
+  left: 90px;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-content: center;
+}
+
+.closed .header {
+  display: flex;
+  justify-content: center;
+}
+
+.open .header {
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.large-logo {
+  width: 70px;
+  margin-right: auto;
+}
+
+.taps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -21,7 +21,6 @@ function AppRouter() {
       <Route path="/project" element={<ProjectPage></ProjectPage>}>
         <Route path="" element={<ProjectList></ProjectList>}></Route>
       </Route>
-
     </Routes>
   );
 }

@@ -7,8 +7,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-@Schema(description = "개발일지 작성 요청 DTO")
-public class DiaryCreateResponse {
+@Schema(description = "개발일지 수정 요청 DTO")
+public class DiaryUpdateRequest {
 
     @Schema(description = "답변")
     private List<String> answers;

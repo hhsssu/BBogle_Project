@@ -21,7 +21,8 @@ function Main() {
       <div className={style.diary}>
         <div className={style.description}>
           <div className={style.mainDescription}>
-            오늘의 성장 기록을 남겨보세요 :-)
+            오늘의 <span style={{ color: '#FF5C17' }}>성장 기록</span>을
+            남겨보세요 :-)
           </div>
           <div className={style.subDescription}>
             개발한 프로젝트를 선택해주세요 !

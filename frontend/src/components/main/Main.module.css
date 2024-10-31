@@ -1,5 +1,5 @@
 .container {
-  padding: 3.75rem 5rem;
+  padding: 6rem 5rem;
 }
 
 .header {
@@ -7,10 +7,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
+  margin: 0 auto 100px auto;
 }
 
 .greeting {
   font-weight: 700;
   font-size: 32px;
+}
+
+.mainDescription {
+  font-weight: 600;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.subDescription {
+  color: #a0a0a0;
 }

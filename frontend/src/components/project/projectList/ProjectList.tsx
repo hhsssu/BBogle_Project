@@ -135,7 +135,7 @@ function ProjectList() {
         <button className={style['btn']}>+ 프로젝트 추가</button>
       </section>
 
-      <section>
+      <section className={style.pjtSec}>
         <div className={style['title']}>진행중인 프로젝트</div>
         <div className={style['wips']}>
           {WIP_PJT_LIST.map((card, index) => (
@@ -153,7 +153,7 @@ function ProjectList() {
       <br />
       <hr className={style['hr']} />
       <br />
-      <section>
+      <section className={style.pjtSec}>
         <div className={style['title']}>종료된 프로젝트</div>
         <div className={style['fins']}>
           {FIN_PJT_LIST.map((card, index) => (

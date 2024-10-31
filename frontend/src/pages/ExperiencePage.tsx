@@ -7,7 +7,7 @@ import ExStyles from '../components/experience/Experience.module.css';
 
 function ExperiencePage() {
   return (
-    <div className={ExStyles.main}>
+    <div className={ExStyles.container}>
       <Routes>
         <Route path="" element={<ExList />} />
         <Route path="create" element={<ExCreate />} />

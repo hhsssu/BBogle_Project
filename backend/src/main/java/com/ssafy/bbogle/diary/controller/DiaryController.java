@@ -2,6 +2,7 @@ package com.ssafy.bbogle.diary.controller;
 
 import com.ssafy.bbogle.diary.dto.request.DiaryCreateRequest;
 import com.ssafy.bbogle.diary.dto.request.DiaryUpdateRequest;
+import com.ssafy.bbogle.diary.dto.response.DiaryDetailResponse;
 import com.ssafy.bbogle.diary.dto.response.DiaryListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -44,6 +45,19 @@ public class DiaryController {
         return null;
     }
 
+    @Operation(summary = "개발일지 상세 조회")
+    @Parameters(value = {
+        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
+        @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
+    })
+    @GetMapping("/{projectId}/diaries/{diaryId}")
+    public ResponseEntity<DiaryDetailResponse> getDiaryDetail(
+        @PathVariable("projectId") Integer projectId,
+        @PathVariable("diaryId") Integer diaryId
+    ){
+        return null;
+    }
+
     @Operation(summary = "개발일지 수정")
     @Parameters(value = {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
@@ -63,7 +77,9 @@ public class DiaryController {
         @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
     })
     @DeleteMapping("/{projectId}/diaries/{diaryId}")
-    public ResponseEntity<String> deleteDiary(){
+    public ResponseEntity<String> deleteDiary(
+        @PathVariable("projectId") Integer projectId,
+        @PathVariable("diaryId") Integer diaryId){
         return null;
     }
 

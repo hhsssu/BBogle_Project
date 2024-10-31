@@ -10,6 +10,9 @@ import lombok.Getter;
 @Schema(description = "특정 프로젝트의 개발일지 전체 조회 리스트 내 요소 응답 DTO")
 public class DiaryListItemResponse {
 
+    @Schema(description = "개발일지 ID")
+    private Integer id;
+
     @Schema(description = "개발일지 AI 한줄요약")
     private String summary;
 

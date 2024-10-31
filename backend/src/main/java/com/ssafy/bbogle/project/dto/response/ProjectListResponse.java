@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 @Builder
 @Schema(description = "전체 프로젝트 조회 응답 DTO")
-public class AllProjectInfoResponse {
+public class ProjectListResponse {
 
     @Schema(description = "프로젝트 정보 리스트")
-    private List<ProjectInfoResponse> infoList;
+    private List<ProjectListItemResponse> projectList;
 }

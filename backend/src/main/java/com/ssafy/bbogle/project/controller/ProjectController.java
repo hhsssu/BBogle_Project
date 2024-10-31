@@ -3,8 +3,8 @@ package com.ssafy.bbogle.project.controller;
 import com.ssafy.bbogle.project.dto.request.NotificationStatusRequest;
 import com.ssafy.bbogle.project.dto.request.ProjectCreateRequest;
 import com.ssafy.bbogle.project.dto.request.ProjectUpdateRequest;
-import com.ssafy.bbogle.project.dto.response.AllProjectInfoResponse;
-import com.ssafy.bbogle.project.dto.response.ProjectDetailInfoResponse;
+import com.ssafy.bbogle.project.dto.response.ProjectListResponse;
+import com.ssafy.bbogle.project.dto.response.ProjectDetailResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -38,7 +38,7 @@ public class ProjectController {
         description = "status 1이 진행중, 0이 종료<br>"
             + "notificationStatus 1이 ON, 0이 OFF")
     @GetMapping()
-    public ResponseEntity<AllProjectInfoResponse> getAllProject(){
+    public ResponseEntity<ProjectListResponse> getAllProjects(){
         return null;
     }
 
@@ -48,7 +48,7 @@ public class ProjectController {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @GetMapping("/{projectId}")
-    public ResponseEntity<ProjectDetailInfoResponse> getProjectById(@PathVariable("projectId") String projectId){
+    public ResponseEntity<ProjectDetailResponse> getProjectById(@PathVariable("projectId") String projectId){
         return null;
     }
 

@@ -26,7 +26,7 @@ function ExList() {
     },
     {
       exId: 2,
-      title: '소셜 로그인 구현',
+      title: '카카오 API를 이용한 소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
       tags: [
@@ -192,16 +192,6 @@ function ExList() {
             <p className={ExStyles.bold}>경험을 추가해 주세요!</p>
           </div>
         )}
-        {/* <ExCard
-        title="소셜 로그인 구현"
-        startDate={new Date('2024-01-01')}
-        endDate={new Date('2024-02-01')}
-        tags={[
-          { type: 0, name: '기술태그' },
-          { type: 0, name: '기술태그' },
-          { type: 1, name: '인성태그' },
-          ]}
-          /> */}
       </section>
     </>
   );

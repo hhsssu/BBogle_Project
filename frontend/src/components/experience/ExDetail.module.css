@@ -1,0 +1,22 @@
+.date {
+  color: #a0a0a0;
+  font-size: 0.75rem;
+  margin-top: 5vh;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 1.875rem;
+  margin-right: 20px;
+}
+
+.content {
+  padding: 0vh 16vw;
+  line-height: 1.8;
+  margin-top: 6vh;
+}

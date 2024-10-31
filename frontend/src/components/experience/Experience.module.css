@@ -1,12 +1,10 @@
-.main {
-  margin: 0 auto;
-  padding: 3.75rem 5rem;
+.container {
+  padding: 8vh 7vw;
 }
 
 .title {
   font-weight: 700;
   font-size: 1.875rem;
-  margin-bottom: 1.38rem;
 }
 
 .list {
@@ -36,9 +34,11 @@
 }
 
 .subhead {
+  width: 100%;
   color: #1c1516;
   font-weight: 600;
   font-size: 1rem;
+  overflow: hidden;
 }
 
 .date {
@@ -75,7 +75,7 @@
   color: #a0a0a0;
   border-bottom: #a0a0a0 1px solid;
   padding: 8px 20px 8px 0;
-  margin-bottom: 31px;
+  margin: 3vh 0;
   gap: 1rem;
   z-index: 10;
 }
@@ -97,6 +97,17 @@
   border: none;
   border-radius: 16px;
   background-color: #ff5c17;
+  font-size: 1rem;
+  color: white;
+  font-weight: 600;
+}
+
+.regist {
+  width: 9rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 16px;
+  background-color: #1c1516;
   font-size: 1rem;
   color: white;
   font-weight: 600;

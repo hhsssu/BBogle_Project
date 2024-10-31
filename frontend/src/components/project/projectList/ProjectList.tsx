@@ -1,6 +1,6 @@
-import ProjectCard from '../common/projectCard/ProjectCard';
-import RunnerWay from '../../assets/image/RunnerWay.png';
-import style from './Project.module.css';
+import ProjectCard from '../../common/projectCard/ProjectCard';
+import RunnerWay from '../../../assets/image/RunnerWay.png';
+import style from './ProjectList.module.css';
 
 function ProjectList() {
   const WIP_PJT_LIST = [
@@ -129,15 +129,15 @@ function ProjectList() {
   ];
 
   return (
-    <div className={style['pjt-list-page']}>
-      <section className={style['pjt-list-head']}>
-        <div className={style['pjt-title']}>프로젝트</div>
-        <button className={style['pjt-btn']}>+ 프로젝트 추가</button>
+    <div className={style['container']}>
+      <section className={style['sec1']}>
+        <div className={style['head']}>프로젝트</div>
+        <button className={style['btn']}>+ 프로젝트 추가</button>
       </section>
 
-      <section className={style['pjt-wip-list']}>
-        <div className={style['pjt-wip-title']}>진행중인 프로젝트</div>
-        <div className={style['pjt-wip-card']}>
+      <section>
+        <div className={style['title']}>진행중인 프로젝트</div>
+        <div className={style['wips']}>
           {WIP_PJT_LIST.map((card, index) => (
             <ProjectCard
               key={index}
@@ -151,11 +151,11 @@ function ProjectList() {
         </div>
       </section>
       <br />
-      <hr className={style['pjt-hr']} />
+      <hr className={style['hr']} />
       <br />
-      <section className={style['pjt-fin-list']}>
-        <div className={style['pjt-fin-title']}>종료된 프로젝트</div>
-        <div className={style['pjt-fin-card']}>
+      <section>
+        <div className={style['title']}>종료된 프로젝트</div>
+        <div className={style['fins']}>
           {FIN_PJT_LIST.map((card, index) => (
             <ProjectCard
               key={index}

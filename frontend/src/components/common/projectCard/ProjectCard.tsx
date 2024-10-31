@@ -13,30 +13,28 @@ interface Props {
 
 function ProjectCard({ imageSrc, title, state, term, summary }: Props) {
   return (
-    <div className={style['pjt-card']}>
-      <section className={style['pjt-card-sec-1']}>
-        <img className={style['pjt-card-img']} src={imageSrc} alt="" />
-        <div className={style['pjt-card-sec-1-div']}>
-          <div className={style['pjt-card-sec-1-div-1']}>
-            <span className={style['pjt-card-title']}>{title}</span>
+    <div className={style['card']}>
+      <section className={style['sec1']}>
+        <img className={style['img']} src={imageSrc} alt="" />
+        <div>
+          <div>
+            <span className={style['title']}>
+              {title.length > 8 ? title.substring(0, 9) + '...' : title}
+            </span>
             <div
-              className={`${style['pjt-card-state']} ${style[state ? 'pjt-card-state-true' : 'pjt-card-state-false']}`}
+              className={`${style['state']} ${style[state ? 'stateTrue' : 'stateFalse']}`}
             >
               {state ? '진행 중' : '종료'}
             </div>
           </div>
-          <div className={style['pjt-card-term']}>{term}</div>
+          <div className={style['term']}>{term}</div>
         </div>
-        <img
-          className={style['pjt-card-more']}
-          src={MoreVertical}
-          alt="더보기"
-        />
+        <img className={style['more']} src={MoreVertical} alt="더보기" />
       </section>
 
-      <section className={style['pjt-card-sec-2']}>
-        <div className={style['pjt-card-summary']}>{summary}</div>
-        <img className={style['pjt-card-bell']} src={Bell} alt="알림 아이콘" />
+      <section className={style['sec2']}>
+        <div className={style['summary']}>{summary}</div>
+        <img className={style['bell']} src={Bell} alt="알림 아이콘" />
       </section>
     </div>
   );

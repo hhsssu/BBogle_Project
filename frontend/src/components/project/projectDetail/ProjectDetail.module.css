@@ -1,0 +1,117 @@
+.info {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info > div > div {
+  display: flex;
+  align-items: center;
+}
+
+.img {
+  width: 3rem;
+  height: 3rem;
+  border: solid;
+  border-color: #e8e8e8;
+  border-width: 0.2px;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.setting {
+  width: 1rem;
+}
+
+.state {
+  width: 3rem;
+  height: 1rem;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+}
+
+.stateTrue {
+  background-color: rgba(30, 166, 252, 0.1);
+  color: rgba(30, 166, 252, 1);
+}
+
+.stateFalse {
+  background-color: rgba(239, 122, 133, 0.3);
+  color: rgba(255, 92, 23, 1);
+}
+
+.btn {
+  width: 9rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: black;
+  font-size: 16px;
+  color: white;
+}
+
+.summary {
+  font-size: 16px;
+}
+
+.term {
+  font-size: 14px;
+  color: rgba(160, 160, 160, 1);
+}
+
+.tags {
+  display: flex;
+  align-items: center;
+}
+
+.subTitle {
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 0.8rem;
+}
+
+.tag {
+  height: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  background-color: rgba(30, 166, 252, 0.1);
+  color: rgba(30, 166, 252, 1);
+  border-radius: 5px;
+  margin-right: 0.8rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.tabs {
+  display: flex;
+}
+
+.tab {
+  width: 7.8rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid;
+  border-color: rgba(255, 92, 23, 1);
+  color: rgba(255, 92, 23, 1);
+}

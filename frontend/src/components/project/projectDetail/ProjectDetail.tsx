@@ -16,25 +16,25 @@ function ProjectDetail() {
   };
 
   return (
-    <>
-      <div>돌아가기</div>
+    <div className={style.container}>
+      <div className={style.back}>돌아가기</div>
 
-      <section className={style['info']}>
+      <section className={style.info}>
         <div>
           <div>
-            <img className={style['img']} src={PROJECT.imageSrc} alt="" />
-            <span className={style['title']}>{PROJECT.title}</span>
+            <img className={style.img} src={PROJECT.imageSrc} alt="" />
+            <span className={style.title}>{PROJECT.title}</span>
             <div>
-              <img className={style['setting']} src={setting} alt="설정" />
+              <img className={style.setting} src={setting} alt="설정" />
               <div
-                className={`${style['state']} ${style[PROJECT.state ? 'stateTrue' : 'stateFalse']}`}
+                className={`${style.state} ${style[PROJECT.state ? 'stateTrue' : 'stateFalse']}`}
               >
                 {PROJECT.state ? '진행 중' : '종료'}
               </div>
             </div>
           </div>
           {PROJECT.state ? (
-            <button className={style['btn']}>프로젝트 종료</button>
+            <button className={style.endBtn}>프로젝트 종료</button>
           ) : (
             ''
           )}
@@ -64,16 +64,26 @@ function ProjectDetail() {
         </div>
       </section>
 
-      <section className={style['tabs']}>
+      <section className={style.tabSec}>
         {/* 탭 */}
-        <div className={style['tab']}>개발일지</div>
-        {PROJECT.state ? '' : <div className={style['tab']}>회고록</div>}
+        <div className={style['tabs']}>
+          <div className={style['tab']}>개발일지</div>
+          {PROJECT.state ? '' : <div className={style['tab']}>회고록</div>}
+        </div>
+
+        <div className={style.control}>
+          <div className={style.sort}>
+            <span>최신순</span>
+            <span>과거순</span>
+          </div>
+          <button className={style.btn}>+ 프로젝트 추가</button>
+        </div>
       </section>
 
       <section>
         <Outlet />
       </section>
-    </>
+    </div>
   );
 }
 

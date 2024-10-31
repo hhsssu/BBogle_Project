@@ -1,5 +1,5 @@
 .container {
-  padding: 6rem 5rem;
+  padding: 5% 6%;
 }
 
 .header {
@@ -7,12 +7,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto 100px auto;
+  margin: 0 auto 4% auto;
 }
 
 .greeting {
+  transform: translateY(-20px);
   font-weight: 700;
   font-size: 32px;
+}
+
+.description {
+  margin-bottom: 10px;
 }
 
 .mainDescription {
@@ -23,4 +28,21 @@
 
 .subDescription {
   color: #a0a0a0;
+}
+
+.pjtList {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 2.1rem;
+  padding-left: 0.1rem;
+  padding: 12px 0;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
 }

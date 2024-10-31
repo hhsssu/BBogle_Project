@@ -17,20 +17,12 @@
   scrollbar-width: none;
   gap: 1.5rem 1rem;
   padding: 20px;
-  /* display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 2rem;
-  width: 85vw;
-  flex-shrink: 1; */
-  /* overflow-y: scroll; */
-  /* height: 500px; */
 }
 
 .card {
-  width: 242px;
+  width: 270px;
   height: auto;
-  max-width: 242px;
+  max-width: 270px;
   aspect-ratio: 320 / 120;
   padding: 24px 20px;
   border-radius: 1rem;

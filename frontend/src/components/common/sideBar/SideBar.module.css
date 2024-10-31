@@ -3,7 +3,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: black ;
+  background-color: #1c1516;
   transition: width 0.3s ease;
   height: 100vh;
   display: flex;
@@ -107,12 +107,12 @@
 }
 
 .active.tapDescription {
-  color: #FF5C17;
+  color: #ff5c17;
 }
 
 .line {
   width: 70%;
-  margin: 0 auto 40px auto ;
+  margin: 0 auto 40px auto;
   color: white;
 }
 

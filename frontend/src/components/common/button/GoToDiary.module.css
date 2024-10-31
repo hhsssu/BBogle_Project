@@ -1,0 +1,15 @@
+.button {
+  display: flex;
+  align-items: center;
+  background-color: #1c1516;
+  padding: 16px 26px;
+  border-radius: 50px;
+}
+
+.memo {
+  margin-right: 12px;
+}
+
+.description {
+  color: white;
+}

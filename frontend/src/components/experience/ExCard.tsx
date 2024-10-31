@@ -1,5 +1,6 @@
 import ExStyles from './Experience.module.css';
 import MoreIcon from '../../assets/image/icon/more.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface Tag {
   type: number;
@@ -16,8 +17,13 @@ interface ExInfoProps {
 
 // 경험 카드
 function ExCard({ exId, title, startDate, endDate, tags }: ExInfoProps) {
+  const nav = useNavigate();
+  const navDetail = (exId: number) => {
+    nav(`detail/${exId}`);
+  };
+
   return (
-    <div className={ExStyles.card}>
+    <div className={ExStyles.card} onClick={() => navDetail(exId)}>
       {/* 소제목과 더보기 메뉴 버튼 */}
       <section className={ExStyles.between}>
         <div className={ExStyles.subhead}>{title}</div>

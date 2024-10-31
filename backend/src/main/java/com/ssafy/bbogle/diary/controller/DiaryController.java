@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +54,16 @@ public class DiaryController {
         @PathVariable("projectId") Integer projectId,
         @PathVariable("diaryId") Integer diaryId,
         @RequestBody DiaryUpdateRequest request){
+        return null;
+    }
+
+    @Operation(summary = "개발일지 삭제")
+    @Parameters(value = {
+        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
+        @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
+    })
+    @DeleteMapping("/{projectId}/diaries/{diaryId}")
+    public ResponseEntity<String> deleteDiary(){
         return null;
     }
 

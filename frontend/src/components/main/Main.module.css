@@ -1,0 +1,16 @@
+.container {
+  padding: 3.75rem 5rem;
+}
+
+.header {
+  width: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.greeting {
+  font-weight: 700;
+  font-size: 32px;
+}

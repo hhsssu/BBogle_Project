@@ -1,44 +1,44 @@
 @font-face {
-  font-family: "Pretendard";
-  src: url("/frontend/src/fonts/pretendard/Pretendard-Light.woff")
-    format("woff");
+  font-family: 'Pretendard';
+  src: url('/frontend/src/fonts/pretendard/Pretendard-Light.woff')
+    format('woff');
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Pretendard";
-  src: url("/frontend/src/fonts/pretendard/Pretendard-Regular.woff")
-    format("woff");
+  font-family: 'Pretendard';
+  src: url('/frontend/src/fonts/pretendard/Pretendard-Regular.woff')
+    format('woff');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Pretendard";
-  src: url("/frontend/src/fonts/pretendard/Pretendard-Medium.woff")
-    format("woff");
+  font-family: 'Pretendard';
+  src: url('/frontend/src/fonts/pretendard/Pretendard-Medium.woff')
+    format('woff');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Pretendard";
-  src: url("/frontend/src/fonts/pretendard/Pretendard-SemiBold.woff")
-    format("woff");
+  font-family: 'Pretendard';
+  src: url('/frontend/src/fonts/pretendard/Pretendard-SemiBold.woff')
+    format('woff');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Pretendard";
-  src: url("/frontend/src/fonts/pretendard/Pretendard-Bold.woff") format("woff");
+  font-family: 'Pretendard';
+  src: url('/frontend/src/fonts/pretendard/Pretendard-Bold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
 }
 
 :root {
-  font-family: "Pretendard", Inter, system-ui, Avenir, Helvetica, Arial,
+  font-family: 'Pretendard', Inter, system-ui, Avenir, Helvetica, Arial,
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -46,5 +46,5 @@
 }
 
 * {
-	margin:0;
+  margin: 0;
 }

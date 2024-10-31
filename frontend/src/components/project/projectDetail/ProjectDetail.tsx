@@ -3,6 +3,7 @@ import setting from '../../../assets/image/icon/setting.svg';
 import style from './ProjectDetail.module.css';
 import { useState } from 'react';
 import DiaryList from '../../diary/diaryList/DiaryList';
+import { useNavigate } from 'react-router-dom';
 
 function ProjectDetail() {
   const PROJECT = {
@@ -17,8 +18,18 @@ function ProjectDetail() {
     diaryNum: 32,
   };
 
+  const navigate = useNavigate();
+
   const [tabIdx, setTabIdx] = useState(0);
   const [sortIdx, setSortIdx] = useState(0);
+
+  const navMain = () => {
+    navigate('/main');
+  };
+
+  const navCreate = () => {
+    navigate('/project/create');
+  };
 
   const changeTab = (idx: number) => {
     setTabIdx(idx);
@@ -30,7 +41,9 @@ function ProjectDetail() {
 
   return (
     <div className={style.container}>
-      <div className={style.back}>돌아가기</div>
+      <div className={style.back} onClick={navMain}>
+        돌아가기
+      </div>
 
       <section className={style.info}>
         <div>
@@ -115,7 +128,9 @@ function ProjectDetail() {
                 과거순
               </span>
             </div>
-            <button className={style.btn}>+ 프로젝트 추가</button>
+            <button className={style.btn} onClick={navCreate}>
+              + 프로젝트 추가
+            </button>
           </div>
         ) : (
           ''

@@ -1,18 +1,31 @@
-import { Outlet } from 'react-router-dom';
 import RunnerWay from '../../../assets/image/RunnerWay.png';
 import setting from '../../../assets/image/icon/setting.svg';
 import style from './ProjectDetail.module.css';
+import { useState } from 'react';
+import DiaryList from '../../diary/diaryList/DiaryList';
 
 function ProjectDetail() {
   const PROJECT = {
     imageSrc: RunnerWay,
     title: 'Runner Way',
-    state: true,
+    state: false,
     term: '2024.10.03 ~ 2024.11.30',
     summary: '당신의 러닝을 함께하는 프로젝트',
     teammate: 6,
     roles: ['FE', 'BE', 'INFRA', 'AI'],
     techs: ['React', 'Spring', 'TypeScript', 'JPA', 'MongoDB'],
+    diaryNum: 32,
+  };
+
+  const [tabIdx, setTabIdx] = useState(0);
+  const [sortIdx, setSortIdx] = useState(0);
+
+  const changeTab = (idx: number) => {
+    setTabIdx(idx);
+  };
+
+  const changeSort = (idx: number) => {
+    setSortIdx(idx);
   };
 
   return (
@@ -40,24 +53,24 @@ function ProjectDetail() {
           )}
         </div>
 
-        <div className={style['summary']}>{PROJECT.summary}</div>
-        <div className={style['term']}>
+        <div className={style.summary}>{PROJECT.summary}</div>
+        <div className={style.term}>
           {PROJECT.term} / {PROJECT.teammate} 명
         </div>
 
-        <div className={style['tags']}>
-          <span className={style['subTitle']}>나의 역할</span>
+        <div className={style.tags}>
+          <span className={style.subTitle}>나의 역할</span>
           {PROJECT.roles.map((role, index) => (
-            <div key={index} className={style['tag']}>
+            <div key={index} className={style.tag}>
               {role}
             </div>
           ))}
         </div>
 
-        <div className={style['tags']}>
-          <span className={style['subTitle']}>사용 기술</span>
+        <div className={style.tags}>
+          <span className={style.subTitle}>사용 기술</span>
           {PROJECT.techs.map((tech, index) => (
-            <div key={index} className={style['tag']}>
+            <div key={index} className={style.tag}>
               {tech}
             </div>
           ))}
@@ -66,22 +79,52 @@ function ProjectDetail() {
 
       <section className={style.tabSec}>
         {/* 탭 */}
-        <div className={style['tabs']}>
-          <div className={style['tab']}>개발일지</div>
-          {PROJECT.state ? '' : <div className={style['tab']}>회고록</div>}
+        <div className={style.tabs}>
+          <div
+            className={`${style.tab} ${tabIdx === 0 ? style.activeTab : ''}`}
+            onClick={() => changeTab(0)}
+          >
+            개발일지
+            <div className={style.diaryNum}>{PROJECT.diaryNum}</div>
+          </div>
+          {PROJECT.state ? (
+            ''
+          ) : (
+            <div
+              className={`${style.tab} ${tabIdx === 1 ? style.activeTab : ''}`}
+              onClick={() => changeTab(1)}
+            >
+              회고록
+            </div>
+          )}
         </div>
 
-        <div className={style.control}>
-          <div className={style.sort}>
-            <span>최신순</span>
-            <span>과거순</span>
+        {tabIdx === 0 ? (
+          <div className={style.control}>
+            <div className={style.sort}>
+              <span
+                className={`${sortIdx === 0 ? style.activeSort : style.deactiveSort}`}
+                onClick={() => changeSort(0)}
+              >
+                최신순
+              </span>
+              <span
+                className={`${sortIdx === 1 ? style.activeSort : style.deactiveSort}`}
+                onClick={() => changeSort(1)}
+              >
+                과거순
+              </span>
+            </div>
+            <button className={style.btn}>+ 프로젝트 추가</button>
           </div>
-          <button className={style.btn}>+ 프로젝트 추가</button>
-        </div>
+        ) : (
+          ''
+        )}
       </section>
 
-      <section>
-        <Outlet />
+      <section className={style.sec3}>
+        {tabIdx === 0 ? <DiaryList /> : ''}
+        {/* <Outlet /> */}
       </section>
     </div>
   );

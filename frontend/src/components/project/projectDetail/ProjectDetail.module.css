@@ -1,11 +1,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 3.75rem 5rem;
+  padding: 8vh 7vw;
 }
 
 .container > section {
-  padding: 1.25rem 1rem;
+  padding: 3vh 1vw;
 }
 
 .back {
@@ -139,6 +139,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: rgba(108, 112, 114, 1);
+}
+
+.diaryNum {
+  width: 1.5rem;
+  height: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: rgba(255, 92, 23, 1);
+  border-radius: 1rem;
+  background-color: rgba(255, 92, 23, 0.1);
+  margin-left: 0.2rem;
+}
+
+.activeTab {
+  font-weight: 600;
   border-bottom: solid;
   border-color: rgba(255, 92, 23, 1);
   color: rgba(255, 92, 23, 1);
@@ -152,8 +170,16 @@
 
 .sort {
   display: flex;
-  gap: 0.4rem;
+  gap: 1vh;
   margin-bottom: 0.2rem;
+}
+
+.activeSort {
+  font-weight: 600;
+}
+
+.deactiveSort {
+  color: rgba(160, 160, 160, 1);
 }
 
 .btn {
@@ -164,4 +190,9 @@
   background-color: #ff5c17;
   font-size: 16px;
   color: white;
+}
+
+.sec3 {
+  display: flex;
+  justify-content: center;
 }

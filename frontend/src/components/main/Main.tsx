@@ -9,13 +9,13 @@ import useProjectSelectStore from '../../store/useProjectSelect';
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
 
-  // TODO : 임시데이터
-  const userName = '홍길동';
-
   // 카드 선택
   const handleCard = (id: number) => {
     setActiveProjectId(id);
   };
+
+  // TODO : 임시데이터
+  const userName = '홍길동';
 
   const pjtList = [
     {
@@ -100,7 +100,7 @@ function Main() {
           ))}
         </div>
         <div className={style.button}>
-          <GoToDiary />
+          <GoToDiary isInactive={activeProjectId === null} />
         </div>
       </div>
     </div>

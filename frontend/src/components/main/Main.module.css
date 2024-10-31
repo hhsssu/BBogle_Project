@@ -49,5 +49,5 @@
 
 .pjtCard.active {
   border-radius: 1rem;
-  border: 2px solid #ff5c17;
+  box-shadow: 0 0 0 2px #ff5c17;
 }

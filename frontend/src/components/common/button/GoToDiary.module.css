@@ -6,6 +6,11 @@
   border-radius: 50px;
 }
 
+.inActive.button {
+  background-color: #e8e8e8;
+  cursor: default;
+}
+
 .memo {
   margin-right: 12px;
 }

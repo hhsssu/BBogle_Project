@@ -10,6 +10,9 @@ import lombok.Getter;
 @Schema(description = "개발일지 상세 조회 응답 DTO")
 public class DiaryDetailResponse {
 
+    @Schema(description = "AI 요약")
+    private String summary;
+
     @Schema(description = "답변 리스트")
     private List<String> answers;
 

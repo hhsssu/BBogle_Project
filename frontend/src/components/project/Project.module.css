@@ -1,0 +1,61 @@
+.pjt-list-page {
+  padding: 60px;
+  padding-top: 80px;
+}
+
+.pjt-list-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pjt-title {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.pjt-btn {
+  width: 9rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff5c17;
+  font-size: 16px;
+  color: white;
+}
+
+.pjt-wip-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.pjt-wip-card {
+  width: 1200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 1rem;
+}
+
+.pjt-hr {
+  width: 1300px;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.pjt-fin-list {
+}
+
+.pjt-fin-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.pjt-fin-card {
+  width: 1130px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}

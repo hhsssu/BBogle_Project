@@ -1,3 +1,5 @@
+@import './reset.css';
+
 @font-face {
   font-family: 'Pretendard';
   src: url('/frontend/src/fonts/pretendard/Pretendard-Light.woff')

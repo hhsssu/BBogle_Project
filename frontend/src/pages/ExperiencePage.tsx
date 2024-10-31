@@ -19,11 +19,9 @@ function ExperiencePage() {
   };
 
   return (
-    <>
+    <div className={ExStyles.main}>
       <div className={ExStyles.title}>나의 경험</div>
-      <button onClick={navExList}>목록</button>
-      <button onClick={navExCreate}>생성</button>
-      <button onClick={navExDetail}>상세</button>
+
       {/* 검색 버튼 - 클릭 시 검색 모달 OPEN */}
       <button className={ExStyles.search}>
         <img src={searchIcon} alt="검색" />
@@ -36,7 +34,12 @@ function ExperiencePage() {
         <Route path="detail" element={<ExDetail />} />
         {/* <Route path="detail/:exId" element={<ExDetail />} /> */}
       </Routes>
-    </>
+      <div>
+        <button onClick={navExList}>목록</button>
+        <button onClick={navExCreate}>생성</button>
+        <button onClick={navExDetail}>상세</button>
+      </div>
+    </div>
   );
 }
 

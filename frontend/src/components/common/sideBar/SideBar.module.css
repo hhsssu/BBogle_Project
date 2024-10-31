@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1000;
 }
 
 .sidebarContainer.open {
@@ -76,7 +77,6 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  /* margin-left: 32px; */
 }
 
 .mainTaps {
@@ -110,9 +110,10 @@
   color: #FF5C17;
 }
 
-hr {
+.line {
   width: 70%;
   margin: 0 auto 40px auto ;
+  color: white;
 }
 
 .logout {

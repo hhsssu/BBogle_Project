@@ -76,7 +76,7 @@ function SideBar() {
               )}
               {showDescriptions && <div className={`${style.tapDescription} ${activeTab === 'main' && style.active}`}>메인</div>}
             </div>
-            <hr />
+            <hr className={style.line} />
             <div className={style.tap} onClick={() => handleTap('project')}>
               {activeTab === 'project' ? (
                 <img src={ActiveProjectIcon} alt="Active Project Icon" />

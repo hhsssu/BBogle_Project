@@ -1,0 +1,19 @@
+package com.ssafy.bbogle.diary.dto.request;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
+@Schema(description = "개발일지 작성 요청 DTO")
+public class DiaryCreateResponse {
+
+    @Schema(description = "답변")
+    private List<String> answers;
+
+    @Schema(description = "첨부 이미지")
+    private List<String> images;
+
+}

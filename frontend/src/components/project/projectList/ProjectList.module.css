@@ -1,19 +1,18 @@
-.pjt-list-page {
-  padding: 60px;
-  padding-top: 80px;
+.container {
+  padding: 3.75rem 5rem;
 }
 
-.pjt-list-head {
+.sec1 {
   display: flex;
   justify-content: space-between;
 }
 
-.pjt-title {
+.head {
   font-size: 30px;
   font-weight: 700;
 }
 
-.pjt-btn {
+.btn {
   width: 9rem;
   height: 2.5rem;
   border: none;
@@ -23,39 +22,36 @@
   color: white;
 }
 
-.pjt-wip-title {
+.title {
   font-size: 20px;
   font-weight: 700;
 }
 
-.pjt-wip-card {
-  width: 1200px;
-  height: 200px;
-  display: flex;
+.wips {
+  width: 60rem;
+  height: 12.5rem;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   overflow-x: auto;
   scrollbar-width: none;
-  gap: 1rem;
+  gap: 2.1rem;
+  padding-left: 0.1rem;
 }
 
-.pjt-hr {
-  width: 1300px;
+.hr {
+  width: 62.5rem;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
   border: none;
 }
 
-.pjt-fin-list {
-}
-
-.pjt-fin-title {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.pjt-fin-card {
-  width: 1130px;
+.fins {
+  width: 60rem;
+  height: 25rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  overflow-y: auto;
+  scrollbar-width: none;
   gap: 1rem;
 }

@@ -4,13 +4,22 @@ import animationData from '../../assets/lottie/Welcome.json';
 import RunnerWay from '../../assets/image/RunnerWay.png';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
+import useProjectSelectStore from '../../store/useProjectSelect';
 
 function Main() {
+  const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
+
   // TODO : 임시데이터
   const userName = '홍길동';
 
+  // 카드 선택
+  const handleCard = (id: number) => {
+    setActiveProjectId(id);
+  };
+
   const pjtList = [
     {
+      id: 0,
       imageSrc: RunnerWay,
       title: 'Runner Way',
       state: true,
@@ -18,6 +27,7 @@ function Main() {
       summary: '당신의 러닝을 함께하는 프로젝트',
     },
     {
+      id: 1,
       imageSrc: RunnerWay,
       title: 'Marathon Prep',
       state: true,
@@ -25,6 +35,7 @@ function Main() {
       summary: '마라톤을 준비하는 모든 러너들을 위한 프로젝트',
     },
     {
+      id: 2,
       imageSrc: RunnerWay,
       title: 'Daily Jogging',
       state: true,
@@ -32,6 +43,7 @@ function Main() {
       summary: '매일 조깅하는 습관을 길러주는 프로젝트',
     },
     {
+      id: 3,
       imageSrc: RunnerWay,
       title: 'Trail Exploration',
       state: true,
@@ -39,6 +51,7 @@ function Main() {
       summary: '자연 속 트레일을 탐험하며 러닝을 즐기는 프로젝트',
     },
     {
+      id: 4,
       imageSrc: RunnerWay,
       title: 'Night Runners',
       state: true,
@@ -71,14 +84,19 @@ function Main() {
         </div>
         <div className={style.pjtList}>
           {pjtList.map((card, index) => (
-            <ProjectCard
+            <div
+              className={`${style.pjtCard} ${activeProjectId === card.id ? style.active : ''}`}
+              onClick={() => handleCard(card.id)}
               key={index}
-              imageSrc={card.imageSrc}
-              title={card.title}
-              state={card.state}
-              term={card.term}
-              summary={card.summary}
-            />
+            >
+              <ProjectCard
+                imageSrc={card.imageSrc}
+                title={card.title}
+                state={card.state}
+                term={card.term}
+                summary={card.summary}
+              />
+            </div>
           ))}
         </div>
         <div className={style.button}>

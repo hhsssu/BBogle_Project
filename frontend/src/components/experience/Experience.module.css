@@ -1,13 +1,23 @@
+.title {
+  font-weight: 700;
+  font-size: 1.875rem;
+  margin-bottom: 1.38rem;
+}
+
 .list {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 2.5rem 3.75rem;
+  width: 85vw;
+  flex-shrink: 1;
 }
 
 .card {
-  width: 350px;
-  padding: 24px 28px;
+  width: 100vw;
+  max-width: 320px;
+  min-width: 250px;
+  padding: 24px 30px;
   border-radius: 1.25rem;
   background: var(--Main-White, #fff);
   box-shadow: 0px 8px 20px 3px rgba(126, 126, 126, 0.2);
@@ -18,9 +28,8 @@
   justify-content: space-between;
 }
 
-.title {
+.subhead {
   color: #1c1516;
-  font-family: 'Pretendard';
   font-weight: 600;
   font-size: 1rem;
 }
@@ -51,4 +60,8 @@
   font-size: 0.65rem;
   border-radius: 3px;
   margin-right: 0.3rem;
+}
+
+.search {
+  color: #a0a0a0;
 }

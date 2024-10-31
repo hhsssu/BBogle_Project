@@ -5,6 +5,7 @@ function ExList() {
   // 더미 데이터 예시
   const exCardList = [
     {
+      exId: 1,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -15,6 +16,7 @@ function ExList() {
       ],
     },
     {
+      exId: 2,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -25,6 +27,7 @@ function ExList() {
       ],
     },
     {
+      exId: 3,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -35,6 +38,7 @@ function ExList() {
       ],
     },
     {
+      exId: 4,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -45,6 +49,7 @@ function ExList() {
       ],
     },
     {
+      exId: 4,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -55,6 +60,7 @@ function ExList() {
       ],
     },
     {
+      exId: 4,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -65,6 +71,7 @@ function ExList() {
       ],
     },
     {
+      exId: 5,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -75,6 +82,7 @@ function ExList() {
       ],
     },
     {
+      exId: 6,
       title: '소셜 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
@@ -91,6 +99,7 @@ function ExList() {
         ? exCardList.map((exCard, index) => (
             <div key={index}>
               <ExCard
+                exId={exCard.exId}
                 title={exCard.title}
                 startDate={new Date(exCard.startDate)}
                 endDate={new Date(exCard.endDate)}

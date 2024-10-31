@@ -7,6 +7,7 @@ interface Tag {
 }
 
 interface ExInfoProps {
+  exId: number;
   title: string;
   startDate: Date;
   endDate: Date;
@@ -14,12 +15,12 @@ interface ExInfoProps {
 }
 
 // 경험 카드
-function ExCard({ title, startDate, endDate, tags }: ExInfoProps) {
+function ExCard({ exId, title, startDate, endDate, tags }: ExInfoProps) {
   return (
     <div className={ExStyles.card}>
       {/* 소제목과 더보기 메뉴 버튼 */}
       <section className={ExStyles.between}>
-        <div className={ExStyles.title}>{title}</div>
+        <div className={ExStyles.subhead}>{title}</div>
         <button>
           <img src={MoreIcon} alt="더 보기 메뉴" />
         </button>

@@ -1,14 +1,19 @@
 .pjt-card {
   width: 20rem;
-  height: 10rem;
+  height: 6rem;
   border-radius: 20px;
   box-shadow: 0px 8px 20px 3px rgba(126, 126, 126, 0.08);
   padding: 40px;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .pjt-card-sec-1 {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .pjt-card-img {
@@ -44,8 +49,16 @@
   justify-content: center;
   border: none;
   border-radius: 8px;
+}
+
+.pjt-card-state-true {
   background-color: rgba(30, 166, 252, 0.1);
   color: rgba(30, 166, 252, 1);
+}
+
+.pjt-card-state-false {
+  background-color: rgba(239, 122, 133, 0.3);
+  color: rgba(255, 92, 23, 1);
 }
 
 .pjt-card-term {
@@ -53,11 +66,24 @@
   color: rgba(160, 160, 160, 1);
 }
 
+.pjt-card-more {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .pjt-card-sec-2 {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding-left: 6px;
+  padding-right: 2px;
 }
 
 .pjt-card-summary {
   font-size: 10px;
+}
+
+.pjt-card-bell {
+  width: 20px;
 }

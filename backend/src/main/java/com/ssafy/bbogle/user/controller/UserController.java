@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,13 +25,13 @@ public class UserController {
 
     @Operation(summary = "닉네임 수정")
     @PatchMapping("/nickname")
-    public ResponseEntity<String> updateNickname(UpdateNicknameRequest request) {
+    public ResponseEntity<String> updateNickname(@RequestBody UpdateNicknameRequest request) {
         return null;
     }
 
     @Operation(summary = "프로필 수정")
     @PatchMapping("/profile")
-    public ResponseEntity<String> updateProfile(UpdateProfileRequest request) {
+    public ResponseEntity<String> updateProfile(@RequestBody UpdateProfileRequest request) {
         return null;
     }
 

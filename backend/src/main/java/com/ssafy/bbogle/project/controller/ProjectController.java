@@ -30,7 +30,7 @@ public class ProjectController {
             + "알림은 꺼짐이 false(0), 켜짐이 true(1)<br>"
             + "알림 시간은 hour, minute 정보만 요청")
     @PostMapping()
-    public ResponseEntity<String> createProject(ProjectCreateRequest request){
+    public ResponseEntity<String> createProject(@RequestBody ProjectCreateRequest request) {
         return null;
     }
 
@@ -38,7 +38,7 @@ public class ProjectController {
         description = "status 1이 진행중, 0이 종료<br>"
             + "notificationStatus 1이 ON, 0이 OFF")
     @GetMapping()
-    public ResponseEntity<ProjectListResponse> getAllProjects(){
+    public ResponseEntity<ProjectListResponse> getAllProjects() {
         return null;
     }
 
@@ -48,20 +48,21 @@ public class ProjectController {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @GetMapping("/{projectId}")
-    public ResponseEntity<ProjectDetailResponse> getProjectById(@PathVariable("projectId") String projectId){
+    public ResponseEntity<ProjectDetailResponse> getProjectById(
+        @PathVariable("projectId") Integer projectId) {
         return null;
     }
 
     @Operation(summary = "프로젝트 정보 수정",
         description = "role과 skill은 List<String> 형태로 요청<br>"
-        + "알림은 꺼짐이 false(0), 켜짐이 true(1)<br>"
-        + "알림 시간은 hour, minute 정보만 요청")
+            + "알림은 꺼짐이 false(0), 켜짐이 true(1)<br>"
+            + "알림 시간은 hour, minute 정보만 요청")
     @Parameters(value = {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @PatchMapping("/{projectId}")
-    public ResponseEntity<String> updateProject(@PathVariable("projectId") String projectId,
-        @RequestBody ProjectUpdateRequest request){
+    public ResponseEntity<String> updateProject(@PathVariable("projectId") Integer projectId,
+        @RequestBody ProjectUpdateRequest request) {
         return null;
     }
 
@@ -70,16 +71,16 @@ public class ProjectController {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @DeleteMapping("/{projectId}")
-    public ResponseEntity<String> deleteProject(@PathVariable("projectId") String projectId){
+    public ResponseEntity<String> deleteProject(@PathVariable("projectId") Integer projectId) {
         return null;
     }
 
-    @Operation(summary = "프로젝트 종료" ,description = "프로젝트 종료 버튼을 누르면 프로젝트 상태를 종료로 변경")
+    @Operation(summary = "프로젝트 종료", description = "프로젝트 종료 버튼을 누르면 프로젝트 상태를 종료로 변경")
     @Parameters(value = {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @PatchMapping("{projectId}/end")
-    public ResponseEntity<String> endProject(@PathVariable("projectId") String projectId){
+    public ResponseEntity<String> endProject(@PathVariable("projectId") Integer projectId) {
         return null;
     }
 
@@ -88,8 +89,8 @@ public class ProjectController {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @PatchMapping("{projectId}/notification")
-    public ResponseEntity<String> notificationProject(@PathVariable("projectId") String projectId,
-        @RequestBody NotificationStatusRequest request){
+    public ResponseEntity<String> notificationProject(@PathVariable("projectId") Integer projectId,
+        @RequestBody NotificationStatusRequest request) {
         return null;
     }
 

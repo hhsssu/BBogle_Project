@@ -13,19 +13,21 @@ function Main() {
           animationData={animationData}
           loop={false}
           autoplay={true}
-          className={style.welcome} 
+          className={style.welcome}
         />
         <div className={style.greeting}>안녕하세요, {userName}님!</div>
       </div>
 
       <div className={style.diary}>
         <div className={style.description}>
-          <div className={style.mainDescription}>오늘의 성장 기록을 남겨보세요 :-)</div>
-          <div className={style.subDescription}>개발한 프로젝트를 선택해주세요 !</div>
+          <div className={style.mainDescription}>
+            오늘의 성장 기록을 남겨보세요 :-)
+          </div>
+          <div className={style.subDescription}>
+            개발한 프로젝트를 선택해주세요 !
+          </div>
         </div>
-        <div>
-          
-        </div>
+        <div></div>
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ function ExDetail() {
 
         {/* 시작일 ~ 종료일 */}
         <div className={ExDetailStyles.date}>
-          {new Date(exDetail.startDate).toLocaleDateString()} ~
+          {new Date(exDetail.startDate).toLocaleDateString()} ~{' '}
           {new Date(exDetail.endDate).toLocaleDateString()}
         </div>
 

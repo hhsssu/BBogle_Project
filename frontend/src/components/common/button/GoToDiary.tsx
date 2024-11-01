@@ -6,7 +6,7 @@ interface GoToDiaryProps {
   isInactive: boolean;
 }
 
-const GoToDiary: React.FC<GoToDiaryProps> = ({ isInactive }) => {
+function GoToDiary({ isInactive }: GoToDiaryProps) {
   return (
     <button
       className={`${style.button} ${isInactive ? style.inActive : ''}`}
@@ -16,6 +16,6 @@ const GoToDiary: React.FC<GoToDiaryProps> = ({ isInactive }) => {
       <div className={style.description}>개발일지 남기러 가기</div>
     </button>
   );
-};
+}
 
 export default GoToDiary;

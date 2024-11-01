@@ -4,7 +4,7 @@ import animationData from '../../assets/lottie/Welcome.json';
 import RunnerWay from '../../assets/image/RunnerWay.png';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
-import useProjectSelectStore from '../../store/useProjectSelect';
+import useProjectSelectStore from '../../store/useProjectSelectStore';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();

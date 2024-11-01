@@ -5,16 +5,42 @@
 .title {
   font-weight: 600;
   font-size: 1.5rem;
+  user-select: none;
 }
 
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.semibold {
+  font-weight: 600;
+}
+
+.small {
+  font-size: 0.875rem;
+}
 .red {
   color: #ef0000;
-  font-size: 0.875rem;
 }
 
 .gray {
   color: #a0a0a0;
-  font-size: 0.875rem;
+}
+
+.orange {
+  color: #ff5c17;
 }
 
 .list {
@@ -36,12 +62,7 @@
   border-radius: 1.25rem;
   background: var(--Main-White, #fff);
   box-shadow: 0px 8px 20px 3px rgba(126, 126, 126, 0.2);
-}
-
-.between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  user-select: none;
 }
 
 .subhead {
@@ -55,29 +76,33 @@
 .date {
   color: #a0a0a0;
   font-size: 0.65rem;
+  user-select: none;
 }
 
-.tags {
+.keywords {
   display: flex;
   margin-top: 42px;
+  user-select: none;
 }
 
-.btag {
+.bluekeyword {
   color: #1ea6fc;
   background: rgba(30, 166, 252, 0.1);
   padding: 3px 8px;
   font-size: 0.65rem;
-  border-radius: 3px;
+  border-radius: 5px;
   margin-right: 0.3rem;
+  user-select: none;
 }
 
-.ytag {
+.yellowkeyword {
   color: #ffc107;
   background: rgba(255, 193, 7, 0.1);
   padding: 3px 8px;
   font-size: 0.65rem;
-  border-radius: 3px;
+  border-radius: 5px;
   margin-right: 0.3rem;
+  user-select: none;
 }
 
 .search {
@@ -111,6 +136,7 @@
   font-size: 1rem;
   color: white;
   font-weight: 600;
+  user-select: none;
 }
 
 .regist {
@@ -122,4 +148,5 @@
   font-size: 1rem;
   color: white;
   font-weight: 600;
+  user-select: none;
 }

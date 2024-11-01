@@ -7,10 +7,10 @@ import lombok.Getter;
 
 @Getter
 @Builder
-@Schema(description = "경험 전체 조회 응답 DTO")
+@Schema(description = "경험 리스트 응답 DTO")
 public class ActivityListResponse {
 
-    @Schema(description = "경험 전체 리스트")
+    @Schema(description = "경험 리스트")
     private List<ActivityListItemResponse> activities;
 
 }

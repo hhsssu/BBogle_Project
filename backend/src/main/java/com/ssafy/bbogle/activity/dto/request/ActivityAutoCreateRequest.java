@@ -8,8 +8,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-@Schema(description = "경험 등록 요청 ")
-public class ActivityCreateRequest {
+@Schema(description = "경험 자동 등록 DTO")
+public class ActivityAutoCreateRequest {
 
     @Schema(description = "소제목")
     private String title;
@@ -25,4 +25,5 @@ public class ActivityCreateRequest {
 
     @Schema(description = "키워드ID 리스트")
     private List<Integer> keywords;
+
 }

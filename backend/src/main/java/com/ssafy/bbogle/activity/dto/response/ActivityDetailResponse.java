@@ -9,8 +9,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-@Schema(description = "경험 리스트 요소 DTO")
-public class ActivityListItemResponse {
+@Schema(description = "경험 상세 조회 응답 DTO")
+public class ActivityDetailResponse {
 
     @Schema(description = "경험 ID")
     private Integer activityId;
@@ -29,5 +29,8 @@ public class ActivityListItemResponse {
 
     @Schema(description = "프로젝트 제목")
     private String projectTitle;
+
+    @Schema(description = "내용")
+    private String content;
 
 }

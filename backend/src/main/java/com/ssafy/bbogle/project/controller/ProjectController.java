@@ -1,6 +1,7 @@
 package com.ssafy.bbogle.project.controller;
 
 import com.ssafy.bbogle.activity.dto.request.ActivitySelectRequest;
+import com.ssafy.bbogle.activity.dto.response.ActivityListResponse;
 import com.ssafy.bbogle.project.dto.request.NotificationStatusRequest;
 import com.ssafy.bbogle.project.dto.request.ProjectCreateRequest;
 import com.ssafy.bbogle.project.dto.request.ProjectUpdateRequest;
@@ -97,10 +98,20 @@ public class ProjectController {
 
     // 경험 관련
 
-    // 프로젝트 관련 경험 조회 API도 필요
+    @Operation(summary = "특정 프로젝트에 대한 저장된 경험 조회", description = "경험추출시 기존 경험 조회에 사용")
+    @Parameters(value = {
+        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
+    })
+    @GetMapping("/{projectId}/activities")
+    public ResponseEntity<ActivityListResponse> getActivitiesByProjectId(@PathVariable("projectId") Integer projectId){
+        return null;
+    }
 
     @Operation(summary = "추출된 경험 선택")
-    @PatchMapping("/{projectId}/activities/select")
+    @Parameters(value = {
+        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
+    })
+    @PostMapping("/{projectId}/activities/select")
     public ResponseEntity<String> selectActivity(@PathVariable("projectId") Integer projectId,
         @RequestBody ActivitySelectRequest request) {
         // 기존 저장된 경험들과 선택된 경험 비교해서 수정 + 추출된 경험 중 선택된 경험 해당 프로젝트ID 달고 추가

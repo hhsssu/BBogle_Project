@@ -10,10 +10,10 @@ import lombok.Getter;
 @Schema(description = "추출된 경험들 중 경험 선택 요청 DTO")
 public class ActivitySelectRequest {
 
-    @Schema(description = "기존 경험들 중 선택된 경험 ID 리스트")
+    @Schema(description = "기존 경험들 중 최종 선택된 경험 ID 리스트")
     private List<Integer> savedActivities;
 
     @Schema(description = "새로 생성된 경험들 중 선택된 경험 리스트")
-    private List<ActivityCreateRequest> newActivities;
+    private List<ActivityAutoCreateRequest> newActivities;
 
 }

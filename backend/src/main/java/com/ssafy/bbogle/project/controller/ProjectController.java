@@ -115,11 +115,11 @@ public class ProjectController {
         return null;
     }
 
-    @Operation(summary = "추출된 경험 선택")
+    @Operation(summary = "추출된 경험 선택", description = "경험추출한 후 저장할 항목 선택할 때 사용")
     @Parameters(value = {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
-    @PostMapping("/{projectId}/activities/select")
+    @PostMapping("/{projectId}/activities")
     public ResponseEntity<String> selectActivity(@PathVariable("projectId") Integer projectId,
         @RequestBody ActivitySelectRequest request) {
         // 기존 저장된 경험들과 선택된 경험 비교해서 수정 + 추출된 경험 중 선택된 경험 해당 프로젝트ID 달고 추가

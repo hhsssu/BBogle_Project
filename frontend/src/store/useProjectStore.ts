@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import DefaultProfile from '../../../assets/image/icon/DefaultProfile.svg';
+import DefaultProfile from '../assets/image/icon/DefaultProfile.svg';
 
 interface Project {
   imgSrc: string;

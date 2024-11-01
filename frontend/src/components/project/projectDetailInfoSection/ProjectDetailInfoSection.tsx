@@ -1,13 +1,30 @@
+import useProjectStore from '../../../store/useProjectStore';
 import style from './ProjectDetailInfoSection.module.css';
 
-import { useState } from 'react';
+interface Props {
+  termError: boolean;
+  handleTermError: (value: boolean) => void;
+}
 
-function ProjectDetailInfoSection() {
-  const [teammate, setTeammate] = useState(1);
+function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
+  const project = useProjectStore((state) => state.project);
+  const updateProject = useProjectStore((state) => state.updateProjectField);
+
+  const handleStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    updateProject('startDate', value);
+    handleTermError(false);
+  };
+
+  const handleFinishDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    updateProject('finishDate', value);
+    handleTermError(false);
+  };
 
   const handleTeammate = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event.target) {
-      setTeammate(Number(event.target.value));
+      updateProject('teammate', Number(event.target.value));
     }
   };
 
@@ -18,27 +35,39 @@ function ProjectDetailInfoSection() {
           <span>프로젝트 기간</span>
           <span className={style.essential}>*</span>
         </p>
-        <div className={style.term}>
+        <div className={`${style.term} ${termError && style.termError}`}>
           <div className={style.dateWrapper}>
             <p className={style.dateLabel}>시작일</p>
-            <input className={style.datePicker} type="date" />
+            <input
+              className={style.datePicker}
+              type="date"
+              max={project.finishDate}
+              onChange={handleStartDate}
+            />
           </div>
           <span className={style.separator}>~</span>
           <div className={style.dateWrapper}>
             <p className={style.dateLabel}>종료일</p>
-            <input className={style.datePicker} type="date" />
+            <input
+              className={style.datePicker}
+              type="date"
+              min={project.startDate}
+              onChange={handleFinishDate}
+            />
           </div>
         </div>
       </div>
 
+      {termError && (
+        <span className={style.error}>
+          프로젝트 기간을 확인해주세요(미입력/입력오류)
+        </span>
+      )}
+
       <div className={style.inputLabel}>
         <span className={style.label}>프로젝트 인원</span>
         <div>
-          <select
-            className={style.select}
-            value={teammate}
-            onChange={handleTeammate}
-          >
+          <select className={style.select} onChange={handleTeammate}>
             {Array.from({ length: 10 }, (_, index) => (
               <option key={index + 1} value={index + 1}>
                 {index + 1}

@@ -4,10 +4,11 @@ import AddTag from '../../../assets/image/icon/AddTag.svg';
 import Close from '../../../assets/image/icon/Close.svg';
 
 import { useState, useRef, useEffect } from 'react';
+import useProjectStore from '../../../store/useProjectStore';
 
 function ProjectTagSection() {
-  const [roles, setRoles] = useState<string[]>([]);
-  const [techs, setTechs] = useState<string[]>([]);
+  const project = useProjectStore((state) => state.project);
+  const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const [roleInputOpen, setRoleInputOpen] = useState(false);
   const [techInputOpen, setTechInputOpen] = useState(false);
@@ -36,9 +37,9 @@ function ProjectTagSection() {
 
   const addRole = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setRoles([...roles, roleInput]);
       setRoleInput('');
       setRoleInputOpen(false);
+      updateProject('roles', [...project.roles, roleInput]);
     } else if (event.key === 'Escape') {
       setRoleInput('');
       setRoleInputOpen(false);
@@ -47,9 +48,9 @@ function ProjectTagSection() {
 
   const addTech = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setTechs([...techs, techInput]);
       setTechInput('');
       setTechInputOpen(false);
+      updateProject('techs', [...project.techs, techInput]);
     } else if (event.key === 'Escape') {
       setTechInput('');
       setTechInputOpen(false);
@@ -57,11 +58,17 @@ function ProjectTagSection() {
   };
 
   const deleteRoleTag = (index: number) => {
-    setRoles((prevRoles) => prevRoles.filter((_, i) => i !== index));
+    updateProject(
+      'roles',
+      project.roles.filter((_, i) => i !== index),
+    );
   };
 
   const deleteTechTag = (index: number) => {
-    setTechs((prevTechs) => prevTechs.filter((_, i) => i !== index));
+    updateProject(
+      'techs',
+      project.techs.filter((_, i) => i !== index),
+    );
   };
 
   useEffect(() => {
@@ -105,7 +112,7 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>나의 역할</span>
         <div className={style.tagSec}>
-          {roles.map((role, index) => (
+          {project.roles.map((role, index) => (
             <div key={index} className={style.tag}>
               {role}
               <img
@@ -144,7 +151,7 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>사용 기술</span>
         <div className={style.tagSec}>
-          {techs.map((tech, index) => (
+          {project.techs.map((tech, index) => (
             <div key={index} className={style.tag}>
               {tech}
               <img

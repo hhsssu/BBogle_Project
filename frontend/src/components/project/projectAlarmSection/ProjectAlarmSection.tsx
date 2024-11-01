@@ -3,19 +3,18 @@ import style from './ProjectAlarmSection.module.css';
 import ToggleOn from '../../../assets/image/icon/ToggleOn.svg';
 import ToggleOff from '../../../assets/image/icon/ToggleOff.svg';
 
-import { useState } from 'react';
+import useProjectStore from '../../../store/useProjectStore';
 
 function ProjectAlarmSection() {
-  const [toggleOn, setToggleOn] = useState(false);
-
-  const [time, setTime] = useState('17:30');
+  const project = useProjectStore((state) => state.project);
+  const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const handleToggleState = () => {
-    setToggleOn(!toggleOn);
+    updateProject('alarmState', !project.alarmState);
   };
 
   const handleTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTime(event.target.value);
+    updateProject('alarmTime', event.target.value);
   };
 
   return (
@@ -23,7 +22,7 @@ function ProjectAlarmSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>알림 설정</span>
         <div className={style.toggleSec}>
-          {toggleOn ? (
+          {project.alarmState ? (
             <img
               className={style.toggle}
               src={ToggleOn}
@@ -37,12 +36,12 @@ function ProjectAlarmSection() {
             />
           )}
 
-          {toggleOn ? (
+          {project.alarmState ? (
             <div>
               <input
                 className={style.timeInput}
                 type="time"
-                value={time}
+                value={project.alarmTime}
                 onChange={handleTime}
               />
             </div>

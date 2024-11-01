@@ -7,7 +7,8 @@
 
 .inputLabel {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 20% 60%;
+  gap: 3rem;
   align-items: center;
   margin-bottom: 3%;
 }
@@ -20,6 +21,7 @@
 .tagSec {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .addTag {
@@ -36,11 +38,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10px;
+  font-size: 12px;
   background-color: rgba(30, 166, 252, 0.1);
   color: rgba(30, 166, 252, 1);
   border-radius: 5px;
   margin-right: 0.8rem;
+  margin-bottom: 0.2rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }

@@ -5,7 +5,8 @@
 
 .inputLabel {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 20% 60%;
+  gap: 3rem;
   align-items: center;
 }
 
@@ -22,6 +23,7 @@
 .toggle {
   width: 1.875rem;
   margin-right: 5%;
+  transition: transform 2s ease;
 }
 
 .timeInput {

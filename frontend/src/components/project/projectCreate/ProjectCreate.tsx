@@ -20,11 +20,14 @@ function ProjectCreate() {
       </div>
 
       <span className={style.head}>프로젝트 생성</span>
-      <div className={style.pjtForm}>
-        <ProjectInfoSection />
-        <ProjectDetailInfoSection />
-        <ProjectTagSection />
-        <ProjectAlarmSection />
+      <div className={style.pjtFormWrapper}>
+        <div className={style.pjtForm}>
+          <ProjectInfoSection />
+          <ProjectDetailInfoSection />
+          <ProjectTagSection />
+          <ProjectAlarmSection />
+        </div>
+        <button className={style.endBtn}>완료</button>
       </div>
     </div>
   );

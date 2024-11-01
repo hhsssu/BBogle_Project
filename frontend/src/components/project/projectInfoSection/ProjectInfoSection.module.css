@@ -1,6 +1,6 @@
 .inputLabel {
   display: grid;
-  grid-template-columns: 1fr 1.8fr;
+  grid-template-columns: 20% 80%;
   align-items: center;
   margin-bottom: 3%;
 }

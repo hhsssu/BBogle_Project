@@ -6,7 +6,8 @@
 
 .inputLabel {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 20% 40%;
+  gap: 3rem;
   align-items: center;
   margin-bottom: 3%;
 }
@@ -22,7 +23,7 @@
 
 .term {
   display: flex;
-  gap: 2.5rem;
+  gap: 1.5rem;
   align-items: center;
 }
 

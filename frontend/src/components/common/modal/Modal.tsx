@@ -4,13 +4,14 @@ interface ModalProps {
   isOpen: boolean;
   title: React.ReactNode;
   content: string;
-  onClose: () => void;
+  onClose?: () => void;
   onConfirm: () => void;
   confirmText?: string;
   cancleText?: string;
 }
 
 function Modal({
+  isOpen,
   title,
   content,
   onClose,
@@ -18,9 +19,11 @@ function Modal({
   confirmText = '확인',
   cancleText = '취소',
 }: ModalProps) {
+  if (!isOpen) return null;
+
   return (
-    <div className={style.overlay}>
-      <div className={style.container}>
+    <div className={style.overlay} onClick={onClose}>
+      <div className={style.container} onClick={(e) => e.stopPropagation()}>
         <h2 className={style.title}>{title}</h2>
         <p className={style.content}>{content}</p>
         <div className={style.actions}>

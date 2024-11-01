@@ -44,6 +44,12 @@ public class ProjectController {
         return null;
     }
 
+    @Operation(summary = "진행중인 프로젝트 조회")
+    @GetMapping("/in-progress")
+    public ResponseEntity<ProjectListResponse> getInProgressProjects() {
+        return null;
+    }
+
     @Operation(summary = "프로젝트 상세 조회",
         description = "status 1이 진행중, 0이 종료")
     @Parameters(value = {

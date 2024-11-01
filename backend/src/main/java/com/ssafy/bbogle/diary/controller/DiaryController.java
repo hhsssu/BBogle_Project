@@ -20,15 +20,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/projects")
+@RequestMapping("/api")
 @Tag(name = "DiaryController", description = "개발일지 컨트롤러")
 public class DiaryController {
+
+    @Operation(summary = "오늘 내가 작성한 개발일지")
+    @GetMapping("/diaries/today")
+    public ResponseEntity<DiaryListResponse> getTodayDiary() {
+        return null;
+    }
 
     @Operation(summary = "특정 프로젝트의 개발일지 목록 조회")
     @Parameters(value = {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
-    @GetMapping("/{projectId}/diaries")
+    @GetMapping("/projects/{projectId}/diaries")
     public ResponseEntity<DiaryListResponse> getAllDiaries(
         @PathVariable("projectId") Integer projectId){
         return null;
@@ -38,7 +44,7 @@ public class DiaryController {
     @Parameters(value = {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
-    @PostMapping("/{projectId}/diaries")
+    @PostMapping("/projects/{projectId}/diaries")
     public ResponseEntity<String> createDiary(
         @PathVariable("projectId") Integer projectId,
         @RequestBody DiaryCreateRequest request){
@@ -50,7 +56,7 @@ public class DiaryController {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
         @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
     })
-    @GetMapping("/{projectId}/diaries/{diaryId}")
+    @GetMapping("/projects/{projectId}/diaries/{diaryId}")
     public ResponseEntity<DiaryDetailResponse> getDiaryDetail(
         @PathVariable("projectId") Integer projectId,
         @PathVariable("diaryId") Integer diaryId
@@ -63,7 +69,7 @@ public class DiaryController {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
         @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
     })
-    @PatchMapping("/{projectId}/diaries/{diaryId}")
+    @PatchMapping("/projects/{projectId}/diaries/{diaryId}")
     public ResponseEntity<String> updateDiary(
         @PathVariable("projectId") Integer projectId,
         @PathVariable("diaryId") Integer diaryId,
@@ -76,7 +82,7 @@ public class DiaryController {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
         @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
     })
-    @DeleteMapping("/{projectId}/diaries/{diaryId}")
+    @DeleteMapping("/projects/{projectId}/diaries/{diaryId}")
     public ResponseEntity<String> deleteDiary(
         @PathVariable("projectId") Integer projectId,
         @PathVariable("diaryId") Integer diaryId){

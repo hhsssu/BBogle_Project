@@ -15,4 +15,7 @@ public class UserInfoResponse {
     @Schema(description = "프로필 이미지")
     private String profileImage;
 
+    @Schema(description = "가입 이메일")
+    private String email;
+
 }

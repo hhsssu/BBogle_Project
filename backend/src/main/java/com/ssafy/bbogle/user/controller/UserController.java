@@ -3,6 +3,7 @@ package com.ssafy.bbogle.user.controller;
 import com.ssafy.bbogle.user.dto.request.UpdateNicknameRequest;
 import com.ssafy.bbogle.user.dto.request.UpdateProfileRequest;
 import com.ssafy.bbogle.user.dto.response.UserInfoResponse;
+import com.ssafy.bbogle.user.dto.response.UserNicknameResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,12 @@ public class UserController {
     @Operation(summary = "회원정보 조회")
     @GetMapping()
     public ResponseEntity<UserInfoResponse> getUser() {
+        return null;
+    }
+
+    @Operation(summary = "닉네임 조회")
+    @GetMapping("/nickname")
+    public ResponseEntity<UserNicknameResponse> getUserNickname(){
         return null;
     }
 

@@ -1,0 +1,38 @@
+.title {
+  position: absolute;
+  left: 55%;
+  transform: translateX(-50%); /* 중앙에 고정 */
+}
+
+.regist {
+  margin-left: auto;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  grid-template-rows: 30px 30px 30px 30px;
+  gap: 10px;
+  margin-top: 7vh;
+  align-items: center;
+}
+
+.bluekeyword {
+  color: #1ea6fc;
+  background: rgba(30, 166, 252, 0.1);
+  padding: 5px 8px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  user-select: none;
+}
+
+.yellowkeyword {
+  color: #ffc107;
+  background: rgba(255, 193, 7, 0.1);
+  padding: 5px 8px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  margin-right: 0.5rem;
+  user-select: none;
+}

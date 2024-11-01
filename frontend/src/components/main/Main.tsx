@@ -5,6 +5,7 @@ import RunnerWay from '../../assets/image/RunnerWay.png';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
 import useProjectSelectStore from '../../store/useProjectSelectStore';
+import Modal from '../common/modal/Modal';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();

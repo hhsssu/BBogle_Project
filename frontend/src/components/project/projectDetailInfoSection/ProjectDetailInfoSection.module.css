@@ -1,0 +1,53 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.inputLabel {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  margin-bottom: 3%;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.essential {
+  color: rgba(255, 92, 23, 1);
+}
+
+.term {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.dateLabel {
+  font-size: 12px;
+}
+
+.datePicker {
+  border: none;
+  outline: none;
+  font-family: 'Pretendard-Regular';
+}
+
+.datePicker::placeholder {
+  color: rgba(232, 232, 232, 1);
+}
+
+.separator {
+  margin-top: 0.6rem;
+}
+
+.select {
+  width: 2rem;
+  border: none;
+  outline: none;
+  appearance: none;
+  text-align: center;
+}

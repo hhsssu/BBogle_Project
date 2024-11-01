@@ -1,0 +1,38 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.inputLabel {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.toggleSec {
+  display: flex;
+  align-items: center;
+}
+
+.toggle {
+  width: 1.875rem;
+  margin-right: 5%;
+}
+
+.timeInput {
+  width: 7rem;
+  border: none;
+  outline: none;
+  font-family: 'Pretendard-regular';
+  font-size: 14px;
+}
+
+.timeToggleOff {
+  font-size: 14px;
+  color: rgba(232, 232, 232, 1);
+}

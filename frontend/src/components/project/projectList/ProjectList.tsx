@@ -1,6 +1,7 @@
 import ProjectCard from '../../common/projectCard/ProjectCard';
 import RunnerWay from '../../../assets/image/RunnerWay.png';
 import style from './ProjectList.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function ProjectList() {
   const WIP_PJT_LIST = [
@@ -128,11 +129,19 @@ function ProjectList() {
     },
   ];
 
+  const navigate = useNavigate();
+
+  const navCreate = () => {
+    navigate('/project/create');
+  };
+
   return (
     <div className={style.container}>
       <section className={style.sec1}>
         <div className={style.head}>프로젝트</div>
-        <button className={style.btn}>+ 프로젝트 추가</button>
+        <button className={style.btn} onClick={navCreate}>
+          + 프로젝트 추가
+        </button>
       </section>
 
       <section className={style.sec2}>

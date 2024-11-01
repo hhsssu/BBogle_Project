@@ -1,5 +1,5 @@
 import RunnerWay from '../../../assets/image/RunnerWay.png';
-import setting from '../../../assets/image/icon/setting.svg';
+import Setting from '../../../assets/image/icon/Setting.svg';
 import style from './ProjectDetail.module.css';
 import { useState } from 'react';
 import DiaryList from '../../diary/diaryList/DiaryList';
@@ -28,7 +28,7 @@ function ProjectDetail() {
   };
 
   const navCreate = () => {
-    navigate('/project/create');
+    // navigate('/project/create');
   };
 
   const changeTab = (idx: number) => {
@@ -51,7 +51,7 @@ function ProjectDetail() {
             <img className={style.img} src={PROJECT.imageSrc} alt="" />
             <span className={style.title}>{PROJECT.title}</span>
             <div>
-              <img className={style.setting} src={setting} alt="설정" />
+              <img className={style.setting} src={Setting} alt="설정" />
               <div
                 className={`${style.state} ${style[PROJECT.state ? 'stateTrue' : 'stateFalse']}`}
               >
@@ -129,7 +129,7 @@ function ProjectDetail() {
               </span>
             </div>
             <button className={style.btn} onClick={navCreate}>
-              + 프로젝트 추가
+              + 개발일지 추가
             </button>
           </div>
         ) : (

@@ -129,10 +129,10 @@ function ProjectList() {
   ];
 
   return (
-    <div className={style['container']}>
-      <section className={style['sec1']}>
-        <div className={style['head']}>프로젝트</div>
-        <button className={style['btn']}>+ 프로젝트 추가</button>
+    <div className={style.container}>
+      <section className={style.sec1}>
+        <div className={style.head}>프로젝트</div>
+        <button className={style.btn}>+ 프로젝트 추가</button>
       </section>
 
       <section className={style.pjtSec}>
@@ -150,8 +150,9 @@ function ProjectList() {
           ))}
         </div>
       </section>
+
       <br />
-      <hr className={style['hr']} />
+      <hr className={style.hr} />
       <br />
       <section className={style.pjtSec}>
         <div className={style['title']}>종료된 프로젝트</div>

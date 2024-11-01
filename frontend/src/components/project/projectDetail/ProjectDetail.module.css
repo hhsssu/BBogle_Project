@@ -1,3 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 8vh 7vw;
+}
+
+.container > section {
+  padding: 3vh 1vw;
+}
+
+.back {
+  font-size: 14px;
+  color: rgba(160, 160, 160, 1);
+}
+
 .info {
   border-radius: 20px;
   display: flex;
@@ -9,9 +24,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.25rem;
 }
 
-.info > div > div {
+.info > div > div:first-child {
   display: flex;
   align-items: center;
 }
@@ -34,6 +50,7 @@
 
 .setting {
   width: 1rem;
+  color: rgba(160, 160, 160, 1);
 }
 
 .state {
@@ -57,7 +74,7 @@
   color: rgba(255, 92, 23, 1);
 }
 
-.btn {
+.endBtn {
   width: 9rem;
   height: 2.5rem;
   border: none;
@@ -69,22 +86,28 @@
 
 .summary {
   font-size: 16px;
+  margin-left: 1rem;
+  margin-bottom: 0.6rem;
 }
 
 .term {
   font-size: 14px;
+  margin-left: 1rem;
+  margin-bottom: 2.25rem;
   color: rgba(160, 160, 160, 1);
 }
 
 .tags {
   display: flex;
   align-items: center;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 
 .subTitle {
   font-size: 12px;
   font-weight: 600;
-  margin-right: 0.8rem;
+  margin-right: 3.75rem;
 }
 
 .tag {
@@ -101,6 +124,11 @@
   padding-right: 0.5rem;
 }
 
+.tabSec {
+  display: flex;
+  justify-content: space-between;
+}
+
 .tabs {
   display: flex;
 }
@@ -111,7 +139,60 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: rgba(108, 112, 114, 1);
+}
+
+.diaryNum {
+  width: 1.5rem;
+  height: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: rgba(255, 92, 23, 1);
+  border-radius: 1rem;
+  background-color: rgba(255, 92, 23, 0.1);
+  margin-left: 0.2rem;
+}
+
+.activeTab {
+  font-weight: 600;
   border-bottom: solid;
   border-color: rgba(255, 92, 23, 1);
   color: rgba(255, 92, 23, 1);
+}
+
+.control {
+  display: flex;
+  align-items: end;
+  gap: 0.8rem;
+}
+
+.sort {
+  display: flex;
+  gap: 1vh;
+  margin-bottom: 0.2rem;
+}
+
+.activeSort {
+  font-weight: 600;
+}
+
+.deactiveSort {
+  color: rgba(160, 160, 160, 1);
+}
+
+.btn {
+  width: 9rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff5c17;
+  font-size: 16px;
+  color: white;
+}
+
+.sec3 {
+  display: flex;
+  justify-content: center;
 }

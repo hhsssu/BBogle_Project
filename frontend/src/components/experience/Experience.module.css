@@ -79,6 +79,7 @@
   padding: 8px 20px 8px 0;
   margin-bottom: 31px;
   gap: 1rem;
+  z-index: 10;
 }
 
 .nothing {
@@ -89,5 +90,16 @@
 }
 
 .bold {
+  font-weight: 600;
+}
+
+.btn {
+  width: 9rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 16px;
+  background-color: #ff5c17;
+  font-size: 1rem;
+  color: white;
   font-weight: 600;
 }

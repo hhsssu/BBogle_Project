@@ -11,7 +11,7 @@ import lombok.Getter;
 public class ProjectListItemResponse {
 
     @Schema(description = "프로젝트 아이디")
-    private Integer id;
+    private Integer projectId;
 
     @Schema(description = "이미지")
     private String image;

@@ -10,8 +10,8 @@ import lombok.Getter;
 @Schema(description = "개발일지 수정 요청 DTO")
 public class DiaryUpdateRequest {
 
-    @Schema(description = "AI 요약")
-    private String summary;
+    @Schema(description = "AI 요약 제목")
+    private String title;
 
     @Schema(description = "답변")
     private List<String> answers;

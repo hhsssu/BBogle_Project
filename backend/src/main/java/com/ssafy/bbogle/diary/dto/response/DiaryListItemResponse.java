@@ -11,10 +11,10 @@ import lombok.Getter;
 public class DiaryListItemResponse {
 
     @Schema(description = "개발일지 ID")
-    private Integer id;
+    private Integer diaryId;
 
-    @Schema(description = "개발일지 AI 한줄요약")
-    private String summary;
+    @Schema(description = "AI 요약 제목")
+    private String title;
 
     @Schema(description = "작성날짜")
     private LocalDate createDate;

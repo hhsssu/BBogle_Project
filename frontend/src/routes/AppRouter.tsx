@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import OnboardingPage from '../pages/OnboardingPage';
+import OAuthCallbackPage from '../pages/OAuthCallbackPage';
 import ProjectPage from '../pages/ProjectPage';
 import ProjectList from '../components/project/projectList/ProjectList';
 import ProjectDetail from '../components/project/projectDetail/ProjectDetail';
@@ -14,6 +15,7 @@ function AppRouter() {
     <Routes>
       // 온보딩 페이지
       <Route path="/" element={<OnboardingPage />}></Route>
+      <Route path="/oauth" element={<OAuthCallbackPage />}></Route>
       // 메인 페이지
       <Route path="/main" element={<MainPage />}>
         <Route index element={<Main />} />

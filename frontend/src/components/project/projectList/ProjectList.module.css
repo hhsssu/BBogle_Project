@@ -7,6 +7,11 @@
 .sec1 {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pjtSec {
+  padding: 20px;
 }
 
 .head {
@@ -28,6 +33,7 @@
 .title {
   font-size: 20px;
   font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .sec2 {
@@ -36,8 +42,6 @@
 }
 
 .wips {
-  width: 70vw;
-  height: 30vh;
   display: grid;
   grid-auto-flow: column;
   align-items: center;
@@ -45,10 +49,10 @@
   scrollbar-width: none;
   gap: 2.1rem;
   padding-left: 0.1rem;
+  padding: 12px;
 }
 
 .hr {
-  width: 62.5rem;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
   border: none;
@@ -60,12 +64,10 @@
 }
 
 .fins {
-  width: 60rem;
-  height: 25rem;
   display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+  place-items: center;
   overflow-y: auto;
   scrollbar-width: none;
-  gap: 1rem;
+  gap: 1.5rem 1rem;
 }

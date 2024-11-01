@@ -1,4 +1,4 @@
-import MoreVertical from '../../../assets/image/icon/morevertical.svg';
+import MoreVertical from '../../../assets/image/icon/MoreVertical.svg';
 import Bell from '../../../assets/image/icon/bell.svg';
 
 import style from './ProjectCard.module.css';

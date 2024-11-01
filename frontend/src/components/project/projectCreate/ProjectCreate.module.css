@@ -8,141 +8,31 @@
 }
 
 .head {
-  font-size: 30px;
-  font-weight: 600;
-  margin-right: 10px;
-}
-
-.inputLabel {
   display: flex;
-  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 2%;
 }
 
-.label {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.essential {
-  color: rgba(255, 92, 23, 1);
-}
-
-.img {
-  width: 3rem;
-  height: 3rem;
-  border: solid;
-  border-color: #e8e8e8;
-  border-width: 0.2px;
-  border-radius: 100%;
-  margin-right: 10px;
-}
-
-.hiddenInput {
-  display: none;
-}
-
-.titleInput {
-  width: 20rem;
-  border: none;
-  border-bottom: solid;
-  border-color: rgba(232, 232, 232, 1);
-  outline: none;
-  padding-left: 0.6rem;
-}
-
-.summary {
-  width: 24.875rem;
-  height: 5.5rem;
-  padding: 0.6rem;
-  border: none;
-  border-radius: 20px;
-  outline: none;
-  resize: none;
-  scrollbar-width: none;
-  background-color: rgba(232, 232, 232, 0.2);
-  font-family: 'Pretendard-Regular';
-}
-
-.term {
+.pjtFormWrapper {
   display: flex;
-  gap: 2.5rem;
-  align-items: center;
+  flex-direction: column;
 }
 
-.dateLabel {
-  font-size: 12px;
-}
-
-.datePicker {
-  border: none;
-  outline: none;
-  font-family: 'Pretendard-Regular';
-}
-
-.datePicker::placeholder {
-  color: rgba(232, 232, 232, 1);
-}
-
-.separator {
-  margin-top: 0.6rem;
-}
-
-.select {
-  width: 2rem;
-  border: none;
-  outline: none;
-  appearance: none;
-  text-align: center;
-}
-
-.addTag {
-  width: 1.25rem;
-  stroke: rgba(160, 160, 160, 1);
-}
-
-.tag {
-  height: 1rem;
+.pjtForm {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-  background-color: rgba(30, 166, 252, 0.1);
-  color: rgba(30, 166, 252, 1);
-  border-radius: 5px;
-  margin-right: 0.8rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  flex-direction: column;
+  padding: 4vh 0vh;
 }
 
-.tagInput {
-  width: 5rem;
-  height: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-  border: solid;
-  border-color: rgba(232, 232, 232, 1);
-  border-width: 0.7px;
-  outline: none;
-  border-radius: 5px;
-  margin-right: 0.8rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.toggle {
-  width: 1.875rem;
-}
-
-.timeInput {
+.endBtn {
+  width: 9rem;
+  height: 2.5rem;
   border: none;
-  outline: none;
-  font-family: 'Pretendard-regular';
-  font-size: 14px;
-}
-
-.timeToggleOff {
-  font-size: 14px;
-  color: rgba(232, 232, 232, 1);
+  border-radius: 8px;
+  background-color: #ff5c17;
+  font-size: 16px;
+  color: white;
+  align-self: center;
+  margin-right: 5rem;
 }

@@ -1,17 +1,3 @@
-.flex {
-  display: flex;
-  align-items: center;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-}
-
-.semibold {
-  font-weight: 600;
-}
-
 .container {
   display: grid;
   grid-template-columns: 1fr 8fr;

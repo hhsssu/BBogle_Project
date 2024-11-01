@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import ExList from '../components/experience/ExList';
-import ExDetail from '../components/experience/ExDetail';
-import ExCreate from '../components/experience/ExCreate';
+import ExDetail from '../components/experience/experienceDetail/ExDetail';
+import ExCreate from '../components/experience/experienceCreate/ExCreate';
 
 import ExStyles from '../components/experience/Experience.module.css';
 
@@ -11,7 +11,7 @@ function ExperiencePage() {
       <Routes>
         <Route path="" element={<ExList />} />
         <Route path="create" element={<ExCreate />} />
-        <Route path="detail/:exId" element={<ExDetail />} />
+        <Route path=":exId" element={<ExDetail />} />
       </Routes>
     </div>
   );

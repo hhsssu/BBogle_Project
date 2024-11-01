@@ -19,7 +19,7 @@ interface ExInfoProps {
 function ExCard({ exId, title, startDate, endDate, tags }: ExInfoProps) {
   const nav = useNavigate();
   const navDetail = (exId: number) => {
-    nav(`detail/${exId}`);
+    nav(`${exId}`);
   };
 
   return (

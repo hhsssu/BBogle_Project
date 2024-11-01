@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import style from './SideBar.module.css';
 import useSideBarStore from '../../../store/useSideBarStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // logo
 import LogoSmall from '../../../assets/image/logo/BBO_small.svg';
@@ -30,6 +30,7 @@ function SideBar() {
   const [showDescriptions, setShowDescriptions] = useState(isOpen); // description 표시 여부 상태 추가
   const [showFoldButton, setShowFoldButton] = useState(!isOpen);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // isOpen 상태가 변경될 때 0.2초 뒤에 showDescriptions 업데이트
   useEffect(() => {
@@ -44,6 +45,21 @@ function SideBar() {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const path = location.pathname;
+
+    // 경로 패턴에 따라 activeTab 설정
+    if (path.includes('project')) {
+      setActiveTab('project');
+    } else if (path.includes('experience')) {
+      setActiveTab('experience');
+    } else if (path.includes('my')) {
+      setActiveTab('my');
+    } else {
+      setActiveTab('main'); // 기본 탭을 'main'으로 설정
+    }
+  }, [location.pathname, setActiveTab]);
+
   // 탭 변경 함수
   const handleTap = (tap: string) => {
     setActiveTab(tap);
@@ -53,18 +69,37 @@ function SideBar() {
   // 로그아웃 함수
   const handleLogout = () => {
     navigate('/');
-  }
+  };
 
   return (
-    <div className={`${style.sidebarContainer} ${isOpen ? style.open : style.closed}`}>
+    <div
+      className={`${style.sidebarContainer} ${isOpen ? style.open : style.closed}`}
+    >
       <div className={style.content}>
         <div className={style.header}>
           {isOpen ? (
-            <img className={style.largeLogo} src={LogoLarge} alt="Logo" onClick={() => handleTap('main')}/>
+            <img
+              className={style.largeLogo}
+              src={LogoLarge}
+              alt="Logo"
+              onClick={() => handleTap('main')}
+            />
           ) : (
-            <img className={style.smallLogo} src={LogoSmall} alt="" onClick={() => handleTap('main')} />
+            <img
+              className={style.smallLogo}
+              src={LogoSmall}
+              alt=""
+              onClick={() => handleTap('main')}
+            />
           )}
-          {isOpen && <img className={style.openButton} src={FoldIcon} alt="Fold Icon" onClick={toggleSideBar} />}
+          {isOpen && (
+            <img
+              className={style.openButton}
+              src={FoldIcon}
+              alt="Fold Icon"
+              onClick={toggleSideBar}
+            />
+          )}
         </div>
         <div className={style.taps}>
           <div className={style.mainTaps}>
@@ -74,7 +109,13 @@ function SideBar() {
               ) : (
                 <img src={MainIcon} alt="Main Icon" />
               )}
-              {showDescriptions && <div className={`${style.tapDescription} ${activeTab === 'main' && style.active}`}>메인</div>}
+              {showDescriptions && (
+                <div
+                  className={`${style.tapDescription} ${activeTab === 'main' && style.active}`}
+                >
+                  메인
+                </div>
+              )}
             </div>
             <hr className={style.line} />
             <div className={style.tap} onClick={() => handleTap('project')}>
@@ -83,7 +124,13 @@ function SideBar() {
               ) : (
                 <img src={ProjectIcon} alt="Project Icon" />
               )}
-              {showDescriptions && <div className={`${style.tapDescription} ${activeTab === 'project' && style.active}`}>프로젝트</div>}
+              {showDescriptions && (
+                <div
+                  className={`${style.tapDescription} ${activeTab === 'project' && style.active}`}
+                >
+                  프로젝트
+                </div>
+              )}
             </div>
             <div className={style.tap} onClick={() => handleTap('experience')}>
               {activeTab === 'experience' ? (
@@ -91,7 +138,13 @@ function SideBar() {
               ) : (
                 <img src={ExperienceIcon} alt="Experience Icon" />
               )}
-              {showDescriptions && <div className={`${style.tapDescription} ${activeTab === 'experience' && style.active}`}>경험</div>}
+              {showDescriptions && (
+                <div
+                  className={`${style.tapDescription} ${activeTab === 'experience' && style.active}`}
+                >
+                  경험
+                </div>
+              )}
             </div>
             <div className={style.tap} onClick={() => handleTap('my')}>
               {activeTab === 'my' ? (
@@ -99,18 +152,36 @@ function SideBar() {
               ) : (
                 <img src={MyIcon} alt="My Icon" />
               )}
-              {showDescriptions && <div className={`${style.tapDescription} ${activeTab === 'my' && style.active}`}>내 정보</div>}
+              {showDescriptions && (
+                <div
+                  className={`${style.tapDescription} ${activeTab === 'my' && style.active}`}
+                >
+                  내 정보
+                </div>
+              )}
             </div>
           </div>
           <div className={style.bottom}>
-            <div className={`${style.tap} ${style.logout}`} onClick={handleLogout}>
+            <div
+              className={`${style.tap} ${style.logout}`}
+              onClick={handleLogout}
+            >
               <img src={LogoutIcon} alt="Logout Icon" />
-              {showDescriptions && <div className={style.tapDescription}>로그아웃</div>}
+              {showDescriptions && (
+                <div className={style.tapDescription}>로그아웃</div>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {showFoldButton && <img className={style.closeButton} src={OutFoldIcon} alt="Fold Icon" onClick={toggleSideBar} />}
+      {showFoldButton && (
+        <img
+          className={style.closeButton}
+          src={OutFoldIcon}
+          alt="Fold Icon"
+          onClick={toggleSideBar}
+        />
+      )}
     </div>
   );
 }

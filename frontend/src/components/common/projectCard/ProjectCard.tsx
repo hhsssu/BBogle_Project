@@ -17,9 +17,9 @@ function ProjectCard({ imageSrc, title, state, term, summary }: Props) {
       <section className={style['sec1']}>
         <img className={style['img']} src={imageSrc} alt="" />
         <div>
-          <div>
+          <div className={style.header}>
             <span className={style['title']}>
-              {title.length > 8 ? title.substring(0, 9) + '...' : title}
+              {title.length > 10 ? title.substring(0, 11) + '...' : title}
             </span>
             <div
               className={`${style['state']} ${style[state ? 'stateTrue' : 'stateFalse']}`}

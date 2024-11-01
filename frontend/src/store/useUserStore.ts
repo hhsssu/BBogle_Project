@@ -2,6 +2,10 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import axios from 'axios';
 
+// REST API 및 redirectUri
+const clientId = import.meta.env.VITE_KAKAO_API_KEY;
+const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+
 // 회원 정보 타입 정의
 interface User {
   id: number;
@@ -14,7 +18,8 @@ interface User {
 interface UserStore {
   user: User | null;
   isAuthenticated: boolean;
-  redirection: () => void;
+  kakaoRedirect: () => void;
+  kakaoLogin: (code: string) => Promise<void>;
   kakaoLogout: () => void;
 }
 
@@ -26,12 +31,8 @@ const useUserStore = create<UserStore>()(
       isAuthenticated: false,
 
       // kakao redirect 함수
-      redirection: () => {
+      kakaoRedirect: () => {
         try {
-          // 인가 코드 요청
-          const clientId = import.meta.env.VITE_KAKAO_API_KEY;
-          const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
-
           console.log(clientId);
           console.log(redirectUri);
 
@@ -48,6 +49,38 @@ const useUserStore = create<UserStore>()(
         }
       },
 
+      // kakao login 함수
+      kakaoLogin: async (code: string) => {
+        try {
+          // 액세스 토큰 요청
+          const tokenResponse = await axios.post(
+            'https://kauth.kakao.com/oauth/token',
+            null,
+            {
+              params: {
+                grant_type: 'authorization_code',
+                client_id: clientId,
+                redirect_uri: redirectUri,
+                code: code,
+              },
+              headers: {
+                'Content-Type':
+                  'application/x-www-form-urlencoded;charset=utf-8',
+              },
+            },
+          );
+
+          const accessToken = tokenResponse.data.access_token;
+
+          console.log(accessToken);
+          // 사용자 정보 요청
+          // const userResponse = await axi
+        } catch (error) {
+          console.error('카카오 로그인 오류 : ', error);
+        }
+      },
+
+      // kakao logout 함수
       kakaoLogout: () => {
         // 로그아웃 시 상태 초기화
         set({ user: null, isAuthenticated: false });

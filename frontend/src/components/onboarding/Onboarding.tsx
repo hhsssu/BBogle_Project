@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 
 function Onboarding() {
-  const { kakaoLogin } = useUserStore();
-  // const navigate = useNavigate();
+  const { kakaoRedirect } = useUserStore();
+  const navigate = useNavigate();
 
-  // const goToMain = () => {
-  //   navigate('/main');
-  // }
+  const goToMain = () => {
+    navigate('/main');
+  };
 
   return (
     <div className={style['onboarding-container']}>
@@ -21,7 +21,9 @@ function Onboarding() {
         className={style['kakao-login']}
         src={KakaoLogin}
         alt="Kakao Login"
-        onClick={kakaoLogin}
+        // kakaoLogin 처리 전
+        // onClick={kakaoRedirect}
+        onClick={goToMain}
       />
     </div>
   );

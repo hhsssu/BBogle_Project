@@ -7,6 +7,7 @@ import com.ssafy.bbogle.project.dto.request.ProjectCreateRequest;
 import com.ssafy.bbogle.project.dto.request.ProjectUpdateRequest;
 import com.ssafy.bbogle.project.dto.response.ProjectListResponse;
 import com.ssafy.bbogle.project.dto.response.ProjectDetailResponse;
+import com.ssafy.bbogle.summary.dto.request.SummaryRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -83,12 +84,13 @@ public class ProjectController {
         return null;
     }
 
-    @Operation(summary = "프로젝트 종료", description = "프로젝트 종료 버튼을 누르면 프로젝트 상태를 종료로 변경")
+    @Operation(summary = "프로젝트 종료", description = "프로젝트 종료 버튼을 누르면 프로젝트 상태를 종료로 변경 + AI 회고 저장")
     @Parameters(value = {
         @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @PatchMapping("/{projectId}/end")
-    public ResponseEntity<String> endProject(@PathVariable("projectId") Integer projectId) {
+    public ResponseEntity<String> endProject(@PathVariable("projectId") Integer projectId,
+        @RequestBody SummaryRequest request) {
         return null;
     }
 

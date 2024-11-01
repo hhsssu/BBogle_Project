@@ -3,8 +3,18 @@
 }
 
 .title {
-  font-weight: 700;
-  font-size: 1.875rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.red {
+  color: #ef0000;
+  font-size: 0.875rem;
+}
+
+.gray {
+  color: #a0a0a0;
+  font-size: 0.875rem;
 }
 
 .list {
@@ -31,6 +41,7 @@
 .between {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .subhead {

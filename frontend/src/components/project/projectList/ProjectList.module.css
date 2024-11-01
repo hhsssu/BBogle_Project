@@ -4,7 +4,7 @@
   padding: 8vh 7vw;
 }
 
-.sec1 {
+.headerSection {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
@@ -36,11 +36,6 @@
   margin-bottom: 20px;
 }
 
-.sec2 {
-  display: flex;
-  flex-direction: column;
-}
-
 .wips {
   display: grid;
   grid-auto-flow: column;
@@ -56,11 +51,6 @@
   height: 1px;
   background-color: rgba(0, 0, 0, 0.1);
   border: none;
-}
-
-.sec3 {
-  display: flex;
-  flex-direction: column;
 }
 
 .fins {

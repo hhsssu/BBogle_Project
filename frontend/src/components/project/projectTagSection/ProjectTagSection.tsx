@@ -108,10 +108,10 @@ function ProjectTagSection() {
   }, []);
 
   return (
-    <div className={style.tagContainer}>
+    <div className={style.container}>
       <div className={style.inputLabel}>
         <span className={style.label}>나의 역할</span>
-        <div className={style.tagSec}>
+        <div className={style.tagSection}>
           {project.roles.map((role, index) => (
             <div key={index} className={style.tag}>
               {role}
@@ -150,7 +150,7 @@ function ProjectTagSection() {
 
       <div className={style.inputLabel}>
         <span className={style.label}>사용 기술</span>
-        <div className={style.tagSec}>
+        <div className={style.tagSection}>
           {project.techs.map((tech, index) => (
             <div key={index} className={style.tag}>
               {tech}

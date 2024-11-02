@@ -14,11 +14,11 @@
   font-weight: 600;
 }
 
-.essential {
+.requiredMark {
   color: rgba(255, 92, 23, 1);
 }
 
-.titleBox {
+.titleContainer {
   display: flex;
   align-items: center;
 }

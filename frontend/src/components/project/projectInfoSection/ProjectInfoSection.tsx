@@ -52,9 +52,9 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
       <div className={style.inputLabel}>
         <p className={style.label}>
           <span>대표이미지/프로젝트명 </span>
-          <span className={style.essential}>*</span>
+          <span className={style.requiredMark}>*</span>
         </p>
-        <div className={style.titleBox}>
+        <div className={style.titleContainer}>
           <img
             className={style.img}
             src={imgSrc}

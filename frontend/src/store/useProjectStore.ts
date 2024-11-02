@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import DefaultProfile from '../assets/image/icon/DefaultProfile.svg';
 
 interface Project {
+  pjtID: number;
   imgSrc: string;
   title: string;
   summary: string;
@@ -25,6 +26,7 @@ interface ProjectState {
 
 const useProjectStore = create<ProjectState>((set) => ({
   project: {
+    pjtID: 0,
     imgSrc: DefaultProfile,
     title: '',
     summary: '',

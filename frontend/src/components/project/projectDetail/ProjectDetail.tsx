@@ -27,8 +27,8 @@ function ProjectDetail() {
     navigate('/project');
   };
 
-  const navCreate = () => {
-    // navigate('/project/create');
+  const navDiaryCreate = () => {
+    navigate('/diary/create');
   };
 
   const changeTab = (idx: number) => {
@@ -128,7 +128,7 @@ function ProjectDetail() {
                 과거순
               </span>
             </div>
-            <button className={style.addDiaryBtn} onClick={navCreate}>
+            <button className={style.addDiaryBtn} onClick={navDiaryCreate}>
               + 개발일지 추가
             </button>
           </div>

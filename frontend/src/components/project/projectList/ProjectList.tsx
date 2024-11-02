@@ -135,6 +135,10 @@ function ProjectList() {
     navigate('/project/create');
   };
 
+  const navPjtCreate = (pjtID: number) => {
+    navigate(`${pjtID}`);
+  };
+
   return (
     <div className={style.container}>
       <section className={style.headerSection}>
@@ -148,14 +152,16 @@ function ProjectList() {
         <div className={style.subTitle}>진행중인 프로젝트</div>
         <div className={style.wips}>
           {WIP_PJT_LIST.map((card, index) => (
-            <ProjectCard
-              key={index}
-              imageSrc={card.imageSrc}
-              title={card.title}
-              state={card.state}
-              term={card.term}
-              summary={card.summary}
-            />
+            <div onClick={() => navPjtCreate(index)}>
+              <ProjectCard
+                key={index}
+                imageSrc={card.imageSrc}
+                title={card.title}
+                state={card.state}
+                term={card.term}
+                summary={card.summary}
+              />
+            </div>
           ))}
         </div>
       </section>
@@ -167,14 +173,16 @@ function ProjectList() {
         <div className={style.subTitle}>종료된 프로젝트</div>
         <div className={style.fins}>
           {FIN_PJT_LIST.map((card, index) => (
-            <ProjectCard
-              key={index}
-              imageSrc={card.imageSrc}
-              title={card.title}
-              state={card.state}
-              term={card.term}
-              summary={card.summary}
-            />
+            <div onClick={() => navPjtCreate(index)}>
+              <ProjectCard
+                key={index}
+                imageSrc={card.imageSrc}
+                title={card.title}
+                state={card.state}
+                term={card.term}
+                summary={card.summary}
+              />
+            </div>
           ))}
         </div>
       </section>

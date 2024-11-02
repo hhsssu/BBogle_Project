@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 8vh 7vw;
+}
+
+.backBtn {
+  font-size: 14px;
+  color: rgba(160, 160, 160, 1);
+  cursor: pointer;
+}
+
+.diaryTitle {
+  font-size: 24px;
+  font-weight: 600;
+  align-self: center;
+  margin: 8vh 0;
+}
+
+.diaryForm {
+}

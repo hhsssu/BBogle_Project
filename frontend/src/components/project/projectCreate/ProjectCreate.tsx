@@ -16,8 +16,8 @@ function ProjectCreate() {
   const [titleError, setTitleError] = useState(false);
   const [termError, setTermError] = useState(false);
 
-  const navMain = () => {
-    navigate('/main');
+  const navPjtList = () => {
+    navigate('/project');
   };
 
   const handleTitleError = (value: boolean) => {
@@ -45,11 +45,11 @@ function ProjectCreate() {
 
   return (
     <div className={style.container}>
-      <div className={style.back} onClick={navMain}>
+      <div className={style.backBtn} onClick={navPjtList}>
         돌아가기
       </div>
 
-      <span className={style.head}>프로젝트 생성</span>
+      <span className={style.pageTitle}>프로젝트 생성</span>
       <div className={style.pjtFormWrapper}>
         <div className={style.pjtForm}>
           <ProjectInfoSection
@@ -63,7 +63,7 @@ function ProjectCreate() {
           <ProjectTagSection />
           <ProjectAlarmSection />
         </div>
-        <button className={style.endBtn} onClick={addProject}>
+        <button className={style.submitBtn} onClick={addProject}>
           완료
         </button>
       </div>

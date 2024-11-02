@@ -138,14 +138,14 @@ function ProjectList() {
   return (
     <div className={style.container}>
       <section className={style.headerSection}>
-        <div className={style.head}>프로젝트</div>
-        <button className={style.btn} onClick={navCreate}>
+        <div className={style.pageTitle}>프로젝트</div>
+        <button className={style.addPjtBtn} onClick={navCreate}>
           + 프로젝트 추가
         </button>
       </section>
 
-      <section className={style.pjtSec}>
-        <div className={style.title}>진행중인 프로젝트</div>
+      <section className={style.pjtSection}>
+        <div className={style.subTitle}>진행중인 프로젝트</div>
         <div className={style.wips}>
           {WIP_PJT_LIST.map((card, index) => (
             <ProjectCard
@@ -163,8 +163,8 @@ function ProjectList() {
       <br />
       <hr className={style.hr} />
       <br />
-      <section className={style.pjtSec}>
-        <div className={style.title}>종료된 프로젝트</div>
+      <section className={style.pjtSection}>
+        <div className={style.subTitle}>종료된 프로젝트</div>
         <div className={style.fins}>
           {FIN_PJT_LIST.map((card, index) => (
             <ProjectCard

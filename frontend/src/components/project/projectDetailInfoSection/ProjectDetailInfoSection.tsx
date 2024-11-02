@@ -33,13 +33,13 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
       <div className={style.inputLabel}>
         <p className={style.label}>
           <span>프로젝트 기간</span>
-          <span className={style.essential}>*</span>
+          <span className={style.requiredMark}>*</span>
         </p>
-        <div className={`${style.term} ${termError && style.termError}`}>
+        <div className={`${style.termSection} ${termError && style.termError}`}>
           <div className={style.dateWrapper}>
             <p className={style.dateLabel}>시작일</p>
             <input
-              className={style.datePicker}
+              className={style.dateInput}
               type="date"
               max={project.finishDate}
               onChange={handleStartDate}
@@ -49,7 +49,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
           <div className={style.dateWrapper}>
             <p className={style.dateLabel}>종료일</p>
             <input
-              className={style.datePicker}
+              className={style.dateInput}
               type="date"
               min={project.startDate}
               onChange={handleFinishDate}
@@ -67,7 +67,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
       <div className={style.inputLabel}>
         <span className={style.label}>프로젝트 인원</span>
         <div>
-          <select className={style.select} onChange={handleTeammate}>
+          <select className={style.selectInput} onChange={handleTeammate}>
             {Array.from({ length: 10 }, (_, index) => (
               <option key={index + 1} value={index + 1}>
                 {index + 1}

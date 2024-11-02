@@ -10,16 +10,12 @@
   margin-bottom: 20px;
 }
 
-.pjtSec {
-  padding: 20px;
-}
-
-.head {
+.pageTitle {
   font-size: 30px;
   font-weight: 700;
 }
 
-.btn {
+.addPjtBtn {
   width: 9rem;
   height: 2.5rem;
   border: none;
@@ -30,7 +26,11 @@
   font-weight: 600;
 }
 
-.title {
+.pjtSection {
+  padding: 20px;
+}
+
+.subTitle {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 20px;

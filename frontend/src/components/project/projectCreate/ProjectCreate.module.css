@@ -2,12 +2,13 @@
   padding: 8vh 7vw;
 }
 
-.back {
+.backBtn {
   font-size: 14px;
   color: rgba(160, 160, 160, 1);
+  cursor: pointer;
 }
 
-.head {
+.pageTitle {
   display: flex;
   font-size: 24px;
   font-weight: 700;
@@ -25,7 +26,7 @@
   padding: 4vh 0vh;
 }
 
-.endBtn {
+.submitBtn {
   width: 9rem;
   height: 2.5rem;
   border: none;

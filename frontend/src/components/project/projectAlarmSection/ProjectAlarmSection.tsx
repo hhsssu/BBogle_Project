@@ -21,7 +21,7 @@ function ProjectAlarmSection() {
     <div className={style.container}>
       <div className={style.inputLabel}>
         <span className={style.label}>알림 설정</span>
-        <div className={style.toggleSec}>
+        <div className={style.toggleSection}>
           {project.alarmState ? (
             <img
               className={style.toggle}
@@ -46,7 +46,7 @@ function ProjectAlarmSection() {
               />
             </div>
           ) : (
-            <div className={style.timeToggleOff}>
+            <div className={style.timeToggleInActive}>
               <span>오후 </span>
               <span>05:30</span>
             </div>

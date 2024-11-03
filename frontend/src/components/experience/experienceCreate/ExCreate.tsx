@@ -60,31 +60,39 @@ function ExCreate() {
         {/* 제목 */}
         <div className={ExStyles.flex}>
           <p className={ExStyles.semibold}>제목</p>
-          <span className={ExStyles.orange}>*</span>
+          <span className={`${ExStyles.orange} ${ExStyles.semibold}`}>*</span>
         </div>
-        <input type="text" placeholder="제목을 입력하세요" />
+        <input
+          type="text"
+          placeholder="제목을 입력하세요"
+          className={ExCreateStyles.subtitle}
+        />
 
         {/* 내용 */}
         <div className={ExStyles.flex}>
           <p className={ExStyles.semibold}>내용</p>
-          <span className={ExStyles.orange}>*</span>
+          <span className={`${ExStyles.orange} ${ExStyles.semibold}`}>*</span>
         </div>
-        <input type="text" placeholder="내용을 입력하세요" />
+        <textarea
+          name="content"
+          rows={20}
+          placeholder="내용을 입력하세요"
+          className={ExCreateStyles.content}
+        />
 
         {/* 시작일 ~ 종료일 */}
         <div className={ExStyles.flex}>
           <p className={ExStyles.semibold}>경험 기간</p>
-          <span className={ExStyles.orange}>*</span>
+          <span className={`${ExStyles.orange} ${ExStyles.semibold}`}>*</span>
         </div>
         <div className={ExStyles.flex}>
-          <div>
-            <p className={ExStyles.small}>시작일</p>
-            <input type="date" />
+          <div className={ExCreateStyles.margin}>
+            <p className={ExCreateStyles.datedes}>시작일</p>
+            <input type="date" className={ExCreateStyles.graybox} />
           </div>
-          <p className={ExStyles.small}> ~ </p>
           <div>
-            <p className={ExStyles.small}>시작일</p>
-            <input type="date" />
+            <p className={ExCreateStyles.datedes}>종료일</p>
+            <input type="date" className={ExCreateStyles.graybox} />
           </div>
         </div>
 
@@ -96,6 +104,7 @@ function ExCreate() {
             id="keywords"
             defaultValue=""
             onChange={handleSelectOption}
+            className={ExCreateStyles.graybox}
           >
             <option value="" disabled>
               키워드를 선택하세요
@@ -144,7 +153,12 @@ function ExCreate() {
 
         {/* 관련 프로젝트 */}
         <p className={ExStyles.semibold}>관련 프로젝트</p>
-        <select name="projects" id="projects" defaultValue="">
+        <select
+          name="projects"
+          id="projects"
+          defaultValue=""
+          className={ExCreateStyles.graybox}
+        >
           <option value="" disabled>
             프로젝트를 선택하세요
           </option>

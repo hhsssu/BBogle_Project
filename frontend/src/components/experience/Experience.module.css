@@ -1,36 +1,57 @@
+/* 경험 부분 공통 CSS */
+
+/* 전체 컨테이너 */
 .container {
   padding: 8vh 7vw;
 }
 
+/* 상단 타이틀 스타일 */
 .title {
   font-weight: 600;
+  /* 24px */
   font-size: 1.5rem;
   user-select: none;
 }
 
+/* flex */
 .flex {
   display: flex;
   align-items: center;
 }
 
+/* flex의 center */
 .center {
   display: flex;
   justify-content: center;
 }
-
+/* flex의 space-between */
 .between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.semibold {
-  font-weight: 600;
+/* 글씨 두껍게 */
+.bold {
+  font-weight: 700;
+  user-select: none;
 }
 
+.semibold {
+  font-weight: 600;
+  user-select: none;
+}
+
+/* 14px */
 .small {
   font-size: 0.875rem;
 }
+
+/* 12px */
+.semismall {
+  font-size: 0.75rem;
+}
+
 .red {
   color: #ef0000;
 }
@@ -41,6 +62,10 @@
 
 .orange {
   color: #ff5c17;
+}
+
+.blue {
+  color: #1ea6fc;
 }
 
 .list {
@@ -67,46 +92,48 @@
   user-select: none;
 }
 
-.between {
-  display: flex;
-  justify-content: space-between;
-}
-
-.subhead {
+/* 카드에 적힌 경험 제목 */
+.subtitle {
   width: 100%;
   color: #1c1516;
   font-weight: 600;
+  /* 16px */
   font-size: 1rem;
   overflow: hidden;
 }
 
 .date {
   color: #a0a0a0;
-  font-size: 0.65rem;
+  /* 10px */
+  font-size: 0.625rem;
   user-select: none;
 }
 
+/* 키워드(태그) */
 .keywords {
   display: flex;
-  /* margin-top: 42px; */
   user-select: none;
 }
 
+/* 기술 키워드 */
 .bluekeyword {
   color: #1ea6fc;
   background: rgba(30, 166, 252, 0.1);
   padding: 3px 8px;
-  font-size: 0.65rem;
+  /* 10px */
+  font-size: 0.625rem;
   border-radius: 5px;
   margin-right: 0.3rem;
   user-select: none;
 }
 
+/* 인성 키워드 */
 .yellowkeyword {
   color: #ffc107;
   background: rgba(255, 193, 7, 0.1);
   padding: 3px 8px;
-  font-size: 0.65rem;
+  /* 10px */
+  font-size: 0.625rem;
   border-radius: 5px;
   margin-right: 0.3rem;
   user-select: none;
@@ -123,6 +150,7 @@
   z-index: 10;
 }
 
+/* 경험 없음 */
 .nothing {
   color: #a0a0a0;
   font-size: 1rem;
@@ -130,10 +158,7 @@
   line-height: 1.4;
 }
 
-.bold {
-  font-weight: 600;
-}
-
+/* 경험 추가 버튼 */
 .btn {
   width: 9rem;
   height: 2.5rem;
@@ -146,6 +171,7 @@
   user-select: none;
 }
 
+/* 검정색 버튼 (등록하기, 수정하기 등) */
 .regist {
   width: 9rem;
   height: 2.5rem;

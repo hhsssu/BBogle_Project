@@ -1,0 +1,9 @@
+.fins {
+  width: 100vw;
+  height: 50vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  overflow-y: auto;
+  scrollbar-width: none;
+  gap: 1rem;
+}

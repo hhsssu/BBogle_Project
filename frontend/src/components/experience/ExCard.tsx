@@ -33,16 +33,18 @@ function ExCard({
   return (
     <div className={ExStyles.card} onClick={() => navDetail(exId)}>
       {/* 소제목과 더보기 메뉴 버튼 */}
-      <section className={ExStyles.between}>
-        <div className={ExStyles.subhead}>{title}</div>
-        <button>
-          <img src={MoreIcon} alt="더 보기 메뉴" />
-        </button>
-      </section>
+      <div className={ExStyles.header}>
+        <section className={ExStyles.between}>
+          <div className={ExStyles.subhead}>{title}</div>
+          <button>
+            <img src={MoreIcon} alt="더 보기 메뉴" />
+          </button>
+        </section>
 
-      {/* 시작일 ~ 종료일 */}
-      <div className={ExStyles.date}>
-        {startDate.toLocaleDateString()} ~ {endDate.toLocaleDateString()}
+        {/* 시작일 ~ 종료일 */}
+        <div className={ExStyles.date}>
+          {startDate.toLocaleDateString()} ~ {endDate.toLocaleDateString()}
+        </div>
       </div>
 
       {/* 관련 프로젝트 명 */}

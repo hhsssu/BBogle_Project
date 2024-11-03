@@ -1,6 +1,7 @@
 import ProjectCard from '../../common/projectCard/ProjectCard';
 import RunnerWay from '../../../assets/image/RunnerWay.png';
 import style from './ProjectList.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function ProjectList() {
   const WIP_PJT_LIST = [
@@ -128,43 +129,60 @@ function ProjectList() {
     },
   ];
 
+  const navigate = useNavigate();
+
+  const navCreate = () => {
+    navigate('/project/create');
+  };
+
+  const navPjtCreate = (pjtID: number) => {
+    navigate(`${pjtID}`);
+  };
+
   return (
-    <div className={style['container']}>
-      <section className={style['sec1']}>
-        <div className={style['head']}>프로젝트</div>
-        <button className={style['btn']}>+ 프로젝트 추가</button>
+    <div className={style.container}>
+      <section className={style.headerSection}>
+        <div className={style.pageTitle}>프로젝트</div>
+        <button className={style.addPjtBtn} onClick={navCreate}>
+          + 프로젝트 추가
+        </button>
       </section>
 
-      <section>
-        <div className={style['title']}>진행중인 프로젝트</div>
-        <div className={style['wips']}>
+      <section className={style.pjtSection}>
+        <div className={style.subTitle}>진행중인 프로젝트</div>
+        <div className={style.wips}>
           {WIP_PJT_LIST.map((card, index) => (
-            <ProjectCard
-              key={index}
-              imageSrc={card.imageSrc}
-              title={card.title}
-              state={card.state}
-              term={card.term}
-              summary={card.summary}
-            />
+            <div onClick={() => navPjtCreate(index)}>
+              <ProjectCard
+                key={index}
+                imageSrc={card.imageSrc}
+                title={card.title}
+                state={card.state}
+                term={card.term}
+                summary={card.summary}
+              />
+            </div>
           ))}
         </div>
       </section>
+
       <br />
-      <hr className={style['hr']} />
+      <hr className={style.hr} />
       <br />
-      <section>
-        <div className={style['title']}>종료된 프로젝트</div>
-        <div className={style['fins']}>
+      <section className={style.pjtSection}>
+        <div className={style.subTitle}>종료된 프로젝트</div>
+        <div className={style.fins}>
           {FIN_PJT_LIST.map((card, index) => (
-            <ProjectCard
-              key={index}
-              imageSrc={card.imageSrc}
-              title={card.title}
-              state={card.state}
-              term={card.term}
-              summary={card.summary}
-            />
+            <div onClick={() => navPjtCreate(index)}>
+              <ProjectCard
+                key={index}
+                imageSrc={card.imageSrc}
+                title={card.title}
+                state={card.state}
+                term={card.term}
+                summary={card.summary}
+              />
+            </div>
           ))}
         </div>
       </section>

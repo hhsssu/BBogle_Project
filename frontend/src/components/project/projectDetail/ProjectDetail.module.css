@@ -1,3 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 8vh 7vw;
+}
+
+.container > section {
+  padding: 3vh 1vw;
+}
+
+.backBtn {
+  font-size: 14px;
+  color: rgba(160, 160, 160, 1);
+  cursor: pointer;
+}
+
 .info {
   border-radius: 20px;
   display: flex;
@@ -5,13 +21,14 @@
   justify-content: space-between;
 }
 
-.info > div:first-child {
+.infoHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.25rem;
 }
 
-.info > div > div {
+.pjtTitleContainer {
   display: flex;
   align-items: center;
 }
@@ -34,6 +51,7 @@
 
 .setting {
   width: 1rem;
+  color: rgba(160, 160, 160, 1);
 }
 
 .state {
@@ -47,17 +65,17 @@
   border-radius: 8px;
 }
 
-.stateTrue {
+.stateActive {
   background-color: rgba(30, 166, 252, 0.1);
   color: rgba(30, 166, 252, 1);
 }
 
-.stateFalse {
+.stateInActive {
   background-color: rgba(239, 122, 133, 0.3);
   color: rgba(255, 92, 23, 1);
 }
 
-.btn {
+.endBtn {
   width: 9rem;
   height: 2.5rem;
   border: none;
@@ -69,22 +87,28 @@
 
 .summary {
   font-size: 16px;
+  margin-left: 1rem;
+  margin-bottom: 0.6rem;
 }
 
 .term {
   font-size: 14px;
+  margin-left: 1rem;
+  margin-bottom: 2.25rem;
   color: rgba(160, 160, 160, 1);
 }
 
-.tags {
+.tagList {
   display: flex;
   align-items: center;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 
 .subTitle {
   font-size: 12px;
   font-weight: 600;
-  margin-right: 0.8rem;
+  margin-right: 3.75rem;
 }
 
 .tag {
@@ -101,7 +125,12 @@
   padding-right: 0.5rem;
 }
 
-.tabs {
+.tabSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabList {
   display: flex;
 }
 
@@ -111,7 +140,60 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: rgba(108, 112, 114, 1);
+}
+
+.diaryCnt {
+  width: 1.5rem;
+  height: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: rgba(255, 92, 23, 1);
+  border-radius: 1rem;
+  background-color: rgba(255, 92, 23, 0.1);
+  margin-left: 0.2rem;
+}
+
+.activeTab {
+  font-weight: 600;
   border-bottom: solid;
   border-color: rgba(255, 92, 23, 1);
   color: rgba(255, 92, 23, 1);
+}
+
+.control {
+  display: flex;
+  align-items: end;
+  gap: 0.8rem;
+}
+
+.sortOptions {
+  display: flex;
+  gap: 1vh;
+  margin-bottom: 0.2rem;
+}
+
+.sortActive {
+  font-weight: 600;
+}
+
+.sortInActive {
+  color: rgba(160, 160, 160, 1);
+}
+
+.addDiaryBtn {
+  width: 9rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff5c17;
+  font-size: 16px;
+  color: white;
+}
+
+.diarySection {
+  display: flex;
+  justify-content: center;
 }

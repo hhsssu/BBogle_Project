@@ -1,7 +1,9 @@
-import { Outlet } from 'react-router-dom';
 import RunnerWay from '../../../assets/image/RunnerWay.png';
-import setting from '../../../assets/image/icon/setting.svg';
+import Setting from '../../../assets/image/icon/Setting.svg';
 import style from './ProjectDetail.module.css';
+import { useState } from 'react';
+import DiaryList from '../../diary/diaryList/DiaryList';
+import { useNavigate } from 'react-router-dom';
 
 function ProjectDetail() {
   const PROJECT = {
@@ -13,67 +15,132 @@ function ProjectDetail() {
     teammate: 6,
     roles: ['FE', 'BE', 'INFRA', 'AI'],
     techs: ['React', 'Spring', 'TypeScript', 'JPA', 'MongoDB'],
+    diaryCnt: 32,
+  };
+
+  const navigate = useNavigate();
+
+  const [tabIdx, setTabIdx] = useState(0);
+  const [sortIdx, setSortIdx] = useState(0);
+
+  const navPjtList = () => {
+    navigate('/project');
+  };
+
+  const navDiaryCreate = () => {
+    navigate('/diary/create');
+  };
+
+  const changeTab = (idx: number) => {
+    setTabIdx(idx);
+  };
+
+  const changeSort = (idx: number) => {
+    setSortIdx(idx);
   };
 
   return (
-    <>
-      <div>돌아가기</div>
+    <div className={style.container}>
+      <div className={style.backBtn} onClick={navPjtList}>
+        돌아가기
+      </div>
 
-      <section className={style['info']}>
-        <div>
-          <div>
-            <img className={style['img']} src={PROJECT.imageSrc} alt="" />
-            <span className={style['title']}>{PROJECT.title}</span>
+      <section className={style.info}>
+        <div className={style.infoHeader}>
+          <div className={style.pjtTitleContainer}>
+            <img className={style.img} src={PROJECT.imageSrc} alt="" />
+            <span className={style.title}>{PROJECT.title}</span>
             <div>
-              <img className={style['setting']} src={setting} alt="설정" />
+              <img className={style.setting} src={Setting} alt="설정" />
               <div
-                className={`${style['state']} ${style[PROJECT.state ? 'stateTrue' : 'stateFalse']}`}
+                className={`${style.state} ${PROJECT.state ? style.stateActive : style.stateInActive}`}
               >
                 {PROJECT.state ? '진행 중' : '종료'}
               </div>
             </div>
           </div>
           {PROJECT.state ? (
-            <button className={style['btn']}>프로젝트 종료</button>
+            <button className={style.endBtn}>프로젝트 종료</button>
           ) : (
             ''
           )}
         </div>
 
-        <div className={style['summary']}>{PROJECT.summary}</div>
-        <div className={style['term']}>
+        <div className={style.summary}>{PROJECT.summary}</div>
+        <div className={style.term}>
           {PROJECT.term} / {PROJECT.teammate} 명
         </div>
 
-        <div className={style['tags']}>
-          <span className={style['subTitle']}>나의 역할</span>
+        <div className={style.tagList}>
+          <span className={style.subTitle}>나의 역할</span>
           {PROJECT.roles.map((role, index) => (
-            <div key={index} className={style['tag']}>
+            <div key={index} className={style.tag}>
               {role}
             </div>
           ))}
         </div>
 
-        <div className={style['tags']}>
-          <span className={style['subTitle']}>사용 기술</span>
+        <div className={style.tagList}>
+          <span className={style.subTitle}>사용 기술</span>
           {PROJECT.techs.map((tech, index) => (
-            <div key={index} className={style['tag']}>
+            <div key={index} className={style.tag}>
               {tech}
             </div>
           ))}
         </div>
       </section>
 
-      <section className={style['tabs']}>
+      <section className={style.tabSection}>
         {/* 탭 */}
-        <div className={style['tab']}>개발일지</div>
-        {PROJECT.state ? '' : <div className={style['tab']}>회고록</div>}
+        <div className={style.tabList}>
+          <div
+            className={`${style.tab} ${tabIdx === 0 ? style.activeTab : ''}`}
+            onClick={() => changeTab(0)}
+          >
+            개발일지
+            <div className={style.diaryCnt}>{PROJECT.diaryCnt}</div>
+          </div>
+          {PROJECT.state ? (
+            ''
+          ) : (
+            <div
+              className={`${style.tab} ${tabIdx === 1 ? style.activeTab : ''}`}
+              onClick={() => changeTab(1)}
+            >
+              회고록
+            </div>
+          )}
+        </div>
+
+        {tabIdx === 0 ? (
+          <div className={style.control}>
+            <div className={style.sortOptions}>
+              <span
+                className={`${sortIdx === 0 ? style.sortActive : style.sortInActive}`}
+                onClick={() => changeSort(0)}
+              >
+                최신순
+              </span>
+              <span
+                className={`${sortIdx === 1 ? style.sortActive : style.sortInActive}`}
+                onClick={() => changeSort(1)}
+              >
+                과거순
+              </span>
+            </div>
+            <button className={style.addDiaryBtn} onClick={navDiaryCreate}>
+              + 개발일지 추가
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
       </section>
 
-      <section>
-        <Outlet />
+      <section className={style.diarySection}>
+        {tabIdx === 0 ? <DiaryList /> : ''}
       </section>
-    </>
+    </div>
   );
 }
 

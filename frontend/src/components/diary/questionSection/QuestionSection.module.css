@@ -75,3 +75,28 @@
   top: 52vh;
   right: 7vw;
 }
+
+.imgInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.imgExBlock {
+  display: flex;
+  align-items: end;
+}
+
+.imgEx {
+  width: 10rem;
+  height: 10rem;
+}
+
+.close {
+  width: 1.5rem;
+}
+
+.hiddenInput {
+  display: none;
+}

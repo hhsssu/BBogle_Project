@@ -50,3 +50,13 @@
 * {
   margin: 0;
 }
+
+input:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+button {
+  user-select: none;
+}

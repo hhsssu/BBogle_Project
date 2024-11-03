@@ -35,7 +35,7 @@ function ExCard({
       {/* 소제목과 더보기 메뉴 버튼 */}
       <div className={ExStyles.header}>
         <section className={ExStyles.between}>
-          <div className={ExStyles.subhead}>{title}</div>
+          <div className={ExStyles.subtitle}>{title}</div>
           <button>
             <img src={MoreIcon} alt="더 보기 메뉴" />
           </button>

@@ -27,7 +27,7 @@ function ExList() {
     },
     {
       exId: 2,
-      title: '카카오 API를 이용한 소셜 로그인 구현',
+      title: '카카오 API를 이용한 로그인 구현',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
       projectName: 'RunnerWay',
@@ -39,7 +39,7 @@ function ExList() {
     },
     {
       exId: 3,
-      title: '소셜 로그인 구현',
+      title: '20자20자20자를채워보자20자20자',
       startDate: '2024-01-01',
       endDate: '2024-02-01',
       projectName: 'RunnerWay',

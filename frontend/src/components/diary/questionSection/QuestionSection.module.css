@@ -34,7 +34,6 @@
   width: 0;
   top: 100%;
   left: 50%;
-  height: 22rem;
   border: solid;
   border-width: 0.1rem;
   border-color: rgba(255, 92, 23, 1);
@@ -52,9 +51,13 @@
   margin: 1vh 0vw 1vh 3.8vw; /* 위 | 오른쪽 | 아래 | 왼쪽 */
 }
 
+.textBlock {
+  position: relative;
+}
+
 .textArea {
-  width: 60rem;
-  height: 20rem;
+  width: 70vw;
+  height: 50vh;
   margin: 2vh 0vw 20vh 3vw;
   padding: 3vh 2vw;
   border: none;
@@ -64,4 +67,11 @@
   scrollbar-width: none;
   background-color: rgba(232, 232, 232, 0.2);
   font-family: 'Pretendard-Regular';
+}
+
+.textLength {
+  color: rgba(160, 160, 160, 1);
+  position: absolute;
+  top: 52vh;
+  right: 7vw;
 }

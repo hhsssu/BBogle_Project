@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import DiaryCard from '../diaryCard/DiaryCard';
+import DiaryCard from '../../common/diaryCard/DiaryCard';
 import style from './DiaryList.module.css';
 
 function DiaryList() {

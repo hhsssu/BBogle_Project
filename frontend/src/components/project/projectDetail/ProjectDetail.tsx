@@ -28,7 +28,7 @@ function ProjectDetail() {
   };
 
   const navDiaryCreate = () => {
-    navigate('/diary/create');
+    navigate('diary/create');
   };
 
   const changeTab = (idx: number) => {

@@ -1,3 +1,43 @@
 .container {
   padding: 8vh 7vw;
 }
+
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 8vh;
+}
+
+.greeting {
+  display: flex;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.name {
+  margin-right: 10px;
+}
+
+.cheer {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.email {
+  background-color: #e8e8e850;
+  display: inline;
+  padding: 8px 16px;
+  border-radius: 16px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.highlight {
+  color: #ff5c17;
+}

@@ -1,5 +1,6 @@
 package com.ssafy.bbogle.common.config;
 
+import com.ssafy.bbogle.auth.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final CustomOAuth2UserService customOAuth2UserService;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -26,8 +29,13 @@ public class SecurityConfig {
             .authorizeHttpRequests((request) -> request
                 .requestMatchers("v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
-            );
+                .anyRequest().authenticated())
+
+            .oauth2Login(oauth2 -> oauth2
+                .loginPage("http://localhost:5173/")
+                .defaultSuccessUrl("http://localhost:5173/main")
+                .userInfoEndpoint((userInfoEndpoint -> userInfoEndpoint
+                    .userService(customOAuth2UserService))));
 
         return http.build();
 

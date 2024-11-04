@@ -9,6 +9,8 @@ interface Question {
 interface DiaryState {
   questionList: Question[];
   getQuestionList: () => void;
+  answerList: string[];
+  updateAnswer: (index: number, value: string) => void;
 }
 
 const useDiaryStore = create<DiaryState>((set) => ({
@@ -40,6 +42,13 @@ const useDiaryStore = create<DiaryState>((set) => ({
   getQuestionList: () =>
     set(() => ({
       // axios.get()
+    })),
+  answerList: ['', '', '', ''],
+  updateAnswer: (index, value) =>
+    set((state) => ({
+      answerList: state.answerList.map((answer, i) =>
+        i === index ? value : answer,
+      ),
     })),
 }));
 

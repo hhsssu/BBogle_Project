@@ -3,7 +3,7 @@ import useProjectStore from '../../../store/useProjectStore';
 import { useNavigate } from 'react-router-dom';
 import QuestionSection from '../questionSection/QuestionSection';
 import useDiaryStore from '../../../store/useDiaryStore';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function DiaryCreate() {
   const questionList = useDiaryStore((state) => state.questionList);
@@ -13,7 +13,11 @@ function DiaryCreate() {
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
+  const questionRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const positionArr = useRef<number[]>([]);
+
+  const answerList = useDiaryStore((state) => state.answerList);
+  // const [currentIdx, setCurrentIdx] = useState(0);
 
   const navPjtDetail = () => {
     navigate(`/project/${project.pjtID}`);
@@ -34,18 +38,73 @@ function DiaryCreate() {
       },
     );
 
-    positionArr.current = circleRefArr.current.map((circleRef) =>
-      circleRef.current ? circleRef.current.offsetTop : 0,
-    );
+    questionRefArr.current.map((ref, index) => {
+      if (ref.current) {
+        positionArr.current[index] = ref.current?.offsetTop;
+      }
+    });
   };
+
+  const addDiary = () => {
+    let totalTextLength = 0;
+    answerList.map((answer) => (totalTextLength += answer.length));
+
+    console.log(answerList);
+    if (totalTextLength < 50) {
+      alert('전체 글자 수가 50자 이상이어야 저장할 수 있습니다.');
+    } else {
+      navigate('/project/0');
+    }
+  };
+
+  // let lastScrollY = 0;
+  // const handleScroll = () => {
+  //   const scrollTop = window.scrollY;
+  //   const scrollDirectionDown = lastScrollY < scrollTop;
+
+  //   let newIdx = currentIdx;
+
+  //   if (scrollDirectionDown && currentIdx < positionArr.current.length - 1) {
+  //     const scrollLoc =
+  //       positionArr.current[currentIdx] +
+  //       (positionArr.current[currentIdx + 1] -
+  //         positionArr.current[currentIdx]) /
+  //         3;
+  //     if (scrollTop >= scrollLoc) {
+  //       newIdx = currentIdx + 1;
+  //     }
+  //   } else if (!scrollDirectionDown && currentIdx > 0) {
+  //     const scrollLoc =
+  //       positionArr.current[currentIdx] -
+  //       (positionArr.current[currentIdx] -
+  //         positionArr.current[currentIdx - 1]) /
+  //         3;
+
+  //     if (scrollTop <= scrollLoc) {
+  //       newIdx = currentIdx - 1;
+  //     }
+  //   }
+
+  //   if (newIdx !== currentIdx) {
+  //     setCurrentIdx(newIdx);
+  //     window.scrollTo({
+  //       top: positionArr.current[newIdx],
+  //       behavior: 'smooth',
+  //     });
+  //   }
+
+  //   lastScrollY = scrollTop;
+  // };
 
   useEffect(() => {
     updateLineHeight();
 
     window.addEventListener('resize', updateLineHeight);
+    // window.addEventListener('scroll', handleScroll);
 
     return () => {
       window.removeEventListener('resize', updateLineHeight);
+      // window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -67,19 +126,28 @@ function DiaryCreate() {
             lineRefArr.current[index] = React.createRef();
           }
 
+          if (!questionRefArr.current[index]) {
+            questionRefArr.current[index] = React.createRef();
+          }
+
           return (
-            <QuestionSection
-              key={index}
-              index={index + 1}
-              question={question.question}
-              description={question.description}
-              isFileType={question.isFileType}
-              circleRef={circleRefArr.current[index]}
-              lineRef={lineRefArr.current[index]}
-            />
+            <div ref={questionRefArr.current[index]} key={index}>
+              <QuestionSection
+                index={index + 1}
+                question={question.question}
+                description={question.description}
+                isFileType={question.isFileType}
+                circleRef={circleRefArr.current[index]}
+                lineRef={lineRefArr.current[index]}
+              />
+            </div>
           );
         })}
       </section>
+
+      <button className={style.submitBtn} onClick={addDiary}>
+        완료
+      </button>
     </div>
   );
 }

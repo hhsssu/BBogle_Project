@@ -19,3 +19,15 @@
 
 .diaryForm {
 }
+
+.submitBtn {
+  width: 14.3125rem;
+  height: 3rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff5c17;
+  margin-bottom: 2rem;
+  font-size: 16px;
+  color: white;
+  align-self: center;
+}

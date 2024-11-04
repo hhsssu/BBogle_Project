@@ -42,13 +42,13 @@
 .question {
   font-size: 20px;
   font-weight: 600;
-  margin-left: 1vw;
+  margin-left: 2vw;
 }
 
 .description {
   font-size: 16px;
   color: rgba(160, 160, 160, 1);
-  margin: 1vh 0vw 1vh 3.8vw; /* 위 | 오른쪽 | 아래 | 왼쪽 */
+  margin: 1vh 0vw 1vh 5.4vw; /* 위 | 오른쪽 | 아래 | 왼쪽 */
 }
 
 .textBlock {
@@ -56,9 +56,9 @@
 }
 
 .textArea {
-  width: 70vw;
+  width: 90%;
   height: 50vh;
-  margin: 2vh 0vw 20vh 3vw;
+  margin: 2vh 0vw 10vh 5vw;
   padding: 3vh 2vw;
   border: none;
   border-radius: 20px;
@@ -73,7 +73,7 @@
   color: rgba(160, 160, 160, 1);
   position: absolute;
   top: 52vh;
-  right: 7vw;
+  right: 5vw;
 }
 
 .imgInput {

@@ -4,6 +4,7 @@ import style from './QuestionSection.module.css';
 
 import ImageUpload from '../../../assets/image/icon/ImageUpload.svg';
 import Close from '../../../assets/image/icon/Close.svg';
+import useDiaryStore from '../../../store/useDiaryStore';
 
 interface Props {
   index: number;
@@ -23,6 +24,7 @@ function QuestionSection({
   lineRef,
 }: Props) {
   const [textValue, setTextValue] = useState('');
+  const updateAnswer = useDiaryStore((state) => state.updateAnswer);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -30,6 +32,7 @@ function QuestionSection({
 
   const handleText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextValue(event.target.value);
+    updateAnswer(index - 1, event.target.value);
   };
 
   const handleImgUploadClick = () => {

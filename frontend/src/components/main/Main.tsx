@@ -7,10 +7,15 @@ import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
 import useProjectSelectStore from '../../store/useProjectSelectStore';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setActiveProjectId(null);
+  }, []);
 
   // 카드 선택
   const handleCard = (id: number) => {

@@ -18,9 +18,12 @@ interface User {
 interface UserStore {
   user: User | null;
   isAuthenticated: boolean;
+  isEditingNickname: boolean;
   kakaoRedirect: () => void;
   kakaoLogin: (code: string) => Promise<void>;
   kakaoLogout: () => void;
+  setEditNickname: () => void;
+  updateNickname: (nickname: string) => Promise<void>;
 }
 
 // 회원 정보 상태관리
@@ -29,6 +32,7 @@ const useUserStore = create<UserStore>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
+      isEditingNickname: false,
 
       // kakao redirect 함수
       kakaoRedirect: () => {
@@ -84,6 +88,19 @@ const useUserStore = create<UserStore>()(
       kakaoLogout: () => {
         // 로그아웃 시 상태 초기화
         set({ user: null, isAuthenticated: false });
+      },
+
+      // 닉네임 편집 모드 상태 관리 함수
+      setEditNickname: () => {
+        set((state) => ({ isEditingNickname: !state.isEditingNickname }));
+      },
+
+      // 회원 정보 수정 함수
+      updateNickname: async (nickname: string) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, nickname } : state.user,
+          isEditingNickname: false,
+        }));
       },
     }),
     {

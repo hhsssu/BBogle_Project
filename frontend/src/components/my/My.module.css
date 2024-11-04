@@ -16,8 +16,44 @@
   margin-bottom: 10px;
 }
 
+.edit {
+  margin-bottom: 10px;
+}
+
+.edit > div {
+  display: flex;
+  align-items: center;
+}
+
+.edit > div > img {
+  margin-left: 8px;
+  width: 14px;
+}
+
+.editDesc {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.editInput {
+  background-color: #e8e8e8;
+  padding: 5px 10px 7px 10px;
+  border-radius: 12px;
+  border: none;
+}
+
 .name {
-  margin-right: 10px;
+  margin-right: 6px;
+  /* text-decoration: wavy underline #a0a0a0; */
+  /* text-decoration-thickness: 1px; */
+  /* text-underline-position: under; */
+}
+
+.name > span {
+  background-color: #e8e8e870;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-right: 2px;
 }
 
 .cheer {
@@ -27,10 +63,10 @@
 }
 
 .email {
-  font-size: 14px;
+  font-size: 12px;
   background-color: #e8e8e870;
   display: inline;
-  padding: 8px 16px;
+  padding: 6px 16px;
   border-radius: 16px;
 }
 

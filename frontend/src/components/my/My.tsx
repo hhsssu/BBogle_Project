@@ -1,11 +1,14 @@
 import style from './My.module.css';
 import EditIcon from '../../assets/image/icon/Edit.svg';
+import Empty from '../../assets/image/default/diary.png';
+import EnterIcon from '../../assets/image/icon/Enter.svg';
 import ImageWithDefault from './ImageWithDefault';
 import RunnerWay from '../../assets/image/RunnerWay.png'; // TODO : 임시 이미지
 import ProjectCard from '../common/projectCard/ProjectCard';
-import Empty from '../../assets/image/default/diary.png';
 import GoToDiary from '../common/button/GoToDiary';
 import { useNavigate } from 'react-router-dom';
+import useUserStore from '../../store/useUserStore';
+import { useState } from 'react';
 
 // 타입 정의
 interface DiaryItem {
@@ -19,6 +22,9 @@ interface DiaryItem {
 
 function My() {
   const navigate = useNavigate();
+  const { user, isEditingNickname, setEditNickname, updateNickname } =
+    useUserStore();
+  const [newNickname, setNewNickname] = useState(user?.nickname || '');
 
   // TODO : 내 정보 임시 데이터
   const myData = {
@@ -93,6 +99,12 @@ function My() {
     navigate(`/project/${cardId}`);
   };
 
+  // 닉네임 업데이트 함수
+  const handleUpdate = () => {
+    updateNickname(newNickname);
+    console.log(newNickname);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.infoContainer}>
@@ -102,10 +114,33 @@ function My() {
           defaultSrc="src/assets/image/default/profile.svg"
         ></ImageWithDefault>
         <div className={style.detailInfo}>
-          <div className={style.greeting}>
-            <div className={style.name}>안녕하세요, {myData.name}님</div>
-            <img className={style.editIcon} src={EditIcon} alt="" />
-          </div>
+          {!isEditingNickname ? (
+            <div className={style.greeting}>
+              <div className={style.name}>
+                안녕하세요, <span>{user?.nickname}</span>님
+              </div>
+              <img
+                className={style.editIcon}
+                src={EditIcon}
+                alt="편집"
+                onClick={setEditNickname}
+              />
+            </div>
+          ) : (
+            <div className={style.edit}>
+              <div className={style.editDesc}>닉네임 입력</div>
+              <div>
+                <input
+                  className={style.editInput}
+                  type="text"
+                  value={newNickname}
+                  onChange={(e) => setNewNickname(e.target.value)}
+                  maxLength={8}
+                />
+                <img src={EnterIcon} alt="등록" onClick={handleUpdate} />
+              </div>
+            </div>
+          )}
           <div className={style.cheer}>
             오늘도 뽀글이 옆에서 응원하고 있어요 !
           </div>

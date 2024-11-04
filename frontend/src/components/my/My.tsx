@@ -9,6 +9,7 @@ import GoToDiary from '../common/button/GoToDiary';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import { useState } from 'react';
+import ProfileImageUploader from './ProfileImageUploader';
 
 // 타입 정의
 interface DiaryItem {
@@ -25,6 +26,7 @@ function My() {
   const { user, isEditingNickname, setEditNickname, updateNickname } =
     useUserStore();
   const [newNickname, setNewNickname] = useState(user?.nickname || '');
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
   // TODO : 내 정보 임시 데이터
   const myData = {
@@ -112,6 +114,16 @@ function My() {
     }
   };
 
+  // 이미지 클릭 시 모달 열기
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={style.container}>
       <div className={style.infoContainer}>
@@ -119,6 +131,7 @@ function My() {
           src={myData.profileImg}
           alt="프로필"
           defaultSrc="src/assets/image/default/profile.svg"
+          onClick={openModal}
         ></ImageWithDefault>
         <div className={style.detailInfo}>
           {!isEditingNickname ? (
@@ -140,6 +153,7 @@ function My() {
                 <input
                   className={style.editInput}
                   type="text"
+                  placeholder="최대 8자"
                   value={newNickname}
                   onChange={(e) => setNewNickname(e.target.value)}
                   onKeyDown={handleEnter}
@@ -155,6 +169,15 @@ function My() {
           <div className={style.email}>{user?.email || '-'}</div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <div className={style.modalOverlay}>
+          <div className={style.modalContent}>
+            <ProfileImageUploader />
+          </div>
+        </div>
+      )}
+
       <div className={style.todayDiary}>
         <div className={style.title}>
           오늘 내가 작성한 <span className={style.highlight}>개발 일지</span>

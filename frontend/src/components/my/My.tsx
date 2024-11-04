@@ -124,7 +124,7 @@ function My() {
           {!isEditingNickname ? (
             <div className={style.greeting}>
               <div className={style.name}>
-                안녕하세요, <span>{user?.nickname}</span>님
+                안녕하세요, <span>{user?.nickname || '-'}</span>님
               </div>
               <img
                 className={style.editIcon}
@@ -142,6 +142,7 @@ function My() {
                   type="text"
                   value={newNickname}
                   onChange={(e) => setNewNickname(e.target.value)}
+                  onKeyDown={handleEnter}
                   maxLength={8}
                 />
                 <img src={EnterIcon} alt="등록" onClick={handleUpdate} />
@@ -151,7 +152,7 @@ function My() {
           <div className={style.cheer}>
             오늘도 뽀글이 옆에서 응원하고 있어요 !
           </div>
-          <div className={style.email}>{myData.email}</div>
+          <div className={style.email}>{user?.email || '-'}</div>
         </div>
       </div>
       <div className={style.todayDiary}>

@@ -1,5 +1,5 @@
 import ExStyles from './Experience.module.css';
-import MoreIcon from '../../assets/image/icon/more.svg';
+import MoreIcon from '../../assets/image/icon/More.svg';
 import { useNavigate } from 'react-router-dom';
 
 interface Tag {
@@ -12,14 +12,22 @@ interface ExInfoProps {
   title: string;
   startDate: Date;
   endDate: Date;
-  tags: Tag[];
+  projectName: string;
+  keywords: Tag[];
 }
 
 // 경험 카드
-function ExCard({ exId, title, startDate, endDate, tags }: ExInfoProps) {
+function ExCard({
+  exId,
+  title,
+  startDate,
+  endDate,
+  projectName,
+  keywords,
+}: ExInfoProps) {
   const nav = useNavigate();
   const navDetail = (exId: number) => {
-    nav(`detail/${exId}`);
+    nav(`${exId}`);
   };
 
   return (
@@ -27,7 +35,7 @@ function ExCard({ exId, title, startDate, endDate, tags }: ExInfoProps) {
       {/* 소제목과 더보기 메뉴 버튼 */}
       <div className={ExStyles.header}>
         <section className={ExStyles.between}>
-          <div className={ExStyles.subhead}>{title}</div>
+          <div className={ExStyles.subtitle}>{title}</div>
           <button>
             <img src={MoreIcon} alt="더 보기 메뉴" />
           </button>
@@ -39,15 +47,18 @@ function ExCard({ exId, title, startDate, endDate, tags }: ExInfoProps) {
         </div>
       </div>
 
+      {/* 관련 프로젝트 명 */}
+      <div className={ExStyles.date}>{projectName}</div>
+
       {/* 경험 태그 */}
-      <section className={ExStyles.tags}>
-        {tags.map((tag, index) => (
+      <section className={ExStyles.keywords}>
+        {keywords.map((keyword, index) => (
           <div key={index}>
             {/* 기술태그 0 blue / 인성태그 1 yellow */}
-            {tag.type === 0 ? (
-              <span className={ExStyles.btag}>{tag.name}</span>
+            {keyword.type === 0 ? (
+              <span className={ExStyles.bluekeyword}>{keyword.name}</span>
             ) : (
-              <span className={ExStyles.ytag}>{tag.name}</span>
+              <span className={ExStyles.yellowkeyword}>{keyword.name}</span>
             )}
           </div>
         ))}

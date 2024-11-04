@@ -30,8 +30,17 @@ interface UserStore {
 const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
-      user: null,
-      isAuthenticated: false,
+      // TODO : 기본 더미 유저 데이터
+      // user: null,
+      // isAuthenticated: false,
+      // isEditingNickname: false,
+      user: {
+        id: 4,
+        nickname: '지혜',
+        email: 'jihye@example.com',
+        profileImage: 'null',
+      },
+      isAuthenticated: true,
       isEditingNickname: false,
 
       // kakao redirect 함수

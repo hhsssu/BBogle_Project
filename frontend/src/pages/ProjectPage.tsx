@@ -9,7 +9,10 @@ function ProjectPage() {
     <div>
       <Routes>
         <Route path="" element={<ProjectList></ProjectList>}></Route>
-        <Route path=":pjtId" element={<ProjectDetail></ProjectDetail>}></Route>
+        <Route
+          path=":pjtId/diary"
+          element={<ProjectDetail></ProjectDetail>}
+        ></Route>
         <Route path="create" element={<ProjectCreate></ProjectCreate>}></Route>
       </Routes>
     </div>

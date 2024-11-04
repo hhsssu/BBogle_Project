@@ -1,15 +1,31 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import ExStyles from '../Experience.module.css';
 import ExDetailStyles from './ExDetail.module.css';
+
 import EditIcon from '../../../assets/image/icon/Pencil.svg';
 import DeleteIcon from '../../../assets/image/icon/RedTrash.svg';
+import BackIcon from '../../../assets/image/icon/Back.svg';
 
 function ExDetail() {
-  const handleNavEdit = () => {};
-  const handleNavDelete = () => {};
+  const navigate = useNavigate();
+  const { exID } = useParams();
+
+  // 수정 이동
+  const NavEdit = () => {
+    navigate(`/experience/update/${exID}`);
+  };
+
+  // 삭제
+  const handleDelete = () => {};
+
+  // 돌아가기
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   // 더미 데이터 예시
   const exDetail = {
-    exId: 1,
+    exID: 1,
     title: '소셜 로그인 구현',
     startDate: '2024-01-01',
     endDate: '2024-02-01',
@@ -25,6 +41,10 @@ function ExDetail() {
 
   return (
     <>
+      <div className={ExStyles.backBtn} onClick={handleGoBack}>
+        <img src={BackIcon} alt="돌아가기" />
+        돌아가기
+      </div>
       <div className={`${ExStyles.center} ${ExStyles.title}`}>경험 상세</div>
 
       {/* 경험 정보 */}
@@ -73,13 +93,13 @@ function ExDetail() {
       {/* 수정 & 삭제 버튼 */}
       <section className={ExStyles.flex}>
         <button
-          onClick={handleNavEdit}
+          onClick={NavEdit}
           className={`${ExStyles.flex} ${ExDetailStyles.margin}`}
         >
           <img src={EditIcon} alt="수정" />
           <span className={`${ExStyles.gray} ${ExStyles.small}`}>수정</span>
         </button>
-        <button onClick={handleNavDelete} className={ExStyles.flex}>
+        <button onClick={handleDelete} className={ExStyles.flex}>
           <img src={DeleteIcon} alt="삭제" />
           <span className={`${ExStyles.red} ${ExStyles.small}`}>삭제</span>
         </button>

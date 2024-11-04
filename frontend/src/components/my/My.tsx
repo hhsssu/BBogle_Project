@@ -105,6 +105,13 @@ function My() {
     console.log(newNickname);
   };
 
+  // 엔터 입력 시 닉네임 업데이트
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleUpdate();
+    }
+  };
+
   return (
     <div className={style.container}>
       <div className={style.infoContainer}>

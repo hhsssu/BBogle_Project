@@ -8,7 +8,7 @@ interface Tag {
 }
 
 interface ExInfoProps {
-  exId: number;
+  exID: number;
   title: string;
   startDate: Date;
   endDate: Date;
@@ -18,20 +18,20 @@ interface ExInfoProps {
 
 // 경험 카드
 function ExCard({
-  exId,
+  exID,
   title,
   startDate,
   endDate,
-  projectName,
   keywords,
+  projectName,
 }: ExInfoProps) {
   const nav = useNavigate();
-  const navDetail = (exId: number) => {
-    nav(`${exId}`);
+  const navDetail = (exID: number) => {
+    nav(`${exID}`);
   };
 
   return (
-    <div className={ExStyles.card} onClick={() => navDetail(exId)}>
+    <div className={ExStyles.card} onClick={() => navDetail(exID)}>
       {/* 소제목과 더보기 메뉴 버튼 */}
       <div className={ExStyles.header}>
         <section className={ExStyles.between}>

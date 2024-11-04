@@ -1,5 +1,7 @@
+import style from './My.module.css';
+
 function My() {
-  return <>My Page</>;
+  return <div className={style.container}>My Page</div>;
 }
 
 export default My;

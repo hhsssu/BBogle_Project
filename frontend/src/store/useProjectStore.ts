@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import DefaultProfile from '../assets/image/icon/DefaultProfile.svg';
 
-interface Project {
+export interface Project {
   pjtID: number;
   imgSrc: string;
   title: string;

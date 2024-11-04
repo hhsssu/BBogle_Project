@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import style from './QuestionSection.module.css';
+import style from './QnaInput.module.css';
 
 import ImageUpload from '../../../assets/image/icon/ImageUpload.svg';
 import Close from '../../../assets/image/icon/Close.svg';
@@ -15,7 +15,7 @@ interface Props {
   lineRef: React.RefObject<HTMLDivElement> | null;
 }
 
-function QuestionSection({
+function QnaInput({
   index,
   question,
   description,
@@ -128,4 +128,4 @@ function QuestionSection({
   );
 }
 
-export default QuestionSection;
+export default QnaInput;

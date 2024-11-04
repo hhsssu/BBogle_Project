@@ -40,7 +40,7 @@ function DiaryList() {
   const navigate = useNavigate();
 
   const navDiaryDetail = (diaryID: number) => {
-    navigate(`${diaryID}`);
+    navigate(`diary/${diaryID}`);
   };
   return (
     <div className={style.fins}>

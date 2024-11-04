@@ -1,9 +1,9 @@
 import style from './DiaryCreate.module.css';
 import useProjectStore from '../../../store/useProjectStore';
 import { useNavigate } from 'react-router-dom';
-import QuestionSection from '../questionSection/QuestionSection';
+import QnaInput from '../qnaInput/QnaInput';
 import useDiaryStore from '../../../store/useDiaryStore';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 function DiaryCreate() {
   const questionList = useDiaryStore((state) => state.questionList);
@@ -132,7 +132,7 @@ function DiaryCreate() {
 
           return (
             <div ref={questionRefArr.current[index]} key={index}>
-              <QuestionSection
+              <QnaInput
                 index={index + 1}
                 question={question.question}
                 description={question.description}

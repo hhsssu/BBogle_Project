@@ -4,6 +4,7 @@ import style from './ProjectList.module.css';
 import { useNavigate } from 'react-router-dom';
 
 function ProjectList() {
+  // TODO 진행 중 프로젝트 더미 데이터
   const WIP_PJT_LIST = [
     {
       imageSrc: RunnerWay,
@@ -42,6 +43,7 @@ function ProjectList() {
     },
   ];
 
+  // TODO 종료된 프로젝트 더미 데이터
   const FIN_PJT_LIST = [
     {
       imageSrc: RunnerWay,
@@ -136,7 +138,7 @@ function ProjectList() {
   };
 
   const navPjtCreate = (pjtID: number) => {
-    navigate(`${pjtID}`);
+    navigate(`${pjtID}/diary`);
   };
 
   return (

@@ -7,13 +7,19 @@ interface Question {
 }
 
 interface DiaryState {
+  // 개발일지 작성
   questionList: Question[];
   getQuestionList: () => void;
   answerList: string[];
   updateAnswer: (index: number, value: string) => void;
+
+  // 개발일지 목록 조회
+  sortIdx: number;
+  setSortIdx: (idx: number) => void;
 }
 
 const useDiaryStore = create<DiaryState>((set) => ({
+  // TODO 질문 문항 더미 리스트
   questionList: [
     {
       question: '어떤 작업을 하셨나요 ?',
@@ -50,6 +56,9 @@ const useDiaryStore = create<DiaryState>((set) => ({
         i === index ? value : answer,
       ),
     })),
+
+  sortIdx: 0,
+  setSortIdx: (idx) => set(() => ({ sortIdx: idx })),
 }));
 
 export default useDiaryStore;

@@ -1,0 +1,78 @@
+.questionSection {
+  display: flex;
+  align-items: center;
+}
+
+.outerCircle {
+  position: relative;
+  width: 2.3125rem;
+  height: 2.3125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid;
+  border-radius: 100%;
+  border-color: rgba(255, 92, 23, 1);
+}
+
+.innerCircle {
+  width: 1.8125rem;
+  height: 1.8125rem;
+  display: flex;
+  background-color: rgba(255, 92, 23, 1);
+  border-radius: 100%;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.question {
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 2vw;
+}
+
+.description {
+  font-size: 16px;
+  color: rgba(160, 160, 160, 1);
+  margin: 1vh 0vw 1vh 5.4vw; /* 위 | 오른쪽 | 아래 | 왼쪽 */
+}
+
+.textArea {
+  width: 90%;
+  height: 50vh;
+  margin: 2vh 0vw 10vh 5vw;
+  padding: 3vh 2vw;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  resize: none;
+  scrollbar-width: none;
+  background-color: rgba(232, 232, 232, 0.2);
+  font-family: 'Pretendard-Regular';
+}
+
+.imgInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.imgExBlock {
+  display: flex;
+  align-items: end;
+}
+
+.imgEx {
+  width: 10rem;
+  height: 10rem;
+}
+
+.close {
+  width: 1.5rem;
+}
+
+.hiddenInput {
+  display: none;
+}

@@ -4,6 +4,7 @@ import useProjectStore from '../../../store/useProjectStore';
 import React, { useEffect, useRef } from 'react';
 import useDiaryStore from '../../../store/useDiaryStore';
 import QnaView from '../qnaView/QnaView';
+import DiaryImgView from '../diaryImgView/DiaryImgView';
 
 function DiaryDetail() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ function DiaryDetail() {
   const updateLineHeight = () => {
     lineRefArr.current.map(
       (line: React.RefObject<HTMLDivElement>, index: number) => {
-        if (index !== lineRefArr.current.length - 1 && line.current) {
+        if (line.current) {
           const topLoc =
             Number(circleRefArr.current[index].current?.offsetTop) +
             Number(circleRefArr.current[index].current?.offsetHeight);
@@ -52,6 +53,14 @@ function DiaryDetail() {
       },
     );
   };
+
+  useEffect(() => {
+    for (let index = 0; index <= questionList.length; index++) {
+      if (!circleRefArr.current[index]) {
+        circleRefArr.current[index] = React.createRef();
+      }
+    }
+  }, []);
 
   useEffect(() => {
     updateLineHeight();
@@ -82,10 +91,6 @@ function DiaryDetail() {
 
       <section className={style.diaryForm}>
         {questionList.map((question, index) => {
-          if (!circleRefArr.current[index]) {
-            circleRefArr.current[index] = React.createRef();
-          }
-
           if (!lineRefArr.current[index]) {
             lineRefArr.current[index] = React.createRef();
           }
@@ -102,6 +107,13 @@ function DiaryDetail() {
             </div>
           );
         })}
+        <div>
+          <DiaryImgView
+            index={questionList.length + 1}
+            question={'첨부 이미지 업로드'}
+            circleRef={circleRefArr.current[3]}
+          />
+        </div>
       </section>
     </div>
   );

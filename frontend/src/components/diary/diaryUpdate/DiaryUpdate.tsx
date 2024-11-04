@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import style from './DiaryUpdate.module.css';
-import useProjectStore from '../../../store/useProjectStore';
 import useDiaryStore from '../../../store/useDiaryStore';
 import React, { useEffect, useRef } from 'react';
 import QnaInput from '../qnaInput/QnaInput';
+import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
 
 function DiaryUpdate() {
   const navigate = useNavigate();
@@ -23,7 +23,6 @@ function DiaryUpdate() {
     let totalTextLength = 0;
     answerList.map((answer) => (totalTextLength += answer.length));
 
-    console.log(answerList);
     if (totalTextLength < 50) {
       alert('전체 글자 수가 50자 이상이어야 저장할 수 있습니다.');
     } else {
@@ -48,6 +47,14 @@ function DiaryUpdate() {
   };
 
   useEffect(() => {
+    for (let index = 0; index <= questionList.length; index++) {
+      if (!circleRefArr.current[index]) {
+        circleRefArr.current[index] = React.createRef();
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     updateLineHeight();
 
     window.addEventListener('resize', updateLineHeight);
@@ -69,10 +76,6 @@ function DiaryUpdate() {
 
       <section className={style.diaryForm}>
         {questionList.map((question, index) => {
-          if (!circleRefArr.current[index]) {
-            circleRefArr.current[index] = React.createRef();
-          }
-
           if (!lineRefArr.current[index]) {
             lineRefArr.current[index] = React.createRef();
           }
@@ -83,13 +86,23 @@ function DiaryUpdate() {
                 index={index + 1}
                 question={question.question}
                 description={question.description}
-                isFileType={question.isFileType}
                 circleRef={circleRefArr.current[index]}
                 lineRef={lineRefArr.current[index]}
               />
             </div>
           );
         })}
+
+        <div>
+          <DiaryImgInput
+            index={questionList.length + 1}
+            question={'첨부 이미지 업로드'}
+            description={
+              '관련된 이미지를 최대 3장까지 첨부할 수 있어요 ! (1장 당 최대 5MB)'
+            }
+            circleRef={circleRefArr.current[3]}
+          />
+        </div>
       </section>
 
       <button className={style.updateBtn} onClick={updateDiary}>

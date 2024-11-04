@@ -1,6 +1,7 @@
 import style from './Main.module.css';
 import Lottie from 'lottie-react';
 import animationData from '../../assets/lottie/Welcome.json';
+// TODO : 임시 이미지
 import RunnerWay from '../../assets/image/RunnerWay.png';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';

@@ -110,7 +110,7 @@ function Main() {
         <div className={style.button}>
           <GoToDiary
             isInactive={activeProjectId === null}
-            onClick={() => navigate(`/project/${activeProjectId}`)}
+            onClick={() => navigate(`/project/${activeProjectId}/diary/create`)}
           />
         </div>
       </div>

@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 
-import ExStyles from '../Experience.module.css';
-import ExCreateStyles from './ExCreate.module.css';
+import ActivityStyles from '../Activity.module.css';
+import ActivityCreateStyles from './ActivityCreate.module.css';
 
 import BlueXIcon from '../../../assets/image/icon/BlueX.svg';
 import YellowXIcon from '../../../assets/image/icon/YellowX.svg';
+
 import useKeywordStore from '../../../store/useKeywordStore';
-import useExperienceStore from '../../../store/useExperienceStore';
+import useActivityStore from '../../../store/useActivityStore';
 // import useProjectStore from '../../../store/useProjectStore';
 
-interface ExFormProps {
-  exID: number;
+interface ActivityFormProps {
+  activityId: number;
 }
 
-function ExForm({ exID }: ExFormProps) {
+function ActivityForm({ activityId }: ActivityFormProps) {
   // TODO 더미데이터 삭제
   //   const Keywords = [
   //     { type: 0, name: '기술1' },
@@ -25,7 +26,7 @@ function ExForm({ exID }: ExFormProps) {
   //   ];
   const projects: string[] = ['RunnerWay', 'WON TOUCH!', 'SFD', 'Challet'];
 
-  const { experience, fetchExperienceById } = useExperienceStore();
+  const { activity, fetchActivityById } = useActivityStore();
   const { keywords, fetchKeywords } = useKeywordStore();
   //   TODO 프로젝트 API 가져오기
   //   const { projects, fetchProjects } = useProjectStore();
@@ -40,10 +41,10 @@ function ExForm({ exID }: ExFormProps) {
   const [projectName, setProjectName] = useState('');
 
   useEffect(() => {
-    fetchExperienceById(exID);
+    fetchActivityById(activityId);
     fetchKeywords();
     // fetchProjects();
-  }, [exID]);
+  }, [activityId]);
 
   // TODO 작성 수정 이탈 시 경고 알림
 
@@ -82,33 +83,41 @@ function ExForm({ exID }: ExFormProps) {
   return (
     <>
       {/* 수정 / 작성하는 부분 */}
-      <section className={ExCreateStyles.container}>
+      <section className={ActivityCreateStyles.container}>
         {/* 제목 */}
-        <div className={ExStyles.flex}>
-          <p className={ExStyles.semibold}>제목</p>
-          <span className={`${ExStyles.orange} ${ExStyles.semibold}`}>*</span>
+        <div className={ActivityStyles.flex}>
+          <p className={ActivityStyles.semibold}>제목</p>
+          <span
+            className={`${ActivityStyles.orange} ${ActivityStyles.semibold}`}
+          >
+            *
+          </span>
         </div>
         <input
           type="text"
           maxLength={20}
           placeholder="제목을 입력하세요 (최대 20자)"
-          value={!experience || exID === 0 ? title : experience.title}
+          value={!activity || activityId === 0 ? title : activity.title}
           onChange={(e) => setTitle(e.target.value)}
-          className={ExCreateStyles.subtitle}
+          className={ActivityCreateStyles.subtitle}
         />
 
         {/* 내용 */}
-        <div className={ExStyles.flex}>
-          <p className={ExStyles.semibold}>내용</p>
-          <span className={`${ExStyles.orange} ${ExStyles.semibold}`}>*</span>
+        <div className={ActivityStyles.flex}>
+          <p className={ActivityStyles.semibold}>내용</p>
+          <span
+            className={`${ActivityStyles.orange} ${ActivityStyles.semibold}`}
+          >
+            *
+          </span>
         </div>
         <textarea
           name="content"
           rows={10}
           placeholder="내용을 입력하세요 (최대 700자)"
-          value={!experience || exID === 0 ? content : experience.content}
+          value={!activity || activityId === 0 ? content : activity.content}
           onChange={(e) => setContent(e.target.value)}
-          className={ExCreateStyles.content}
+          className={ActivityCreateStyles.content}
           onInput={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
             handleTextareaChange(event)
           }
@@ -116,42 +125,46 @@ function ExForm({ exID }: ExFormProps) {
 
         {/* TODO 프로젝트 작성과 디자인 통일하기 */}
         {/* 시작일 ~ 종료일 */}
-        <div className={ExStyles.flex}>
-          <p className={ExStyles.semibold}>경험 기간</p>
-          <span className={`${ExStyles.orange} ${ExStyles.semibold}`}>*</span>
+        <div className={ActivityStyles.flex}>
+          <p className={ActivityStyles.semibold}>경험 기간</p>
+          <span
+            className={`${ActivityStyles.orange} ${ActivityStyles.semibold}`}
+          >
+            *
+          </span>
         </div>
-        <div className={ExStyles.flex}>
-          <div className={ExCreateStyles.margin}>
-            <p className={ExCreateStyles.datedes}>시작일</p>
+        <div className={ActivityStyles.flex}>
+          <div className={ActivityCreateStyles.margin}>
+            <p className={ActivityCreateStyles.datedes}>시작일</p>
             <input
               type="date"
               value={
-                !experience || exID === 0 ? startDate : experience.startDate
+                !activity || activityId === 0 ? startDate : activity.startDate
               }
               onChange={(e) => setStartDate(e.target.value)}
-              className={ExCreateStyles.graybox}
+              className={ActivityCreateStyles.graybox}
             />
           </div>
           <div>
-            <p className={ExCreateStyles.datedes}>종료일</p>
+            <p className={ActivityCreateStyles.datedes}>종료일</p>
             <input
               type="date"
-              value={!experience || exID === 0 ? endDate : experience.endDate}
+              value={!activity || activityId === 0 ? endDate : activity.endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className={ExCreateStyles.graybox}
+              className={ActivityCreateStyles.graybox}
             />
           </div>
         </div>
 
         {/* 경험 키워드 */}
-        <p className={ExStyles.semibold}>관련 키워드</p>
-        <div className={ExStyles.flex}>
+        <p className={ActivityStyles.semibold}>관련 키워드</p>
+        <div className={ActivityStyles.flex}>
           <select
             name="keywords"
             id="keywords"
             defaultValue=""
             onChange={handleSelectOption}
-            className={ExCreateStyles.graybox}
+            className={ActivityCreateStyles.graybox}
           >
             <option value="" disabled>
               키워드를 선택하세요
@@ -176,14 +189,14 @@ function ExForm({ exID }: ExFormProps) {
             </optgroup>
           </select>
           {/* 선택한 키워드 */}
-          <div className={ExStyles.flex}>
+          <div className={ActivityStyles.flex}>
             {selectedOptions.map((keyword, index) => (
               <div
                 key={index}
                 className={
                   keyword.type === 0
-                    ? ExCreateStyles.bluekeyword
-                    : ExCreateStyles.yellowkeyword
+                    ? ActivityCreateStyles.bluekeyword
+                    : ActivityCreateStyles.yellowkeyword
                 }
               >
                 {keyword.name}
@@ -199,15 +212,15 @@ function ExForm({ exID }: ExFormProps) {
         </div>
 
         {/* 관련 프로젝트 */}
-        <p className={ExStyles.semibold}>관련 프로젝트</p>
+        <p className={ActivityStyles.semibold}>관련 프로젝트</p>
         <select
           name="projects"
           id="projects"
           defaultValue={
-            !experience || exID === 0 ? projectName : experience.project.title
+            !activity || activityId === 0 ? projectName : activity.projectTitle
           }
           onChange={(e) => setProjectName(e.target.value)}
-          className={ExCreateStyles.graybox}
+          className={ActivityCreateStyles.graybox}
         >
           <option value="">선택 안함</option>
           {projects.map((option) => (
@@ -221,4 +234,4 @@ function ExForm({ exID }: ExFormProps) {
   );
 }
 
-export default ExForm;
+export default ActivityForm;

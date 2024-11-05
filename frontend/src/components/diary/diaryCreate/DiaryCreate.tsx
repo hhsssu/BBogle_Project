@@ -3,8 +3,10 @@ import useProjectStore from '../../../store/useProjectStore';
 import { useNavigate } from 'react-router-dom';
 import QnaInput from '../qnaInput/QnaInput';
 import useDiaryStore from '../../../store/useDiaryStore';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
+
+import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
 
 function DiaryCreate() {
   const questionList = useDiaryStore((state) => state.questionList);
@@ -18,6 +20,9 @@ function DiaryCreate() {
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const questionRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const positionArr = useRef<number[]>([]);
+
+  const [textLengthErr, setTextLengthErr] = useState(true);
+  const [errMsgOn, setErrMsgOn] = useState(false);
 
   // const [currentIdx, setCurrentIdx] = useState(0);
 
@@ -47,13 +52,23 @@ function DiaryCreate() {
     });
   };
 
-  const addDiary = () => {
+  const checkTotalLength = () => {
     let totalTextLength = 0;
     answerList.map((answer) => (totalTextLength += answer.length));
 
-    if (totalTextLength < 50) {
-      alert('전체 글자 수가 50자 이상이어야 저장할 수 있습니다.');
+    if (totalTextLength >= 50) {
+      setTextLengthErr(false);
+      setErrMsgOn(false);
     } else {
+      setTextLengthErr(true);
+    }
+  };
+
+  const addDiary = () => {
+    if (textLengthErr) {
+      setErrMsgOn(true);
+    } else {
+      alert('작성 완료!');
       navigate('/project/0');
     }
   };
@@ -100,6 +115,10 @@ function DiaryCreate() {
   useEffect(() => {
     initQnaList();
   }, []);
+
+  useEffect(() => {
+    checkTotalLength();
+  }, [answerList]);
 
   useEffect(() => {
     for (let index = 0; index <= questionList.length; index++) {
@@ -163,9 +182,18 @@ function DiaryCreate() {
         </div>
       </section>
 
-      <button className={style.submitBtn} onClick={addDiary}>
+      <button
+        className={`${style.submitBtn} ${textLengthErr && style.failBtn}`}
+        onClick={addDiary}
+      >
         완료
       </button>
+      {errMsgOn && (
+        <div className={style.errMsg}>
+          <img className={style.warnIcon} src={AlertTriangle} alt="경고" />
+          답변 길이가 너무 짧습니다! 50자 이상 작성해주세요{' '}
+        </div>
+      )}
     </div>
   );
 }

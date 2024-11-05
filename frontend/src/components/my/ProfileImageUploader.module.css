@@ -88,10 +88,10 @@
 .progressBarContainer {
   width: 74%;
   height: 10px;
-  background-color: #e0e0e0;
+  background-color: #f3f3f3;
   border-radius: 5px;
   overflow: hidden;
-  margin-top: 24px;
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -112,6 +112,6 @@
   color: white;
   font-size: 14px;
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: 14px;
   margin-left: auto;
 }

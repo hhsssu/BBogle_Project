@@ -1,110 +1,55 @@
-import RunnerWay from '../../../assets/image/RunnerWay.png';
-import ProjectCard from '../../common/projectCard/ProjectCard';
+import { useNavigate } from 'react-router-dom';
+import DiaryCard from '../../common/diaryCard/DiaryCard';
 import style from './DiaryList.module.css';
 
 function DiaryList() {
-  const FIN_PJT_LIST = [
-    {
-      imageSrc: RunnerWay,
-      title: 'Endurance Challenge',
-      state: false,
-      term: '2024.04.01 ~ 2024.06.30',
-      summary: '한계를 극복하는 러닝 도전 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Marathon Complete',
-      state: false,
-      term: '2024.01.01 ~ 2024.03.30',
-      summary: '마라톤 완주를 위한 도전 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Summer Sprint',
-      state: false,
-      term: '2024.06.01 ~ 2024.07.31',
-      summary: '여름 동안 짧은 거리 러닝 훈련 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'City Night Run',
-      state: false,
-      term: '2023.11.05 ~ 2024.01.10',
-      summary: '도심에서의 야간 러닝 체험 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Trail Discoveries',
-      state: false,
-      term: '2024.03.15 ~ 2024.05.15',
-      summary: '트레일 러닝으로 새로운 길을 탐험',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Weekly 5K Challenge',
-      state: false,
-      term: '2023.09.01 ~ 2024.01.01',
-      summary: '매주 5km 달리기 도전 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Morning Marathoners',
-      state: false,
-      term: '2024.02.01 ~ 2024.04.01',
-      summary: '아침 러닝을 즐기는 사람들을 위한 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Speed Boost',
-      state: false,
-      term: '2024.08.01 ~ 2024.09.01',
-      summary: '단기간 스피드 향상을 목표로 한 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Endurance Build',
-      state: false,
-      term: '2023.12.01 ~ 2024.02.28',
-      summary: '장거리 달리기로 지구력 강화 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Rainy Day Run',
-      state: false,
-      term: '2024.05.01 ~ 2024.06.30',
-      summary: '비 오는 날에도 러닝을 멈추지 않는 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Marathon Prep Complete',
-      state: false,
-      term: '2024.03.01 ~ 2024.05.31',
-      summary: '마라톤을 준비하는 모든 러너들의 여정',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Park Run Adventures',
-      state: false,
-      term: '2024.07.01 ~ 2024.09.01',
-      summary: '도시 공원을 탐방하며 달리기 즐기기',
-    },
+  // TODO 다이어리 더미 데이터
+  const diaryData = [
+    { diaryID: 1, title: '오늘의 회고록', date: '2023.10.01' },
+    { diaryID: 2, title: '프로그래밍 연습', date: '2023.10.02' },
+    { diaryID: 3, title: '팀 프로젝트 진행', date: '2023.10.03' },
+    { diaryID: 4, title: '알고리즘 문제 풀이', date: '2023.10.04' },
+    { diaryID: 5, title: 'UI/UX 디자인 회의', date: '2023.10.05' },
+    { diaryID: 6, title: '코드 리뷰', date: '2023.10.06' },
+    { diaryID: 7, title: '배포 준비', date: '2023.10.07' },
+    { diaryID: 8, title: '일일 회고', date: '2023.10.08' },
+    { diaryID: 9, title: '모듈 리팩토링', date: '2023.10.09' },
+    { diaryID: 10, title: '새로운 기능 추가', date: '2023.10.10' },
+    { diaryID: 11, title: '프로젝트 계획 수립', date: '2023.10.11' },
+    { diaryID: 12, title: '회고 작성', date: '2023.10.12' },
+    { diaryID: 13, title: '테스트 코드 작성', date: '2023.10.13' },
+    { diaryID: 14, title: '기능 배포', date: '2023.10.14' },
+    { diaryID: 15, title: '팀 회의', date: '2023.10.15' },
+    { diaryID: 16, title: '데이터베이스 설계', date: '2023.10.16' },
+    { diaryID: 17, title: 'API 최적화', date: '2023.10.17' },
+    { diaryID: 18, title: '서버 설정 변경', date: '2023.10.18' },
+    { diaryID: 19, title: 'UI 컴포넌트 개선', date: '2023.10.19' },
+    { diaryID: 20, title: '상태 관리 리팩토링', date: '2023.10.20' },
+    { diaryID: 21, title: '회고', date: '2023.10.21' },
+    { diaryID: 22, title: '디자인 수정', date: '2023.10.22' },
+    { diaryID: 23, title: '로그인 기능 구현', date: '2023.10.23' },
+    { diaryID: 24, title: '프로젝트 진행 상황 점검', date: '2023.10.24' },
+    { diaryID: 25, title: '팀원 코드 리뷰', date: '2023.10.25' },
+    { diaryID: 26, title: '성능 개선 작업', date: '2023.10.26' },
+    { diaryID: 27, title: '개발 환경 설정', date: '2023.10.27' },
+    { diaryID: 28, title: '새로운 스킬 학습', date: '2023.10.28' },
+    { diaryID: 29, title: '프로젝트 테스트', date: '2023.10.29' },
+    { diaryID: 30, title: '일일 회고', date: '2023.10.30' },
   ];
 
+  const navigate = useNavigate();
+
+  const navDiaryDetail = (diaryID: number) => {
+    navigate(`diary/${diaryID}`);
+  };
   return (
-    <>
-      <div className={style.fins}>
-        {FIN_PJT_LIST.map((card, index) => (
-          <ProjectCard
-            key={index}
-            imageSrc={card.imageSrc}
-            title={card.title}
-            state={card.state}
-            term={card.term}
-            summary={card.summary}
-          />
-        ))}
-      </div>
-    </>
+    <div className={style.fins}>
+      {diaryData.map((card) => (
+        <div onClick={() => navDiaryDetail(card.diaryID)}>
+          <DiaryCard key={card.diaryID} title={card.title} date={card.date} />
+        </div>
+      ))}
+    </div>
   );
 }
 

@@ -6,7 +6,6 @@ import ProjectPage from '../pages/ProjectPage';
 import ExperiencePage from '../pages/ExperiencePage';
 import MainPage from '../pages/MainPage';
 import Main from '../components/main/Main';
-import DiaryPage from '../pages/DiaryPage';
 
 function AppRouter() {
   return (
@@ -20,8 +19,6 @@ function AppRouter() {
       </Route>
       // 프로젝트 페이지
       <Route path="/project/*" element={<ProjectPage></ProjectPage>} />
-      // 개발일지 페이지
-      <Route path="/diary/*" element={<DiaryPage></DiaryPage>} />
       <Route path="experience/*" element={<ExperiencePage />} />
     </Routes>
   );

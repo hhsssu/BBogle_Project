@@ -6,6 +6,8 @@ import ProjectPage from '../pages/ProjectPage';
 import ExperiencePage from '../pages/ExperiencePage';
 import MainPage from '../pages/MainPage';
 import Main from '../components/main/Main';
+import DiaryPage from '../pages/DiaryPage';
+import MyPage from '../pages/MyPage';
 
 function AppRouter() {
   return (
@@ -20,6 +22,8 @@ function AppRouter() {
       // 프로젝트 페이지
       <Route path="/project/*" element={<ProjectPage></ProjectPage>} />
       <Route path="experience/*" element={<ExperiencePage />} />
+      // 마이 페이지
+      <Route path="/my" element={<MyPage />}></Route>
     </Routes>
   );
 }

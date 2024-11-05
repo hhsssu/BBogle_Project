@@ -1,5 +1,5 @@
 .button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   background-color: #1c1516;
   padding: 14px 24px;

@@ -1,16 +1,21 @@
 import style from './Main.module.css';
 import Lottie from 'lottie-react';
 import animationData from '../../assets/lottie/Welcome.json';
+// TODO : 임시 이미지
 import RunnerWay from '../../assets/image/RunnerWay.png';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
 import useProjectSelectStore from '../../store/useProjectSelectStore';
-import Loading from '../common/loading/DiaryLoading';
-
-import Bubble from '../../assets/lottie/Bubble.json';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setActiveProjectId(null);
+  }, []);
 
   // 카드 선택
   const handleCard = (id: number) => {
@@ -103,7 +108,10 @@ function Main() {
           ))}
         </div>
         <div className={style.button}>
-          <GoToDiary isInactive={activeProjectId === null} />
+          <GoToDiary
+            isInactive={activeProjectId === null}
+            onClick={() => navigate(`/project/${activeProjectId}`)}
+          />
         </div>
       </div>
     </div>

@@ -24,6 +24,7 @@ interface UserStore {
   kakaoLogout: () => void;
   setEditNickname: () => void;
   updateNickname: (nickname: string) => Promise<void>;
+  updateProfile: (profile: string) => Promise<void>;
 }
 
 // 회원 정보 상태관리
@@ -109,6 +110,15 @@ const useUserStore = create<UserStore>()(
         set((state) => ({
           user: state.user ? { ...state.user, nickname } : state.user,
           isEditingNickname: false,
+        }));
+      },
+
+      // 프로필 이미지 수정 함수
+      updateProfile: async (profile: string) => {
+        set((state) => ({
+          user: state.user
+            ? { ...state.user, profileImage: profile }
+            : state.user,
         }));
       },
     }),

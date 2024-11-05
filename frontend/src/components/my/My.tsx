@@ -179,7 +179,10 @@ function My() {
             className={style.modalContent}
             onClick={(e) => e.stopPropagation()}
           >
-            <ProfileImageUploader initialImage={user?.profileImage || null} />
+            <ProfileImageUploader
+              initialImage={user?.profileImage || null}
+              onComplete={closeModal}
+            />
           </div>
         </div>
       )}

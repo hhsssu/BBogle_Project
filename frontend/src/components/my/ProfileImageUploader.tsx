@@ -6,15 +6,24 @@ import ImageWithDefault from './ImageWithDefault';
 import DownloadIcon from '../../assets/image/icon/Download.svg';
 import DefaultImage from '../../assets/image/default/Image.svg';
 import DefaultProfile from '../../assets/image/default/profile.svg';
+import useUserStore from '../../store/useUserStore';
 
 interface ProfileImageUploaderProps {
   initialImage: null | string;
+  onComplete: () => void;
 }
 
-function ProfileImageUploader({ initialImage }: ProfileImageUploaderProps) {
+function ProfileImageUploader({
+  initialImage,
+  onComplete,
+}: ProfileImageUploaderProps) {
   // 미리보기 이미지 상태 및 업로드 진행률 상태 관리
   const [previewImage, setPreviewImage] = useState<string | null>(initialImage);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const { updateProfile } = useUserStore();
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
 
   useEffect(() => {
     if (initialImage) setPreviewImage(initialImage);
@@ -23,7 +32,18 @@ function ProfileImageUploader({ initialImage }: ProfileImageUploaderProps) {
   // 파일 선택 시 호출되는 함수
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
+
     if (file) {
+      // 파일 크기 및 형식 확인
+      if (file.size > MAX_FILE_SIZE) {
+        alert('이미지 파일 크기는 5MB를 초과할 수 없습니다.');
+        return;
+      }
+      if (!SUPPORTED_FORMATS.includes(file.type)) {
+        alert('지원하는 이미지 형식은 JPG, PNE입니다.');
+        return;
+      }
+
       uploadImage(file);
     }
   };
@@ -33,6 +53,16 @@ function ProfileImageUploader({ initialImage }: ProfileImageUploaderProps) {
     event.preventDefault();
     const file = event.dataTransfer.files && event.dataTransfer.files[0];
     if (file) {
+      // 파일 크기 및 형식 확인
+      if (file.size > MAX_FILE_SIZE) {
+        alert('이미지 파일 크기는 5MB를 초과할 수 없습니다.');
+        return;
+      }
+      if (!SUPPORTED_FORMATS.includes(file.type)) {
+        alert('지원하는 이미지 형식은 JPG, PNE입니다.');
+        return;
+      }
+
       uploadImage(file);
     }
   };
@@ -77,7 +107,11 @@ function ProfileImageUploader({ initialImage }: ProfileImageUploaderProps) {
   };
 
   // 프로필 이미지 업데이트를 관리하는 함수
-  const handleUpdate = () => {};
+  const handleUpdate = () => {
+    updateProfile(previewImage || '');
+    console.log('이미지 업데이트');
+    onComplete(); // 수정 완료 후 모달 닫기
+  };
 
   return (
     <div className={style.container}>

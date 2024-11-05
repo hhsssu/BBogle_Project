@@ -8,16 +8,17 @@ import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
 
 function DiaryCreate() {
   const questionList = useDiaryStore((state) => state.questionList);
+  const answerList = useDiaryStore((state) => state.answerList);
 
   const navigate = useNavigate();
   const project = useProjectStore((state) => state.project);
+  const initQnaList = useDiaryStore((state) => state.initQnaList);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const questionRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const positionArr = useRef<number[]>([]);
 
-  const answerList = useDiaryStore((state) => state.answerList);
   // const [currentIdx, setCurrentIdx] = useState(0);
 
   const navPjtDetail = () => {
@@ -97,6 +98,10 @@ function DiaryCreate() {
   // };
 
   useEffect(() => {
+    initQnaList();
+  }, []);
+
+  useEffect(() => {
     for (let index = 0; index <= questionList.length; index++) {
       if (!circleRefArr.current[index]) {
         circleRefArr.current[index] = React.createRef();
@@ -139,6 +144,7 @@ function DiaryCreate() {
                 index={index + 1}
                 question={question.question}
                 description={question.description}
+                answer={answerList[index]}
                 circleRef={circleRefArr.current[index]}
                 lineRef={lineRefArr.current[index]}
               />

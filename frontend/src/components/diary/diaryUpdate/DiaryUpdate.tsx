@@ -11,6 +11,7 @@ function DiaryUpdate() {
 
   const questionList = useDiaryStore((state) => state.questionList);
   const answerList = useDiaryStore((state) => state.answerList);
+  const getQnaList = useDiaryStore((state) => state.getQnaList);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
@@ -45,6 +46,10 @@ function DiaryUpdate() {
       },
     );
   };
+
+  useEffect(() => {
+    getQnaList();
+  }, []);
 
   useEffect(() => {
     for (let index = 0; index <= questionList.length; index++) {
@@ -86,6 +91,7 @@ function DiaryUpdate() {
                 index={index + 1}
                 question={question.question}
                 description={question.description}
+                answer={answerList[index]}
                 circleRef={circleRefArr.current[index]}
                 lineRef={lineRefArr.current[index]}
               />

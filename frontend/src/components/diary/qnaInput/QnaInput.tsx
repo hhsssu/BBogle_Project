@@ -8,16 +8,22 @@ interface Props {
   index: number;
   question: string;
   description: string;
+  answer: string;
   circleRef: React.RefObject<HTMLDivElement> | null;
   lineRef: React.RefObject<HTMLDivElement> | null;
 }
 
-function QnaInput({ index, question, description, circleRef, lineRef }: Props) {
-  const [textValue, setTextValue] = useState('');
+function QnaInput({
+  index,
+  question,
+  description,
+  answer,
+  circleRef,
+  lineRef,
+}: Props) {
   const updateAnswer = useDiaryStore((state) => state.updateAnswer);
 
   const handleText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTextValue(event.target.value);
     updateAnswer(index - 1, event.target.value);
   };
 
@@ -36,11 +42,11 @@ function QnaInput({ index, question, description, circleRef, lineRef }: Props) {
       <div className={style.textBlock}>
         <textarea
           className={style.textArea}
-          value={textValue}
+          value={answer}
           onChange={handleText}
           maxLength={500}
         ></textarea>
-        <p className={style.textLength}>{textValue.length} / 500자</p>
+        <p className={style.textLength}>{answer.length} / 500자</p>
       </div>
     </div>
   );

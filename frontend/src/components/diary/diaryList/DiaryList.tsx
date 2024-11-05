@@ -45,8 +45,12 @@ function DiaryList() {
   return (
     <div className={style.fins}>
       {diaryData.map((card) => (
-        <div onClick={() => navDiaryDetail(card.diaryID)}>
-          <DiaryCard key={card.diaryID} title={card.title} date={card.date} />
+        <div key={card.diaryID} onClick={() => navDiaryDetail(card.diaryID)}>
+          <DiaryCard
+            diaryId={card.diaryID}
+            title={card.title}
+            date={card.date}
+          />
         </div>
       ))}
     </div>

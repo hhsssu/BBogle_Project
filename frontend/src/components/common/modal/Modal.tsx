@@ -27,10 +27,10 @@ function Modal({
         <h2 className={style.title}>{title}</h2>
         <p className={style.content}>{content}</p>
         <div className={style.actions}>
-          <button className={style.cancle} onClick={() => onClose}>
+          <button className={style.cancle} onClick={onClose}>
             {cancleText}
           </button>
-          <button className={style.confirm} onClick={() => onConfirm}>
+          <button className={style.confirm} onClick={onConfirm}>
             {confirmText}
           </button>
         </div>

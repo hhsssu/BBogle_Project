@@ -9,10 +9,15 @@ spring:
     import: application-key.yml
 
   datasource:
-    url: jdbc:mysql://localhost:3306/${mysql_database}
+    url: jdbc:mysql://k11b102.p.ssafy.io:3306/${mysql_database}
     username: ${mysql_username}
     password: ${mysql_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: localhost
+      port: ${redis_port}
 
   jpa:
     hibernate:
@@ -29,7 +34,7 @@ spring:
             client-id: ${kakao_client_id}
             client-secret: ${kakao_client_secret}
             client-authentication-method: client_secret_post
-            redirect-uri: "http://localhost:8080//login/oauth2/code/kakao"
+            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
             authorization-grant-type: authorization_code
             scope:
               - profile_nickname

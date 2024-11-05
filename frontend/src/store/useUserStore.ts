@@ -18,17 +18,31 @@ interface User {
 interface UserStore {
   user: User | null;
   isAuthenticated: boolean;
+  isEditingNickname: boolean;
   kakaoRedirect: () => void;
   kakaoLogin: (code: string) => Promise<void>;
   kakaoLogout: () => void;
+  setEditNickname: () => void;
+  updateNickname: (nickname: string) => Promise<void>;
+  updateProfile: (profile: string) => Promise<void>;
 }
 
 // 회원 정보 상태관리
 const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
-      user: null,
-      isAuthenticated: false,
+      // TODO : 기본 더미 유저 데이터
+      // user: null,
+      // isAuthenticated: false,
+      // isEditingNickname: false,
+      user: {
+        id: 4,
+        nickname: '지혜',
+        email: 'jihye@example.com',
+        profileImage: 'src/assets/image/dummy/profile.jpg',
+      },
+      isAuthenticated: true,
+      isEditingNickname: false,
 
       // kakao redirect 함수
       kakaoRedirect: () => {
@@ -84,6 +98,28 @@ const useUserStore = create<UserStore>()(
       kakaoLogout: () => {
         // 로그아웃 시 상태 초기화
         set({ user: null, isAuthenticated: false });
+      },
+
+      // 닉네임 편집 모드 상태 관리 함수
+      setEditNickname: () => {
+        set((state) => ({ isEditingNickname: !state.isEditingNickname }));
+      },
+
+      // 회원 정보 수정 함수
+      updateNickname: async (nickname: string) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, nickname } : state.user,
+          isEditingNickname: false,
+        }));
+      },
+
+      // 프로필 이미지 수정 함수
+      updateProfile: async (profile: string) => {
+        set((state) => ({
+          user: state.user
+            ? { ...state.user, profileImage: profile }
+            : state.user,
+        }));
       },
     }),
     {

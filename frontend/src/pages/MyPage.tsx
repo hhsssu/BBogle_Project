@@ -1,5 +1,11 @@
+import My from '../components/my/My';
+
 function MyPage() {
-    return <></>;
+  return (
+    <>
+      <My />
+    </>
+  );
 }
 
 export default MyPage;

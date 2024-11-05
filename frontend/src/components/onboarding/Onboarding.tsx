@@ -1,7 +1,12 @@
 import style from './Onboarding.module.css';
 import KakaoLogin from '../../assets/image/KakaoLogin.png';
+import { useNavigate } from 'react-router-dom';
+import useUserStore from '../../store/useUserStore';
 
 function Onboarding() {
+  const { kakaoRedirect } = useUserStore();
+  const navigate = useNavigate();
+
   const goToLogin = () => {
     // 리다이랙트 URL
     window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';

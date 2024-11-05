@@ -8,6 +8,7 @@ import GoToDiary from '../common/button/GoToDiary';
 import useProjectSelectStore from '../../store/useProjectSelectStore';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import HorizontalScroll from '../common/scroll/horizontalScroll';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
@@ -90,8 +91,8 @@ function Main() {
             개발한 프로젝트를 선택해주세요 !
           </div>
         </div>
-        <div className={style.pjtList}>
-          {pjtList.map((card, index) => (
+        <HorizontalScroll
+          children={pjtList.map((card, index) => (
             <div
               className={`${style.pjtCard} ${activeProjectId === card.id ? style.active : ''}`}
               onClick={() => handleCard(card.id)}
@@ -106,7 +107,24 @@ function Main() {
               />
             </div>
           ))}
-        </div>
+        ></HorizontalScroll>
+        {/* // <div className={style.pjtList}>
+        //   {pjtList.map((card, index) => (
+        //     <div
+        //       className={`${style.pjtCard} ${activeProjectId === card.id ? style.active : ''}`}
+        //       onClick={() => handleCard(card.id)}
+        //       key={index}
+        //     >
+        //       <ProjectCard
+        //         imageSrc={card.imageSrc}
+        //         title={card.title}
+        //         state={card.state}
+        //         term={card.term}
+        //         summary={card.summary}
+        //       />
+        //     </div>
+        //   ))}
+        // </div> */}
         <div className={style.button}>
           <GoToDiary
             isInactive={activeProjectId === null}

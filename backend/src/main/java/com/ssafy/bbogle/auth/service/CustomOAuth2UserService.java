@@ -51,32 +51,32 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .build());
         userRepository.save(user);
 
-        // 토큰 발급
-        String accessToken = jwtUtil.generateAccessToken(user.getKakaoId().toString());
-        String refreshToken = jwtUtil.generateRefreshToken(user.getKakaoId().toString());
-
-        // 리프레시 토큰 저장
-        redisUtil.save(user.getKakaoId().toString(), refreshToken, jwtUtil.getRefreshTokenExpire());
-
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setMaxAge((int)jwtUtil.getRefreshTokenExpire()/1000);
-        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-        response.addCookie(cookie);
-
-        // 액세스 토큰
-        response.setContentType("application/json");
-        response.setCharacterEncoding("utf-8");
-
-        Map<String, String> accessTokenMap = Map.of("accessToken", accessToken);
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            objectMapper.writeValue(response.getWriter(), accessTokenMap);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        // 토큰 발급
+//        String accessToken = jwtUtil.generateAccessToken(user.getKakaoId().toString());
+//        String refreshToken = jwtUtil.generateRefreshToken(user.getKakaoId().toString());
+//
+//        // 리프레시 토큰 저장
+//        redisUtil.save(user.getKakaoId().toString(), refreshToken, jwtUtil.getRefreshTokenExpire());
+//
+//        Cookie cookie = new Cookie("refreshToken", refreshToken);
+//        cookie.setPath("/");
+//        cookie.setHttpOnly(true);
+//        cookie.setSecure(true);
+//        cookie.setMaxAge((int)jwtUtil.getRefreshTokenExpire()/1000);
+//        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+//        response.addCookie(cookie);
+//
+//        // 액세스 토큰
+//        response.setContentType("application/json");
+//        response.setCharacterEncoding("utf-8");
+//
+//        Map<String, String> accessTokenMap = Map.of("accessToken", accessToken);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        try {
+//            objectMapper.writeValue(response.getWriter(), accessTokenMap);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
         return oAuth2User;
     }

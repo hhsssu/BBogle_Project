@@ -7,12 +7,12 @@ spring:
   config:
     import: application-key.yml
   datasource:
-    url: jdbc:mysql://localhost:3306/${mysql_database}
+    url: jdbc:mysql://k11b102.p.ssafy.io:3306/${mysql_database}
     username: ${mysql_username}
     password: ${mysql_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       dialect: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false

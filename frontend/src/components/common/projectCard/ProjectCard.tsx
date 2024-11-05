@@ -13,28 +13,28 @@ interface Props {
 
 function ProjectCard({ imageSrc, title, state, term, summary }: Props) {
   return (
-    <div className={style['card']}>
-      <section className={style['sec1']}>
-        <img className={style['img']} src={imageSrc} alt="" />
+    <div className={style.card}>
+      <section className={style.cardHeader}>
+        <img className={style.img} src={imageSrc} alt="" />
         <div>
-          <div className={style.header}>
-            <span className={style['title']}>
+          <div className={style.titleWrapper}>
+            <span className={style.title}>
               {title.length > 10 ? title.substring(0, 11) + '...' : title}
             </span>
             <div
-              className={`${style['state']} ${style[state ? 'stateTrue' : 'stateFalse']}`}
+              className={`${style.state} ${state ? style.stateActive : style.stateInactive}`}
             >
               {state ? '진행 중' : '종료'}
             </div>
           </div>
-          <div className={style['term']}>{term}</div>
+          <div className={style.term}>{term}</div>
         </div>
-        <img className={style['more']} src={MoreVertical} alt="더보기" />
+        <img className={style.moreIcon} src={MoreVertical} alt="더보기" />
       </section>
 
-      <section className={style['sec2']}>
-        <div className={style['summary']}>{summary}</div>
-        <img className={style['bell']} src={Bell} alt="알림 아이콘" />
+      <section className={style.cardContent}>
+        <div className={style.summary}>{summary}</div>
+        <img className={style.bellIcon} src={Bell} alt="알림 아이콘" />
       </section>
     </div>
   );

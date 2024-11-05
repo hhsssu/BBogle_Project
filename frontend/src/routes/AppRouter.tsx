@@ -21,8 +21,6 @@ function AppRouter() {
       </Route>
       // 프로젝트 페이지
       <Route path="/project/*" element={<ProjectPage></ProjectPage>} />
-      // 개발일지 페이지
-      <Route path="/diary/*" element={<DiaryPage></DiaryPage>} />
       <Route path="experience/*" element={<ExperiencePage />} />
       // 마이 페이지
       <Route path="/my" element={<MyPage />}></Route>

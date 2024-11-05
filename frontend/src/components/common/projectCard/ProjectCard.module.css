@@ -12,7 +12,7 @@
   cursor: pointer;
 }
 
-.sec1 {
+.cardHeader {
   display: flex;
   align-items: center;
   position: relative;
@@ -28,7 +28,7 @@
   margin-right: 10px;
 }
 
-.sec1 > div > div {
+.titleWrapper {
   display: flex;
   align-items: center;
 }
@@ -54,12 +54,12 @@
   border-radius: 8px;
 }
 
-.stateTrue {
+.stateActive {
   background-color: rgba(30, 166, 252, 0.1);
   color: rgba(30, 166, 252, 1);
 }
 
-.stateFalse {
+.stateInactive {
   background-color: rgba(239, 122, 133, 0.3);
   color: rgba(255, 92, 23, 1);
 }
@@ -69,13 +69,13 @@
   color: rgba(160, 160, 160, 1);
 }
 
-.more {
+.moreIcon {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-.sec2 {
+.cardContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,6 +87,6 @@
   font-size: 10px;
 }
 
-.bell {
+.bellIcon {
   width: 20px;
 }

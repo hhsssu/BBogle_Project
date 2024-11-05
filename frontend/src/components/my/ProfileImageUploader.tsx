@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './ProfileImageUploader.module.css';
+import ImageWithDefault from './ImageWithDefault';
 
 // 이미지 파일
 import DownloadIcon from '../../assets/image/icon/Download.svg';
 import DefaultImage from '../../assets/image/default/Image.svg';
+import DefaultProfile from '../../assets/image/default/profile.svg';
 
-function ProfileImageUploader() {
+interface ProfileImageUploaderProps {
+  initialImage: null | string;
+}
+
+function ProfileImageUploader({ initialImage }: ProfileImageUploaderProps) {
   // 미리보기 이미지 상태 및 업로드 진행률 상태 관리
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(initialImage);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
+
+  useEffect(() => {
+    if (initialImage) setPreviewImage(initialImage);
+  }, [initialImage]);
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,10 +85,10 @@ function ProfileImageUploader() {
         <div className={style.profile}>
           <div className={style.preview}>
             {previewImage ? (
-              <img
+              <ImageWithDefault
                 src={previewImage}
                 alt="미리보기"
-                className={style.previewImage}
+                defaultSrc={DefaultProfile}
               />
             ) : (
               <p>미리보기</p>

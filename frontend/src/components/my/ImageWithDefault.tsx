@@ -2,7 +2,7 @@ interface ImageWithDefaultDrops {
   src: string | null | undefined;
   alt: string;
   defaultSrc: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 // 이미지 오류 시 default 이미지를 로드하는 함수
@@ -25,10 +25,10 @@ function ImageWithDefault({
       onError={handleError}
       onClick={onClick}
       style={{
-        width: '200px',
-        height: '200px',
+        width: '100%',
+        height: '100%',
         borderRadius: '50%',
-        marginRight: '40px',
+        // marginRight: '40px',
         objectFit: 'cover',
       }}
     />

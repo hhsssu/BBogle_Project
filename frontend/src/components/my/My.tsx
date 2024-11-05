@@ -4,6 +4,7 @@ import Empty from '../../assets/image/default/diary.png';
 import EnterIcon from '../../assets/image/icon/Enter.svg';
 import ImageWithDefault from './ImageWithDefault';
 import RunnerWay from '../../assets/image/RunnerWay.png'; // TODO : 임시 이미지
+import DefaultImage from '../../assets/image/default/profile.svg';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
 import { useNavigate } from 'react-router-dom';
@@ -127,12 +128,14 @@ function My() {
   return (
     <div className={style.container}>
       <div className={style.infoContainer}>
-        <ImageWithDefault
-          src={myData.profileImg}
-          alt="프로필"
-          defaultSrc="src/assets/image/default/profile.svg"
-          onClick={openModal}
-        ></ImageWithDefault>
+        <div>
+          <ImageWithDefault
+            src={user?.profileImage}
+            alt="프로필"
+            defaultSrc={DefaultImage}
+            onClick={openModal}
+          ></ImageWithDefault>
+        </div>
         <div className={style.detailInfo}>
           {!isEditingNickname ? (
             <div className={style.greeting}>
@@ -176,7 +179,7 @@ function My() {
             className={style.modalContent}
             onClick={(e) => e.stopPropagation()}
           >
-            <ProfileImageUploader />
+            <ProfileImageUploader initialImage={user?.profileImage || null} />
           </div>
         </div>
       )}

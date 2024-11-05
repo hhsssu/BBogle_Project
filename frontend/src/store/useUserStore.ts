@@ -38,7 +38,7 @@ const useUserStore = create<UserStore>()(
         id: 4,
         nickname: '지혜',
         email: 'jihye@example.com',
-        profileImage: 'null',
+        profileImage: 'src/assets/image/dummy/profile.jpg',
       },
       isAuthenticated: true,
       isEditingNickname: false,

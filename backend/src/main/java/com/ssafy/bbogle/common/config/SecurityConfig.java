@@ -1,5 +1,6 @@
 package com.ssafy.bbogle.common.config;
 
+import com.ssafy.bbogle.auth.service.CustomOAuth2AuthenticationSuccessHandler;
 import com.ssafy.bbogle.auth.service.CustomOAuth2UserService;
 import com.ssafy.bbogle.common.jwt.JwtAuthenticationFilter;
 import java.util.List;
@@ -23,6 +24,7 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomOAuth2AuthenticationSuccessHandler customOAuth2AuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,9 +42,11 @@ public class SecurityConfig {
 
             .oauth2Login(oauth2 -> oauth2
                 .loginPage("http://localhost:5173/")
-                .defaultSuccessUrl("http://localhost:5173/main")
+//                .defaultSuccessUrl("http://localhost:5173/main")
                 .userInfoEndpoint((userInfoEndpoint -> userInfoEndpoint
-                    .userService(customOAuth2UserService))))
+                    .userService(customOAuth2UserService)))
+                .successHandler(customOAuth2AuthenticationSuccessHandler)
+            )
 
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

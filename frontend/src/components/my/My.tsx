@@ -171,8 +171,11 @@ function My() {
       </div>
 
       {isModalOpen && (
-        <div className={style.modalOverlay}>
-          <div className={style.modalContent}>
+        <div className={style.modalOverlay} onClick={closeModal}>
+          <div
+            className={style.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
             <ProfileImageUploader />
           </div>
         </div>

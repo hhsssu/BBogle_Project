@@ -4,15 +4,51 @@ server:
 spring:
   application:
     name: bbogle
+
   config:
     import: application-key.yml
+
   datasource:
     url: jdbc:mysql://k11b102.p.ssafy.io:3306/${mysql_database}
     username: ${mysql_username}
     password: ${mysql_password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: localhost
+      port: ${redis_port}
+
   jpa:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL8Dialect
     open-in-view: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-name: kakao
+            client-id: ${kakao_client_id}
+            client-secret: ${kakao_client_secret}
+            client-authentication-method: client_secret_post
+            redirect-uri: "http://localhost:8080/login/oauth2/code/kakao"
+            authorization-grant-type: authorization_code
+            scope:
+              - profile_nickname
+              - account_email
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+
+
+jwt:
+  secret: ${jwt_secret}
+  access-expire: ${jwt_access_expire}
+  refresh-expire: ${jwt_refresh_expire}

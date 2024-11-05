@@ -33,7 +33,7 @@ function DiaryCreate() {
   const updateLineHeight = () => {
     lineRefArr.current.map(
       (line: React.RefObject<HTMLDivElement>, index: number) => {
-        if (line.current) {
+        if (line.current && circleRefArr.current[index]?.current) {
           const topLoc =
             Number(circleRefArr.current[index].current?.offsetTop) +
             Number(circleRefArr.current[index].current?.offsetHeight);
@@ -68,6 +68,8 @@ function DiaryCreate() {
     if (textLengthErr) {
       setErrMsgOn(true);
     } else {
+      setTextLengthErr(true);
+      setErrMsgOn(false);
       alert('작성 완료!');
       navigate('/project/0');
     }
@@ -114,6 +116,14 @@ function DiaryCreate() {
 
   useEffect(() => {
     initQnaList();
+
+    window.addEventListener('resize', updateLineHeight);
+    // window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', updateLineHeight);
+      // window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -133,15 +143,7 @@ function DiaryCreate() {
 
   useEffect(() => {
     updateLineHeight();
-
-    window.addEventListener('resize', updateLineHeight);
-    // window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('resize', updateLineHeight);
-      // window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  }, [questionList]);
 
   return (
     <div className={style.container}>

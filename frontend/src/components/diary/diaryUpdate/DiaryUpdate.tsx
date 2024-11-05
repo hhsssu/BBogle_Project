@@ -1,13 +1,14 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import style from './DiaryUpdate.module.css';
 import useDiaryStore from '../../../store/useDiaryStore';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import QnaInput from '../qnaInput/QnaInput';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
+import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
 
 function DiaryUpdate() {
   const navigate = useNavigate();
-  const { pjtId } = useParams();
+  const { pjtId, diaryId } = useParams();
 
   const questionList = useDiaryStore((state) => state.questionList);
   const answerList = useDiaryStore((state) => state.answerList);
@@ -16,18 +17,21 @@ function DiaryUpdate() {
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
 
+  const [textLengthErr, setTextLengthErr] = useState(true);
+  const [errMsgOn, setErrMsgOn] = useState(false);
+
   const navPjtDetail = () => {
     navigate(`/project/${pjtId}`);
   };
 
   const updateDiary = () => {
-    let totalTextLength = 0;
-    answerList.map((answer) => (totalTextLength += answer.length));
-
-    if (totalTextLength < 50) {
-      alert('전체 글자 수가 50자 이상이어야 저장할 수 있습니다.');
+    if (textLengthErr) {
+      setErrMsgOn(true);
     } else {
-      navigate('/project/0');
+      setTextLengthErr(true);
+      setErrMsgOn(false);
+      alert('수정 완료!');
+      navigate(`/project/${pjtId}/diary/${diaryId}`);
     }
   };
 
@@ -47,9 +51,33 @@ function DiaryUpdate() {
     );
   };
 
+  const checkTotalLength = () => {
+    let totalTextLength = 0;
+    answerList.map((answer) => (totalTextLength += answer.length));
+
+    if (totalTextLength >= 50) {
+      setTextLengthErr(false);
+      setErrMsgOn(false);
+    } else {
+      setTextLengthErr(true);
+    }
+  };
+
   useEffect(() => {
     getQnaList();
+
+    window.addEventListener('resize', updateLineHeight);
+    // window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', updateLineHeight);
+      // window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  useEffect(() => {
+    checkTotalLength();
+  }, [answerList]);
 
   useEffect(() => {
     for (let index = 0; index <= questionList.length; index++) {
@@ -61,15 +89,7 @@ function DiaryUpdate() {
 
   useEffect(() => {
     updateLineHeight();
-
-    window.addEventListener('resize', updateLineHeight);
-    // window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('resize', updateLineHeight);
-      // window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  }, [questionList]);
 
   return (
     <div className={style.container}>
@@ -111,9 +131,18 @@ function DiaryUpdate() {
         </div>
       </section>
 
-      <button className={style.updateBtn} onClick={updateDiary}>
+      <button
+        className={`${style.updateBtn} ${textLengthErr && style.failBtn}`}
+        onClick={updateDiary}
+      >
         완료
       </button>
+      {errMsgOn && (
+        <div className={style.errMsg}>
+          <img className={style.warnIcon} src={AlertTriangle} alt="경고" />
+          답변 길이가 너무 짧습니다! 50자 이상 작성해주세요{' '}
+        </div>
+      )}
     </div>
   );
 }

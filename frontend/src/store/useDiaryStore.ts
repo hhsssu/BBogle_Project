@@ -6,7 +6,7 @@ interface Question {
 }
 
 interface DiaryState {
-  // 개발일지 작성 및 상세 조회 - qna list
+  // 개발일지 작성, 수정 및 상세 조회 - qna list
   questionList: Question[];
   answerList: string[];
   getQnaList: () => void;
@@ -24,9 +24,22 @@ interface DiaryState {
 }
 
 const useDiaryStore = create<DiaryState>((set) => ({
-  // 개발일지 작성 및 상세 조회
-  questionList: [],
-  answerList: [],
+  // 개발일지 작성, 수정 및 상세 조회 - qna list
+  questionList: [
+    {
+      question: '',
+      description: '',
+    },
+    {
+      question: '',
+      description: '',
+    },
+    {
+      question: '',
+      description: '',
+    },
+  ],
+  answerList: ['', '', ''],
   initQnaList: () =>
     set(() => ({
       questionList: [

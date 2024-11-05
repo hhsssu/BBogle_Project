@@ -43,6 +43,14 @@ function DiaryDetail() {
 
   useEffect(() => {
     getQnaList();
+
+    window.addEventListener('resize', updateLineHeight);
+    // window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('resize', updateLineHeight);
+      // window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -55,19 +63,11 @@ function DiaryDetail() {
 
   useEffect(() => {
     updateLineHeight();
+  }, [questionList]);
 
-    window.addEventListener('resize', updateLineHeight);
-    // window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('resize', updateLineHeight);
-      // window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    // axios.get(`/api/projects/${pjtId}/diaries/${diaryId}`)
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`/api/projects/${pjtId}/diaries/${diaryId}`)
+  // }, []);
 
   return (
     <div className={style.container}>

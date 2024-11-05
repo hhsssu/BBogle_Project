@@ -30,9 +30,6 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
         Authentication authentication) throws IOException, ServletException {
 
-        if(!response.isCommitted()) {
-
-
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -53,20 +50,18 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         cookie.setMaxAge((int)jwtUtil.getRefreshTokenExpire()/1000);
         response.addCookie(cookie);
 
-//        response.setContentType("application/json");
-//        response.setCharacterEncoding("utf-8");
-//        response.getWriter().write("{\"accessToken\":\"" + accessToken + "\"}");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        response.getWriter().write("{\"accessToken\":\"" + accessToken + "\"}");
 
 //        // Access Token을 쿼리 파라미터로 전달하여 리다이렉트
 //        String redirectUrl = "http://localhost:5173/main?accessToken=" + accessToken;
 //        response.sendRedirect(redirectUrl); // 리다이렉트 수행
 
-        // Access Token을 헤더에 추가
-        response.setHeader("Authorization", "Bearer " + accessToken);
+//        // Access Token을 헤더에 추가
+//        response.setHeader("Authorization", "Bearer " + accessToken);
 
         // 리다이렉트 수행
         response.sendRedirect("http://localhost:5173/main");
-
-        }
     }
 }

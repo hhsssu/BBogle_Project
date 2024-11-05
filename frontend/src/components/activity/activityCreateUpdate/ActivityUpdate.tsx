@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
 import ActivityForm from './ActivityForm';
+import { ActivityFormData } from '../../../store/useActivityStore';
 
 import ActivityStyles from '../Activity.module.css';
 import ActivityCreateStyles from './ActivityCreate.module.css';
@@ -19,6 +20,11 @@ function ActivityUpdate() {
     nav(-1);
   };
 
+  // 폼 제출 로직
+  const handleSubmit = (formData: ActivityFormData) => {
+    console.log('폼 제출 데이터:', formData);
+  };
+
   return (
     <>
       <div className={ActivityStyles.backBtn} onClick={handleGoBack}>
@@ -34,11 +40,17 @@ function ActivityUpdate() {
         </div>
         <button
           className={`${ActivityStyles.regist} ${ActivityCreateStyles.regist}`}
+          // onClick={handleFormSubmit}
         >
           수정 완료
         </button>
       </section>
-      <ActivityForm activityId={numericActivityId} />
+
+      {/* TODO 폼 제출 오류 해결하기 */}
+      {/* <ActivityForm
+        activityId={numericActivityId}
+        onSubmit={handleFormSubmit}
+      /> */}
     </>
   );
 }

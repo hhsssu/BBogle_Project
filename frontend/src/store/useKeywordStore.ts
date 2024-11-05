@@ -4,7 +4,8 @@ import { create } from 'zustand';
 const API_LINK = import.meta.env.VITE_API_URL;
 
 export interface Keyword {
-  type: number;
+  id: number;
+  type: boolean;
   name: string;
 }
 

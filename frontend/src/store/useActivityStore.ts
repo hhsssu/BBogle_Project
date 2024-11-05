@@ -5,13 +5,24 @@ import { Keyword } from './useKeywordStore';
 
 const API_LINK = import.meta.env.VITE_API_URL;
 
+export interface ActivityFormData {
+  activityId: number;
+  title: string;
+  content: string;
+  startDate: string;
+  endDate: string;
+  selectedOptions: { id: number; type: boolean; name: string }[];
+  projectId: number | null;
+}
+
 interface Activity {
   activityId: number;
   title: string;
   content: string;
   startDate: string;
   endDate: string;
-  projectTitle: string;
+  projectId: number;
+  projectTitle?: string;
   keywords: Keyword[];
 }
 
@@ -35,6 +46,7 @@ const useActivityStore = create<ActivityState>((set) => ({
     content: '',
     startDate: '',
     endDate: '',
+    projectId: 0,
     projectTitle: '',
     keywords: [],
   },
@@ -66,7 +78,14 @@ const useActivityStore = create<ActivityState>((set) => ({
     try {
       const response = await axios.get(`${API_LINK}/activities/${activityId}`);
       const activity = response.data;
-      set({ activity });
+
+      // 프로젝트 타이틀 가져오기
+      const projectResponse = await axios.get(
+        `${API_LINK}/projects/${activity.projectId}`,
+      );
+      const projectTitle = projectResponse.data.title;
+
+      set({ activity: { ...activity, projectTitle } });
     } catch (error) {
       console.error(
         `경험 ID ${activityId} 데이터를 가져오는 데 실패했습니다: `,

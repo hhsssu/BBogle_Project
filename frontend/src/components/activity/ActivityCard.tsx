@@ -2,8 +2,9 @@ import ActivityStyles from './Activity.module.css';
 import MoreIcon from '../../assets/image/icon/More.svg';
 import { useNavigate } from 'react-router-dom';
 
-interface Tag {
-  type: number;
+interface Keyword {
+  id: number;
+  type: boolean;
   name: string;
 }
 
@@ -12,8 +13,8 @@ interface ExInfoProps {
   title: string;
   startDate: Date;
   endDate: Date;
-  projectTitle: string;
-  keywords: Tag[];
+  projectTitle?: string | undefined;
+  keywords: Keyword[];
 }
 
 // 경험 카드
@@ -55,7 +56,7 @@ function ActivityCard({
         {keywords.map((keyword, index) => (
           <div key={index}>
             {/* 기술태그 0 blue / 인성태그 1 yellow */}
-            {keyword.type === 0 ? (
+            {!keyword.type ? (
               <span className={ActivityStyles.bluekeyword}>{keyword.name}</span>
             ) : (
               <span className={ActivityStyles.yellowkeyword}>

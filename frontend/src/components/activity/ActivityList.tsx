@@ -7,10 +7,12 @@ import ActivityStyles from './Activity.module.css';
 
 import SearchIcon from '../../assets/image/icon/Search.svg';
 import EmptyFolder from '../../assets/image/icon/EmptyFolder.svg';
+// import useProjectStore from '../../store/useProjectStore';
 
 function ActivityList() {
   const nav = useNavigate();
   const { activities, fetchActivities } = useActivityStore();
+  // const {project, fetchProject} = useProjectStore();
 
   // 경험 수동 생성으로 이동
   const navActivityCreate = () => {
@@ -20,6 +22,7 @@ function ActivityList() {
   // 경험
   useEffect(() => {
     fetchActivities();
+    console.log(`activities: `, activities);
   }, [fetchActivities]);
 
   // 더미 데이터 예시
@@ -134,7 +137,7 @@ function ActivityList() {
                 title={activityCard.title}
                 startDate={new Date(activityCard.startDate)}
                 endDate={new Date(activityCard.endDate)}
-                projectTitle={activityCard.projectTitle}
+                projectTitle={activityCard.projectTitle ?? ''}
                 keywords={activityCard.keywords}
               />
             </div>

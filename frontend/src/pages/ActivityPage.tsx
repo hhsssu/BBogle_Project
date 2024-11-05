@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import ActivityList from '../components/experience/ActivityList';
-import ActivityDetail from '../components/experience/activityDetail/ActivityDetail';
-import ActivityCreate from '../components/experience/activityCreateUpdate/ActivityCreate';
+import ActivityList from '../components/activity/ActivityList';
+import ActivityDetail from '../components/activity/activityDetail/ActivityDetail';
+import ActivityCreate from '../components/activity/activityCreateUpdate/ActivityCreate';
 
-import ActivityStyles from '../components/experience/Activity.module.css';
-import ActivityUpdate from '../components/experience/activityCreateUpdate/ActivityUpdate';
+import ActivityStyles from '../components/activity/Activity.module.css';
+import ActivityUpdate from '../components/activity/activityCreateUpdate/ActivityUpdate';
 
 function ActivityPage() {
   return (

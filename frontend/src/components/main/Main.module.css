@@ -20,6 +20,11 @@
   margin-bottom: 10px;
 }
 
+.diary > div:nth-child(1) {
+  display: flex;
+  justify-content: space-between;
+}
+
 .mainDescription {
   font-weight: 600;
   font-size: 20px;
@@ -28,6 +33,20 @@
 
 .subDescription {
   color: #a0a0a0;
+}
+
+.scrollGuide {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scrollGuide.unvisible {
+  visibility: hidden;
+}
+
+.scroll {
+  height: 40px;
 }
 
 .pjtList {

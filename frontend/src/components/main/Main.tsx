@@ -11,13 +11,16 @@ import useProjectSelectStore from '../../store/useProjectSelectStore';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HorizontalScroll from '../common/scroll/HorizontalScroll';
+import useUserStore from '../../store/useUserStore';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
+  const { fetchUser, user } = useUserStore();
   const navigate = useNavigate();
   const [scrollGuide, setScrollGuide] = useState(true);
 
   useEffect(() => {
+    fetchUser();
     setActiveProjectId(null);
     setTimeout(() => {
       setScrollGuide(false);
@@ -84,7 +87,7 @@ function Main() {
           autoplay={true}
           className={style.welcome}
         />
-        <div className={style.greeting}>안녕하세요, {userName}님!</div>
+        <div className={style.greeting}>안녕하세요, {user?.nickname}님!</div>
       </div>
 
       <div className={style.diary}>

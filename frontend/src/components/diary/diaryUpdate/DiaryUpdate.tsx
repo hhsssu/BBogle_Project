@@ -1,39 +1,44 @@
-import style from './DiaryCreate.module.css';
-import useProjectStore from '../../../store/useProjectStore';
-import { useNavigate } from 'react-router-dom';
-import QnaInput from '../qnaInput/QnaInput';
+import { useNavigate, useParams } from 'react-router-dom';
+import style from './DiaryUpdate.module.css';
 import useDiaryStore from '../../../store/useDiaryStore';
 import React, { useEffect, useRef, useState } from 'react';
+import QnaInput from '../qnaInput/QnaInput';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
-
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
 
-function DiaryCreate() {
+function DiaryUpdate() {
+  const navigate = useNavigate();
+  const { pjtId, diaryId } = useParams();
+
   const questionList = useDiaryStore((state) => state.questionList);
   const answerList = useDiaryStore((state) => state.answerList);
-
-  const navigate = useNavigate();
-  const project = useProjectStore((state) => state.project);
-  const initQnaList = useDiaryStore((state) => state.initQnaList);
+  const getQnaList = useDiaryStore((state) => state.getQnaList);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
-  const questionRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
-  const positionArr = useRef<number[]>([]);
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
 
-  // const [currentIdx, setCurrentIdx] = useState(0);
-
   const navPjtDetail = () => {
-    navigate(`/project/${project.pjtID}`);
+    navigate(`/project/${pjtId}`);
+  };
+
+  const updateDiary = () => {
+    if (textLengthErr) {
+      setErrMsgOn(true);
+    } else {
+      setTextLengthErr(true);
+      setErrMsgOn(false);
+      alert('수정 완료!');
+      navigate(`/project/${pjtId}/diary/${diaryId}`);
+    }
   };
 
   const updateLineHeight = () => {
     lineRefArr.current.map(
       (line: React.RefObject<HTMLDivElement>, index: number) => {
-        if (line.current && circleRefArr.current[index]?.current) {
+        if (line.current) {
           const topLoc =
             Number(circleRefArr.current[index].current?.offsetTop) +
             Number(circleRefArr.current[index].current?.offsetHeight);
@@ -44,12 +49,6 @@ function DiaryCreate() {
         }
       },
     );
-
-    questionRefArr.current.map((ref, index) => {
-      if (ref.current) {
-        positionArr.current[index] = ref.current?.offsetTop;
-      }
-    });
   };
 
   const checkTotalLength = () => {
@@ -64,58 +63,8 @@ function DiaryCreate() {
     }
   };
 
-  const addDiary = () => {
-    if (textLengthErr) {
-      setErrMsgOn(true);
-    } else {
-      setTextLengthErr(true);
-      setErrMsgOn(false);
-      alert('작성 완료!');
-      navigate('/project/0');
-    }
-  };
-
-  // let lastScrollY = 0;
-  // const handleScroll = () => {
-  //   const scrollTop = window.scrollY;
-  //   const scrollDirectionDown = lastScrollY < scrollTop;
-
-  //   let newIdx = currentIdx;
-
-  //   if (scrollDirectionDown && currentIdx < positionArr.current.length - 1) {
-  //     const scrollLoc =
-  //       positionArr.current[currentIdx] +
-  //       (positionArr.current[currentIdx + 1] -
-  //         positionArr.current[currentIdx]) /
-  //         3;
-  //     if (scrollTop >= scrollLoc) {
-  //       newIdx = currentIdx + 1;
-  //     }
-  //   } else if (!scrollDirectionDown && currentIdx > 0) {
-  //     const scrollLoc =
-  //       positionArr.current[currentIdx] -
-  //       (positionArr.current[currentIdx] -
-  //         positionArr.current[currentIdx - 1]) /
-  //         3;
-
-  //     if (scrollTop <= scrollLoc) {
-  //       newIdx = currentIdx - 1;
-  //     }
-  //   }
-
-  //   if (newIdx !== currentIdx) {
-  //     setCurrentIdx(newIdx);
-  //     window.scrollTo({
-  //       top: positionArr.current[newIdx],
-  //       behavior: 'smooth',
-  //     });
-  //   }
-
-  //   lastScrollY = scrollTop;
-  // };
-
   useEffect(() => {
-    initQnaList();
+    getQnaList();
 
     window.addEventListener('resize', updateLineHeight);
     // window.addEventListener('scroll', handleScroll);
@@ -135,9 +84,6 @@ function DiaryCreate() {
       if (!circleRefArr.current[index]) {
         circleRefArr.current[index] = React.createRef();
       }
-      if (!questionRefArr.current[index]) {
-        questionRefArr.current[index] = React.createRef();
-      }
     }
   }, []);
 
@@ -151,7 +97,7 @@ function DiaryCreate() {
         돌아가기
       </div>
 
-      <div className={style.diaryTitle}>오늘의 Runner Way는 어땠나요?</div>
+      <div className={style.diaryTitle}>내용 한 줄 요약</div>
 
       <section className={style.diaryForm}>
         {questionList.map((question, index) => {
@@ -160,7 +106,7 @@ function DiaryCreate() {
           }
 
           return (
-            <div ref={questionRefArr.current[index]} key={index}>
+            <div key={index}>
               <QnaInput
                 index={index + 1}
                 question={question.question}
@@ -172,7 +118,8 @@ function DiaryCreate() {
             </div>
           );
         })}
-        <div ref={questionRefArr.current[questionList.length]}>
+
+        <div>
           <DiaryImgInput
             index={questionList.length + 1}
             question={'첨부 이미지 업로드'}
@@ -185,8 +132,8 @@ function DiaryCreate() {
       </section>
 
       <button
-        className={`${style.submitBtn} ${textLengthErr && style.failBtn}`}
-        onClick={addDiary}
+        className={`${style.updateBtn} ${textLengthErr && style.failBtn}`}
+        onClick={updateDiary}
       >
         완료
       </button>
@@ -200,4 +147,4 @@ function DiaryCreate() {
   );
 }
 
-export default DiaryCreate;
+export default DiaryUpdate;

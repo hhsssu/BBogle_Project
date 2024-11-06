@@ -7,7 +7,7 @@
 
 /* 상단 타이틀 스타일 */
 .title {
-  font-weight: 600;
+  font-weight: 700;
   /* 24px */
   font-size: 1.5rem;
   user-select: none;
@@ -90,6 +90,7 @@
   flex-direction: column;
   justify-content: space-between;
   user-select: none;
+  cursor: pointer;
 }
 
 /* 카드에 적힌 경험 제목 */
@@ -100,6 +101,8 @@
   /* 16px */
   font-size: 1rem;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .date {
@@ -156,6 +159,7 @@
   font-size: 1rem;
   margin: 10rem auto;
   line-height: 1.4;
+  user-select: none;
 }
 
 /* 경험 추가 버튼 */
@@ -182,4 +186,13 @@
   color: white;
   font-weight: 600;
   user-select: none;
+}
+
+/* 돌아가기 */
+.backBtn {
+  font-size: 14px;
+  color: rgba(160, 160, 160, 1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }

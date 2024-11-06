@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import useKeywordStore from '../../../store/useKeywordStore';
-import useActivityStore from '../../../store/useActivityStore';
+import useActivityKeywordStore from '../../../store/useActivityKeywordStore';
 // import useProjectStore from '../../../store/useProjectStore';
-import { ActivityFormData } from '../../../store/useActivityStore';
+// import { ActivityFormData } from '../../../store/useActivityStore';
 
 import useBeforeUnload from '../../../hooks/useBeforeUnload';
 
@@ -14,11 +13,25 @@ import BlueXIcon from '../../../assets/image/icon/BlueX.svg';
 import YellowXIcon from '../../../assets/image/icon/YellowX.svg';
 
 interface ActivityFormProps {
-  activityId: number;
-  onSubmit: (formData: ActivityFormData) => void;
+  activityId?: number; // 작성 페이지에서는 받을 필요 없음
+  onSubmit: (event: React.FormEvent) => void;
+  initialValues: {
+    title: string;
+    content: string;
+    startDate: string;
+    endDate: string;
+    projectId: number | null;
+    keywords: { id: number; type: boolean; name: string }[];
+  };
 }
 
-function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
+function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
+  // TODO 프로젝트 API 가져오기
+  // const { projects, fetchProjects } = useProjectStore();
+
+  // TODO 경험 키워드 가져오기
+  const { activityKeywords, fetchActivityKeywords } = useActivityKeywordStore();
+
   // TODO 더미데이터 삭제
   //   const Keywords = [
   //     { type: 0, name: '기술1' },
@@ -34,20 +47,12 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
     { id: 3, name: 'SFD' },
     { id: 4, name: 'Challet' },
   ];
-
-  const { activity, fetchActivityById } = useActivityStore();
-  const { keywords, fetchKeywords } = useKeywordStore();
-  //   TODO 프로젝트 API 가져오기
-  //   const { projects, fetchProjects } = useProjectStore();
-
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [selectedOptions, setSelectedOptions] = useState<
-    { id: number; type: boolean; name: string }[]
-  >([]);
-  const [projectId, setProjectId] = useState<number | null>(null);
+  const [title, setTitle] = useState(initialValues.title);
+  const [content, setContent] = useState(initialValues.content);
+  const [startDate, setStartDate] = useState(initialValues.startDate);
+  const [endDate, setEndDate] = useState(initialValues.endDate);
+  const [projectId, setProjectId] = useState(initialValues.projectId);
+  const [keywords, setKeywords] = useState(initialValues.keywords);
   // const [projectTitle, setProjectTitle] = useState('');
 
   // 페이지 이탈 방지 경고 설정
@@ -62,10 +67,9 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
 
   // ✅데이터 불러오기
   useEffect(() => {
-    fetchActivityById(activityId);
-    fetchKeywords();
+    fetchActivityKeywords();
     // fetchProjects();
-  }, [activityId]);
+  }, [initialValues]);
 
   // ✅입력이 변경된 상태에서 페이지 이탈 시 경고 알림
   const handleInputChange =
@@ -76,16 +80,16 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
     };
 
   // ✅선택할 때마다 키워드 추가
-  const handleSelectOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedKeyword = keywords.find(
+  const handleSelectKeyword = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedKeyword = activityKeywords.find(
       (keyword) => keyword.name === event.target.value,
     );
     if (
       selectedKeyword &&
-      !selectedOptions.some((option) => option.name === selectedKeyword.name)
+      !keywords.some((option) => option.name === selectedKeyword.name)
     ) {
-      if (selectedOptions.length < 3) {
-        setSelectedOptions([...selectedOptions, selectedKeyword]);
+      if (keywords.length < 3) {
+        setKeywords([...keywords, selectedKeyword]);
         setIsWrite(true);
       } else {
         alert('키워드는 최대 3개까지 선택 가능합니다.');
@@ -95,9 +99,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
 
   // ✅키워드 삭제
   const deleteHandle = (option: string) => {
-    setSelectedOptions(
-      selectedOptions.filter((keyword) => keyword.name !== option),
-    );
+    setKeywords(keywords.filter((keyword) => keyword.name !== option));
     setIsWrite(true);
   };
 
@@ -115,24 +117,8 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
     setProjectId(selectedId);
   };
 
-  // ✅폼 제출 로직
-  const handleFormSubmit = () => {
-    const formData: ActivityFormData = {
-      activityId,
-      title,
-      content,
-      startDate,
-      endDate,
-      selectedOptions,
-      projectId,
-    };
-
-    onSubmit(formData); // 부모 컴포넌트로 데이터 전달
-    setIsWrite(false); // 제출 후 경고 비활성화
-  };
-
   return (
-    <>
+    <form onSubmit={onSubmit}>
       {/* 수정 / 작성하는 부분 */}
       <section className={ActivityCreateStyles.container}>
         {/* 제목 */}
@@ -148,7 +134,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
           type="text"
           maxLength={20}
           placeholder="제목을 입력하세요 (최대 20자)"
-          value={!activity || activityId === 0 ? title : activity.title}
+          value={title}
           onChange={handleInputChange(setTitle)}
           className={ActivityCreateStyles.subtitle}
         />
@@ -166,7 +152,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
           name="content"
           rows={10}
           placeholder="내용을 입력하세요 (최대 700자)"
-          value={!activity || activityId === 0 ? content : activity.content}
+          value={content}
           onChange={handleInputChange(setContent)}
           className={ActivityCreateStyles.content}
           onInput={handleTextareaChange}
@@ -187,9 +173,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
             <p className={ActivityCreateStyles.datedes}>시작일</p>
             <input
               type="date"
-              value={
-                !activity || activityId === 0 ? startDate : activity.startDate
-              }
+              value={startDate}
               onChange={handleInputChange(setStartDate)}
               className={ActivityCreateStyles.graybox}
             />
@@ -198,7 +182,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
             <p className={ActivityCreateStyles.datedes}>종료일</p>
             <input
               type="date"
-              value={!activity || activityId === 0 ? endDate : activity.endDate}
+              value={endDate}
               onChange={handleInputChange(setEndDate)}
               className={ActivityCreateStyles.graybox}
             />
@@ -212,7 +196,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
             name="keywords"
             id="keywords"
             defaultValue=""
-            onChange={handleSelectOption}
+            onChange={handleSelectKeyword}
             className={ActivityCreateStyles.graybox}
           >
             <option value="" disabled>
@@ -239,7 +223,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
           </select>
           {/* 선택한 키워드 */}
           <div className={ActivityStyles.flex}>
-            {selectedOptions.map((keyword, index) => (
+            {keywords.map((keyword, index) => (
               <div
                 key={index}
                 className={
@@ -265,7 +249,8 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
         <select
           name="projects"
           id="projects"
-          value={projectId || ''}
+          // null이면 undefined로 변환
+          value={projectId ?? undefined}
           onChange={handleProjectChange}
           className={ActivityCreateStyles.graybox}
         >
@@ -277,7 +262,7 @@ function ActivityForm({ activityId, onSubmit }: ActivityFormProps) {
           ))}
         </select>
       </section>
-    </>
+    </form>
   );
 }
 

@@ -15,6 +15,11 @@ function ActivityCreate() {
     nav(-1);
   };
 
+  // 폼 제출 로직
+  const handleFormSubmit = () => {
+    event?.preventDefault();
+  };
+
   return (
     <>
       <div className={ActivityStyles.backBtn} onClick={handleGoBack}>
@@ -30,11 +35,22 @@ function ActivityCreate() {
         </div>
         <button
           className={`${ActivityStyles.regist} ${ActivityCreateStyles.regist}`}
+          onClick={handleFormSubmit}
         >
           등록하기
         </button>
       </section>
-      <ActivityForm activityId={0} />
+      <ActivityForm
+        onSubmit={handleFormSubmit}
+        initialValues={{
+          title: '',
+          content: '',
+          startDate: '',
+          endDate: '',
+          projectId: null,
+          keywords: [],
+        }}
+      />
     </>
   );
 }

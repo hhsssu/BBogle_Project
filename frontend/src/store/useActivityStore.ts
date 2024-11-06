@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-import { Keyword } from './useKeywordStore';
+import { ActivityKeyword } from './useActivityKeywordStore';
 
 const API_LINK = import.meta.env.VITE_API_URL;
 
-export interface ActivityFormData {
-  activityId: number;
-  title: string;
-  content: string;
-  startDate: string;
-  endDate: string;
-  selectedOptions: { id: number; type: boolean; name: string }[];
-  projectId: number | null;
-}
+// export interface ActivityFormData {
+//   activityId: number;
+//   title: string;
+//   content: string;
+//   startDate: string;
+//   endDate: string;
+//   selectedOptions: { id: number; type: boolean; name: string }[];
+//   projectId: number | null;
+// }
 
 interface Activity {
   activityId: number;
@@ -23,18 +23,14 @@ interface Activity {
   endDate: string;
   projectId: number;
   projectTitle?: string;
-  keywords: Keyword[];
+  keywords: ActivityKeyword[];
 }
 
 interface ActivityState {
   activity: Activity;
   activities: Activity[];
   setActivity: (act: Activity[]) => void;
-  updateActivityField: (
-    activityId: number,
-    field: string,
-    value: string | string[] | number | boolean,
-  ) => void;
+  updateActivity: (updatedActivity: Activity) => void;
   fetchActivities: () => Promise<void>;
   fetchActivityById: (activityId: number) => Promise<void>;
 }
@@ -54,11 +50,11 @@ const useActivityStore = create<ActivityState>((set) => ({
   setActivity: (act) => set(() => ({ activities: act })),
 
   // 경험 수정
-  updateActivityField: (activityId, field, value) =>
+  updateActivity: (updatedActivity) =>
     set((state) => ({
       activities: state.activities.map((act) =>
         // 아이디로 경험 찾기
-        act.activityId === activityId ? { ...act, [field]: value } : act,
+        act.activityId === updatedActivity.activityId ? updatedActivity : act,
       ),
     })),
 

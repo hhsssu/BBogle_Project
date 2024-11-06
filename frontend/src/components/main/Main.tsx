@@ -1,20 +1,27 @@
 import style from './Main.module.css';
 import Lottie from 'lottie-react';
-import animationData from '../../assets/lottie/Welcome.json';
+import Welcome from '../../assets/lottie/Welcome.json';
+import Scroll from '../../assets/lottie/Scroll.json';
+
 // TODO : 임시 이미지
 import RunnerWay from '../../assets/image/RunnerWay.png';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
 import useProjectSelectStore from '../../store/useProjectSelectStore';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import HorizontalScroll from '../common/scroll/HorizontalScroll';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
   const navigate = useNavigate();
+  const [scrollGuide, setScrollGuide] = useState(true);
 
   useEffect(() => {
     setActiveProjectId(null);
+    setTimeout(() => {
+      setScrollGuide(false);
+    }, 3000);
   }, []);
 
   // 카드 선택
@@ -72,7 +79,7 @@ function Main() {
     <div className={style.container}>
       <div className={style.header}>
         <Lottie
-          animationData={animationData}
+          animationData={Welcome}
           loop={false}
           autoplay={true}
           className={style.welcome}
@@ -81,17 +88,30 @@ function Main() {
       </div>
 
       <div className={style.diary}>
-        <div className={style.description}>
-          <div className={style.mainDescription}>
-            오늘의 <span style={{ color: '#FF5C17' }}>성장 기록</span>을
-            남겨보세요 :-)
+        <div>
+          <div className={style.description}>
+            <div className={style.mainDescription}>
+              오늘의 <span style={{ color: '#FF5C17' }}>성장 기록</span>을
+              남겨보세요 :-)
+            </div>
+            <div className={style.subDescription}>
+              개발한 프로젝트를 선택해주세요 !
+            </div>
           </div>
-          <div className={style.subDescription}>
-            개발한 프로젝트를 선택해주세요 !
+          <div
+            className={`${style.scrollGuide} ${!scrollGuide ? style.unvisible : ''}`}
+          >
+            가로로 스크롤해보세요
+            <Lottie
+              animationData={Scroll}
+              loop={false}
+              autoplay={true}
+              className={style.scroll}
+            />
           </div>
         </div>
-        <div className={style.pjtList}>
-          {pjtList.map((card, index) => (
+        <HorizontalScroll
+          children={pjtList.map((card, index) => (
             <div
               className={`${style.pjtCard} ${activeProjectId === card.id ? style.active : ''}`}
               onClick={() => handleCard(card.id)}
@@ -106,11 +126,11 @@ function Main() {
               />
             </div>
           ))}
-        </div>
+        ></HorizontalScroll>
         <div className={style.button}>
           <GoToDiary
             isInactive={activeProjectId === null}
-            onClick={() => navigate(`/project/${activeProjectId}`)}
+            onClick={() => navigate(`/project/${activeProjectId}/diary/create`)}
           />
         </div>
       </div>

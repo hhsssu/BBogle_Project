@@ -15,8 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Component
 @RequiredArgsConstructor
@@ -41,13 +39,20 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         String refreshToken = jwtUtil.generateRefreshToken(user.getKakaoId().toString());
 
         // 리프레시 토큰 저장
-        redisUtil.save(user.getKakaoId().toString(), refreshToken, jwtUtil.getRefreshTokenExpire());
+        redisUtil.saveRefresh(user.getKakaoId().toString(), refreshToken, jwtUtil.getRefreshTokenExpire());
+
+        // 리프레시 토큰 전달
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setSecure(true);
+        response.addCookie(refreshCookie);
 
         // 액세스 토큰 전달
-        Cookie cookie = new Cookie("accessToken", refreshToken);
-        cookie.setPath("/");
-        cookie.setSecure(true);
-        response.addCookie(cookie);
+        Cookie accessCookie = new Cookie("accessToken", accessToken);
+        accessCookie.setPath("/");
+        accessCookie.setSecure(true);
+        response.addCookie(accessCookie);
 
         response.sendRedirect("http://localhost:5173/main");
 

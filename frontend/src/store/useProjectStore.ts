@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import DefaultProfile from '../assets/image/icon/DefaultProfile.svg';
+import DefaultProject from '../assets/image/icon/DefaultProject.svg';
 import RunnerWay from '../assets/image/RunnerWay.png';
 
 interface Project {
@@ -30,7 +30,7 @@ interface ProjectState {
 const useProjectStore = create<ProjectState>((set) => ({
   project: {
     pjtID: 0,
-    imgSrc: DefaultProfile,
+    imgSrc: DefaultProject,
     title: '',
     summary: '',
     startDate: '',
@@ -46,7 +46,7 @@ const useProjectStore = create<ProjectState>((set) => ({
     set(() => ({
       project: {
         pjtID: 0,
-        imgSrc: DefaultProfile,
+        imgSrc: DefaultProject,
         title: '',
         summary: '',
         startDate: '',

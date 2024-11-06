@@ -1,9 +1,10 @@
 import style from './ProjectInfoSection.module.css';
 
-// import DefaultProfile from '../../../assets/image/icon/DefaultProfile.svg';
+import DefaultProject from '../../../assets/image/icon/DefaultProject.svg';
 
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import useProjectStore from '../../../store/useProjectStore';
+import ImageWithDefault from '../../my/ImageWithDefault';
 
 interface Props {
   titleError: boolean;
@@ -56,12 +57,20 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
           <span className={style.requiredMark}>*</span>
         </p>
         <div className={style.titleContainer}>
-          <img
+          <div className={style.img}>
+            <ImageWithDefault
+              src={project.imgSrc}
+              alt="로고"
+              defaultSrc={DefaultProject}
+              onClick={handleImgClick}
+            />
+          </div>
+          {/* <img
             className={style.img}
             src={project.imgSrc}
             alt="로고"
             onClick={handleImgClick}
-          />
+          /> */}
           <input
             className={style.hiddenInput}
             type="file"
@@ -72,6 +81,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
           <input
             className={`${style.titleInput} ${titleError && style.titleError}`}
             type="text"
+            maxLength={20}
             value={project.title}
             onChange={handleTitleChange}
             placeholder="프로젝트 이름을 입력해주세요 ! (20자 이내)"
@@ -90,6 +100,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
         <textarea
           className={style.summary}
           rows={3}
+          maxLength={100}
           value={project.summary}
           onChange={handleSummaryChange}
         ></textarea>

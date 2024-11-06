@@ -18,7 +18,7 @@ function ProjectUpdate() {
   const [termError, setTermError] = useState(false);
 
   const navPjtList = () => {
-    navigate('/project');
+    navigate(`/project/${pjtId}`);
   };
 
   const handleTitleError = (value: boolean) => {
@@ -41,7 +41,7 @@ function ProjectUpdate() {
     }
 
     console.log(project);
-    navigate('/project');
+    navigate(`/project/${pjtId}`);
   };
 
   useEffect(() => {

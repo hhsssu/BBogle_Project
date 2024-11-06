@@ -6,6 +6,7 @@ import ProjectPage from '../pages/ProjectPage';
 import ActivityPage from '../pages/ActivityPage';
 import MainPage from '../pages/MainPage';
 import Main from '../components/main/Main';
+import MyPage from '../pages/MyPage';
 
 function AppRouter() {
   return (
@@ -20,6 +21,8 @@ function AppRouter() {
       // 프로젝트 페이지
       <Route path="/project/*" element={<ProjectPage></ProjectPage>} />
       <Route path="activity/*" element={<ActivityPage />} />
+      // 마이 페이지
+      <Route path="/my" element={<MyPage />}></Route>
     </Routes>
   );
 }

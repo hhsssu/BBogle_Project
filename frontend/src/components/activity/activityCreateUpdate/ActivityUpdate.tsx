@@ -15,7 +15,8 @@ function ActivityUpdate() {
   // activityId를 숫자로 변환
   const numericActivityId = activityId ? parseInt(activityId, 10) : 0;
 
-  const { activity, fetchActivityById, updateActivity } = useActivityStore();
+  // TODO updateActivity 선언해야함
+  const { activity, fetchActivityById } = useActivityStore();
 
   // ✅데이터 불러오기
   useEffect(() => {

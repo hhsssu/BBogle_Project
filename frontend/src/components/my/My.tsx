@@ -29,13 +29,6 @@ function My() {
   const [newNickname, setNewNickname] = useState(user?.nickname || '');
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
-  // TODO : 내 정보 임시 데이터
-  const myData = {
-    name: '홍길은',
-    profileImg: 'src/assets/image/dummy/profile.jpg',
-    email: 'gileun@example.com',
-  };
-
   // TODO : 개발일지 임시 데이터
   const diaryList: DiaryItem[] = [
     // {

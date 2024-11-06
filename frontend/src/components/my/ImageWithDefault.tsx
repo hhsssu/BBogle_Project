@@ -28,8 +28,8 @@ function ImageWithDefault({
         width: '100%',
         height: '100%',
         borderRadius: '50%',
-        // marginRight: '40px',
         objectFit: 'cover',
+        cursor: 'pointer',
       }}
     />
   );

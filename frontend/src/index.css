@@ -56,3 +56,10 @@ button:focus {
 button {
   user-select: none;
 }
+
+body {
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}

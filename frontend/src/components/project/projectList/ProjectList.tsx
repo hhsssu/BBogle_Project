@@ -2,51 +2,16 @@ import ProjectCard from '../../common/projectCard/ProjectCard';
 import RunnerWay from '../../../assets/image/RunnerWay.png';
 import style from './ProjectList.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function ProjectList() {
-  const WIP_PJT_LIST = [
-    {
-      imageSrc: RunnerWay,
-      title: 'Runner Way',
-      state: true,
-      term: '2024.10.03 ~ 2024.11.30',
-      summary: '당신의 러닝을 함께하는 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Marathon Prep',
-      state: true,
-      term: '2024.09.01 ~ 2024.12.01',
-      summary: '마라톤을 준비하는 모든 러너들을 위한 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Daily Jogging',
-      state: true,
-      term: '2024.11.01 ~ 2024.12.31',
-      summary: '매일 조깅하는 습관을 길러주는 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Trail Exploration',
-      state: true,
-      term: '2024.08.15 ~ 2024.11.15',
-      summary: '자연 속 트레일을 탐험하며 러닝을 즐기는 프로젝트',
-    },
-    {
-      imageSrc: RunnerWay,
-      title: 'Night Runners',
-      state: true,
-      term: '2024.10.10 ~ 2024.12.10',
-      summary: '야간 러닝을 즐기는 러너들을 위한 프로젝트',
-    },
-  ];
+  const [onlyProgress, setOnlyProgress] = useState(false);
 
-  const FIN_PJT_LIST = [
+  const PJT_LIST = [
     {
       imageSrc: RunnerWay,
       title: 'Endurance Challenge',
-      state: false,
+      state: true,
       term: '2024.04.01 ~ 2024.06.30',
       summary: '한계를 극복하는 러닝 도전 프로젝트',
     },
@@ -149,41 +114,39 @@ function ProjectList() {
       </section>
 
       <section className={style.pjtSection}>
-        <div className={style.subTitle}>진행중인 프로젝트</div>
-        <div className={style.wips}>
-          {WIP_PJT_LIST.map((card, index) => (
-            <div onClick={() => navPjtCreate(index)}>
-              <ProjectCard
-                key={index}
-                imageSrc={card.imageSrc}
-                title={card.title}
-                state={card.state}
-                term={card.term}
-                summary={card.summary}
-              />
-            </div>
-          ))}
+        <div className={style.checkProgress}>
+          <input
+            type="checkbox"
+            onClick={() => setOnlyProgress(!onlyProgress)}
+          />
+          진행중인 것만 보기
         </div>
-      </section>
-
-      <br />
-      <hr className={style.hr} />
-      <br />
-      <section className={style.pjtSection}>
-        <div className={style.subTitle}>종료된 프로젝트</div>
         <div className={style.fins}>
-          {FIN_PJT_LIST.map((card, index) => (
-            <div onClick={() => navPjtCreate(index)}>
-              <ProjectCard
-                key={index}
-                imageSrc={card.imageSrc}
-                title={card.title}
-                state={card.state}
-                term={card.term}
-                summary={card.summary}
-              />
-            </div>
-          ))}
+          {onlyProgress
+            ? PJT_LIST.filter((pjt) => pjt.state).map((card, index) => (
+                <div key={index} onClick={() => navPjtCreate(index)}>
+                  <ProjectCard
+                    key={index}
+                    imageSrc={card.imageSrc}
+                    title={card.title}
+                    state={card.state}
+                    term={card.term}
+                    summary={card.summary}
+                  />
+                </div>
+              ))
+            : PJT_LIST.map((card, index) => (
+                <div key={index} onClick={() => navPjtCreate(index)}>
+                  <ProjectCard
+                    key={index}
+                    imageSrc={card.imageSrc}
+                    title={card.title}
+                    state={card.state}
+                    term={card.term}
+                    summary={card.summary}
+                  />
+                </div>
+              ))}
         </div>
       </section>
     </div>

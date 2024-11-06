@@ -26,38 +26,29 @@
   font-weight: 600;
 }
 
-.pjtSection {
-  padding: 20px;
-}
-
 .subTitle {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 20px;
 }
 
-.wips {
-  display: grid;
-  grid-auto-flow: column;
+.checkProgress {
+  display: flex;
   align-items: center;
-  overflow-x: auto;
-  scrollbar-width: none;
-  gap: 2.1rem;
-  padding-left: 0.1rem;
-  padding: 12px;
-}
-
-.hr {
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.1);
-  border: none;
+  gap: 8px;
+  margin: 10px 0;
 }
 
 .fins {
+  padding: 8px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
   place-items: center;
   overflow-y: auto;
-  scrollbar-width: none;
-  gap: 1.5rem 1rem;
+  -ms-overflow-style: none;
+  gap: 24px 8px;
+}
+
+.fins::-webkit-scrollbar {
+  display: none;
 }

@@ -11,7 +11,7 @@ import EmptyFolder from '../../assets/image/icon/EmptyFolder.svg';
 
 function ActivityList() {
   const nav = useNavigate();
-  const { activities, fetchActivities } = useActivityStore();
+  // const { activities, fetchActivities } = useActivityStore();
   // const {project, fetchProject} = useProjectStore();
 
   // 경험 수동 생성으로 이동
@@ -20,98 +20,98 @@ function ActivityList() {
   };
 
   // 경험
-  useEffect(() => {
-    fetchActivities();
-    console.log(`activities: `, activities);
-  }, [fetchActivities]);
+  // useEffect(() => {
+  //   fetchActivities();
+  //   console.log(`activities: `, activities);
+  // }, [fetchActivities]);
 
   // 더미 데이터 예시
-  // const activities = [
-  //   {
-  //     activityId: 1,
-  //     title: '소셜 로그인 구현',
-  //     startDate: '2024-01-01',
-  //     endDate: '2024-02-01',
-  //     projectTitle: 'RunnerWay',
-  //     keywords: [
-  //       { type: 0, name: '기술1' },
-  //       { type: 0, name: '기술2' },
-  //       { type: 1, name: '인성1' },
-  //     ],
-  //   },
-  //   {
-  //     activityId: 2,
-  //     title: '카카오 API를 이용한 로그인 구현',
-  //     startDate: '2024-01-01',
-  //     endDate: '2024-02-01',
-  //     projectTitle: 'WON TOUCH!',
-  //     keywords: [
-  //       { type: 0, name: '기술1' },
-  //       { type: 0, name: '기술2' },
-  //       { type: 1, name: '인성1' },
-  //     ],
-  //   },
-  //   {
-  //     activityId: 3,
-  //     title: '20자20자20자를채워보자20자20자',
-  //     startDate: '2024-01-01',
-  //     endDate: '2024-02-01',
-  //     projectTitle: 'RunnerWay',
-  //     keywords: [
-  //       { type: 0, name: '기술1' },
-  //       { type: 0, name: '기술2' },
-  //       { type: 1, name: '인성1' },
-  //     ],
-  //   },
-  //   {
-  //     activityId: 4,
-  //     title: '소셜 로그인 구현',
-  //     startDate: '2024-01-01',
-  //     endDate: '2024-02-01',
-  //     projectTitle: 'Challet',
-  //     keywords: [
-  //       { type: 0, name: '기술1' },
-  //       { type: 0, name: '기술2' },
-  //       { type: 1, name: '인성1' },
-  //     ],
-  //   },
-  //   {
-  //     activityId: 5,
-  //     title: '소셜 로그인 구현',
-  //     startDate: '2024-01-01',
-  //     endDate: '2024-02-01',
-  //     projectTitle: 'RunnerWay',
-  //     keywords: [
-  //       { type: 0, name: '기술1' },
-  //       { type: 0, name: '기술2' },
-  //       { type: 1, name: '인성1' },
-  //     ],
-  //   },
-  //   {
-  //     activityId: 6,
-  //     title: '소셜 로그인 구현',
-  //     startDate: '2024-01-01',
-  //     endDate: '2024-02-01',
-  //     projectTitle: 'WON TOUCH!',
-  //     keywords: [
-  //       { type: 0, name: '기술1' },
-  //       { type: 0, name: '기술2' },
-  //       { type: 1, name: '인성1' },
-  //     ],
-  //   },
-  //   {
-  //     activityId: 7,
-  //     title: '소셜 로그인 구현',
-  //     startDate: '2024-01-01',
-  //     endDate: '2024-02-01',
-  //     projectTitle: 'Challet',
-  //     keywords: [
-  //       { type: 0, name: '기술1' },
-  //       { type: 0, name: '기술2' },
-  //       { type: 1, name: '인성1' },
-  //     ],
-  //   },
-  // ];
+  const activities = [
+    {
+      activityId: 1,
+      title: '소셜 로그인 구현',
+      startDate: '2024-01-01',
+      endDate: '2024-02-01',
+      projectTitle: 'RunnerWay',
+      keywords: [
+        { type: 0, name: '기술1' },
+        { type: 0, name: '기술2' },
+        { type: 1, name: '인성1' },
+      ],
+    },
+    {
+      activityId: 2,
+      title: '카카오 API를 이용한 로그인 구현',
+      startDate: '2024-01-01',
+      endDate: '2024-02-01',
+      projectTitle: 'WON TOUCH!',
+      keywords: [
+        { type: 0, name: '기술1' },
+        { type: 0, name: '기술2' },
+        { type: 1, name: '인성1' },
+      ],
+    },
+    {
+      activityId: 3,
+      title: '20자20자20자를채워보자20자20자',
+      startDate: '2024-01-01',
+      endDate: '2024-02-01',
+      projectTitle: 'RunnerWay',
+      keywords: [
+        { type: 0, name: '기술1' },
+        { type: 0, name: '기술2' },
+        { type: 1, name: '인성1' },
+      ],
+    },
+    {
+      activityId: 4,
+      title: '소셜 로그인 구현',
+      startDate: '2024-01-01',
+      endDate: '2024-02-01',
+      projectTitle: 'Challet',
+      keywords: [
+        { type: 0, name: '기술1' },
+        { type: 0, name: '기술2' },
+        { type: 1, name: '인성1' },
+      ],
+    },
+    {
+      activityId: 5,
+      title: '소셜 로그인 구현',
+      startDate: '2024-01-01',
+      endDate: '2024-02-01',
+      projectTitle: 'RunnerWay',
+      keywords: [
+        { type: 0, name: '기술1' },
+        { type: 0, name: '기술2' },
+        { type: 1, name: '인성1' },
+      ],
+    },
+    {
+      activityId: 6,
+      title: '소셜 로그인 구현',
+      startDate: '2024-01-01',
+      endDate: '2024-02-01',
+      projectTitle: 'WON TOUCH!',
+      keywords: [
+        { type: 0, name: '기술1' },
+        { type: 0, name: '기술2' },
+        { type: 1, name: '인성1' },
+      ],
+    },
+    {
+      activityId: 7,
+      title: '소셜 로그인 구현',
+      startDate: '2024-01-01',
+      endDate: '2024-02-01',
+      projectTitle: 'Challet',
+      keywords: [
+        { type: 0, name: '기술1' },
+        { type: 0, name: '기술2' },
+        { type: 1, name: '인성1' },
+      ],
+    },
+  ];
 
   return (
     <>

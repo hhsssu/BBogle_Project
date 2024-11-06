@@ -59,6 +59,7 @@ button {
 
 body {
   -ms-overflow-style: none;
+  user-select: none;
 }
 ::-webkit-scrollbar {
   display: none;

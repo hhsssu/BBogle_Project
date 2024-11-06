@@ -19,6 +19,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
   const handleFinishDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     updateProject('finishDate', value);
+    console.log(value);
     handleTermError(false);
   };
 
@@ -42,6 +43,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
               className={style.dateInput}
               type="date"
               max={project.finishDate}
+              value={project.startDate}
               onChange={handleStartDate}
             />
           </div>
@@ -52,6 +54,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
               className={style.dateInput}
               type="date"
               min={project.startDate}
+              value={project.finishDate}
               onChange={handleFinishDate}
             />
           </div>
@@ -67,7 +70,11 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
       <div className={style.inputLabel}>
         <span className={style.label}>프로젝트 인원</span>
         <div>
-          <select className={style.selectInput} onChange={handleTeammate}>
+          <select
+            className={style.selectInput}
+            value={project.teammate}
+            onChange={handleTeammate}
+          >
             {Array.from({ length: 10 }, (_, index) => (
               <option key={index + 1} value={index + 1}>
                 {index + 1}

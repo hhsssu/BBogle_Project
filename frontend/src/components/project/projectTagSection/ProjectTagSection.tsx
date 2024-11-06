@@ -128,9 +128,10 @@ function ProjectTagSection() {
 
           {roleInputOpen ? (
             <input
+              ref={roleInputRef}
               className={style.tagInput}
               type="text"
-              ref={roleInputRef}
+              maxLength={20}
               value={roleInput}
               onChange={handleRoleInput}
               onKeyDown={addRole}
@@ -139,12 +140,14 @@ function ProjectTagSection() {
             ''
           )}
 
-          <img
-            className={style.addTag}
-            src={AddTag}
-            alt="태그 추가"
-            onClick={openRoleInput}
-          />
+          {project.roles.length < 7 && (
+            <img
+              className={style.addTag}
+              src={AddTag}
+              alt="태그 추가"
+              onClick={openRoleInput}
+            />
+          )}
         </div>
       </div>
 
@@ -167,9 +170,10 @@ function ProjectTagSection() {
 
           {techInputOpen ? (
             <input
+              ref={techInputRef}
               className={style.tagInput}
               type="text"
-              ref={techInputRef}
+              maxLength={20}
               value={techInput}
               onChange={handleTechInput}
               onKeyDown={addTech}
@@ -178,12 +182,14 @@ function ProjectTagSection() {
             ''
           )}
 
-          <img
-            className={style.addTag}
-            src={AddTag}
-            alt="태그 추가"
-            onClick={openTechInput}
-          />
+          {project.techs.length < 7 && (
+            <img
+              className={style.addTag}
+              src={AddTag}
+              alt="태그 추가"
+              onClick={openTechInput}
+            />
+          )}
         </div>
       </div>
     </div>

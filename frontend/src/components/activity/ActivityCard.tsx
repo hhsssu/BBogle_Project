@@ -48,24 +48,29 @@ function ActivityCard({
         </div>
       </div>
 
-      {/* 관련 프로젝트 명 */}
-      <div className={ActivityStyles.date}>{projectTitle}</div>
+      {/* 프로젝트 명 & 태그 */}
+      <div className={ActivityStyles.footer}>
+        {/* 관련 프로젝트 명 */}
+        <div className={ActivityStyles.project}>{projectTitle}</div>
 
-      {/* 경험 태그 */}
-      <section className={ActivityStyles.keywords}>
-        {keywords.map((keyword, index) => (
-          <div key={index}>
-            {/* 기술태그 0 blue / 인성태그 1 yellow */}
-            {!keyword.type ? (
-              <span className={ActivityStyles.bluekeyword}>{keyword.name}</span>
-            ) : (
-              <span className={ActivityStyles.yellowkeyword}>
-                {keyword.name}
-              </span>
-            )}
-          </div>
-        ))}
-      </section>
+        {/* 경험 태그 */}
+        <section className={ActivityStyles.keywords}>
+          {keywords.map((keyword, index) => (
+            <div key={index}>
+              {/* 기술태그 0 blue / 인성태그 1 yellow */}
+              {!keyword.type ? (
+                <span className={ActivityStyles.bluekeyword}>
+                  {keyword.name}
+                </span>
+              ) : (
+                <span className={ActivityStyles.yellowkeyword}>
+                  {keyword.name}
+                </span>
+              )}
+            </div>
+          ))}
+        </section>
+      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TARGET_BRANCH='develop/be'
+        TARGET_BRANCH='develop'
     }
 
     stages {

@@ -29,11 +29,11 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
   // TODO 프로젝트 API 가져오기
   // const { projects, fetchProjects } = useProjectStore();
 
-  // TODO 경험 키워드 가져오기
+  // 경험 키워드 목록 가져오기
   const { activityKeywords, fetchActivityKeywords } = useActivityKeywordStore();
 
   // TODO 더미데이터 삭제
-  //   const Keywords = [
+  //   const activityKeywords = [
   //     { type: 0, name: '기술1' },
   //     { type: 0, name: '기술2' },
   //     { type: 0, name: '기술3' },

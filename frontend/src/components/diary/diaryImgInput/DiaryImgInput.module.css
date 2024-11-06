@@ -63,9 +63,9 @@
   height: 50vh;
   margin: 2vh 0vw 8vh 5vw;
   padding: 3vh 2vw;
-  border: none;
+  border: solid;
   border-radius: 20px;
-  background-color: rgba(232, 232, 232, 0.2);
+  border-color: rgba(232, 232, 232, 1);
   font-family: 'Pretendard-Regular';
   display: flex;
   flex-direction: column;
@@ -118,6 +118,7 @@
 .imgEx {
   width: 10rem;
   height: 10rem;
+  object-fit: cover;
 }
 
 .close {

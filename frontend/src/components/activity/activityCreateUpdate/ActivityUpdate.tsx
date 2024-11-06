@@ -29,17 +29,16 @@ function ActivityUpdate() {
 
   // 폼 제출 로직
   const handleFormSubmit = () => {
-    // updateActivity(
-    //   {
-    //     activityId: numericActivityId, // 현재 활동의 ID
-    //     title,
-    //     content,
-    //     startDate,
-    //     endDate,
-    //     projectId: projectId ?? 0, // null일 경우 기본값 0 사용
-    //     keywords: selectedOptions, // 키워드 배열
-    //   }
-    // );
+    // TODO 폼 제출 로직 수정
+    // updateActivity({
+    //   activityId: numericActivityId, // 현재 활동의 ID
+    //   title,
+    //   content,
+    //   startDate,
+    //   endDate,
+    //   projectId: projectId ?? 0, // null일 경우 기본값 0 사용
+    //   keywords: selectedOptions, // 키워드 배열
+    // });
     event?.preventDefault();
   };
 
@@ -64,7 +63,6 @@ function ActivityUpdate() {
         </button>
       </section>
 
-      {/* TODO 폼 제출 오류 해결하기 */}
       <ActivityForm
         onSubmit={handleFormSubmit}
         initialValues={{

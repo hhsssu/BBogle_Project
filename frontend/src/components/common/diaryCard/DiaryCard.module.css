@@ -2,10 +2,10 @@
   width: 260px;
   height: auto;
   max-width: 260px;
-  aspect-ratio: 350 / 120;
+  aspect-ratio: 340 / 120;
   border-radius: 1rem;
   box-shadow: 0px 8px 12px 3px #7e7e7e12;
-  padding: 30px 24px;
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -34,11 +34,8 @@
   background-color: rgba(232, 232, 232, 1);
 }
 
-.moreIcon {
-}
-
 .date {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(160, 160, 160, 1);
 }
 

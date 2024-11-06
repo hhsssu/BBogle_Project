@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import DefaultProject from '../assets/image/icon/DefaultProject.svg';
 import RunnerWay from '../assets/image/RunnerWay.png';
 
-interface Project {
+export interface Project {
   pjtID: number;
   imgSrc: string;
   title: string;

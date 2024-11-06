@@ -17,7 +17,7 @@ import ActiveMainIcon from '../../../assets/image/icon/ActiveMain.svg';
 import ProjectIcon from '../../../assets/image/icon/Project.svg';
 import ActiveProjectIcon from '../../../assets/image/icon/ActiveProject.svg';
 
-import ExperienceIcon from '../../../assets/image/icon/Experience.svg';
+import ActivityIcon from '../../../assets/image/icon/Experience.svg';
 import ActiveExperienceIcon from '../../../assets/image/icon/ActiveExperience.svg';
 
 import MyIcon from '../../../assets/image/icon/My.svg';
@@ -51,8 +51,8 @@ function SideBar() {
     // 경로 패턴에 따라 activeTab 설정
     if (path.includes('project')) {
       setActiveTab('project');
-    } else if (path.includes('experience')) {
-      setActiveTab('experience');
+    } else if (path.includes('activity')) {
+      setActiveTab('activity');
     } else if (path.includes('my')) {
       setActiveTab('my');
     } else {
@@ -132,15 +132,15 @@ function SideBar() {
                 </div>
               )}
             </div>
-            <div className={style.tap} onClick={() => handleTap('experience')}>
-              {activeTab === 'experience' ? (
-                <img src={ActiveExperienceIcon} alt="Active Experience Icon" />
+            <div className={style.tap} onClick={() => handleTap('activity')}>
+              {activeTab === 'activity' ? (
+                <img src={ActiveExperienceIcon} alt="Active Activity Icon" />
               ) : (
-                <img src={ExperienceIcon} alt="Experience Icon" />
+                <img src={ActivityIcon} alt="Activity Icon" />
               )}
               {showDescriptions && (
                 <div
-                  className={`${style.tapDescription} ${activeTab === 'experience' && style.active}`}
+                  className={`${style.tapDescription} ${activeTab === 'activity' && style.active}`}
                 >
                   경험
                 </div>

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import style from './QnaInput.module.css';
 
 import useDiaryStore from '../../../store/useDiaryStore';

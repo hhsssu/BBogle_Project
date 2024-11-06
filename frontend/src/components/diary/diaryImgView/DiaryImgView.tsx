@@ -1,4 +1,3 @@
-import { useRef, useState } from 'react';
 import style from './DiaryImgView.module.css';
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 }
 
 function DiaryImgView({ index, question, circleRef }: Props) {
-  const [files, setFiles] = useState<string[]>([]);
+  const files: string[] = [];
 
   return (
     <div className={style.inputSection}>

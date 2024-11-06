@@ -52,6 +52,10 @@ public class JwtUtil {
         return refreshExpire;
     }
 
+    public long getAccessTokenExpire(){
+        return accessExpire;
+    }
+
     public String getKakaoIdFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
         return claims.getSubject();

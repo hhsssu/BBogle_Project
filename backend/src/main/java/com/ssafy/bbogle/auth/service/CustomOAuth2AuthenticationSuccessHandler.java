@@ -43,14 +43,13 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         // 리프레시 토큰 저장
         redisUtil.save(user.getKakaoId().toString(), refreshToken, jwtUtil.getRefreshTokenExpire());
 
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
+        // 액세스 토큰 전달
+        Cookie cookie = new Cookie("accessToken", refreshToken);
         cookie.setPath("/");
-        cookie.setHttpOnly(true);
         cookie.setSecure(true);
-        cookie.setMaxAge((int)jwtUtil.getRefreshTokenExpire()/1000);
         response.addCookie(cookie);
 
-        response.setHeader("accessToken", accessToken);
+        response.sendRedirect("http://localhost:5173/main");
 
     }
 }

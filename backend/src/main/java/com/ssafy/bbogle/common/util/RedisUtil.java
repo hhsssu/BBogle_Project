@@ -2,7 +2,6 @@ package com.ssafy.bbogle.common.util;
 
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,7 @@ public class RedisUtil {
 
     private final StringRedisTemplate redisTemplate;
 
-    public void save(String key, String value, long time) {
+    public void saveRefresh(String key, String value, long time) {
         redisTemplate.opsForValue().set(key, value, time, TimeUnit.MILLISECONDS);
     }
 

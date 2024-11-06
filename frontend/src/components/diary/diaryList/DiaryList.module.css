@@ -2,8 +2,9 @@
   width: 100vw;
   height: 50vh;
   display: grid;
+  place-items: center;
   grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
   overflow-y: auto;
   scrollbar-width: none;
-  gap: 1rem;
+  gap: 24px 8px;
 }

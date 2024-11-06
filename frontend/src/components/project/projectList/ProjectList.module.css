@@ -33,10 +33,19 @@
 }
 
 .checkProgress {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   margin: 10px 0;
+  background-color: gainsboro;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.checkProgress.active {
+  background-color: #1c1516;
 }
 
 .fins {

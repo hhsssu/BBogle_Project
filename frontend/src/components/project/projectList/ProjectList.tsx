@@ -104,6 +104,10 @@ function ProjectList() {
     navigate(`${pjtID}`);
   };
 
+  const handleProgress = () => {
+    setOnlyProgress(!onlyProgress);
+  };
+
   return (
     <div className={style.container}>
       <section className={style.headerSection}>
@@ -114,12 +118,11 @@ function ProjectList() {
       </section>
 
       <section className={style.pjtSection}>
-        <div className={style.checkProgress}>
-          <input
-            type="checkbox"
-            onClick={() => setOnlyProgress(!onlyProgress)}
-          />
-          진행중인 것만 보기
+        <div
+          className={`${style.checkProgress} ${onlyProgress ? style.active : ''}`}
+          onClick={handleProgress}
+        >
+          {onlyProgress ? '전체보기' : '진행중인 것만 보기'}
         </div>
         <div className={style.fins}>
           {onlyProgress

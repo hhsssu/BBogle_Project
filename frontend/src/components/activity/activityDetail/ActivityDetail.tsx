@@ -13,7 +13,7 @@ function ActivityDetail() {
 
   // 수정 이동
   const NavEdit = () => {
-    navigate(`/experience/update/${activityId}`);
+    navigate(`/activity/update/${activityId}`);
   };
 
   // 삭제

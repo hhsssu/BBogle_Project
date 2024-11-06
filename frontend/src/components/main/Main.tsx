@@ -101,7 +101,7 @@ function Main() {
           <div
             className={`${style.scrollGuide} ${!scrollGuide ? style.unvisible : ''}`}
           >
-            가로로 스크롤해보세요 !
+            가로로 스크롤해보세요
             <Lottie
               animationData={Scroll}
               loop={false}

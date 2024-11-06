@@ -1,6 +1,6 @@
 import style from './ProjectInfoSection.module.css';
 
-import DefaultProfile from '../../../assets/image/icon/DefaultProfile.svg';
+// import DefaultProfile from '../../../assets/image/icon/DefaultProfile.svg';
 
 import { useState, useRef } from 'react';
 import useProjectStore from '../../../store/useProjectStore';
@@ -11,10 +11,11 @@ interface Props {
 }
 
 function ProjectInfoSection({ titleError, handleTitleError }: Props) {
-  const [imgSrc, setImgSrc] = useState(DefaultProfile);
-  const imgInputRef = useRef<HTMLInputElement>(null);
-
+  const project = useProjectStore((state) => state.project);
   const updateProject = useProjectStore((state) => state.updateProjectField);
+
+  // const [imgSrc, setImgSrc] = useState(project.imgSrc);
+  const imgInputRef = useRef<HTMLInputElement>(null);
 
   const handleImgClick = () => {
     if (imgInputRef.current) {
@@ -26,7 +27,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
     const file = event.target.files?.[0];
     if (file) {
       const newImageUrl = URL.createObjectURL(file); // 새 이미지 URL 생성
-      setImgSrc(newImageUrl); // 이미지 상태 업데이트
+      // setImgSrc(newImageUrl); // 이미지 상태 업데이트
       updateProject('imgSrc', newImageUrl);
     }
   };
@@ -57,7 +58,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
         <div className={style.titleContainer}>
           <img
             className={style.img}
-            src={imgSrc}
+            src={project.imgSrc}
             alt="로고"
             onClick={handleImgClick}
           />
@@ -71,6 +72,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
           <input
             className={`${style.titleInput} ${titleError && style.titleError}`}
             type="text"
+            value={project.title}
             onChange={handleTitleChange}
             placeholder="프로젝트 이름을 입력해주세요 ! (20자 이내)"
           />
@@ -88,6 +90,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
         <textarea
           className={style.summary}
           rows={3}
+          value={project.summary}
           onChange={handleSummaryChange}
         ></textarea>
       </div>

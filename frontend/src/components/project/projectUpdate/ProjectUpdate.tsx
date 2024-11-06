@@ -1,18 +1,18 @@
-import { useNavigate } from 'react-router-dom';
-import style from './ProjectCreate.module.css';
-
-import ProjectInfoSection from '../projectInfoSection/ProjectInfoSection';
-import ProjectDetailInfoSection from '../projectDetailInfoSection/ProjectDetailInfoSection';
-import ProjectTagSection from '../projectTagSection/ProjectTagSection';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProjectAlarmSection from '../projectAlarmSection/ProjectAlarmSection';
+import ProjectDetailInfoSection from '../projectDetailInfoSection/ProjectDetailInfoSection';
+import ProjectInfoSection from '../projectInfoSection/ProjectInfoSection';
+import ProjectTagSection from '../projectTagSection/ProjectTagSection';
+import style from './ProjectUpdate.module.css';
 import useProjectStore from '../../../store/useProjectStore';
 import { useEffect, useState } from 'react';
 
-function ProjectCreate() {
+function ProjectUpdate() {
+  const { pjtId } = useParams();
   const navigate = useNavigate();
 
   const project = useProjectStore((state) => state.project);
-  const initProject = useProjectStore((state) => state.initProject);
+  const getProject = useProjectStore((state) => state.getProject);
 
   const [titleError, setTitleError] = useState(false);
   const [termError, setTermError] = useState(false);
@@ -29,7 +29,7 @@ function ProjectCreate() {
     setTermError(value);
   };
 
-  const addProject = () => {
+  const updateProject = () => {
     if (project.title === '') {
       setTitleError(true);
       return;
@@ -45,7 +45,7 @@ function ProjectCreate() {
   };
 
   useEffect(() => {
-    initProject();
+    getProject(Number(pjtId));
   }, []);
 
   return (
@@ -54,7 +54,7 @@ function ProjectCreate() {
         돌아가기
       </div>
 
-      <span className={style.pageTitle}>프로젝트 생성</span>
+      <span className={style.pageTitle}>프로젝트 수정</span>
       <div className={style.pjtFormWrapper}>
         <div className={style.pjtForm}>
           <ProjectInfoSection
@@ -68,7 +68,7 @@ function ProjectCreate() {
           <ProjectTagSection />
           <ProjectAlarmSection />
         </div>
-        <button className={style.submitBtn} onClick={addProject}>
+        <button className={style.submitBtn} onClick={updateProject}>
           완료
         </button>
       </div>
@@ -76,4 +76,4 @@ function ProjectCreate() {
   );
 }
 
-export default ProjectCreate;
+export default ProjectUpdate;

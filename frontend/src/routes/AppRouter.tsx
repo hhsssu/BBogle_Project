@@ -6,7 +6,6 @@ import ProjectPage from '../pages/ProjectPage';
 import ExperiencePage from '../pages/ExperiencePage';
 import MainPage from '../pages/MainPage';
 import Main from '../components/main/Main';
-import DiaryPage from '../pages/DiaryPage';
 import MyPage from '../pages/MyPage';
 
 function AppRouter() {

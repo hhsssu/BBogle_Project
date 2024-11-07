@@ -1,14 +1,9 @@
-package com.ssafy.bbogle.auth.service;
+package com.ssafy.bbogle.common.oauth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.bbogle.common.jwt.JwtUtil;
 import com.ssafy.bbogle.common.util.RedisUtil;
 import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.user.repository.UserRepository;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -17,8 +12,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
 @RequiredArgsConstructor

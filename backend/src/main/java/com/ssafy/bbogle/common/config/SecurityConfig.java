@@ -1,7 +1,7 @@
 package com.ssafy.bbogle.common.config;
 
-import com.ssafy.bbogle.auth.service.CustomOAuth2AuthenticationSuccessHandler;
-import com.ssafy.bbogle.auth.service.CustomOAuth2UserService;
+import com.ssafy.bbogle.common.oauth.CustomOAuth2AuthenticationSuccessHandler;
+import com.ssafy.bbogle.common.oauth.CustomOAuth2UserService;
 import com.ssafy.bbogle.common.jwt.JwtAuthenticationFilter;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

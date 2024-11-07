@@ -1,4 +1,4 @@
-package com.ssafy.bbogle.auth.service;
+package com.ssafy.bbogle.common.oauth;
 
 import com.ssafy.bbogle.common.jwt.JwtUtil;
 import com.ssafy.bbogle.common.util.RedisUtil;

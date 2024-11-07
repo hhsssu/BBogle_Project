@@ -7,12 +7,14 @@ import com.ssafy.bbogle.user.dto.response.UserNicknameResponse;
 import com.ssafy.bbogle.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +33,7 @@ public class UserController {
         return null;
     }
 
-    @Operation(summary = "닉네임 조회")
+    @Operation(summary = "닉네임 조회 (완료)")
     @GetMapping("/nickname")
     public ResponseEntity<UserNicknameResponse> getUserNickname(){
         UserNicknameResponse result = userService.getUserNickname();
@@ -48,6 +50,13 @@ public class UserController {
     @PatchMapping("/profile")
     public ResponseEntity<String> updateProfile(@RequestBody UpdateProfileRequest request) {
         return null;
+    }
+
+    @Operation(summary = "로그아웃 (완료)", description = " (백) 리프레시 토큰 삭제 (프론트) 액세스 토큰 삭제")
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        userService.logout(response);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

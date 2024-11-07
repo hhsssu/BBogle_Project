@@ -1,17 +1,19 @@
 FROM node:20 AS build
 
 RUN mkdir /react
-
 WORKDIR /react
 
 COPY package.json .
 
 # RUN npm install --legacy-peer-deps
 RUN npm install
-RUN npm install eslint-plugin-import --save-dev
+#RUN npm install eslint-plugin-import --save-dev
 COPY . .
 
 RUN npm run build
+
+# 빌드된 디렉토리 확인 (디버깅 용도)
+RUN ls /react/dist
 
 RUN ls
 
@@ -19,7 +21,7 @@ FROM nginx:latest
 
 WORKDIR /
 
-COPY --from=build /react/build /usr/share/nginx/html
+COPY --from=build /react/dist /usr/share/nginx/html
 
 RUN rm /etc/nginx/conf.d/default.conf
 

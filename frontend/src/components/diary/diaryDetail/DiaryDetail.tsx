@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import style from './DiaryDetail.module.css';
 import useProjectStore from '../../../store/useProjectStore';
 import React, { useEffect, useRef } from 'react';

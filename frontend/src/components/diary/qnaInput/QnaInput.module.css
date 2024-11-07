@@ -53,12 +53,15 @@
 
 .textBlock {
   position: relative;
+  width: 100%;
+  margin: 2vh 0vw 8vh 5vw;
+  box-sizing: border-box;
 }
 
 .textArea {
   width: 90%;
-  height: 50vh;
-  margin: 2vh 0vw 10vh 5vw;
+  box-sizing: border-box;
+  height: 30vh;
   padding: 3vh 2vw;
   border: none;
   border-radius: 20px;
@@ -67,13 +70,14 @@
   scrollbar-width: none;
   background-color: rgba(232, 232, 232, 0.2);
   font-family: 'Pretendard-Regular';
+  font-size: 14px;
 }
 
 .textLength {
   color: rgba(160, 160, 160, 1);
   position: absolute;
-  top: 52vh;
-  right: 2vw;
+  bottom: 30px;
+  right: 140px;
 }
 
 .imgInput {

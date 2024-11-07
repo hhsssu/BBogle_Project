@@ -197,9 +197,11 @@ function ProjectDetail() {
                   과거순
                 </span>
               </div>
-              <button className={style.addDiaryBtn} onClick={navDiaryCreate}>
-                + 개발일지 추가
-              </button>
+              {PROJECT.state && (
+                <button className={style.addDiaryBtn} onClick={navDiaryCreate}>
+                  + 개발일지 추가
+                </button>
+              )}
             </div>
           ) : (
             ''

@@ -13,6 +13,18 @@
   user-select: none;
 }
 
+/* relative */
+.relative {
+  position: relative;
+}
+
+/* close Button */
+.closebtn {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+}
+
 /* flex */
 .flex {
   display: flex;
@@ -24,6 +36,7 @@
   display: flex;
   justify-content: center;
 }
+
 /* flex의 space-between */
 .between {
   display: flex;

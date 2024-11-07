@@ -120,7 +120,7 @@ function ActivityList() {
   return (
     <>
       <section className={ActivityStyles.between}>
-        <div className={ActivityStyles.title}>나의 경험</div>y{' '}
+        <div className={ActivityStyles.title}>나의 경험</div>
         <button className={ActivityStyles.btn} onClick={navActivityCreate}>
           + 경험 추가
         </button>

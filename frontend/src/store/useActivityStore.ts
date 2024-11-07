@@ -32,6 +32,7 @@ interface ActivityState {
   setActivity: (act: Activity[]) => void;
   updateActivity: (updatedActivity: Activity) => void;
   fetchActivities: () => Promise<void>;
+  fetchActivitiesBySearch: () => Promise<void>;
   fetchActivityById: (activityId: number) => Promise<void>;
 }
 
@@ -66,6 +67,17 @@ const useActivityStore = create<ActivityState>((set) => ({
       set({ activities: Array.isArray(response.data) ? response.data : [] }); // 가져온 데이터를 상태에 저장
     } catch (error) {
       console.error('경험 데이터를 가져오는 데 실패했습니다:', error);
+    }
+  },
+
+  // 검색을 통해 경험 리스트 가져오기
+  fetchActivitiesBySearch: async () => {
+    try {
+      // TODO : 경험 검색 결과를 가져오는 API 호출
+      const response = await axios.get(``);
+      set({ activities: Array.isArray(response.data) ? response.data : [] }); // 가져온 데이터를 상태에 저장
+    } catch (error) {
+      console.error('경험 검색 데이터를 가져오는 데 실패했습니다:', error);
     }
   },
 

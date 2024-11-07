@@ -32,9 +32,6 @@ function Main() {
     setActiveProjectId(id);
   };
 
-  // TODO : 임시데이터
-  const userName = '홍길동';
-
   const pjtList = [
     {
       id: 0,

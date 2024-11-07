@@ -1,4 +1,4 @@
-import style from './goToDiary.module.css';
+import style from './GoToDiary.module.css';
 import MemoIcon from '../../../assets/image/icon/Memo.svg';
 
 interface GoToDiaryProps {

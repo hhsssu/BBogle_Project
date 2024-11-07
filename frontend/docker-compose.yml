@@ -1,7 +1,7 @@
 services:
   frontend:
-    image: bbogle-front:latest
-    container_name: bbogle-front
+    image: bbogle-frontend:latest
+    container_name: bbogle-frontend
     networks:
       - front-network
     # restart: unless-stopped

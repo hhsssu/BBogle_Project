@@ -14,7 +14,7 @@ COPY . .
 RUN npm run build
 
 RUN ls /react/dist
-RUN ls /react/build
+#RUN ls /react/build
 RUN ls
 
 FROM nginx:latest

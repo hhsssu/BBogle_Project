@@ -118,6 +118,7 @@ function Main() {
               key={index}
             >
               <ProjectCard
+                pjtId={card.id}
                 imageSrc={card.imageSrc}
                 title={card.title}
                 state={card.state}

@@ -9,6 +9,7 @@ function ProjectList() {
 
   const PJT_LIST = [
     {
+      id: 10,
       imageSrc: RunnerWay,
       title: 'Endurance Challenge',
       state: true,
@@ -16,6 +17,7 @@ function ProjectList() {
       summary: '한계를 극복하는 러닝 도전 프로젝트',
     },
     {
+      id: 11,
       imageSrc: RunnerWay,
       title: 'Marathon Complete',
       state: false,
@@ -23,6 +25,7 @@ function ProjectList() {
       summary: '마라톤 완주를 위한 도전 프로젝트',
     },
     {
+      id: 12,
       imageSrc: RunnerWay,
       title: 'Summer Sprint',
       state: false,
@@ -30,6 +33,7 @@ function ProjectList() {
       summary: '여름 동안 짧은 거리 러닝 훈련 프로젝트',
     },
     {
+      id: 13,
       imageSrc: RunnerWay,
       title: 'City Night Run',
       state: false,
@@ -37,6 +41,7 @@ function ProjectList() {
       summary: '도심에서의 야간 러닝 체험 프로젝트',
     },
     {
+      id: 14,
       imageSrc: RunnerWay,
       title: 'Trail Discoveries',
       state: false,
@@ -44,6 +49,7 @@ function ProjectList() {
       summary: '트레일 러닝으로 새로운 길을 탐험',
     },
     {
+      id: 15,
       imageSrc: RunnerWay,
       title: 'Weekly 5K Challenge',
       state: false,
@@ -51,6 +57,7 @@ function ProjectList() {
       summary: '매주 5km 달리기 도전 프로젝트',
     },
     {
+      id: 16,
       imageSrc: RunnerWay,
       title: 'Morning Marathoners',
       state: false,
@@ -58,6 +65,7 @@ function ProjectList() {
       summary: '아침 러닝을 즐기는 사람들을 위한 프로젝트',
     },
     {
+      id: 17,
       imageSrc: RunnerWay,
       title: 'Speed Boost',
       state: false,
@@ -65,6 +73,7 @@ function ProjectList() {
       summary: '단기간 스피드 향상을 목표로 한 프로젝트',
     },
     {
+      id: 18,
       imageSrc: RunnerWay,
       title: 'Endurance Build',
       state: false,
@@ -72,6 +81,7 @@ function ProjectList() {
       summary: '장거리 달리기로 지구력 강화 프로젝트',
     },
     {
+      id: 19,
       imageSrc: RunnerWay,
       title: 'Rainy Day Run',
       state: false,
@@ -79,6 +89,7 @@ function ProjectList() {
       summary: '비 오는 날에도 러닝을 멈추지 않는 프로젝트',
     },
     {
+      id: 20,
       imageSrc: RunnerWay,
       title: 'Marathon Prep Complete',
       state: false,
@@ -86,6 +97,7 @@ function ProjectList() {
       summary: '마라톤을 준비하는 모든 러너들의 여정',
     },
     {
+      id: 21,
       imageSrc: RunnerWay,
       title: 'Park Run Adventures',
       state: false,
@@ -100,7 +112,7 @@ function ProjectList() {
     navigate('/project/create');
   };
 
-  const navPjtCreate = (pjtID: number) => {
+  const navPjtDetail = (pjtID: number) => {
     navigate(`${pjtID}`);
   };
 
@@ -127,9 +139,10 @@ function ProjectList() {
         <div className={style.fins}>
           {onlyProgress
             ? PJT_LIST.filter((pjt) => pjt.state).map((card, index) => (
-                <div key={index} onClick={() => navPjtCreate(index)}>
+                <div onClick={() => navPjtDetail(card.id)}>
                   <ProjectCard
                     key={index}
+                    pjtId={card.id}
                     imageSrc={card.imageSrc}
                     title={card.title}
                     state={card.state}
@@ -139,9 +152,10 @@ function ProjectList() {
                 </div>
               ))
             : PJT_LIST.map((card, index) => (
-                <div key={index} onClick={() => navPjtCreate(index)}>
+                <div onClick={() => navPjtDetail(card.id)}>
                   <ProjectCard
                     key={index}
+                    pjtId={card.id}
                     imageSrc={card.imageSrc}
                     title={card.title}
                     state={card.state}

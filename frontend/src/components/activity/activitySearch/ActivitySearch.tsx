@@ -3,8 +3,10 @@ import GoBack from '../../../assets/image/icon/GoBack.svg';
 import Search from '../../../assets/image/icon/Search.svg';
 import useActivityKeywordStore from '../../../store/useActivityKeywordStore';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ActivitySearch() {
+  const navigate = useNavigate();
   const { activityKeywords } = useActivityKeywordStore();
   const [selectProjects, setSelectProjects] = useState<number[]>([]);
   const [selectKeywords, setSelectKeywords] = useState<number[]>([]);
@@ -84,7 +86,13 @@ function ActivitySearch() {
   return (
     <div className={style.container}>
       <div className={style.searchContainer}>
-        <img src={GoBack} alt="" />
+        <img
+          src={GoBack}
+          alt=""
+          onClick={() => {
+            navigate('/activity');
+          }}
+        />
         <div>
           <img src={Search} alt="" />
           <input

@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 // import useActivityStore from '../../store/useActivityStore';
 
 import ActivityCard from './ActivityCard';
@@ -7,14 +6,13 @@ import ActivityStyles from './Activity.module.css';
 
 import SearchIcon from '../../assets/image/icon/Search.svg';
 import EmptyFolder from '../../assets/image/icon/EmptyFolder.svg';
-import ActivitySearchModal from './activitySearch/ActivitySearchModal';
 // import useProjectStore from '../../store/useProjectStore';
 
 function ActivityList() {
   const nav = useNavigate();
+  const navigate = useNavigate();
   // const { activities, fetchActivities } = useActivityStore();
   // const {project, fetchProject} = useProjectStore();
-  const [isOpen, setIsOpen] = useState(false);
 
   // 경험 수동 생성으로 이동
   const navActivityCreate = () => {
@@ -27,9 +25,9 @@ function ActivityList() {
   //   console.log(`activities: `, activities);
   // }, []);
 
-  // 검색 모달
-  const handleOpenSearchModal = () => setIsOpen(true);
-  const handleCloseSearchModal = () => setIsOpen(false);
+  const handleSearchPage = () => {
+    navigate('search');
+  };
 
   // 더미 데이터 예시
   const activities = [
@@ -122,25 +120,25 @@ function ActivityList() {
   return (
     <>
       <section className={ActivityStyles.between}>
-        <div className={ActivityStyles.title}>나의 경험</div>
+        <div className={ActivityStyles.title}>나의 경험</div>y{' '}
         <button className={ActivityStyles.btn} onClick={navActivityCreate}>
           + 경험 추가
         </button>
       </section>
 
       {/* 검색 버튼 - 클릭 시 검색 모달 OPEN */}
-      <button onClick={handleOpenSearchModal} className={ActivityStyles.search}>
+      <button onClick={handleSearchPage} className={ActivityStyles.search}>
         <img src={SearchIcon} alt="검색" />
         <span>키워드, 내용으로 검색</span>
       </button>
 
       {/* 검색 모달 */}
-      <ActivitySearchModal
+      {/* <ActivitySearchModal
         isOpen={isOpen}
         title={'경험 검색'}
         onConfirm={navActivityCreate}
         onClose={handleCloseSearchModal}
-      />
+      /> */}
 
       <section className={ActivityStyles.list}>
         {activities.length > 0 ? (

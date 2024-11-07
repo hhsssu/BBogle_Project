@@ -3,11 +3,11 @@ services:
     image: bbogle-front:latest
     container_name: bbogle-front
     networks:
-      - frontend-network
+      - front-network
     # restart: unless-stopped
     expose:
       - "80" # 프론트가 nginx를 가지고 있으므로 컨테이너에서는 80포트를 연 상태
 
 networks:
-  frontend-network:
+  front-network:
     external: true

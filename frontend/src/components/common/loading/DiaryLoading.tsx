@@ -1,4 +1,4 @@
-import style from './loading.module.css';
+import style from './Loading.module.css';
 import Lottie from 'lottie-react';
 import Bubble from '../../../assets/lottie/Bubble.json';
 import { useEffect, useState } from 'react';

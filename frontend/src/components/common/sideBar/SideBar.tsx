@@ -17,8 +17,8 @@ import ActiveMainIcon from '../../../assets/image/icon/ActiveMain.svg';
 import ProjectIcon from '../../../assets/image/icon/Project.svg';
 import ActiveProjectIcon from '../../../assets/image/icon/ActiveProject.svg';
 
-import ActivityIcon from '../../../assets/image/icon/Activity.svg';
-import ActiveActivityIcon from '../../../assets/image/icon/ActiveActivity.svg';
+import ExperienceIcon from '../../../assets/image/icon/Experience.svg';
+import ActiveExperienceIcon from '../../../assets/image/icon/ActiveExperience.svg';
 
 import MyIcon from '../../../assets/image/icon/My.svg';
 import ActiveMyIcon from '../../../assets/image/icon/ActiveMy.svg';
@@ -134,9 +134,9 @@ function SideBar() {
             </div>
             <div className={style.tap} onClick={() => handleTap('activity')}>
               {activeTab === 'activity' ? (
-                <img src={ActiveActivityIcon} alt="Active Activity Icon" />
+                <img src={ActiveExperienceIcon} alt="Active Activity Icon" />
               ) : (
-                <img src={ActivityIcon} alt="Activity Icon" />
+                <img src={ExperienceIcon} alt="Activity Icon" />
               )}
               {showDescriptions && (
                 <div

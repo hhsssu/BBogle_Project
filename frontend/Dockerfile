@@ -14,7 +14,7 @@ RUN npm run build
 
 # 빌드된 디렉토리 확인 (디버깅 용도)
 RUN ls /react/dist
-
+RUN ls /react/build
 RUN ls
 
 FROM nginx:latest

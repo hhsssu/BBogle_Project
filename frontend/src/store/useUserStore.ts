@@ -46,7 +46,6 @@ const useUserStore = create<UserStore>()(
 
       getAccessTokenFromCookie: () => {
         const cookieString = document.cookie;
-        console.log('cookie String : ', cookieString);
         const cookies = cookieString.split('; ');
 
         for (const cookie of cookies) {

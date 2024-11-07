@@ -17,8 +17,6 @@ function Onboarding() {
         className={style['kakao-login']}
         src={KakaoLogin}
         alt="Kakao Login"
-        // kakaoLogin 처리 전
-        // onClick={kakaoRedirect}
         onClick={goToLogin}
       />
     </div>

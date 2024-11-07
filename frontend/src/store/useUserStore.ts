@@ -19,10 +19,10 @@ interface UserStore {
   user: User | null;
   isAuthenticated: boolean;
   isEditingNickname: boolean;
-  kakaoRedirect: () => void;
-  kakaoLogin: (code: string) => Promise<void>;
+  fetchUser: () => void;
   kakaoLogout: () => void;
   setEditNickname: () => void;
+  getAccessTokenFromCookie: () => void;
   updateNickname: (nickname: string) => Promise<void>;
   updateProfile: (profile: string) => Promise<void>;
 }
@@ -30,7 +30,7 @@ interface UserStore {
 // 회원 정보 상태관리
 const useUserStore = create<UserStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       // TODO : 기본 더미 유저 데이터
       // user: null,
       // isAuthenticated: false,
@@ -44,26 +44,59 @@ const useUserStore = create<UserStore>()(
       isAuthenticated: true,
       isEditingNickname: false,
 
-      // kakao redirect 함수
-      kakaoRedirect: () => {
+      getAccessTokenFromCookie: () => {
+        const cookieString = document.cookie;
+        console.log('cookie String : ', cookieString);
+        const cookies = cookieString.split('; ');
+
+        for (const cookie of cookies) {
+          const [name, value] = cookie.split('=');
+          if (name === 'accessToken') {
+            return value;
+          }
+        }
+
+        // TODO : accessToken 쿠키 없는 경우
+        return null;
+      },
+
+      // 유저 정보 가져오는 함수
+      fetchUser: async () => {
+        const accessToken = get().getAccessTokenFromCookie();
+
+        if (accessToken === null) {
+          console.error('Access Token is missing.');
+        }
+
+        // 유저 닉네임 가져오기
         try {
-          console.log(clientId);
-          console.log(redirectUri);
+          const response = await axios.get(
+            'http://localhost:8080/api/users/nickname',
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+              },
+            },
+          );
 
-          // 인가 코드 요청 URL로 리디렉션
-          const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
-
-          // 브라우저 리디렉션
-          window.location.href = kakaoAuthUrl;
-
-          console.log('인가 코드 요청 결과 ');
-        } catch (error) {
-          console.error('카카오 로그인 오류:', error);
-          set({ isAuthenticated: false, user: null });
+          const userName = response.data.nickname;
+          set({
+            user: {
+              id: 4,
+              nickname: userName,
+              email: 'jihye@example.com',
+              profileImage: 'src/assets/image/dummy/profile.jpg',
+            },
+            isAuthenticated: true,
+          });
+          console.log('닉네임 가져오기 성공:', userName);
+        } catch (e) {
+          console.error('닉네임 가져오기 실패 : ', e);
         }
       },
 
-      // kakao login 함수
+      // kakao redirect 함수
       kakaoLogin: async (code: string) => {
         try {
           // 액세스 토큰 요청

@@ -1,7 +1,7 @@
 import style from './DiaryCard.module.css';
 
 import MoreVertical from '../../../assets/image/icon/MoreVertical.svg';
-import Pencil from '../../../assets/image/icon/pencil.svg';
+import Pencil from '../../../assets/image/icon/Pencil.svg';
 import RedTrash from '../../../assets/image/icon/RedTrash.svg';
 
 import { useEffect, useRef, useState } from 'react';

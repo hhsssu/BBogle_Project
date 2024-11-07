@@ -1,6 +1,6 @@
 import RunnerWay from '../../../assets/image/RunnerWay.png';
 import Setting from '../../../assets/image/icon/Setting.svg';
-import Pencil from '../../../assets/image/icon/pencil.svg';
+import Pencil from '../../../assets/image/icon/Pencil.svg';
 import RedTrash from '../../../assets/image/icon/RedTrash.svg';
 
 import style from './ProjectDetail.module.css';

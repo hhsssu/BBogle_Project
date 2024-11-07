@@ -1,10 +1,10 @@
 import style from './My.module.css';
 import EditIcon from '../../assets/image/icon/Edit.svg';
-import Empty from '../../assets/image/default/diary.png';
+import Empty from '../../assets/image/default/Diary.png';
 import EnterIcon from '../../assets/image/icon/Enter.svg';
 import ImageWithDefault from './ImageWithDefault';
 import RunnerWay from '../../assets/image/RunnerWay.png'; // TODO : 임시 이미지
-import DefaultImage from '../../assets/image/default/profile.svg';
+import DefaultImage from '../../assets/image/default/Profile.svg';
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
 import { useNavigate } from 'react-router-dom';

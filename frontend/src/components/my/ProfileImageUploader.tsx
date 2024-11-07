@@ -5,7 +5,7 @@ import ImageWithDefault from './ImageWithDefault';
 // 이미지 파일
 import DownloadIcon from '../../assets/image/icon/Download.svg';
 import DefaultImage from '../../assets/image/default/Image.svg';
-import DefaultProfile from '../../assets/image/default/profile.svg';
+import DefaultProfile from '../../assets/image/default/Profile.svg';
 import useUserStore from '../../store/useUserStore';
 
 interface ProfileImageUploaderProps {

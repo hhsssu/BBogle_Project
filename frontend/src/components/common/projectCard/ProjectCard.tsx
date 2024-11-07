@@ -1,5 +1,5 @@
 import MoreVertical from '../../../assets/image/icon/MoreVertical.svg';
-import Bell from '../../../assets/image/icon/bell.svg';
+import Bell from '../../../assets/image/icon/Bell.svg';
 
 import style from './ProjectCard.module.css';
 

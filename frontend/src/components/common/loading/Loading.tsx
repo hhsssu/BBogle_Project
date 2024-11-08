@@ -1,18 +1,13 @@
 import style from './Loading.module.css';
 import Lottie from 'lottie-react';
-import Bubble from '../../../assets/lottie/Bubble.json';
 import { useEffect, useState } from 'react';
-
-interface diaryLoadingProps {
-  isLoading: boolean;
-}
 
 // 로딩 메세지 목록
 const MESSAGES = [
   '오늘의 작은 노력이 내일의 큰 성과로 이어집니다.',
   '당신의 코드는 세상을 바꿀 잠재력을 가지고 있습니다.',
   '노력은 배신하지 않아요. 믿고 끝까지 도전해 봅시다!',
-  '개발자는 끊임없는 도전을 통해 성장합니다. 지금도 성장하고 있어요!',
+  '개발자는 끊임없는 도전을 통해 성장합니다.',
   '당신의 가능성은 무한합니다. 자신감을 가지세요.',
   '실패는 성공의 밑거름입니다. 포기하지 마세요.',
   '포기하지 않는 한, 당신은 이미 반 이상 성공한 것입니다.',
@@ -58,7 +53,13 @@ const MESSAGES = [
   '지금까지 잘해왔고 앞으로도 잘 해낼 수 있습니다.',
 ];
 
-function Loading({ isLoading }: diaryLoadingProps) {
+interface LoadingProps {
+  isLoading: boolean;
+  title: string;
+  animationData: Record<string, unknown>;
+}
+
+function Loading({ isLoading, title, animationData }: LoadingProps) {
   const [message, setMessage] = useState('');
   const [fade, setFade] = useState(true);
 
@@ -67,42 +68,33 @@ function Loading({ isLoading }: diaryLoadingProps) {
 
     if (isLoading) {
       const changeMessage = () => {
-        // 페이드 아웃
         setFade(false);
-
-        // 페이드 아웃 후 새로운 메시지 설정 및 페이드 인
         setTimeout(() => {
           const randomMessage =
             MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
           setMessage(randomMessage);
-          setFade(true); // 페이드 인
-        }, 500); // 500ms 동안 페이드 아웃된 후 메시지 변경
+          setFade(true);
+        }, 500);
       };
 
-      // 초기 메시지 설정
       changeMessage();
-
-      // 4초마다 메시지 변경
       intervalId = setInterval(changeMessage, 4000);
     }
 
-    // 컴포넌트 언마운트 시 interval 해제
     return () => clearInterval(intervalId);
   }, [isLoading]);
 
-  // 로딩 중인지 확인
   if (!isLoading) {
     return null;
   }
 
-  // 로딩 중인 경우
   return (
     <div className={style.overlay}>
       <div className={style.container}>
         <div className={style.animation}>
-          <Lottie animationData={Bubble} loop={true} autoplay={true}></Lottie>
+          <Lottie animationData={animationData} loop autoplay />
         </div>
-        <h2 className={style.title}>개발일지 작성 중 ...</h2>
+        <h2 className={style.title}>{title}</h2>
         <p
           className={`${style.description} ${fade ? style.fadeIn : style.fadeOut}`}
         >

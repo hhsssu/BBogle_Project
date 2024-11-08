@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HorizontalScroll from '../common/scroll/HorizontalScroll';
 import useUserStore from '../../store/useUserStore';
-import Loading from '../common/loading/DiaryLoading';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
@@ -87,7 +86,7 @@ function Main() {
         />
         <div className={style.greeting}>안녕하세요, {user?.nickname}님!</div>
       </div>
-
+      // 각 화면에서 다른 제목과 애니메이션으로 사용
       <div className={style.diary}>
         <div>
           <div className={style.description}>

@@ -1,6 +1,7 @@
 package com.ssafy.bbogle.common.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -36,10 +37,10 @@ public class JwtUtil {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(this.getSecretKey()).build().parseClaimsJws(token);
+            getClaimsFromToken(token);
             return true;
         }catch (Exception e) {
-            return false;
+            throw new JwtException("Invalid JWT token");
         }
     }
 

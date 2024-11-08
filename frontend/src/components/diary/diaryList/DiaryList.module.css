@@ -7,4 +7,5 @@
   overflow-y: auto;
   scrollbar-width: none;
   gap: 24px 8px;
+  padding: 8px;
 }

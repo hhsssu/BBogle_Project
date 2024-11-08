@@ -10,7 +10,7 @@ function ProjectAlarmSection() {
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const handleToggleState = () => {
-    updateProject('alarmState', !project.alarmState);
+    updateProject('alarmState', !project.notificationStatus);
   };
 
   const handleTime = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +22,7 @@ function ProjectAlarmSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>알림 설정</span>
         <div className={style.toggleSection}>
-          {project.alarmState ? (
+          {project.notificationStatus ? (
             <img
               className={style.toggle}
               src={ToggleOn}
@@ -36,12 +36,16 @@ function ProjectAlarmSection() {
             />
           )}
 
-          {project.alarmState ? (
+          {project.notificationStatus ? (
             <div>
               <input
                 className={style.timeInput}
                 type="time"
-                value={project.alarmTime}
+                value={
+                  project.notificationTime.hour +
+                  ':' +
+                  project.notificationTime.minute
+                }
                 onChange={handleTime}
               />
             </div>

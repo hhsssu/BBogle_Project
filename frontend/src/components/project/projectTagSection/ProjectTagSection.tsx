@@ -2,6 +2,7 @@ import style from './ProjectTagSection.module.css';
 
 import AddTag from '../../../assets/image/icon/AddTag.svg';
 import Close from '../../../assets/image/icon/Close.svg';
+import EnterIcon from '../../../assets/image/icon/Enter.svg';
 
 import { useState, useRef, useEffect } from 'react';
 import useProjectStore from '../../../store/useProjectStore';
@@ -20,11 +21,11 @@ function ProjectTagSection() {
   const techInputRef = useRef<HTMLInputElement>(null);
 
   const openRoleInput = () => {
-    setRoleInputOpen(true);
+    if (!roleInputOpen) setRoleInputOpen(true);
   };
 
   const openTechInput = () => {
-    setTechInputOpen(true);
+    if (!techInputOpen) setTechInputOpen(true);
   };
 
   const handleRoleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,39 +36,67 @@ function ProjectTagSection() {
     setTechInput(event.target.value);
   };
 
-  const addRole = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      setRoleInput('');
-      setRoleInputOpen(false);
-      updateProject('roles', [...project.roles, roleInput]);
-    } else if (event.key === 'Escape') {
-      setRoleInput('');
-      setRoleInputOpen(false);
+  const addRole = (
+    event:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLImageElement>,
+  ) => {
+    if ('key' in event) {
+      if (event.key !== 'Enter') {
+        if (event.key === 'Escape') {
+          setRoleInput('');
+          setRoleInputOpen(false);
+        }
+        return;
+      }
     }
+
+    if (roleInput === '') {
+      setRoleInputOpen(false);
+      return;
+    }
+
+    updateProject('roles', [...project.role, roleInput]);
+    setRoleInput('');
+    setRoleInputOpen(false);
   };
 
-  const addTech = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      setTechInput('');
-      setTechInputOpen(false);
-      updateProject('techs', [...project.techs, techInput]);
-    } else if (event.key === 'Escape') {
-      setTechInput('');
-      setTechInputOpen(false);
+  const addTech = (
+    event:
+      | React.KeyboardEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLImageElement>,
+  ) => {
+    if ('key' in event) {
+      if (event.key !== 'Enter') {
+        if (event.key === 'Escape') {
+          setTechInput('');
+          setTechInputOpen(false);
+        }
+        return;
+      }
     }
+
+    if (techInput === '') {
+      setRoleInputOpen(false);
+      return;
+    }
+
+    setTechInput('');
+    setTechInputOpen(false);
+    updateProject('techs', [...project.skill, techInput]);
   };
 
   const deleteRoleTag = (index: number) => {
     updateProject(
       'roles',
-      project.roles.filter((_, i) => i !== index),
+      project.role.filter((_, i) => i !== index),
     );
   };
 
   const deleteTechTag = (index: number) => {
     updateProject(
       'techs',
-      project.techs.filter((_, i) => i !== index),
+      project.skill.filter((_, i) => i !== index),
     );
   };
 
@@ -86,6 +115,7 @@ function ProjectTagSection() {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
+        roleInputOpen &&
         roleInputRef.current &&
         !roleInputRef.current.contains(event.target as Node)
       ) {
@@ -93,6 +123,7 @@ function ProjectTagSection() {
         setRoleInputOpen(false);
       }
       if (
+        techInputOpen &&
         techInputRef.current &&
         !techInputRef.current.contains(event.target as Node)
       ) {
@@ -112,7 +143,7 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>나의 역할</span>
         <div className={style.tagSection}>
-          {project.roles.map((role, index) => (
+          {project.role.map((role, index) => (
             <div key={index} className={style.tag}>
               {role}
               <img
@@ -126,21 +157,26 @@ function ProjectTagSection() {
             </div>
           ))}
 
-          {roleInputOpen ? (
-            <input
-              ref={roleInputRef}
-              className={style.tagInput}
-              type="text"
-              maxLength={20}
-              value={roleInput}
-              onChange={handleRoleInput}
-              onKeyDown={addRole}
-            />
-          ) : (
-            ''
+          {roleInputOpen && (
+            <div ref={roleInputRef} className={style.tagInputContainer}>
+              <input
+                className={style.tagInput}
+                type="text"
+                maxLength={20}
+                value={roleInput}
+                onChange={handleRoleInput}
+                onKeyDown={addRole}
+              />
+              <img
+                className={style.enterImg}
+                src={EnterIcon}
+                alt="등록"
+                onClick={addRole}
+              />
+            </div>
           )}
 
-          {project.roles.length < 7 && (
+          {project.role.length < 7 && (
             <img
               className={style.addTag}
               src={AddTag}
@@ -154,13 +190,13 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>사용 기술</span>
         <div className={style.tagSection}>
-          {project.techs.map((tech, index) => (
+          {project.skill.map((skill, index) => (
             <div key={index} className={style.tag}>
-              {tech}
+              {skill}
               <img
                 className={style.close}
                 src={Close}
-                alt="닫기"
+                alt="삭제"
                 onClick={() => {
                   deleteTechTag(index);
                 }}
@@ -169,20 +205,22 @@ function ProjectTagSection() {
           ))}
 
           {techInputOpen ? (
-            <input
-              ref={techInputRef}
-              className={style.tagInput}
-              type="text"
-              maxLength={20}
-              value={techInput}
-              onChange={handleTechInput}
-              onKeyDown={addTech}
-            />
+            <div ref={techInputRef} className={style.tagInputContainer}>
+              <input
+                className={style.tagInput}
+                type="text"
+                maxLength={20}
+                value={techInput}
+                onChange={handleTechInput}
+                onKeyDown={addTech}
+              />
+              <img src={EnterIcon} alt="등록" onClick={addTech} />
+            </div>
           ) : (
             ''
           )}
 
-          {project.techs.length < 7 && (
+          {project.skill.length < 7 && (
             <img
               className={style.addTag}
               src={AddTag}

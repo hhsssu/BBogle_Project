@@ -59,7 +59,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
         <div className={style.titleContainer}>
           <div className={style.img}>
             <ImageWithDefault
-              src={project.imgSrc}
+              src={project.image}
               alt="로고"
               defaultSrc={DefaultProject}
               onClick={handleImgClick}
@@ -101,7 +101,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
           className={style.summary}
           rows={3}
           maxLength={100}
-          value={project.summary}
+          value={project.description}
           onChange={handleSummaryChange}
         ></textarea>
       </div>

@@ -50,7 +50,7 @@ function ProjectCreate() {
       return;
     }
 
-    if (project.startDate === '' || project.finishDate === '') {
+    if (project.startDate === '' || project.endDate === '') {
       setTermError(true);
       setErrMsgOn(true);
       return;

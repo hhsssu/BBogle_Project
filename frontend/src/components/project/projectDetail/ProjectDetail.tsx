@@ -1,4 +1,3 @@
-import RunnerWay from '../../../assets/image/RunnerWay.png';
 import Back from '../../../assets/image/icon/Back.svg';
 import Setting from '../../../assets/image/icon/Setting.svg';
 import Pencil from '../../../assets/image/icon/Pencil.svg';
@@ -6,26 +5,30 @@ import RedTrash from '../../../assets/image/icon/RedTrash.svg';
 
 import style from './ProjectDetail.module.css';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import DiaryList from '../../diary/diaryList/DiaryList';
 import Modal from '../../common/modal/Modal';
 import DiaryLoading from '../../common/loading/DiaryLoading';
+import useProjectStore from '../../../store/useProjectStore';
 
 function ProjectDetail() {
-  const PROJECT = {
-    imageSrc: RunnerWay,
-    title: 'Runner Way',
-    state: true,
-    term: '2024.10.03 ~ 2024.11.30',
-    summary: '당신의 러닝을 함께하는 프로젝트',
-    teammate: 6,
-    roles: ['FE', 'BE', 'INFRA', 'AI'],
-    techs: ['React', 'Spring', 'TypeScript', 'JPA', 'MongoDB'],
-    diaryCnt: 32,
-  };
+  const PROJECT = useProjectStore((state) => state.project);
+  const getProject = useProjectStore((state) => state.getProject);
+  // {
+  //   imageSrc: RunnerWay,
+  //   title: 'Runner Way',
+  //   state: true,
+  //   term: '2024.10.03 ~ 2024.11.30',
+  //   summary: '당신의 러닝을 함께하는 프로젝트',
+  //   teammate: 6,
+  //   roles: ['FE', 'BE', 'INFRA', 'AI'],
+  //   techs: ['React', 'Spring', 'TypeScript', 'JPA', 'MongoDB'],
+  //   diaryCnt: 32,
+  // };
 
   const navigate = useNavigate();
+  const { pjtId } = useParams();
 
   const settingIconRef = useRef<HTMLImageElement>(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -83,6 +86,10 @@ function ProjectDetail() {
   };
 
   useEffect(() => {
+    getProject(Number(pjtId));
+  }, []);
+
+  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
         settingIconRef.current &&
@@ -111,7 +118,7 @@ function ProjectDetail() {
             <div className={style.pjtTitleContainer}>
               <img
                 className={style.img}
-                src={PROJECT.imageSrc}
+                src={PROJECT.image}
                 alt="프로젝트 이미지"
               />
               <span className={style.title}>{PROJECT.title}</span>
@@ -123,9 +130,9 @@ function ProjectDetail() {
                   onClick={handleModalOpen}
                 />
                 <div
-                  className={`${style.state} ${PROJECT.state ? style.stateActive : style.stateInActive}`}
+                  className={`${style.state} ${PROJECT.status ? style.stateActive : style.stateInActive}`}
                 >
-                  {PROJECT.state ? '진행 중' : '종료'}
+                  {PROJECT.status ? '진행 중' : '종료'}
                 </div>
                 {isModalOpen && (
                   <div className={style.modalBox}>
@@ -151,7 +158,7 @@ function ProjectDetail() {
                 )}
               </div>
             </div>
-            {PROJECT.state ? (
+            {PROJECT.status ? (
               <button className={style.endBtn} onClick={handleFinModal}>
                 프로젝트 종료
               </button>
@@ -160,14 +167,14 @@ function ProjectDetail() {
             )}
           </div>
 
-          <div className={style.summary}>{PROJECT.summary}</div>
+          <div className={style.summary}>{PROJECT.description}</div>
           <div className={style.term}>
-            {PROJECT.term} / {PROJECT.teammate} 명
+            {PROJECT.startDate} ~ {PROJECT.endDate} / {PROJECT.memberCount} 명
           </div>
 
           <div className={style.tagList}>
             <span className={style.subTitle}>나의 역할</span>
-            {PROJECT.roles.map((role, index) => (
+            {PROJECT.role.map((role, index) => (
               <div key={index} className={style.tag}>
                 {role}
               </div>
@@ -176,9 +183,9 @@ function ProjectDetail() {
 
           <div className={style.tagList}>
             <span className={style.subTitle}>사용 기술</span>
-            {PROJECT.techs.map((tech, index) => (
+            {PROJECT.skill.map((skill, index) => (
               <div key={index} className={style.tag}>
-                {tech}
+                {skill}
               </div>
             ))}
           </div>
@@ -192,9 +199,9 @@ function ProjectDetail() {
               onClick={() => changeTab(0)}
             >
               개발일지
-              <div className={style.diaryCnt}>{PROJECT.diaryCnt}</div>
+              <div className={style.diaryCnt}>{32}</div>
             </div>
-            {PROJECT.state ? (
+            {PROJECT.status ? (
               ''
             ) : (
               <div
@@ -222,7 +229,7 @@ function ProjectDetail() {
                   과거순
                 </span>
               </div>
-              {PROJECT.state && (
+              {PROJECT.status && (
                 <button className={style.addDiaryBtn} onClick={navDiaryCreate}>
                   + 개발일지 추가
                 </button>

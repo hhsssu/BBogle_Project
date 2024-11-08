@@ -196,6 +196,7 @@ function My() {
                   state={card.state}
                   term={card.term}
                   summary={card.summary}
+                  notificationStatus={false}
                 />
               </div>
             ))

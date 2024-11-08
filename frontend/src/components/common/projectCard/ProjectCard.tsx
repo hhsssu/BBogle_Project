@@ -16,13 +16,22 @@ interface Props {
   state: boolean;
   term: string;
   summary: string;
+  notificationStatus: boolean;
 }
 
-function ProjectCard({ pjtId, imageSrc, title, state, term, summary }: Props) {
+function ProjectCard({
+  pjtId,
+  imageSrc,
+  title,
+  state,
+  term,
+  summary,
+  notificationStatus,
+}: Props) {
   const navigate = useNavigate();
   const moreIconRef = useRef<HTMLImageElement>(null);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [isAlarmOn, setAlarmOn] = useState(false);
+  const [isAlarmOn, setAlarmOn] = useState(notificationStatus);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleModalOpen = (e: React.MouseEvent) => {

@@ -56,7 +56,7 @@ function ProjectTagSection() {
       return;
     }
 
-    updateProject('roles', [...project.roles, roleInput]);
+    updateProject('roles', [...project.role, roleInput]);
     setRoleInput('');
     setRoleInputOpen(false);
   };
@@ -83,20 +83,20 @@ function ProjectTagSection() {
 
     setTechInput('');
     setTechInputOpen(false);
-    updateProject('techs', [...project.techs, techInput]);
+    updateProject('techs', [...project.skill, techInput]);
   };
 
   const deleteRoleTag = (index: number) => {
     updateProject(
       'roles',
-      project.roles.filter((_, i) => i !== index),
+      project.role.filter((_, i) => i !== index),
     );
   };
 
   const deleteTechTag = (index: number) => {
     updateProject(
       'techs',
-      project.techs.filter((_, i) => i !== index),
+      project.skill.filter((_, i) => i !== index),
     );
   };
 
@@ -143,7 +143,7 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>나의 역할</span>
         <div className={style.tagSection}>
-          {project.roles.map((role, index) => (
+          {project.role.map((role, index) => (
             <div key={index} className={style.tag}>
               {role}
               <img
@@ -176,7 +176,7 @@ function ProjectTagSection() {
             </div>
           )}
 
-          {project.roles.length < 7 && (
+          {project.role.length < 7 && (
             <img
               className={style.addTag}
               src={AddTag}
@@ -190,9 +190,9 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>사용 기술</span>
         <div className={style.tagSection}>
-          {project.techs.map((tech, index) => (
+          {project.skill.map((skill, index) => (
             <div key={index} className={style.tag}>
-              {tech}
+              {skill}
               <img
                 className={style.close}
                 src={Close}
@@ -220,7 +220,7 @@ function ProjectTagSection() {
             ''
           )}
 
-          {project.techs.length < 7 && (
+          {project.skill.length < 7 && (
             <img
               className={style.addTag}
               src={AddTag}

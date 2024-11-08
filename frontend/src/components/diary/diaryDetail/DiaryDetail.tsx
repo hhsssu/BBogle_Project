@@ -18,7 +18,7 @@ function DiaryDetail() {
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
 
   const navPjtDetail = () => {
-    navigate(`/project/${project.pjtID}`);
+    navigate(`/project/${project.projectId}`);
   };
 
   const navDiaryUpdate = () => {

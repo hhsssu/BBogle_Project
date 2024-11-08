@@ -41,7 +41,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
             <input
               className={style.dateInput}
               type="date"
-              max={project.finishDate}
+              max={project.endDate}
               value={project.startDate}
               onChange={handleStartDate}
             />
@@ -53,7 +53,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
               className={style.dateInput}
               type="date"
               min={project.startDate}
-              value={project.finishDate}
+              value={project.endDate}
               onChange={handleFinishDate}
             />
           </div>
@@ -71,7 +71,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
         <div>
           <select
             className={style.selectInput}
-            value={project.teammate}
+            value={project.memberCount}
             onChange={handleTeammate}
           >
             {Array.from({ length: 10 }, (_, index) => (

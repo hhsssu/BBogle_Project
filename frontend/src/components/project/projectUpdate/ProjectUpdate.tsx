@@ -35,7 +35,7 @@ function ProjectUpdate() {
       return;
     }
 
-    if (project.startDate === '' || project.finishDate === '') {
+    if (project.startDate === '' || project.endDate === '') {
       setTermError(true);
       return;
     }

@@ -2,6 +2,7 @@ package com.ssafy.bbogle.common.jwt;
 
 import com.ssafy.bbogle.user.CustomUserDetails;
 import com.ssafy.bbogle.user.CustomUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,16 +29,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         FilterChain filterChain) throws ServletException, IOException {
 
         String token = resolveToken(request);
-        if (token != null && jwtUtil.validateToken(token) && jwtUtil.isAccessToken(token)) {
-            String kakaoId = jwtUtil.getKakaoIdFromToken(token);
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(kakaoId);
+        try {
+            if (token != null && jwtUtil.validateToken(token) && jwtUtil.isAccessToken(token)) {
+                String kakaoId = jwtUtil.getKakaoIdFromToken(token);
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(kakaoId);
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
+
         filterChain.doFilter(request, response);
 
     }

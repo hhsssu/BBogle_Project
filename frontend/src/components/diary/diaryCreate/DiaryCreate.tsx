@@ -27,7 +27,7 @@ function DiaryCreate() {
   // const [currentIdx, setCurrentIdx] = useState(0);
 
   const navPjtDetail = () => {
-    navigate(`/project/${project.pjtID}`);
+    navigate(`/project/${project.projectId}`);
   };
 
   const updateLineHeight = () => {

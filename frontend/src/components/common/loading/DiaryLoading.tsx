@@ -60,14 +60,34 @@ const MESSAGES = [
 
 function Loading({ isLoading }: diaryLoadingProps) {
   const [message, setMessage] = useState('');
+  const [fade, setFade] = useState(true);
 
   useEffect(() => {
+    let intervalId: ReturnType<typeof setInterval>;
+
     if (isLoading) {
-      // 로딩 중일 때 랜덤 멘트 선택
-      const randomMessage =
-        MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-      setMessage(randomMessage);
+      const changeMessage = () => {
+        // 페이드 아웃
+        setFade(false);
+
+        // 페이드 아웃 후 새로운 메시지 설정 및 페이드 인
+        setTimeout(() => {
+          const randomMessage =
+            MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+          setMessage(randomMessage);
+          setFade(true); // 페이드 인
+        }, 500); // 500ms 동안 페이드 아웃된 후 메시지 변경
+      };
+
+      // 초기 메시지 설정
+      changeMessage();
+
+      // 4초마다 메시지 변경
+      intervalId = setInterval(changeMessage, 4000);
     }
+
+    // 컴포넌트 언마운트 시 interval 해제
+    return () => clearInterval(intervalId);
   }, [isLoading]);
 
   // 로딩 중인지 확인
@@ -83,7 +103,11 @@ function Loading({ isLoading }: diaryLoadingProps) {
           <Lottie animationData={Bubble} loop={true} autoplay={true}></Lottie>
         </div>
         <h2 className={style.title}>개발일지 작성 중 ...</h2>
-        <p className={style.description}>{message}</p>
+        <p
+          className={`${style.description} ${fade ? style.fadeIn : style.fadeOut}`}
+        >
+          {message}
+        </p>
       </div>
     </div>
   );

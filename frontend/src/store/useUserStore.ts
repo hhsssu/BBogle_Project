@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { fetchUserNickname, logoutUser } from '../api/AuthApi';
+import { fetchUserNickname, logoutUser } from '../api/authApi';
 // 회원 정보 타입 정의
 interface User {
   id: number | null;

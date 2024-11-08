@@ -4,6 +4,7 @@ import useDiaryStore from '../../../store/useDiaryStore';
 import React, { useEffect, useRef, useState } from 'react';
 import QnaInput from '../qnaInput/QnaInput';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
+import DiaryLoading from '../../common/loading/DiaryLoading';
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
 
 function DiaryUpdate() {
@@ -11,7 +12,7 @@ function DiaryUpdate() {
   const { pjtId, diaryId } = useParams();
 
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answerList);
+  const answerList = useDiaryStore((state) => state.answers);
   const getQnaList = useDiaryStore((state) => state.getQnaList);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
@@ -19,6 +20,7 @@ function DiaryUpdate() {
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
+  const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
 
   const navPjtDetail = () => {
     navigate(`/project/${pjtId}`);
@@ -30,8 +32,12 @@ function DiaryUpdate() {
     } else {
       setTextLengthErr(true);
       setErrMsgOn(false);
-      alert('수정 완료!');
-      navigate(`/project/${pjtId}/diary/${diaryId}`);
+
+      setFinLoadingOpen(true);
+      setTimeout(() => {
+        setFinLoadingOpen(false);
+        navigate(`/project/${pjtId}/diary/${diaryId}`);
+      }, 2000);
     }
   };
 
@@ -143,6 +149,8 @@ function DiaryUpdate() {
           답변 길이가 너무 짧습니다! 50자 이상 작성해주세요{' '}
         </div>
       )}
+
+      <DiaryLoading isLoading={isFinLoadingOpen} />
     </div>
   );
 }

@@ -11,7 +11,7 @@ import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
 
 function DiaryCreate() {
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answerList);
+  const answerList = useDiaryStore((state) => state.answers);
 
   const navigate = useNavigate();
   const project = useProjectStore((state) => state.project);
@@ -206,7 +206,6 @@ function DiaryCreate() {
       )}
 
       <DiaryLoading isLoading={isFinLoadingOpen} />
-      {isFinLoadingOpen}
     </div>
   );
 }

@@ -11,7 +11,7 @@ function DiaryDetail() {
   // const { pjtId, diaryId } = useParams();
   const project = useProjectStore((state) => state.project);
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answerList);
+  const answerList = useDiaryStore((state) => state.answers);
   const getQnaList = useDiaryStore((state) => state.getQnaList);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
@@ -64,10 +64,6 @@ function DiaryDetail() {
   useEffect(() => {
     updateLineHeight();
   }, [questionList]);
-
-  // useEffect(() => {
-  //   axios.get(`/api/projects/${pjtId}/diaries/${diaryId}`)
-  // }, []);
 
   return (
     <div className={style.container}>

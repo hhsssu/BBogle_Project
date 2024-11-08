@@ -26,7 +26,8 @@ const refreshAccessToken = async () => {
 // 요청 인터셉터로 인증 헤더 추가
 axiosInstance.interceptors.request.use(
   async (config) => {
-    console.log('요청 URL:', API_LINK + config.url);
+    // TODO : URL 확인용
+    console.log('API 요청 URL:', API_LINK + config.url);
 
     // localStorage에서 accessToken 가져오기
     let token = localStorage.getItem('accessToken');
@@ -42,7 +43,7 @@ axiosInstance.interceptors.request.use(
       }
     }
 
-    //
+    // 토큰이 있으면, 헤더에 accesstoken을 넣어 인증
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

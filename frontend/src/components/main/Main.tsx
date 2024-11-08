@@ -130,7 +130,6 @@ function Main() {
             </div>
           ))}
         ></HorizontalScroll>
-        <Loading isLoading={true}></Loading>
         <div className={style.button}>
           <GoToDiary
             isInactive={activeProjectId === null}

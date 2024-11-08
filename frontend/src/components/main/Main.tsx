@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import HorizontalScroll from '../common/scroll/HorizontalScroll';
 import useUserStore from '../../store/useUserStore';
+import Loading from '../common/loading/DiaryLoading';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
@@ -24,8 +25,8 @@ function Main() {
     setActiveProjectId(null);
     setTimeout(() => {
       setScrollGuide(false);
-    }, 3000);
-  }, []);
+    }, 5000);
+  }, [fetchUser, setActiveProjectId]);
 
   // 카드 선택
   const handleCard = (id: number) => {
@@ -127,6 +128,7 @@ function Main() {
             </div>
           ))}
         ></HorizontalScroll>
+        <Loading isLoading={true}></Loading>
         <div className={style.button}>
           <GoToDiary
             isInactive={activeProjectId === null}

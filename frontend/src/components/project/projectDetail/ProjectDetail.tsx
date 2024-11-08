@@ -1,13 +1,16 @@
 import RunnerWay from '../../../assets/image/RunnerWay.png';
+import Back from '../../../assets/image/icon/Back.svg';
 import Setting from '../../../assets/image/icon/Setting.svg';
 import Pencil from '../../../assets/image/icon/Pencil.svg';
 import RedTrash from '../../../assets/image/icon/RedTrash.svg';
 
 import style from './ProjectDetail.module.css';
 import { useEffect, useRef, useState } from 'react';
-import DiaryList from '../../diary/diaryList/DiaryList';
 import { useNavigate } from 'react-router-dom';
+
+import DiaryList from '../../diary/diaryList/DiaryList';
 import Modal from '../../common/modal/Modal';
+import DiaryLoading from '../../common/loading/DiaryLoading';
 
 function ProjectDetail() {
   const PROJECT = {
@@ -27,6 +30,8 @@ function ProjectDetail() {
   const settingIconRef = useRef<HTMLImageElement>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isFinModalOpen, setFinModalOpen] = useState(false);
+  const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
 
   const [tabIdx, setTabIdx] = useState(0);
   const [sortIdx, setSortIdx] = useState(0);
@@ -64,6 +69,19 @@ function ProjectDetail() {
     setSortIdx(idx);
   };
 
+  const handleFinModal = () => {
+    setFinModalOpen(!isFinModalOpen);
+  };
+
+  const finishProject = () => {
+    setFinModalOpen(false);
+    setFinLoadingOpen(true);
+
+    setTimeout(() => {
+      setFinLoadingOpen(false);
+    }, 2000);
+  };
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -84,13 +102,18 @@ function ProjectDetail() {
     <div>
       <div className={style.container}>
         <div className={style.backBtn} onClick={navPjtList}>
-          돌아가기
+          <img src={Back} alt="뒤로가기 버튼" />
+          프로젝트 목록
         </div>
 
         <section className={style.info}>
           <div className={style.infoHeader}>
             <div className={style.pjtTitleContainer}>
-              <img className={style.img} src={PROJECT.imageSrc} alt="" />
+              <img
+                className={style.img}
+                src={PROJECT.imageSrc}
+                alt="프로젝트 이미지"
+              />
               <span className={style.title}>{PROJECT.title}</span>
               <div ref={settingIconRef} className={style.settingBox}>
                 <img
@@ -129,7 +152,9 @@ function ProjectDetail() {
               </div>
             </div>
             {PROJECT.state ? (
-              <button className={style.endBtn}>프로젝트 종료</button>
+              <button className={style.endBtn} onClick={handleFinModal}>
+                프로젝트 종료
+              </button>
             ) : (
               ''
             )}
@@ -181,7 +206,7 @@ function ProjectDetail() {
             )}
           </div>
 
-          {tabIdx === 0 ? (
+          {tabIdx === 0 && (
             <div className={style.control}>
               <div className={style.sortOptions}>
                 <span
@@ -203,8 +228,6 @@ function ProjectDetail() {
                 </button>
               )}
             </div>
-          ) : (
-            ''
           )}
         </section>
 
@@ -213,17 +236,29 @@ function ProjectDetail() {
         </section>
       </div>
 
-      {isDeleteModalOpen && (
-        <Modal
-          isOpen={isDeleteModalOpen}
-          title={'정말 프로젝트를 삭제하시겠어요?'}
-          content={'삭제 시 복구가 어려워요'}
-          onClose={handleDeleteModal}
-          onConfirm={deleteProject}
-          confirmText={'확인'}
-          cancleText={'취소'}
-        />
-      )}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        title={'정말 프로젝트를 삭제하시겠어요?'}
+        content={'삭제 시 복구가 어려워요'}
+        onClose={handleDeleteModal}
+        onConfirm={deleteProject}
+        confirmText={'확인'}
+        cancleText={'취소'}
+      />
+
+      <Modal
+        isOpen={isFinModalOpen}
+        title={'프로젝트를 종료하시겠어요?'}
+        content={
+          '종료 시 회고록이 생성되고 더 이상 개발일지를 작성할 수 없어요'
+        }
+        onClose={handleFinModal}
+        onConfirm={finishProject}
+        confirmText={'삭제'}
+        cancleText={'취소'}
+      />
+
+      <DiaryLoading isLoading={isFinLoadingOpen} />
     </div>
   );
 }

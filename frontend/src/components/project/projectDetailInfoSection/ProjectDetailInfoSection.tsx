@@ -19,7 +19,6 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
   const handleFinishDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     updateProject('finishDate', value);
-    console.log(value);
     handleTermError(false);
   };
 

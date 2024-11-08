@@ -9,9 +9,11 @@
 }
 
 .backBtn {
+  display: flex;
   font-size: 14px;
   color: rgba(160, 160, 160, 1);
   cursor: pointer;
+  align-items: center;
 }
 
 .info {

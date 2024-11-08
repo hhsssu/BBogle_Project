@@ -29,7 +29,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
     if (file) {
       const newImageUrl = URL.createObjectURL(file); // 새 이미지 URL 생성
       // setImgSrc(newImageUrl); // 이미지 상태 업데이트
-      updateProject('imgSrc', newImageUrl);
+      updateProject('image', newImageUrl);
     }
   };
 
@@ -42,11 +42,11 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
     }
   };
 
-  const handleSummaryChange = (
+  const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const value = event.target.value;
-    updateProject('summary', value);
+    updateProject('description', value);
   };
 
   return (
@@ -102,7 +102,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
           rows={3}
           maxLength={100}
           value={project.description}
-          onChange={handleSummaryChange}
+          onChange={handleDescriptionChange}
         ></textarea>
       </div>
     </div>

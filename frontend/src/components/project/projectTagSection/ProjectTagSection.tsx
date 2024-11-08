@@ -12,28 +12,28 @@ function ProjectTagSection() {
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const [roleInputOpen, setRoleInputOpen] = useState(false);
-  const [techInputOpen, setTechInputOpen] = useState(false);
+  const [skillInputOpen, setSkillInputOpen] = useState(false);
 
   const [roleInput, setRoleInput] = useState('');
-  const [techInput, setTechInput] = useState('');
+  const [skillInput, setSkillInput] = useState('');
 
   const roleInputRef = useRef<HTMLInputElement>(null);
-  const techInputRef = useRef<HTMLInputElement>(null);
+  const skillInputRef = useRef<HTMLInputElement>(null);
 
   const openRoleInput = () => {
     if (!roleInputOpen) setRoleInputOpen(true);
   };
 
-  const openTechInput = () => {
-    if (!techInputOpen) setTechInputOpen(true);
+  const openSkillInput = () => {
+    if (!skillInputOpen) setSkillInputOpen(true);
   };
 
   const handleRoleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRoleInput(event.target.value);
   };
 
-  const handleTechInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTechInput(event.target.value);
+  const handleSkillInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSkillInput(event.target.value);
   };
 
   const addRole = (
@@ -56,12 +56,12 @@ function ProjectTagSection() {
       return;
     }
 
-    updateProject('roles', [...project.role, roleInput]);
+    updateProject('role', [...project.role, roleInput]);
     setRoleInput('');
     setRoleInputOpen(false);
   };
 
-  const addTech = (
+  const addSkill = (
     event:
       | React.KeyboardEvent<HTMLInputElement>
       | React.MouseEvent<HTMLImageElement>,
@@ -69,33 +69,33 @@ function ProjectTagSection() {
     if ('key' in event) {
       if (event.key !== 'Enter') {
         if (event.key === 'Escape') {
-          setTechInput('');
-          setTechInputOpen(false);
+          setSkillInput('');
+          setSkillInputOpen(false);
         }
         return;
       }
     }
 
-    if (techInput === '') {
+    if (skillInput === '') {
       setRoleInputOpen(false);
       return;
     }
 
-    setTechInput('');
-    setTechInputOpen(false);
-    updateProject('techs', [...project.skill, techInput]);
+    setSkillInput('');
+    setSkillInputOpen(false);
+    updateProject('skill', [...project.skill, skillInput]);
   };
 
   const deleteRoleTag = (index: number) => {
     updateProject(
-      'roles',
+      'role',
       project.role.filter((_, i) => i !== index),
     );
   };
 
-  const deleteTechTag = (index: number) => {
+  const deleteSkillTag = (index: number) => {
     updateProject(
-      'techs',
+      'skill',
       project.skill.filter((_, i) => i !== index),
     );
   };
@@ -107,10 +107,10 @@ function ProjectTagSection() {
   }, [roleInputOpen]);
 
   useEffect(() => {
-    if (techInputRef.current) {
-      techInputRef.current.focus();
+    if (skillInputRef.current) {
+      skillInputRef.current.focus();
     }
-  }, [techInputOpen]);
+  }, [skillInputOpen]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -123,12 +123,12 @@ function ProjectTagSection() {
         setRoleInputOpen(false);
       }
       if (
-        techInputOpen &&
-        techInputRef.current &&
-        !techInputRef.current.contains(event.target as Node)
+        skillInputOpen &&
+        skillInputRef.current &&
+        !skillInputRef.current.contains(event.target as Node)
       ) {
-        setTechInput('');
-        setTechInputOpen(false);
+        setSkillInput('');
+        setSkillInputOpen(false);
       }
     }
 
@@ -198,23 +198,23 @@ function ProjectTagSection() {
                 src={Close}
                 alt="삭제"
                 onClick={() => {
-                  deleteTechTag(index);
+                  deleteSkillTag(index);
                 }}
               />
             </div>
           ))}
 
-          {techInputOpen ? (
-            <div ref={techInputRef} className={style.tagInputContainer}>
+          {skillInputOpen ? (
+            <div ref={skillInputRef} className={style.tagInputContainer}>
               <input
                 className={style.tagInput}
                 type="text"
                 maxLength={20}
-                value={techInput}
-                onChange={handleTechInput}
-                onKeyDown={addTech}
+                value={skillInput}
+                onChange={handleSkillInput}
+                onKeyDown={addSkill}
               />
-              <img src={EnterIcon} alt="등록" onClick={addTech} />
+              <img src={EnterIcon} alt="등록" onClick={addSkill} />
             </div>
           ) : (
             ''
@@ -225,7 +225,7 @@ function ProjectTagSection() {
               className={style.addTag}
               src={AddTag}
               alt="태그 추가"
-              onClick={openTechInput}
+              onClick={openSkillInput}
             />
           )}
         </div>

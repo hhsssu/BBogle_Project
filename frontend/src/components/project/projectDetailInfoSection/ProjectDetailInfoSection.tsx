@@ -18,13 +18,13 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
 
   const handleFinishDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    updateProject('finishDate', value);
+    updateProject('endDate', value);
     handleTermError(false);
   };
 
-  const handleTeammate = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleMemberCount = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event.target) {
-      updateProject('teammate', Number(event.target.value));
+      updateProject('memberCount', Number(event.target.value));
     }
   };
 
@@ -72,7 +72,7 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
           <select
             className={style.selectInput}
             value={project.memberCount}
-            onChange={handleTeammate}
+            onChange={handleMemberCount}
           >
             {Array.from({ length: 10 }, (_, index) => (
               <option key={index + 1} value={index + 1}>

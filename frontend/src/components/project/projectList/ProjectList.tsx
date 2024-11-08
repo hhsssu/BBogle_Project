@@ -50,9 +50,8 @@ function ProjectList() {
           <div className={style.fins}>
             {onlyProgress
               ? PJT_LIST.filter((pjt) => pjt.status).map((card, index) => (
-                  <div onClick={() => navPjtDetail(card.projectId)}>
+                  <div key={index} onClick={() => navPjtDetail(card.projectId)}>
                     <ProjectCard
-                      key={index}
                       pjtId={card.projectId}
                       imageSrc={card.image}
                       title={card.title}
@@ -64,9 +63,8 @@ function ProjectList() {
                   </div>
                 ))
               : PJT_LIST.map((card, index) => (
-                  <div onClick={() => navPjtDetail(card.projectId)}>
+                  <div key={index} onClick={() => navPjtDetail(card.projectId)}>
                     <ProjectCard
-                      key={index}
                       pjtId={card.projectId}
                       imageSrc={card.image}
                       title={card.title}

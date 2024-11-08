@@ -5,16 +5,30 @@ import ToggleOff from '../../../assets/image/icon/ToggleOff.svg';
 
 import useProjectStore from '../../../store/useProjectStore';
 
+interface Time {
+  hour: number;
+  minute: number;
+  second: number;
+  nano: number;
+}
+
 function ProjectAlarmSection() {
   const project = useProjectStore((state) => state.project);
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const handleToggleState = () => {
-    updateProject('alarmState', !project.notificationStatus);
+    updateProject('notificationStatus', !project.notificationStatus);
   };
 
   const handleTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateProject('alarmTime', event.target.value);
+    const time = event.target.value.split(':');
+    const notificationTime: Time = {
+      hour: Number(time[0]),
+      minute: Number(time[1]),
+      second: 0,
+      nano: 0,
+    };
+    updateProject('notificationTime', notificationTime);
   };
 
   return (

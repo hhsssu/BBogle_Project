@@ -47,7 +47,7 @@ interface ProjectState {
   getProject: (pjtId: number) => void;
   updateProjectField: (
     field: string,
-    value: string | string[] | number | boolean,
+    value: string | string[] | number | boolean | Time,
   ) => void;
 }
 

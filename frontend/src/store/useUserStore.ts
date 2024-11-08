@@ -1,10 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import axios from 'axios';
-
-// REST API 및 redirectUri
-const clientId = import.meta.env.VITE_KAKAO_API_KEY;
-const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+import axiosInstance from '../api/axiosInstance';
 
 // 회원 정보 타입 정의
 interface User {
@@ -22,7 +18,6 @@ interface UserStore {
   fetchUser: () => void;
   kakaoLogout: () => void;
   setEditNickname: () => void;
-  getAccessTokenFromCookie: () => void;
   updateNickname: (nickname: string) => Promise<void>;
   updateProfile: (profile: string) => Promise<void>;
 }
@@ -30,7 +25,7 @@ interface UserStore {
 // 회원 정보 상태관리
 const useUserStore = create<UserStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // TODO : 기본 더미 유저 데이터
       // user: null,
       // isAuthenticated: false,
@@ -44,43 +39,15 @@ const useUserStore = create<UserStore>()(
       isAuthenticated: true,
       isEditingNickname: false,
 
-      getAccessTokenFromCookie: () => {
-        const cookieString = document.cookie;
-        console.log('cookie String : ', cookieString);
-        const cookies = cookieString.split('; ');
-
-        for (const cookie of cookies) {
-          const [name, value] = cookie.split('=');
-          if (name === 'accessToken') {
-            return value;
-          }
-        }
-
-        // TODO : accessToken 쿠키 없는 경우
-        return null;
-      },
-
       // 유저 정보 가져오는 함수
       fetchUser: async () => {
-        const accessToken = get().getAccessTokenFromCookie();
-
-        if (accessToken === null) {
-          console.error('Access Token is missing.');
-        }
-
         // 유저 닉네임 가져오기
         try {
-          const response = await axios.get(
-            'http://localhost:8080/api/users/nickname',
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-              },
-            },
-          );
+          const response = await axiosInstance.get('/users/nickname');
+          console.log('API 응답 데이터:', response);
 
           const userName = response.data.nickname;
+          console.log('userName : ', userName);
           set({
             user: {
               id: 4,
@@ -93,37 +60,6 @@ const useUserStore = create<UserStore>()(
           console.log('닉네임 가져오기 성공:', userName);
         } catch (e) {
           console.error('닉네임 가져오기 실패 : ', e);
-        }
-      },
-
-      // kakao redirect 함수
-      kakaoLogin: async (code: string) => {
-        try {
-          // 액세스 토큰 요청
-          const tokenResponse = await axios.post(
-            'https://kauth.kakao.com/oauth/token',
-            null,
-            {
-              params: {
-                grant_type: 'authorization_code',
-                client_id: clientId,
-                redirect_uri: redirectUri,
-                code: code,
-              },
-              headers: {
-                'Content-Type':
-                  'application/x-www-form-urlencoded;charset=utf-8',
-              },
-            },
-          );
-
-          const accessToken = tokenResponse.data.access_token;
-
-          console.log(accessToken);
-          // 사용자 정보 요청
-          // const userResponse = await axi
-        } catch (error) {
-          console.error('카카오 로그인 오류 : ', error);
         }
       },
 
@@ -156,7 +92,7 @@ const useUserStore = create<UserStore>()(
       },
     }),
     {
-      name: 'user-storage', // localStorage에 저장될 키 이름
+      name: 'userStorage',
       partialize: (state) => ({
         user: state.user,
         isAuthenticated: state.isAuthenticated,

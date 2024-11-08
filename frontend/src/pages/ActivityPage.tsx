@@ -5,6 +5,7 @@ import ActivityCreate from '../components/activity/activityCreateUpdate/Activity
 
 import ActivityStyles from '../components/activity/Activity.module.css';
 import ActivityUpdate from '../components/activity/activityCreateUpdate/ActivityUpdate';
+import ActivitySearch from '../components/activity/activitySearch/ActivitySearch';
 
 function ActivityPage() {
   return (
@@ -14,6 +15,7 @@ function ActivityPage() {
         <Route path="create" element={<ActivityCreate />} />
         <Route path=":activityId" element={<ActivityDetail />} />
         <Route path="update/:activityId" element={<ActivityUpdate />} />
+        <Route path="search" element={<ActivitySearch />}></Route>
       </Routes>
     </div>
   );

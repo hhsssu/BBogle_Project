@@ -5,12 +5,14 @@ import QnaInput from '../qnaInput/QnaInput';
 import useDiaryStore from '../../../store/useDiaryStore';
 import React, { useEffect, useRef, useState } from 'react';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
+import Loading from '../../common/loading/Loading';
 
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
+import Bubble from '../../../assets/lottie/Bubble.json';
 
 function DiaryCreate() {
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answerList);
+  const answerList = useDiaryStore((state) => state.answers);
 
   const navigate = useNavigate();
   const project = useProjectStore((state) => state.project);
@@ -23,6 +25,8 @@ function DiaryCreate() {
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
+
+  const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
 
   // const [currentIdx, setCurrentIdx] = useState(0);
 
@@ -70,8 +74,12 @@ function DiaryCreate() {
     } else {
       setTextLengthErr(true);
       setErrMsgOn(false);
-      alert('작성 완료!');
-      navigate('/project/0');
+
+      setFinLoadingOpen(true);
+      setTimeout(() => {
+        setFinLoadingOpen(false);
+        navigate(`/project/${project.projectId}`);
+      }, 2000);
     }
   };
 
@@ -151,7 +159,7 @@ function DiaryCreate() {
         돌아가기
       </div>
 
-      <div className={style.diaryTitle}>오늘의 Runner Way는 어땠나요?</div>
+      <div className={style.diaryTitle}>오늘의 {project.title}</div>
 
       <section className={style.diaryForm}>
         {questionList.map((question, index) => {
@@ -190,12 +198,19 @@ function DiaryCreate() {
       >
         완료
       </button>
+
       {errMsgOn && (
         <div className={style.errMsg}>
           <img className={style.warnIcon} src={AlertTriangle} alt="경고" />
           답변 길이가 너무 짧습니다! 50자 이상 작성해주세요{' '}
         </div>
       )}
+
+      <Loading
+        isLoading={isFinLoadingOpen}
+        title="개발일지 작성 중 ..."
+        animationData={Bubble}
+      />
     </div>
   );
 }

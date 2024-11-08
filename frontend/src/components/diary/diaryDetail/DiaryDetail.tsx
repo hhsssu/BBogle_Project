@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import style from './DiaryDetail.module.css';
 import useProjectStore from '../../../store/useProjectStore';
 import React, { useEffect, useRef } from 'react';
@@ -6,19 +6,21 @@ import useDiaryStore from '../../../store/useDiaryStore';
 import QnaView from '../qnaView/QnaView';
 import DiaryImgView from '../diaryImgView/DiaryImgView';
 
+import Back from '../../../assets/image/icon/Back.svg';
+
 function DiaryDetail() {
   const navigate = useNavigate();
-  // const { pjtId, diaryId } = useParams();
-  const project = useProjectStore((state) => state.project);
+  const { pjtId } = useParams();
+  const projectTitle = useProjectStore((state) => state.project.title);
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answerList);
+  const answerList = useDiaryStore((state) => state.answers);
   const getQnaList = useDiaryStore((state) => state.getQnaList);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
 
   const navPjtDetail = () => {
-    navigate(`/project/${project.projectId}`);
+    navigate(`/project/${pjtId}`);
   };
 
   const navDiaryUpdate = () => {
@@ -65,14 +67,11 @@ function DiaryDetail() {
     updateLineHeight();
   }, [questionList]);
 
-  // useEffect(() => {
-  //   axios.get(`/api/projects/${pjtId}/diaries/${diaryId}`)
-  // }, []);
-
   return (
     <div className={style.container}>
       <div className={style.backBtn} onClick={navPjtDetail}>
-        돌아가기
+        <img src={Back} alt="뒤로가기 버튼" />
+        {projectTitle}
       </div>
 
       <div className={style.diaryTitle}>내용 요약 한 줄</div>

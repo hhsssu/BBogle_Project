@@ -4,14 +4,16 @@ import useDiaryStore from '../../../store/useDiaryStore';
 import React, { useEffect, useRef, useState } from 'react';
 import QnaInput from '../qnaInput/QnaInput';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
+
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
+import Back from '../../../assets/image/icon/Back.svg';
 
 function DiaryUpdate() {
   const navigate = useNavigate();
   const { pjtId, diaryId } = useParams();
 
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answerList);
+  const answerList = useDiaryStore((state) => state.answers);
   const getQnaList = useDiaryStore((state) => state.getQnaList);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
@@ -20,8 +22,8 @@ function DiaryUpdate() {
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
 
-  const navPjtDetail = () => {
-    navigate(`/project/${pjtId}`);
+  const navDiaryDetail = () => {
+    navigate(`/project/${pjtId}/diary/${diaryId}`);
   };
 
   const updateDiary = () => {
@@ -30,7 +32,8 @@ function DiaryUpdate() {
     } else {
       setTextLengthErr(true);
       setErrMsgOn(false);
-      alert('수정 완료!');
+
+      alert('개발일지 수정 완료!');
       navigate(`/project/${pjtId}/diary/${diaryId}`);
     }
   };
@@ -93,7 +96,8 @@ function DiaryUpdate() {
 
   return (
     <div className={style.container}>
-      <div className={style.backBtn} onClick={navPjtDetail}>
+      <div className={style.backBtn} onClick={navDiaryDetail}>
+        <img src={Back} alt="뒤로가기 버튼" />
         돌아가기
       </div>
 

@@ -1,6 +1,7 @@
 package com.ssafy.bbogle.common.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -39,10 +40,13 @@ public class JwtUtil {
         try {
             getClaimsFromToken(token);
             return true;
-        }catch (Exception e) {
-            throw new JwtException("Invalid JWT token");
+        } catch (ExpiredJwtException e) {
+            throw e; // 만료된 토큰 예외를 던짐
+        } catch (JwtException e) {
+            throw e; // 유효하지 않은 토큰 예외를 던짐
         }
     }
+
 
     public boolean isAccessToken(String token){
         Claims claims = getClaimsFromToken(token);

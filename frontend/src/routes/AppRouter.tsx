@@ -10,10 +10,10 @@ import MyPage from '../pages/MyPage';
 function AppRouter() {
   return (
     <Routes>
-      // 온보딩 페이지
-      <Route path="/" element={<OnboardingPage />}></Route>
+      // 로그인 페이지
+      <Route path="/login" element={<OnboardingPage />}></Route>
       // 메인 페이지
-      <Route path="/main" element={<MainPage />}>
+      <Route path="/" element={<MainPage />}>
         <Route index element={<Main />} />
       </Route>
       // 프로젝트 페이지

@@ -71,7 +71,7 @@ function SideBar() {
   // 로그아웃 함수
   const handleLogout = async () => {
     await logout();
-    navigate('');
+    navigate('/login');
   };
 
   return (

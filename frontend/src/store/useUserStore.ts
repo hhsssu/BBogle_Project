@@ -18,7 +18,6 @@ interface UserStore {
   fetchUser: () => void;
   kakaoLogout: () => void;
   setEditNickname: () => void;
-  getAccessTokenFromCookie: () => void;
   updateNickname: (nickname: string) => Promise<void>;
   updateProfile: (profile: string) => Promise<void>;
 }
@@ -40,27 +39,12 @@ const useUserStore = create<UserStore>()(
       isAuthenticated: true,
       isEditingNickname: false,
 
-      getAccessTokenFromCookie: () => {
-        const cookieString = document.cookie;
-        const cookies = cookieString.split('; ');
-
-        for (const cookie of cookies) {
-          const [name, value] = cookie.split('=');
-          if (name === 'accessToken') {
-            return value;
-          }
-        }
-
-        // TODO : accessToken 쿠키 없는 경우
-        return null;
-      },
-
       // 유저 정보 가져오는 함수
       fetchUser: async () => {
         // 유저 닉네임 가져오기
         try {
-          const response = await axiosInstance.get('/api/users/nickname');
-          console.log('API 응답 데이터:', response.data);
+          const response = await axiosInstance.get('/users/nickname');
+          console.log('API 응답 데이터:', response);
 
           const userName = response.data.nickname;
           console.log('userName : ', userName);

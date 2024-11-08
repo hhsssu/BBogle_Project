@@ -24,12 +24,14 @@ import MyIcon from '../../../assets/image/icon/My.svg';
 import ActiveMyIcon from '../../../assets/image/icon/ActiveMy.svg';
 
 import LogoutIcon from '../../../assets/image/icon/Logout.svg';
+import useUserStore from '../../../store/useUserStore';
 
 function SideBar() {
   const { isOpen, toggleSideBar, activeTab, setActiveTab } = useSideBarStore();
   const [showDescriptions, setShowDescriptions] = useState(isOpen); // description 표시 여부 상태 추가
   const [showFoldButton, setShowFoldButton] = useState(!isOpen);
   const navigate = useNavigate();
+  const logout = useUserStore((state) => state.logout);
   const location = useLocation();
 
   // isOpen 상태가 변경될 때 0.2초 뒤에 showDescriptions 업데이트
@@ -67,8 +69,9 @@ function SideBar() {
   };
 
   // 로그아웃 함수
-  const handleLogout = () => {
-    navigate('/');
+  const handleLogout = async () => {
+    await logout();
+    navigate('');
   };
 
   return (

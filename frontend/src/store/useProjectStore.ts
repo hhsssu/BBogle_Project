@@ -255,7 +255,7 @@ const useProjectStore = create<ProjectState>()(
     {
       name: 'projectStorage',
       partialize: (state) => ({
-        projectTitle: state.project.title,
+        project: state.project,
       }),
     },
   ),

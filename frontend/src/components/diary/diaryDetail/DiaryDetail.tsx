@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import style from './DiaryDetail.module.css';
 import useProjectStore from '../../../store/useProjectStore';
 import React, { useEffect, useRef } from 'react';
@@ -10,8 +10,8 @@ import Back from '../../../assets/image/icon/Back.svg';
 
 function DiaryDetail() {
   const navigate = useNavigate();
-  // const { pjtId, diaryId } = useParams();
-  const project = useProjectStore((state) => state.project);
+  const { pjtId } = useParams();
+  const projectTitle = useProjectStore((state) => state.project.title);
   const questionList = useDiaryStore((state) => state.questionList);
   const answerList = useDiaryStore((state) => state.answers);
   const getQnaList = useDiaryStore((state) => state.getQnaList);
@@ -20,7 +20,7 @@ function DiaryDetail() {
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
 
   const navPjtDetail = () => {
-    navigate(`/project/${project.projectId}`);
+    navigate(`/project/${pjtId}`);
   };
 
   const navDiaryUpdate = () => {
@@ -71,7 +71,7 @@ function DiaryDetail() {
     <div className={style.container}>
       <div className={style.backBtn} onClick={navPjtDetail}>
         <img src={Back} alt="뒤로가기 버튼" />
-        {project.title}
+        {projectTitle}
       </div>
 
       <div className={style.diaryTitle}>내용 요약 한 줄</div>

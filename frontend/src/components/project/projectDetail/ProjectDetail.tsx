@@ -268,7 +268,7 @@ function ProjectDetail() {
 
       <Loading
         isLoading={isFinLoadingOpen}
-        title="개발일지 작성 중 ..."
+        title="회고록 작성 중 ..."
         animationData={Bubble}
       />
     </div>

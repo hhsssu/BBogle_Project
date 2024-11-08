@@ -5,9 +5,10 @@ import QnaInput from '../qnaInput/QnaInput';
 import useDiaryStore from '../../../store/useDiaryStore';
 import React, { useEffect, useRef, useState } from 'react';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
-import DiaryLoading from '../../common/loading/DiaryLoading';
+import Loading from '../../common/loading/Loading';
 
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
+import Bubble from '../../../assets/lottie/Bubble.json';
 
 function DiaryCreate() {
   const questionList = useDiaryStore((state) => state.questionList);
@@ -205,7 +206,11 @@ function DiaryCreate() {
         </div>
       )}
 
-      <DiaryLoading isLoading={isFinLoadingOpen} />
+      <Loading
+        isLoading={isFinLoadingOpen}
+        title="개발일지 작성 중 ..."
+        animationData={Bubble}
+      />
     </div>
   );
 }

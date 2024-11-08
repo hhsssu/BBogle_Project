@@ -4,7 +4,6 @@ import useDiaryStore from '../../../store/useDiaryStore';
 import React, { useEffect, useRef, useState } from 'react';
 import QnaInput from '../qnaInput/QnaInput';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
-import DiaryLoading from '../../common/loading/DiaryLoading';
 
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
 import Back from '../../../assets/image/icon/Back.svg';
@@ -22,7 +21,6 @@ function DiaryUpdate() {
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
-  const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
 
   const navDiaryDetail = () => {
     navigate(`/project/${pjtId}/diary/${diaryId}`);
@@ -35,11 +33,8 @@ function DiaryUpdate() {
       setTextLengthErr(true);
       setErrMsgOn(false);
 
-      setFinLoadingOpen(true);
-      setTimeout(() => {
-        setFinLoadingOpen(false);
-        navigate(`/project/${pjtId}/diary/${diaryId}`);
-      }, 2000);
+      alert('개발일지 수정 완료!');
+      navigate(`/project/${pjtId}/diary/${diaryId}`);
     }
   };
 
@@ -152,8 +147,6 @@ function DiaryUpdate() {
           답변 길이가 너무 짧습니다! 50자 이상 작성해주세요{' '}
         </div>
       )}
-
-      <DiaryLoading isLoading={isFinLoadingOpen} />
     </div>
   );
 }

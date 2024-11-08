@@ -6,6 +6,8 @@ import useDiaryStore from '../../../store/useDiaryStore';
 import QnaView from '../qnaView/QnaView';
 import DiaryImgView from '../diaryImgView/DiaryImgView';
 
+import Back from '../../../assets/image/icon/Back.svg';
+
 function DiaryDetail() {
   const navigate = useNavigate();
   // const { pjtId, diaryId } = useParams();
@@ -68,7 +70,8 @@ function DiaryDetail() {
   return (
     <div className={style.container}>
       <div className={style.backBtn} onClick={navPjtDetail}>
-        돌아가기
+        <img src={Back} alt="뒤로가기 버튼" />
+        {project.title}
       </div>
 
       <div className={style.diaryTitle}>내용 요약 한 줄</div>

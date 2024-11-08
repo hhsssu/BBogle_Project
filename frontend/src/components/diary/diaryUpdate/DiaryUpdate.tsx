@@ -5,7 +5,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import QnaInput from '../qnaInput/QnaInput';
 import DiaryImgInput from '../diaryImgInput/DiaryImgInput';
 import DiaryLoading from '../../common/loading/DiaryLoading';
+
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
+import Back from '../../../assets/image/icon/Back.svg';
 
 function DiaryUpdate() {
   const navigate = useNavigate();
@@ -22,8 +24,8 @@ function DiaryUpdate() {
   const [errMsgOn, setErrMsgOn] = useState(false);
   const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
 
-  const navPjtDetail = () => {
-    navigate(`/project/${pjtId}`);
+  const navDiaryDetail = () => {
+    navigate(`/project/${pjtId}/diary/${diaryId}`);
   };
 
   const updateDiary = () => {
@@ -99,7 +101,8 @@ function DiaryUpdate() {
 
   return (
     <div className={style.container}>
-      <div className={style.backBtn} onClick={navPjtDetail}>
+      <div className={style.backBtn} onClick={navDiaryDetail}>
+        <img src={Back} alt="뒤로가기 버튼" />
         돌아가기
       </div>
 

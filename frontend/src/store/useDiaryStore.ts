@@ -19,6 +19,7 @@ interface Question {
 interface DiaryState {
   // 개발일지 작성, 수정 및 상세 조회 - qna list
   questionList: Question[];
+  title: string;
   answers: string[];
   getQnaList: () => void;
   initQnaList: () => void;
@@ -50,9 +51,11 @@ const useDiaryStore = create<DiaryState>((set) => ({
       description: '',
     },
   ],
-  answers: [],
+  title: '',
+  answers: ['', '', ''],
   initQnaList: () =>
     set(() => ({
+      title: '',
       questionList: [
         // TODO 질문 문항 더미 리스트
         {
@@ -75,6 +78,7 @@ const useDiaryStore = create<DiaryState>((set) => ({
   getQnaList: () =>
     set(() => ({
       // axios.get()
+      title: '개발일지 리스트',
       questionList: [
         // TODO 질문 문항 더미 리스트
         {

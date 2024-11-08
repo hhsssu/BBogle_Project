@@ -86,7 +86,6 @@ function Main() {
         />
         <div className={style.greeting}>안녕하세요, {user?.nickname}님!</div>
       </div>
-      // 각 화면에서 다른 제목과 애니메이션으로 사용
       <div className={style.diary}>
         <div>
           <div className={style.description}>

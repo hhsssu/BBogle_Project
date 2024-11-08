@@ -51,11 +51,11 @@
 .fins {
   padding: 8px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(292px, 1fr));
   place-items: center;
   overflow-y: auto;
   -ms-overflow-style: none;
-  gap: 24px 8px;
+  gap: 24px 12px;
 }
 
 .fins::-webkit-scrollbar {

@@ -9,8 +9,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import DiaryList from '../../diary/diaryList/DiaryList';
 import Modal from '../../common/modal/Modal';
-import DiaryLoading from '../../common/loading/DiaryLoading';
+import Bubble from '../../../assets/lottie/Bubble.json';
 import useProjectStore from '../../../store/useProjectStore';
+import Loading from '../../common/loading/Loading';
 
 function ProjectDetail() {
   const PROJECT = useProjectStore((state) => state.project);
@@ -265,7 +266,11 @@ function ProjectDetail() {
         cancleText={'취소'}
       />
 
-      <DiaryLoading isLoading={isFinLoadingOpen} />
+      <Loading
+        isLoading={isFinLoadingOpen}
+        title="개발일지 작성 중 ..."
+        animationData={Bubble}
+      />
     </div>
   );
 }

@@ -29,6 +29,7 @@ public class AuthController {
         HttpServletRequest request, HttpServletResponse response) {
         NewTokenResponse result = authService.refreshToken(request, response);
         if (result == null){
+            System.out.println("리프레시 엄서용");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);

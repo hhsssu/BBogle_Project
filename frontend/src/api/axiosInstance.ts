@@ -15,7 +15,6 @@ const axiosInstance = axios.create({
 // 요청 인터셉터로 인증 헤더 추가
 axiosInstance.interceptors.request.use(
   async (config) => {
-    // TODO : URL 확인용
     console.log('API 요청 URL:', API_LINK + config.url);
 
     // localStorage에서 accessToken 가져오기
@@ -26,9 +25,10 @@ axiosInstance.interceptors.request.use(
       try {
         token = await refreshAccessToken();
         localStorage.setItem('accessToken', token!);
+        console.log('accessToken이 없어 새 토큰 요청');
       } catch (error) {
         console.error('Access Token을 가져오는 데 실패했습니다:', error);
-        return Promise.reject(error); // 새 토큰을 가져오는 데 실패 시 요청을 중단
+        return Promise.reject(error);
       }
     }
 

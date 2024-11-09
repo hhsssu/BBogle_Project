@@ -1,5 +1,5 @@
-import useProjectStore from '../../../store/useProjectStore';
 import style from './ProjectDetailInfoInput.module.css';
+import useProjectStore from '../../../../../store/useProjectStore';
 
 interface Props {
   termError: boolean;

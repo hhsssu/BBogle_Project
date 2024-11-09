@@ -1,10 +1,10 @@
 import style from './ProjectInfoInput.module.css';
 
-import DefaultProject from '../../../assets/image/icon/DefaultProject.svg';
+import DefaultProject from '../../../../../assets/image/icon/DefaultProject.svg';
 
 import { useRef } from 'react';
-import useProjectStore from '../../../store/useProjectStore';
-import ImageWithDefault from '../../my/ImageWithDefault';
+import useProjectStore from '../../../../../store/useProjectStore';
+import ImageWithDefault from '../../../../my/ImageWithDefault';
 
 interface Props {
   titleError: boolean;

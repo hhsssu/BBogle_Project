@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from './ProjectCreate.module.css';
 
-import ProjectInfoInput from '../projectInfoInput/ProjectInfoInput';
-import ProjectDetailInfoInput from '../projectDetailInfoInput/ProjectDetailInfoInput';
-import ProjectTagInput from '../projectTagInput/ProjectTagInput';
-import ProjectAlarmInput from '../projectAlarmInput/ProjectAlarmInput';
-import useProjectStore from '../../../store/useProjectStore';
+import ProjectInfoInput from '../projectForm/projectInfoInput/ProjectInfoInput';
+import ProjectDetailInfoInput from '../projectForm/projectDetailInfoInput/ProjectDetailInfoInput';
+import ProjectTagInput from '../projectForm/projectTagInput/ProjectTagInput';
+import ProjectAlarmInput from '../projectForm/projectAlarmInput/ProjectAlarmInput';
+import useProjectStore from '../../../../store/useProjectStore';
 
-import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
-import Modal from '../../common/modal/Modal';
+import AlertTriangle from '../../../../assets/image/icon/AlertTriangle.svg';
+import Modal from '../../../common/modal/Modal';
 
 function ProjectCreate() {
   const navigate = useNavigate();

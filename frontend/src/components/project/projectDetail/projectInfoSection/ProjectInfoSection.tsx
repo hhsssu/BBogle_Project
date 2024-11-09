@@ -1,13 +1,13 @@
 import style from './ProjectInfoSection.module.css';
 
-import Setting from '../../../assets/image/icon/Setting.svg';
-import Pencil from '../../../assets/image/icon/Pencil.svg';
-import RedTrash from '../../../assets/image/icon/RedTrash.svg';
+import Setting from '../../../../assets/image/icon/Setting.svg';
+import Pencil from '../../../../assets/image/icon/Pencil.svg';
+import RedTrash from '../../../../assets/image/icon/RedTrash.svg';
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useProjectStore from '../../../store/useProjectStore';
-import Modal from '../../common/modal/Modal';
+import useProjectStore from '../../../../store/useProjectStore';
+import Modal from '../../../common/modal/Modal';
 
 function ProjectInfoSection() {
   const { pjtId } = useParams();

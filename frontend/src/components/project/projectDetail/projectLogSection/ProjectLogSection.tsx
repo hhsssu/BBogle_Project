@@ -2,9 +2,9 @@ import style from './ProjectLogSection.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import useProjectStore from '../../../store/useProjectStore';
+import useProjectStore from '../../../../store/useProjectStore';
 
-import DiaryList from '../../diary/diaryList/DiaryList';
+import DiaryList from '../../../diary/diaryList/DiaryList';
 
 function ProjectLogSection() {
   const navigate = useNavigate();

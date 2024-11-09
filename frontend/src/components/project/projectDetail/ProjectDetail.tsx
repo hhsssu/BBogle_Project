@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 import useProjectStore from '../../../store/useProjectStore';
 
-import ProjectInfoSection from '../projectInfoSection/ProjectInfoSection';
+import ProjectInfoSection from './projectInfoSection/ProjectInfoSection';
+import ProjectLogSection from './projectLogSection/ProjectLogSection';
 import Modal from '../../common/modal/Modal';
 import Loading from '../../common/loading/Loading';
-import ProjectLogSection from '../projectLogSection/ProjectLogSection';
 
 function ProjectDetail() {
   const PROJECT = useProjectStore((state) => state.project);

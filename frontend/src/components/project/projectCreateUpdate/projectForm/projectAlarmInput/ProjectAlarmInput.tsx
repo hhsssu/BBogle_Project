@@ -1,9 +1,9 @@
 import style from './ProjectAlarmInput.module.css';
 
-import ToggleOn from '../../../assets/image/icon/ToggleOn.svg';
-import ToggleOff from '../../../assets/image/icon/ToggleOff.svg';
+import ToggleOn from '../../../../../assets/image/icon/ToggleOn.svg';
+import ToggleOff from '../../../../../assets/image/icon/ToggleOff.svg';
 
-import useProjectStore from '../../../store/useProjectStore';
+import useProjectStore from '../../../../../store/useProjectStore';
 
 interface Time {
   hour: number;

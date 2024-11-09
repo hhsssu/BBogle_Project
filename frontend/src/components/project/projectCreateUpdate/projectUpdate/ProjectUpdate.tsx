@@ -1,11 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import ProjectAlarmInput from '../projectAlarmInput/ProjectAlarmInput';
-import ProjectDetailInfoInput from '../projectDetailInfoInput/ProjectDetailInfoInput';
-import ProjectInfoInput from '../projectInfoInput/ProjectInfoInput';
-import ProjectTagInput from '../projectTagInput/ProjectTagInput';
 import style from './ProjectUpdate.module.css';
-import useProjectStore from '../../../store/useProjectStore';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
+import useProjectStore from '../../../../store/useProjectStore';
+
+import ProjectAlarmInput from '../projectForm/projectAlarmInput/ProjectAlarmInput';
+import ProjectDetailInfoInput from '../projectForm/projectDetailInfoInput/ProjectDetailInfoInput';
+import ProjectInfoInput from '../projectForm/projectInfoInput/ProjectInfoInput';
+import ProjectTagInput from '../projectForm/projectTagInput/ProjectTagInput';
 
 function ProjectUpdate() {
   const { pjtId } = useParams();

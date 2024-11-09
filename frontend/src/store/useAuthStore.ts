@@ -21,6 +21,9 @@ const useAuthStore = create<AuthStore>()(
           await logoutUser();
           set({ isAuthenticated: false });
           console.log('로그아웃 성공');
+
+          // accessToken 및 기타 인증 관련 데이터를 localStorage에서 삭제
+          localStorage.clear();
         } catch (error) {
           console.error('로그아웃 처리 중 문제 발생 : ', error);
         }

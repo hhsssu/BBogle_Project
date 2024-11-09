@@ -39,7 +39,7 @@ public class ProjectCreateRequest {
     @Schema(description = "알림 ON/OFF"
         + "꺼짐 : false(0)"
         + "켜짐 : true(1)")
-    private Boolean notificationStatus;
+    private boolean notificationStatus;
 
     @Schema(description = "알림 시간"
         + "second와 nano는 무시")

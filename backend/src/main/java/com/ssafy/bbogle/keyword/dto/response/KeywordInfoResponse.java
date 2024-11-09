@@ -13,7 +13,7 @@ public class KeywordInfoResponse {
     private Integer id;
 
     @Schema(description = "종류 0:기술, 1:인성")
-    private Boolean type;
+    private boolean type;
 
     @Schema(description = "이름")
     private String name;

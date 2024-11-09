@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { refreshAccessToken } from '../api/authApi';
 
 const API_LINK = import.meta.env.VITE_API_URL;
 
@@ -10,18 +11,6 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
-// Refresh Token 요청 전용 인스턴스
-const refreshInstance = axios.create({
-  baseURL: API_LINK,
-  withCredentials: true, // Refresh Token을 쿠키로 보내기 위해 설정
-});
-
-// Refresh Token으로 Access Token 재발급 요청 함수
-const refreshAccessToken = async () => {
-  const response = await refreshInstance.get('/auth/refresh');
-  return response.data.accessToken;
-};
 
 // 요청 인터셉터로 인증 헤더 추가
 axiosInstance.interceptors.request.use(

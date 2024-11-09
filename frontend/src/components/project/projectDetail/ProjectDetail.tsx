@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import useProjectStore from '../../../store/useProjectStore';
 
 import ProjectInfoSection from '../projectInfoSection/ProjectInfoSection';
-import DiaryList from '../../diary/diaryList/DiaryList';
 import Modal from '../../common/modal/Modal';
 import Loading from '../../common/loading/Loading';
+import ProjectLogSection from '../projectLogSection/ProjectLogSection';
 
 function ProjectDetail() {
   const PROJECT = useProjectStore((state) => state.project);
@@ -21,23 +21,8 @@ function ProjectDetail() {
   const [isFinModalOpen, setFinModalOpen] = useState(false);
   const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
 
-  const [tabIdx, setTabIdx] = useState(0);
-  const [sortIdx, setSortIdx] = useState(0);
-
   const navPjtList = () => {
     navigate('/project');
-  };
-
-  const navDiaryCreate = () => {
-    navigate('diary/create');
-  };
-
-  const changeTab = (idx: number) => {
-    setTabIdx(idx);
-  };
-
-  const changeSort = (idx: number) => {
-    setSortIdx(idx);
   };
 
   const handleFinModal = () => {
@@ -54,8 +39,8 @@ function ProjectDetail() {
   };
 
   return (
-    <div>
-      <div className={style.container}>
+    <div className={style.container}>
+      <div>
         <div className={style.backBtn} onClick={navPjtList}>
           <img src={Back} alt="뒤로가기 버튼" />
           프로젝트 목록
@@ -70,56 +55,9 @@ function ProjectDetail() {
             </button>
           )}
         </div>
-
-        <section className={style.tabSection}>
-          {/* 탭 */}
-          <div className={style.tabList}>
-            <div
-              className={`${style.tab} ${tabIdx === 0 && style.tabActive}`}
-              onClick={() => changeTab(0)}
-            >
-              개발일지
-              <div className={style.diaryCnt}>{32}</div>
-            </div>
-            {!PROJECT.status && (
-              <div
-                className={`${style.tab} ${tabIdx === 1 && style.tabActive}`}
-                onClick={() => changeTab(1)}
-              >
-                회고록
-              </div>
-            )}
-          </div>
-
-          {tabIdx === 0 && (
-            <div className={style.controlContainer}>
-              <div className={style.sortOptions}>
-                <span
-                  className={`${sortIdx === 0 ? style.sortActive : style.sortInActive}`}
-                  onClick={() => changeSort(0)}
-                >
-                  최신순
-                </span>
-                <span
-                  className={`${sortIdx === 1 ? style.sortActive : style.sortInActive}`}
-                  onClick={() => changeSort(1)}
-                >
-                  과거순
-                </span>
-              </div>
-              {PROJECT.status && (
-                <button className={style.addDiaryBtn} onClick={navDiaryCreate}>
-                  + 개발일지 추가
-                </button>
-              )}
-            </div>
-          )}
-        </section>
-
-        <section className={style.diarySection}>
-          {tabIdx === 0 ? <DiaryList /> : ''}
-        </section>
       </div>
+
+      <ProjectLogSection />
 
       <Modal
         isOpen={isFinModalOpen}

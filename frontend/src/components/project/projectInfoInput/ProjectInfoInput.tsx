@@ -1,4 +1,4 @@
-import style from './ProjectInfoSection.module.css';
+import style from './ProjectInfoInput.module.css';
 
 import DefaultProject from '../../../assets/image/icon/DefaultProject.svg';
 
@@ -11,7 +11,7 @@ interface Props {
   handleTitleError: (value: boolean) => void;
 }
 
-function ProjectInfoSection({ titleError, handleTitleError }: Props) {
+function ProjectInfoInput({ titleError, handleTitleError }: Props) {
   const project = useProjectStore((state) => state.project);
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
@@ -65,12 +65,7 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
               onClick={handleImgClick}
             />
           </div>
-          {/* <img
-            className={style.img}
-            src={project.imgSrc}
-            alt="로고"
-            onClick={handleImgClick}
-          /> */}
+
           <input
             className={style.hiddenInput}
             type="file"
@@ -109,4 +104,4 @@ function ProjectInfoSection({ titleError, handleTitleError }: Props) {
   );
 }
 
-export default ProjectInfoSection;
+export default ProjectInfoInput;

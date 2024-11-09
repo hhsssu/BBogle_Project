@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import ProjectAlarmSection from '../projectAlarmSection/ProjectAlarmSection';
-import ProjectDetailInfoSection from '../projectDetailInfoSection/ProjectDetailInfoSection';
-import ProjectInfoSection from '../projectInfoSection/ProjectInfoSection';
-import ProjectTagSection from '../projectTagSection/ProjectTagSection';
+import ProjectAlarmInput from '../projectAlarmInput/ProjectAlarmInput';
+import ProjectDetailInfoInput from '../projectDetailInfoInput/ProjectDetailInfoInput';
+import ProjectInfoInput from '../projectInfoInput/ProjectInfoInput';
+import ProjectTagInput from '../projectTagInput/ProjectTagInput';
 import style from './ProjectUpdate.module.css';
 import useProjectStore from '../../../store/useProjectStore';
 import { useEffect, useState } from 'react';
@@ -57,16 +57,16 @@ function ProjectUpdate() {
       <span className={style.pageTitle}>프로젝트 수정</span>
       <div className={style.pjtFormWrapper}>
         <div className={style.pjtForm}>
-          <ProjectInfoSection
+          <ProjectInfoInput
             titleError={titleError}
             handleTitleError={handleTitleError}
           />
-          <ProjectDetailInfoSection
+          <ProjectDetailInfoInput
             termError={termError}
             handleTermError={handleTermError}
           />
-          <ProjectTagSection />
-          <ProjectAlarmSection />
+          <ProjectTagInput />
+          <ProjectAlarmInput />
         </div>
         <button className={style.submitBtn} onClick={updateProject}>
           완료

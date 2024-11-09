@@ -1,12 +1,12 @@
 import useProjectStore from '../../../store/useProjectStore';
-import style from './ProjectDetailInfoSection.module.css';
+import style from './ProjectDetailInfoInput.module.css';
 
 interface Props {
   termError: boolean;
   handleTermError: (value: boolean) => void;
 }
 
-function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
+function ProjectDetailInfoInput({ termError, handleTermError }: Props) {
   const project = useProjectStore((state) => state.project);
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
@@ -87,4 +87,4 @@ function ProjectDetailInfoSection({ termError, handleTermError }: Props) {
   );
 }
 
-export default ProjectDetailInfoSection;
+export default ProjectDetailInfoInput;

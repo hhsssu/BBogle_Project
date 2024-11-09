@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from './ProjectCreate.module.css';
 
-import ProjectInfoSection from '../projectInfoSection/ProjectInfoSection';
-import ProjectDetailInfoSection from '../projectDetailInfoSection/ProjectDetailInfoSection';
-import ProjectTagSection from '../projectTagSection/ProjectTagSection';
-import ProjectAlarmSection from '../projectAlarmSection/ProjectAlarmSection';
+import ProjectInfoInput from '../projectInfoInput/ProjectInfoInput';
+import ProjectDetailInfoInput from '../projectDetailInfoInput/ProjectDetailInfoInput';
+import ProjectTagInput from '../projectTagInput/ProjectTagInput';
+import ProjectAlarmInput from '../projectAlarmInput/ProjectAlarmInput';
 import useProjectStore from '../../../store/useProjectStore';
 
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
@@ -84,16 +84,16 @@ function ProjectCreate() {
         <span className={style.pageTitle}>프로젝트 생성</span>
         <div className={style.pjtFormWrapper}>
           <div className={style.pjtForm}>
-            <ProjectInfoSection
+            <ProjectInfoInput
               titleError={titleError}
               handleTitleError={handleTitleError}
             />
-            <ProjectDetailInfoSection
+            <ProjectDetailInfoInput
               termError={termError}
               handleTermError={handleTermError}
             />
-            <ProjectTagSection />
-            <ProjectAlarmSection />
+            <ProjectTagInput />
+            <ProjectAlarmInput />
           </div>
           <button
             className={`${style.submitBtn} ${(titleError || termError) && errMsgOn && style.failBtn}`}

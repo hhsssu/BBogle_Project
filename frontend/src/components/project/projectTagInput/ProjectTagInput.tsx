@@ -1,4 +1,4 @@
-import style from './ProjectTagSection.module.css';
+import style from './ProjectTagInput.module.css';
 
 import AddTag from '../../../assets/image/icon/AddTag.svg';
 import Close from '../../../assets/image/icon/Close.svg';
@@ -7,7 +7,7 @@ import EnterIcon from '../../../assets/image/icon/Enter.svg';
 import { useState, useRef, useEffect } from 'react';
 import useProjectStore from '../../../store/useProjectStore';
 
-function ProjectTagSection() {
+function ProjectTagInput() {
   const project = useProjectStore((state) => state.project);
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
@@ -234,4 +234,4 @@ function ProjectTagSection() {
   );
 }
 
-export default ProjectTagSection;
+export default ProjectTagInput;

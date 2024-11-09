@@ -1,4 +1,4 @@
-import style from './ProjectAlarmSection.module.css';
+import style from './ProjectAlarmInput.module.css';
 
 import ToggleOn from '../../../assets/image/icon/ToggleOn.svg';
 import ToggleOff from '../../../assets/image/icon/ToggleOff.svg';
@@ -12,7 +12,7 @@ interface Time {
   nano: number;
 }
 
-function ProjectAlarmSection() {
+function ProjectAlarmInput() {
   const project = useProjectStore((state) => state.project);
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
@@ -76,4 +76,4 @@ function ProjectAlarmSection() {
   );
 }
 
-export default ProjectAlarmSection;
+export default ProjectAlarmInput;

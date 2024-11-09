@@ -54,7 +54,7 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         accessCookie.setSecure(true);
         response.addCookie(accessCookie);
 
-        response.sendRedirect("http://localhost:5173/main");
+        response.sendRedirect("http://localhost:5173/");
 
     }
 }

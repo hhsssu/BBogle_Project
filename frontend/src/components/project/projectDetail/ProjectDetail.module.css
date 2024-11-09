@@ -16,7 +16,7 @@
   align-items: center;
 }
 
-.info {
+.infoContainer {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@
   color: rgba(160, 160, 160, 1);
 }
 
-.state {
+.status {
   width: 3rem;
   height: 1rem;
   font-size: 10px;
@@ -71,12 +71,12 @@
   border-radius: 8px;
 }
 
-.stateActive {
+.statusActive {
   background-color: rgba(30, 166, 252, 0.1);
   color: rgba(30, 166, 252, 1);
 }
 
-.stateInActive {
+.statusInActive {
   background-color: rgba(239, 122, 133, 0.3);
   color: rgba(255, 92, 23, 1);
 }
@@ -111,7 +111,7 @@
   width: 1rem;
 }
 
-.endBtn {
+.pjtEndBtn {
   width: 9rem;
   height: 2.5rem;
   border: none;
@@ -121,7 +121,7 @@
   color: white;
 }
 
-.summary {
+.description {
   font-size: 16px;
   margin-left: 1rem;
   margin-bottom: 0.6rem;
@@ -141,7 +141,7 @@
   margin-bottom: 1rem;
 }
 
-.subTitle {
+.tagLabel {
   font-size: 12px;
   font-weight: 600;
   margin-right: 3.75rem;
@@ -192,14 +192,14 @@
   margin-left: 0.2rem;
 }
 
-.activeTab {
+.tabActive {
   font-weight: 600;
   border-bottom: solid;
   border-color: rgba(255, 92, 23, 1);
   color: rgba(255, 92, 23, 1);
 }
 
-.control {
+.controlContainer {
   display: flex;
   align-items: end;
   gap: 0.8rem;

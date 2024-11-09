@@ -16,17 +16,6 @@ import Loading from '../../common/loading/Loading';
 function ProjectDetail() {
   const PROJECT = useProjectStore((state) => state.project);
   const getProject = useProjectStore((state) => state.getProject);
-  // {
-  //   imageSrc: RunnerWay,
-  //   title: 'Runner Way',
-  //   state: true,
-  //   term: '2024.10.03 ~ 2024.11.30',
-  //   summary: '당신의 러닝을 함께하는 프로젝트',
-  //   teammate: 6,
-  //   roles: ['FE', 'BE', 'INFRA', 'AI'],
-  //   techs: ['React', 'Spring', 'TypeScript', 'JPA', 'MongoDB'],
-  //   diaryCnt: 32,
-  // };
 
   const navigate = useNavigate();
   const { pjtId } = useParams();
@@ -114,7 +103,7 @@ function ProjectDetail() {
           프로젝트 목록
         </div>
 
-        <section className={style.info}>
+        <section className={style.infoContainer}>
           <div className={style.infoHeader}>
             <div className={style.pjtTitleContainer}>
               <img
@@ -131,7 +120,7 @@ function ProjectDetail() {
                   onClick={handleModalOpen}
                 />
                 <div
-                  className={`${style.state} ${PROJECT.status ? style.stateActive : style.stateInActive}`}
+                  className={`${style.status} ${PROJECT.status ? style.statusActive : style.statusInActive}`}
                 >
                   {PROJECT.status ? '진행 중' : '종료'}
                 </div>
@@ -159,22 +148,20 @@ function ProjectDetail() {
                 )}
               </div>
             </div>
-            {PROJECT.status ? (
-              <button className={style.endBtn} onClick={handleFinModal}>
+            {PROJECT.status && (
+              <button className={style.pjtEndBtn} onClick={handleFinModal}>
                 프로젝트 종료
               </button>
-            ) : (
-              ''
             )}
           </div>
 
-          <div className={style.summary}>{PROJECT.description}</div>
+          <div className={style.description}>{PROJECT.description}</div>
           <div className={style.term}>
             {PROJECT.startDate} ~ {PROJECT.endDate} / {PROJECT.memberCount} 명
           </div>
 
           <div className={style.tagList}>
-            <span className={style.subTitle}>나의 역할</span>
+            <span className={style.tagLabel}>나의 역할</span>
             {PROJECT.role.map((role, index) => (
               <div key={index} className={style.tag}>
                 {role}
@@ -183,7 +170,7 @@ function ProjectDetail() {
           </div>
 
           <div className={style.tagList}>
-            <span className={style.subTitle}>사용 기술</span>
+            <span className={style.tagLabel}>사용 기술</span>
             {PROJECT.skill.map((skill, index) => (
               <div key={index} className={style.tag}>
                 {skill}
@@ -196,17 +183,15 @@ function ProjectDetail() {
           {/* 탭 */}
           <div className={style.tabList}>
             <div
-              className={`${style.tab} ${tabIdx === 0 ? style.activeTab : ''}`}
+              className={`${style.tab} ${tabIdx === 0 && style.tabActive}`}
               onClick={() => changeTab(0)}
             >
               개발일지
               <div className={style.diaryCnt}>{32}</div>
             </div>
-            {PROJECT.status ? (
-              ''
-            ) : (
+            {!PROJECT.status && (
               <div
-                className={`${style.tab} ${tabIdx === 1 ? style.activeTab : ''}`}
+                className={`${style.tab} ${tabIdx === 1 && style.tabActive}`}
                 onClick={() => changeTab(1)}
               >
                 회고록
@@ -215,7 +200,7 @@ function ProjectDetail() {
           </div>
 
           {tabIdx === 0 && (
-            <div className={style.control}>
+            <div className={style.controlContainer}>
               <div className={style.sortOptions}>
                 <span
                   className={`${sortIdx === 0 ? style.sortActive : style.sortInActive}`}

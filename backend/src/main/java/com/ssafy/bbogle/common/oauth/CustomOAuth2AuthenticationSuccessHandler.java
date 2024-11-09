@@ -46,6 +46,7 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         refreshCookie.setHttpOnly(true);
         refreshCookie.setPath("/");
         refreshCookie.setSecure(true);
+        refreshCookie.setMaxAge(5259400);
         response.addCookie(refreshCookie);
 
         // 액세스 토큰 전달

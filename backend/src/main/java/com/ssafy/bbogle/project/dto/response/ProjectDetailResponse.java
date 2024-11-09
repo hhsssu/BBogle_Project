@@ -24,7 +24,7 @@ public class ProjectDetailResponse {
     private String description;
 
     @Schema(description = "진행상태")
-    private Boolean status;
+    private boolean status;
 
     @Schema(description = "시작날짜")
     private LocalDate startDate;

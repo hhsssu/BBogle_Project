@@ -15,7 +15,7 @@
   font-weight: 700;
 }
 
-.addPjtBtn {
+.pjtAddBtn {
   width: 9rem;
   height: 2.5rem;
   border: none;
@@ -24,12 +24,6 @@
   font-size: 16px;
   color: white;
   font-weight: 600;
-}
-
-.subTitle {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 20px;
 }
 
 .checkProgress {
@@ -48,7 +42,7 @@
   background-color: #1c1516;
 }
 
-.fins {
+.projectGrid {
   padding: 8px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(292px, 1fr));
@@ -58,7 +52,7 @@
   gap: 24px 12px;
 }
 
-.fins::-webkit-scrollbar {
+.projectGrid::-webkit-scrollbar {
   display: none;
 }
 
@@ -70,7 +64,7 @@
   gap: 1rem;
 }
 
-.emptyFolder {
+.emptyIcon {
   width: 7.5rem;
 }
 

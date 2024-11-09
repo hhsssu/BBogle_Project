@@ -193,9 +193,9 @@ function My() {
                   pjtId={card.id}
                   imageSrc={card.imageSrc}
                   title={card.title}
-                  state={card.state}
+                  status={card.state}
                   term={card.term}
-                  summary={card.summary}
+                  description={card.summary}
                   notificationStatus={false}
                 />
               </div>

@@ -55,9 +55,9 @@ function ProjectList() {
                       pjtId={card.projectId}
                       imageSrc={card.image}
                       title={card.title}
-                      state={card.status}
+                      status={card.status}
                       term={card.startDate + ' ~ ' + card.endDate}
-                      summary={card.description}
+                      description={card.description}
                       notificationStatus={card.notificationStatus}
                     />
                   </div>
@@ -68,9 +68,9 @@ function ProjectList() {
                       pjtId={card.projectId}
                       imageSrc={card.image}
                       title={card.title}
-                      state={card.status}
+                      status={card.status}
                       term={card.startDate + ' ~ ' + card.endDate}
-                      summary={card.description}
+                      description={card.description}
                       notificationStatus={card.notificationStatus}
                     />
                   </div>

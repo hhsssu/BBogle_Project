@@ -2,11 +2,15 @@ package com.ssafy.bbogle.diary.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "개발일지 수정 요청 DTO")
 public class DiaryUpdateRequest {
 

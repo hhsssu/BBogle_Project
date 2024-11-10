@@ -1,8 +1,9 @@
-import { useRef, useState } from 'react';
 import style from './DiaryImgInput.module.css';
-// import ImageUpload from '../../../assets/image/icon/ImageUpload.svg';
-import ImageUpload from '../../../assets/image/default/Image.svg';
-import Close from '../../../assets/image/icon/Close.svg';
+
+import ImageUpload from '../../../../../assets/image/default/Image.svg';
+import Close from '../../../../../assets/image/icon/Close.svg';
+
+import { useRef, useState } from 'react';
 
 interface Props {
   index: number;

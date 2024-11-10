@@ -1,4 +1,4 @@
-import style from './QnaView.module.css';
+import style from './DiaryEntryView.module.css';
 
 interface Props {
   index: number;

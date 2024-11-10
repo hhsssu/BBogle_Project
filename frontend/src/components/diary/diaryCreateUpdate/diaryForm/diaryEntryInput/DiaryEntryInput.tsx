@@ -1,6 +1,6 @@
-import style from './QnaInput.module.css';
+import style from './DiaryEntryInput.module.css';
 
-import useDiaryStore from '../../../store/useDiaryStore';
+import useDiaryStore from '../../../../../store/useDiaryStore';
 
 interface Props {
   index: number;

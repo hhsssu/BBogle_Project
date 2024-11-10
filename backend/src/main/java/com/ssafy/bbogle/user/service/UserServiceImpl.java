@@ -1,5 +1,7 @@
 package com.ssafy.bbogle.user.service;
 
+import com.ssafy.bbogle.common.exception.CustomException;
+import com.ssafy.bbogle.common.exception.ErrorCode;
 import com.ssafy.bbogle.common.util.LoginUser;
 import com.ssafy.bbogle.common.util.RedisUtil;
 import com.ssafy.bbogle.user.dto.response.UserNicknameResponse;
@@ -21,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public UserNicknameResponse getUserNickname() {
         Long kakaoId = LoginUser.getKakaoId();
         User user = userRepository.findByKakaoId(kakaoId)
-            .orElseThrow(RuntimeException::new);
+            .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
         return UserNicknameResponse.builder()
             .nickname(user.getNickname())
             .build();

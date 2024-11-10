@@ -45,8 +45,8 @@ function ActivityCreate() {
         initialValues={{
           title: '',
           content: '',
-          startDate: '',
-          endDate: '',
+          startDate: null,
+          endDate: null,
           projectId: null,
           keywords: [],
         }}

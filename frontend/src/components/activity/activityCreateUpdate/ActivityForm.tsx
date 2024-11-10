@@ -18,8 +18,8 @@ interface ActivityFormProps {
   initialValues: {
     title: string;
     content: string;
-    startDate: string;
-    endDate: string;
+    startDate: Date | null;
+    endDate: Date | null;
     projectId: number | null;
     keywords: { id: number; type: boolean; name: string }[];
   };
@@ -32,15 +32,7 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
   // 경험 키워드 목록 가져오기
   const { activityKeywords, fetchActivityKeywords } = useActivityKeywordStore();
 
-  // TODO 더미데이터 삭제
-  //   const activityKeywords = [
-  //     { type: 0, name: '기술1' },
-  //     { type: 0, name: '기술2' },
-  //     { type: 0, name: '기술3' },
-  //     { type: 1, name: '인성1' },
-  //     { type: 1, name: '인성2' },
-  //     { type: 1, name: '인성3' },
-  //   ];
+  // TODO 프로젝트 더미데이터 삭제
   const projects = [
     { id: 1, name: 'RunnerWay' },
     { id: 2, name: 'WON TOUCH!' },
@@ -173,8 +165,10 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
             <p className={ActivityCreateStyles.datedes}>시작일</p>
             <input
               type="date"
-              value={startDate}
-              onChange={handleInputChange(setStartDate)}
+              value={startDate ? startDate.toISOString().split('T')[0] : ''}
+              onChange={(e) =>
+                setStartDate(e.target.value ? new Date(e.target.value) : null)
+              }
               className={ActivityCreateStyles.graybox}
             />
           </div>
@@ -182,8 +176,10 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
             <p className={ActivityCreateStyles.datedes}>종료일</p>
             <input
               type="date"
-              value={endDate}
-              onChange={handleInputChange(setEndDate)}
+              value={endDate ? endDate.toISOString().split('T')[0] : ''}
+              onChange={(e) =>
+                setEndDate(e.target.value ? new Date(e.target.value) : null)
+              }
               className={ActivityCreateStyles.graybox}
             />
           </div>

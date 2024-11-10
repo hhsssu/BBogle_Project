@@ -105,16 +105,13 @@ function ProjectTagInput({ role, skill }: Props) {
   };
 
   useEffect(() => {
-    if (roleInputRef.current) {
-      roleInputRef.current.focus();
+    const input = document.querySelector(
+      `.${style.tagInput}`,
+    ) as HTMLInputElement; // 적절한 클래스 이름으로 변경
+    if (input) {
+      input.focus();
     }
-  }, [roleInputOpen]);
-
-  useEffect(() => {
-    if (skillInputRef.current) {
-      skillInputRef.current.focus();
-    }
-  }, [skillInputOpen]);
+  }, [roleInputOpen, skillInputOpen]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

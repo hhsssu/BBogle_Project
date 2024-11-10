@@ -15,7 +15,7 @@
   font-weight: 600;
 }
 
-.toggleSection {
+.alarmToggleContainer {
   display: flex;
   align-items: center;
 }
@@ -34,7 +34,7 @@
   font-size: 14px;
 }
 
-.timeToggleInActive {
+.toggleInActive {
   font-size: 14px;
   color: rgba(232, 232, 232, 1);
 }

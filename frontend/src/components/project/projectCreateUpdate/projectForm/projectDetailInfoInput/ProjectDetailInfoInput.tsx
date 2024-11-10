@@ -88,7 +88,11 @@ function ProjectDetailInfoInput({ startDate, endDate, memberCount }: Props) {
             onChange={handleMemberCount}
           >
             {Array.from({ length: 10 }, (_, index) => (
-              <option key={index + 1} value={index + 1}>
+              <option
+                className={style.selectOption}
+                key={index + 1}
+                value={index + 1}
+              >
                 {index + 1}
               </option>
             ))}

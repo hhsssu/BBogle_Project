@@ -62,10 +62,10 @@
   color: red;
 }
 
-.summary {
+.description {
   width: 24.875rem;
   height: 5.5rem;
-  padding: 0.6rem;
+  padding: 0.8rem 1rem;
   border: none;
   border-radius: 20px;
   outline: none;

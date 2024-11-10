@@ -45,6 +45,7 @@
 }
 
 .dateInput {
+  width: 6.25rem;
   border: none;
   outline: none;
   font-family: 'Pretendard-Regular';
@@ -72,4 +73,5 @@
   outline: none;
   appearance: none;
   text-align: center;
+  font-size: 14px;
 }

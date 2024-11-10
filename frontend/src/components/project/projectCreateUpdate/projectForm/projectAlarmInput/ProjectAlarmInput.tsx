@@ -39,7 +39,7 @@ function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
     <div className={style.container}>
       <div className={style.inputLabel}>
         <span className={style.label}>알림 설정</span>
-        <div className={style.toggleSection}>
+        <div className={style.alarmToggleContainer}>
           {notificationStatus ? (
             <img
               className={style.toggle}
@@ -64,7 +64,7 @@ function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
               />
             </div>
           ) : (
-            <div className={style.timeToggleInActive}>
+            <div className={style.toggleInActive}>
               <span>오후 </span>
               <span>05:30</span>
             </div>

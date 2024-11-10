@@ -11,7 +11,7 @@ function ProjectForm() {
   const project = useProjectStore((state) => state.project);
 
   return (
-    <div className={style.pjtForm}>
+    <div className={style.container}>
       <ProjectInfoInput
         image={project.image}
         title={project.title}

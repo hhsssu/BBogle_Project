@@ -103,7 +103,7 @@ function ProjectInfoInput({ image, title, description }: Props) {
       <div className={style.inputLabel}>
         <span className={style.label}>프로젝트 개요</span>
         <textarea
-          className={style.summary}
+          className={style.description}
           rows={3}
           maxLength={100}
           value={description}

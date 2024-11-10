@@ -16,7 +16,7 @@ function ProjectActivityOrigin({
 }: ProjectActivityOriginProps) {
   // TODO 해당 프로젝트 기존 경험 가져오기
   const { activities } = useActivityStore();
-  const { pjtId } = useParams();
+  // const { pjtId } = useParams();
   const [selectedActivities, setSelectedActivities] = useState<{
     [key: number]: boolean;
   }>({});

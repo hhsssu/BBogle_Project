@@ -15,7 +15,7 @@ function ProjectActivityNew({
 }: ProjectActivityOriginProps) {
   // TODO 추출된 경험 선택 API 사용
   const { activities } = useActivityStore();
-  const { pjtId } = useParams();
+  // const { pjtId } = useParams();
   const [selectedActivities, setSelectedActivities] = useState<{
     [key: number]: boolean;
   }>({});

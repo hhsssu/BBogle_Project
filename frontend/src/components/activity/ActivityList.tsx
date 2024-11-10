@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useActivityStore from '../../store/useActivityStore';
 
 import ActivityCard from './ActivityCard';

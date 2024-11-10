@@ -1,12 +1,15 @@
-import { useNavigate, useParams } from 'react-router-dom';
 import style from './DiaryDetail.module.css';
-import useProjectStore from '../../../store/useProjectStore';
-import React, { useEffect, useRef } from 'react';
-import useDiaryStore from '../../../store/useDiaryStore';
-import QnaView from '../qnaView/QnaView';
-import DiaryImgView from '../diaryImgView/DiaryImgView';
 
 import Back from '../../../assets/image/icon/Back.svg';
+
+import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+
+import useProjectStore from '../../../store/useProjectStore';
+import useDiaryStore from '../../../store/useDiaryStore';
+
+import DiaryEntryView from './diaryEntryView/DiaryEntryView';
+import DiaryImgView from './diaryImgView/DiaryImgView';
 
 function DiaryDetail() {
   const navigate = useNavigate();
@@ -87,7 +90,7 @@ function DiaryDetail() {
 
           return (
             <div key={index}>
-              <QnaView
+              <DiaryEntryView
                 index={index + 1}
                 question={question.question}
                 answer={answerList[index]}

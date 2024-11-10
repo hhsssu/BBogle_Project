@@ -24,8 +24,8 @@ function Main() {
     setActiveProjectId(null);
     setTimeout(() => {
       setScrollGuide(false);
-    }, 3000);
-  }, []);
+    }, 5000);
+  }, [fetchUser, setActiveProjectId]);
 
   // 카드 선택
   const handleCard = (id: number) => {
@@ -86,7 +86,6 @@ function Main() {
         />
         <div className={style.greeting}>안녕하세요, {user?.nickname}님!</div>
       </div>
-
       <div className={style.diary}>
         <div>
           <div className={style.description}>
@@ -118,11 +117,13 @@ function Main() {
               key={index}
             >
               <ProjectCard
+                pjtId={card.id}
                 imageSrc={card.imageSrc}
                 title={card.title}
-                state={card.state}
+                status={card.state}
                 term={card.term}
-                summary={card.summary}
+                description={card.summary}
+                notificationStatus={false}
               />
             </div>
           ))}

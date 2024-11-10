@@ -190,11 +190,13 @@ function My() {
               <div key={index} onClick={() => selectCard(card.id)}>
                 <ProjectCard
                   key={index}
+                  pjtId={card.id}
                   imageSrc={card.imageSrc}
                   title={card.title}
-                  state={card.state}
+                  status={card.state}
                   term={card.term}
-                  summary={card.summary}
+                  description={card.summary}
+                  notificationStatus={false}
                 />
               </div>
             ))

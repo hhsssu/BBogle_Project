@@ -2,9 +2,9 @@ import { Routes, Route } from 'react-router-dom';
 
 import ProjectList from '../components/project/projectList/ProjectList';
 import ProjectDetail from '../components/project/projectDetail/ProjectDetail';
-import ProjectCreate from '../components/project/projectCreate/ProjectCreate';
+import ProjectCreate from '../components/project/projectCreateUpdate/projectCreate/ProjectCreate';
 import DiaryPage from './DiaryPage';
-import ProjectUpdate from '../components/project/projectUpdate/ProjectUpdate';
+import ProjectUpdate from '../components/project/projectCreateUpdate/projectUpdate/ProjectUpdate';
 import ProjectActivityExtract from '../components/project/projectActivityExtract/ProjectActivityExtract';
 
 function ProjectPage() {

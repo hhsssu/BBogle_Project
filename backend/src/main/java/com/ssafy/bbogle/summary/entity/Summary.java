@@ -34,4 +34,8 @@ public class Summary {
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
 }

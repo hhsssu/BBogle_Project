@@ -10,8 +10,8 @@ interface Props {
 
 function QnaView({ index, question, answer, circleRef, lineRef }: Props) {
   return (
-    <div className={style.inputSection}>
-      <div className={style.questionSection}>
+    <div className={style.container}>
+      <div className={style.questionContainer}>
         <div ref={circleRef} className={style.outerCircle}>
           <div className={style.innerCircle}>{index}</div>
           <div ref={lineRef} className={style.line}></div>

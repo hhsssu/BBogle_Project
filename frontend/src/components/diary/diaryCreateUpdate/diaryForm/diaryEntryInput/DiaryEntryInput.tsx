@@ -26,8 +26,8 @@ function QnaInput({
   };
 
   return (
-    <div className={style.inputSection}>
-      <div className={style.questionSection}>
+    <div className={style.container}>
+      <div className={style.questionContainer}>
         <div ref={circleRef} className={style.outerCircle}>
           <div className={style.innerCircle}>{index}</div>
           <div ref={lineRef} className={style.line}></div>
@@ -37,7 +37,7 @@ function QnaInput({
 
       <p className={style.description}>{description}</p>
 
-      <div className={style.textBlock}>
+      <div className={style.answerContainer}>
         <textarea
           className={style.textArea}
           value={answer}

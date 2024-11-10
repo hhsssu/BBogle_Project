@@ -104,15 +104,15 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
   };
 
   return (
-    <div className={style.inputSection}>
-      <div className={style.questionSection}>
+    <div className={style.container}>
+      <div className={style.questionContainer}>
         <div ref={circleRef} className={style.outerCircle}>
           <div className={style.innerCircle}>{index}</div>
         </div>
         <span className={style.question}>{question}</span>
       </div>
       <p className={style.description}>{description}</p>
-      <div className={style.imgInputContainer}>
+      <div className={style.imgContainer}>
         {files.length > 0 && (
           <div className={style.imgInputBlock}>
             {files.map((file, index) => (

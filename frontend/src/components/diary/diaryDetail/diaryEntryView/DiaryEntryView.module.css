@@ -1,4 +1,7 @@
-.questionSection {
+.container {
+}
+
+.questionContainer {
   display: flex;
   align-items: center;
 }
@@ -53,22 +56,4 @@
   resize: none;
   scrollbar-width: none;
   font-family: 'Pretendard-Regular';
-}
-
-.imgExBlock {
-  display: flex;
-  align-items: end;
-}
-
-.imgEx {
-  width: 10rem;
-  height: 10rem;
-}
-
-.close {
-  width: 1.5rem;
-}
-
-.hiddenInput {
-  display: none;
 }

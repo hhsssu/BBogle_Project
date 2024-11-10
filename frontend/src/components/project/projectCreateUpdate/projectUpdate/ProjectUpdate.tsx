@@ -8,6 +8,7 @@ import ProjectAlarmInput from '../projectForm/projectAlarmInput/ProjectAlarmInpu
 import ProjectDetailInfoInput from '../projectForm/projectDetailInfoInput/ProjectDetailInfoInput';
 import ProjectInfoInput from '../projectForm/projectInfoInput/ProjectInfoInput';
 import ProjectTagInput from '../projectForm/projectTagInput/ProjectTagInput';
+import ProjectForm from '../projectForm/ProjectForm';
 
 function ProjectUpdate() {
   const { pjtId } = useParams();
@@ -58,18 +59,7 @@ function ProjectUpdate() {
 
       <span className={style.pageTitle}>프로젝트 수정</span>
       <div className={style.pjtFormWrapper}>
-        <div className={style.pjtForm}>
-          <ProjectInfoInput
-            titleError={titleError}
-            handleTitleError={handleTitleError}
-          />
-          <ProjectDetailInfoInput
-            termError={termError}
-            handleTermError={handleTermError}
-          />
-          <ProjectTagInput />
-          <ProjectAlarmInput />
-        </div>
+        <ProjectForm />
         <button className={style.submitBtn} onClick={updateProject}>
           완료
         </button>

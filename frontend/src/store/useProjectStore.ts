@@ -50,6 +50,14 @@ interface ProjectState {
     field: string,
     value: string | string[] | number | boolean | Time,
   ) => void;
+
+  // 프로젝트 생성/수정
+  titleError: boolean;
+  setTitleError: (value: boolean) => void;
+  termError: boolean;
+  setTermError: (value: boolean) => void;
+  errMsgOn: boolean;
+  setErrMsgOn: (value: boolean) => void;
 }
 
 const useProjectStore = create<ProjectState>()(
@@ -251,6 +259,14 @@ const useProjectStore = create<ProjectState>()(
         })),
       updateProjectField: (field, value) =>
         set((state) => ({ project: { ...state.project, [field]: value } })),
+
+      // 프로젝트 생성/수정
+      titleError: false,
+      setTitleError: (value) => set(() => ({ titleError: value })),
+      termError: false,
+      setTermError: (value) => set(() => ({ termError: value })),
+      errMsgOn: false,
+      setErrMsgOn: (value) => set(() => ({ errMsgOn: value })),
     }),
     {
       name: 'projectStorage',

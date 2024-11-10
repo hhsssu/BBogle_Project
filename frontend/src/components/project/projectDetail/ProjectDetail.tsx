@@ -67,7 +67,7 @@ function ProjectDetail() {
         }
         onClose={handleFinModal}
         onConfirm={finishProject}
-        confirmText={'삭제'}
+        confirmText={'종료'}
         cancleText={'취소'}
       />
 

@@ -7,13 +7,14 @@ import useProjectStore from '../../../../../store/useProjectStore';
 import ImageWithDefault from '../../../../my/ImageWithDefault';
 
 interface Props {
-  titleError: boolean;
-  handleTitleError: (value: boolean) => void;
+  image: string;
+  title: string;
+  description: string;
 }
 
-function ProjectInfoInput({ titleError, handleTitleError }: Props) {
-  const project = useProjectStore((state) => state.project);
+function ProjectInfoInput({ image, title, description }: Props) {
   const updateProject = useProjectStore((state) => state.updateProjectField);
+  const { titleError, setTitleError, setErrMsgOn } = useProjectStore();
 
   // const [imgSrc, setImgSrc] = useState(project.imgSrc);
   const imgInputRef = useRef<HTMLInputElement>(null);
@@ -30,6 +31,14 @@ function ProjectInfoInput({ titleError, handleTitleError }: Props) {
       const newImageUrl = URL.createObjectURL(file); // 새 이미지 URL 생성
       // setImgSrc(newImageUrl); // 이미지 상태 업데이트
       updateProject('image', newImageUrl);
+    }
+  };
+
+  const handleTitleError = (value: boolean) => {
+    setTitleError(value);
+
+    if (!titleError) {
+      setErrMsgOn(false);
     }
   };
 
@@ -53,13 +62,13 @@ function ProjectInfoInput({ titleError, handleTitleError }: Props) {
     <div className={style.container}>
       <div className={style.inputLabel}>
         <p className={style.label}>
-          <span>대표이미지/프로젝트명 </span>
+          <span>대표이미지/프로젝트명</span>
           <span className={style.requiredMark}>*</span>
         </p>
         <div className={style.titleContainer}>
           <div className={style.img}>
             <ImageWithDefault
-              src={project.image}
+              src={image}
               alt="로고"
               defaultSrc={DefaultProject}
               onClick={handleImgClick}
@@ -73,22 +82,23 @@ function ProjectInfoInput({ titleError, handleTitleError }: Props) {
             onChange={handleImageChange}
             ref={imgInputRef}
           />
-          <input
-            className={`${style.titleInput} ${titleError && style.titleError}`}
-            type="text"
-            maxLength={20}
-            value={project.title}
-            onChange={handleTitleChange}
-            placeholder="프로젝트 이름을 입력해주세요 ! (20자 이내)"
-          />
+          <div className={style.titleInputContainer}>
+            <input
+              className={`${style.titleInput} ${titleError && style.titleError}`}
+              type="text"
+              maxLength={20}
+              value={title}
+              onChange={handleTitleChange}
+              placeholder="프로젝트 이름을 입력해주세요 ! (20자 이내)"
+            />
+            {titleError && (
+              <span className={style.error}>
+                프로젝트 명은 필수 입력값입니다.
+              </span>
+            )}
+          </div>
         </div>
       </div>
-
-      {titleError ? (
-        <span className={style.error}>프로젝트 명은 필수 입력값입니다.</span>
-      ) : (
-        ''
-      )}
 
       <div className={style.inputLabel}>
         <span className={style.label}>프로젝트 개요</span>
@@ -96,7 +106,7 @@ function ProjectInfoInput({ titleError, handleTitleError }: Props) {
           className={style.summary}
           rows={3}
           maxLength={100}
-          value={project.description}
+          value={description}
           onChange={handleDescriptionChange}
         ></textarea>
       </div>

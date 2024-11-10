@@ -20,12 +20,6 @@
   flex-direction: column;
 }
 
-.pjtForm {
-  display: flex;
-  flex-direction: column;
-  padding: 4vh 0vh;
-}
-
 .submitBtn {
   width: 9rem;
   height: 2.5rem;

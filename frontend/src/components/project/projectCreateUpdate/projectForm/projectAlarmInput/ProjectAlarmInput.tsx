@@ -12,12 +12,16 @@ interface Time {
   nano: number;
 }
 
-function ProjectAlarmInput() {
-  const project = useProjectStore((state) => state.project);
+interface Props {
+  notificationStatus: boolean;
+  notificationTime: Time;
+}
+
+function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const handleToggleState = () => {
-    updateProject('notificationStatus', !project.notificationStatus);
+    updateProject('notificationStatus', !notificationStatus);
   };
 
   const handleTime = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +40,7 @@ function ProjectAlarmInput() {
       <div className={style.inputLabel}>
         <span className={style.label}>알림 설정</span>
         <div className={style.toggleSection}>
-          {project.notificationStatus ? (
+          {notificationStatus ? (
             <img
               className={style.toggle}
               src={ToggleOn}
@@ -50,16 +54,12 @@ function ProjectAlarmInput() {
             />
           )}
 
-          {project.notificationStatus ? (
+          {notificationStatus ? (
             <div>
               <input
                 className={style.timeInput}
                 type="time"
-                value={
-                  project.notificationTime.hour +
-                  ':' +
-                  project.notificationTime.minute
-                }
+                value={notificationTime.hour + ':' + notificationTime.minute}
                 onChange={handleTime}
               />
             </div>

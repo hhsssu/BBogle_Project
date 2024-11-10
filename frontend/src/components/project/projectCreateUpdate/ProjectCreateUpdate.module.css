@@ -3,9 +3,11 @@
 }
 
 .backBtn {
+  display: flex;
   font-size: 14px;
   color: rgba(160, 160, 160, 1);
   cursor: pointer;
+  align-items: center;
 }
 
 .pageTitle {
@@ -18,12 +20,7 @@
 .pjtFormWrapper {
   display: flex;
   flex-direction: column;
-}
-
-.pjtForm {
-  display: flex;
-  flex-direction: column;
-  padding: 4vh 0vh;
+  padding: 0vh 1vw;
 }
 
 .submitBtn {

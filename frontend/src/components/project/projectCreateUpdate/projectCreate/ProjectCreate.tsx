@@ -1,15 +1,15 @@
+import style from '../ProjectCreateUpdate.module.css';
+
+import Back from '../../../../assets/image/icon/Back.svg';
+import AlertTriangle from '../../../../assets/image/icon/AlertTriangle.svg';
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import style from './ProjectCreate.module.css';
 
-import ProjectInfoSection from '../projectInfoSection/ProjectInfoSection';
-import ProjectDetailInfoSection from '../projectDetailInfoSection/ProjectDetailInfoSection';
-import ProjectTagSection from '../projectTagSection/ProjectTagSection';
-import ProjectAlarmSection from '../projectAlarmSection/ProjectAlarmSection';
-import useProjectStore from '../../../store/useProjectStore';
+import useProjectStore from '../../../../store/useProjectStore';
 
-import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
-import Modal from '../../common/modal/Modal';
+import ProjectForm from '../projectForm/ProjectForm';
+import Modal from '../../../common/modal/Modal';
 
 function ProjectCreate() {
   const navigate = useNavigate();
@@ -17,33 +17,31 @@ function ProjectCreate() {
   const project = useProjectStore((state) => state.project);
   const initProject = useProjectStore((state) => state.initProject);
 
-  const [titleError, setTitleError] = useState(false);
-  const [termError, setTermError] = useState(false);
-  const [errMsgOn, setErrMsgOn] = useState(false);
+  const {
+    titleError,
+    setTitleError,
+    termError,
+    setTermError,
+    errMsgOn,
+    setErrMsgOn,
+  } = useProjectStore();
 
+  const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
   const navPjtList = () => {
     navigate('/project');
   };
 
-  const handleTitleError = (value: boolean) => {
-    setTitleError(value);
-
-    if (!titleError) {
-      setErrMsgOn(false);
-    }
+  const handleBackModal = () => {
+    setBackModalOpen(!isBackModalOpen);
   };
 
-  const handleTermError = (value: boolean) => {
-    setTermError(value);
-
-    if (!termError) {
-      setErrMsgOn(false);
-    }
+  const handleCreateModal = () => {
+    setCreateModalOpen(!isCreateModalOpen);
   };
 
-  const addProject = () => {
+  const submitForm = () => {
     if (project.title === '') {
       setTitleError(true);
       setErrMsgOn(true);
@@ -59,10 +57,6 @@ function ProjectCreate() {
     setCreateModalOpen(true);
   };
 
-  const handleCreateModal = () => {
-    setCreateModalOpen(!isCreateModalOpen);
-  };
-
   const createProject = () => {
     setCreateModalOpen(!isCreateModalOpen);
 
@@ -72,32 +66,25 @@ function ProjectCreate() {
 
   useEffect(() => {
     initProject();
+    setTitleError(false);
+    setTermError(false);
+    setErrMsgOn(false);
   }, []);
 
   return (
     <div>
       <div className={style.container}>
-        <div className={style.backBtn} onClick={navPjtList}>
-          돌아가기
+        <div className={style.backBtn} onClick={handleBackModal}>
+          <img src={Back} alt="뒤로가기 버튼" />
+          프로젝트 목록
         </div>
 
         <span className={style.pageTitle}>프로젝트 생성</span>
         <div className={style.pjtFormWrapper}>
-          <div className={style.pjtForm}>
-            <ProjectInfoSection
-              titleError={titleError}
-              handleTitleError={handleTitleError}
-            />
-            <ProjectDetailInfoSection
-              termError={termError}
-              handleTermError={handleTermError}
-            />
-            <ProjectTagSection />
-            <ProjectAlarmSection />
-          </div>
+          <ProjectForm />
           <button
             className={`${style.submitBtn} ${(titleError || termError) && errMsgOn && style.failBtn}`}
-            onClick={addProject}
+            onClick={submitForm}
           >
             완료
           </button>
@@ -109,6 +96,16 @@ function ProjectCreate() {
           )}
         </div>
       </div>
+
+      <Modal
+        isOpen={isBackModalOpen}
+        title={'이 페이지를 벗어나시겠어요?'}
+        content={'작성 내용이 초기화됩니다.'}
+        onClose={handleBackModal}
+        onConfirm={navPjtList}
+        confirmText={'이동'}
+        cancleText={'취소'}
+      />
 
       <Modal
         isOpen={isCreateModalOpen}

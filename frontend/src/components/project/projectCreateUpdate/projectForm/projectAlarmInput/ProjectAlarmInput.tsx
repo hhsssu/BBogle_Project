@@ -1,9 +1,9 @@
-import style from './ProjectAlarmSection.module.css';
+import style from './ProjectAlarmInput.module.css';
 
-import ToggleOn from '../../../assets/image/icon/ToggleOn.svg';
-import ToggleOff from '../../../assets/image/icon/ToggleOff.svg';
+import ToggleOn from '../../../../../assets/image/icon/ToggleOn.svg';
+import ToggleOff from '../../../../../assets/image/icon/ToggleOff.svg';
 
-import useProjectStore from '../../../store/useProjectStore';
+import useProjectStore from '../../../../../store/useProjectStore';
 
 interface Time {
   hour: number;
@@ -12,12 +12,16 @@ interface Time {
   nano: number;
 }
 
-function ProjectAlarmSection() {
-  const project = useProjectStore((state) => state.project);
+interface Props {
+  notificationStatus: boolean;
+  notificationTime: Time;
+}
+
+function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const handleToggleState = () => {
-    updateProject('notificationStatus', !project.notificationStatus);
+    updateProject('notificationStatus', !notificationStatus);
   };
 
   const handleTime = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,8 +39,8 @@ function ProjectAlarmSection() {
     <div className={style.container}>
       <div className={style.inputLabel}>
         <span className={style.label}>알림 설정</span>
-        <div className={style.toggleSection}>
-          {project.notificationStatus ? (
+        <div className={style.alarmToggleContainer}>
+          {notificationStatus ? (
             <img
               className={style.toggle}
               src={ToggleOn}
@@ -50,21 +54,17 @@ function ProjectAlarmSection() {
             />
           )}
 
-          {project.notificationStatus ? (
+          {notificationStatus ? (
             <div>
               <input
                 className={style.timeInput}
                 type="time"
-                value={
-                  project.notificationTime.hour +
-                  ':' +
-                  project.notificationTime.minute
-                }
+                value={notificationTime.hour + ':' + notificationTime.minute}
                 onChange={handleTime}
               />
             </div>
           ) : (
-            <div className={style.timeToggleInActive}>
+            <div className={style.toggleInActive}>
               <span>오후 </span>
               <span>05:30</span>
             </div>
@@ -76,4 +76,4 @@ function ProjectAlarmSection() {
   );
 }
 
-export default ProjectAlarmSection;
+export default ProjectAlarmInput;

@@ -1,21 +1,19 @@
-.card {
-  width: 260px;
-  height: auto;
-  max-width: 260px;
-  aspect-ratio: 340 / 120;
-  border-radius: 1rem;
-  box-shadow: 0px 8px 12px 3px #7e7e7e12;
-  padding: 20px 16px;
+.container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
+  margin-top: 1rem;
 }
 
-.cardHeader {
+.infoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.pjtTitleContainer {
   display: flex;
   align-items: center;
-  position: relative;
 }
 
 .img {
@@ -28,16 +26,19 @@
   margin-right: 10px;
 }
 
-.titleWrapper {
-  display: flex;
-  align-items: center;
-  margin-bottom: 6px;
-}
-
 .title {
-  font-size: 16px;
+  font-size: 30px;
   font-weight: 600;
   margin-right: 10px;
+}
+
+.settingBox {
+  position: relative;
+}
+
+.setting {
+  width: 1rem;
+  color: rgba(160, 160, 160, 1);
 }
 
 .status {
@@ -56,32 +57,15 @@
   color: rgba(30, 166, 252, 1);
 }
 
-.statusInactive {
+.statusInActive {
   background-color: rgba(239, 122, 133, 0.3);
   color: rgba(255, 92, 23, 1);
 }
 
-.term {
-  font-size: 10px;
-  color: rgba(160, 160, 160, 1);
-}
-
-.moreIcon {
-  position: absolute;
-  border-radius: 100%;
-  top: 0;
-  right: 0;
-  z-index: 10;
-}
-
-.optionSelected {
-  background-color: rgba(232, 232, 232, 1);
-}
-
 .modalBox {
   position: absolute;
-  top: 45%;
-  left: 95%;
+  top: 40%;
+  left: 20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,19 +92,42 @@
   width: 1rem;
 }
 
-.cardContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 6px;
-  padding-right: 2px;
-}
-
 .description {
-  font-size: 10px;
+  font-size: 16px;
+  margin-left: 1rem;
+  margin-bottom: 0.6rem;
 }
 
-.bellIcon {
-  width: 20px;
-  z-index: 20;
+.term {
+  font-size: 14px;
+  margin-left: 1rem;
+  margin-bottom: 2.25rem;
+  color: rgba(160, 160, 160, 1);
+}
+
+.tagList {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tagLabel {
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 3.75rem;
+}
+
+.tag {
+  height: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  background-color: rgba(30, 166, 252, 0.1);
+  color: rgba(30, 166, 252, 1);
+  border-radius: 5px;
+  margin-right: 0.8rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }

@@ -1,5 +1,4 @@
 .container {
-  position: relative;
 }
 
 .inputLabel {
@@ -16,6 +15,7 @@
 
 .requiredMark {
   color: rgba(255, 92, 23, 1);
+  margin-left: 0.2rem;
 }
 
 .titleContainer {
@@ -37,6 +37,10 @@
   display: none;
 }
 
+.titleInputContainer {
+  position: relative;
+}
+
 .titleInput {
   width: 20rem;
   border: none;
@@ -52,16 +56,16 @@
 
 .error {
   position: absolute;
-  bottom: 75.5%;
-  left: 26.25%;
+  top: 120%;
+  left: 3%;
   font-size: 10px;
   color: red;
 }
 
-.summary {
+.description {
   width: 24.875rem;
   height: 5.5rem;
-  padding: 0.6rem;
+  padding: 0.8rem 1rem;
   border: none;
   border-radius: 20px;
   outline: none;

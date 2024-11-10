@@ -1,14 +1,18 @@
-import style from './ProjectTagSection.module.css';
+import style from './ProjectTagInput.module.css';
 
-import AddTag from '../../../assets/image/icon/AddTag.svg';
-import Close from '../../../assets/image/icon/Close.svg';
-import EnterIcon from '../../../assets/image/icon/Enter.svg';
+import AddTag from '../../../../../assets/image/icon/AddTag.svg';
+import Close from '../../../../../assets/image/icon/Close.svg';
+import EnterIcon from '../../../../../assets/image/icon/Enter.svg';
 
 import { useState, useRef, useEffect } from 'react';
-import useProjectStore from '../../../store/useProjectStore';
+import useProjectStore from '../../../../../store/useProjectStore';
 
-function ProjectTagSection() {
-  const project = useProjectStore((state) => state.project);
+interface Props {
+  role: string[];
+  skill: string[];
+}
+
+function ProjectTagInput({ role, skill }: Props) {
   const updateProject = useProjectStore((state) => state.updateProjectField);
 
   const [roleInputOpen, setRoleInputOpen] = useState(false);
@@ -56,7 +60,7 @@ function ProjectTagSection() {
       return;
     }
 
-    updateProject('role', [...project.role, roleInput]);
+    updateProject('role', [...role, roleInput]);
     setRoleInput('');
     setRoleInputOpen(false);
   };
@@ -83,39 +87,35 @@ function ProjectTagSection() {
 
     setSkillInput('');
     setSkillInputOpen(false);
-    updateProject('skill', [...project.skill, skillInput]);
+    updateProject('skill', [...skill, skillInput]);
   };
 
   const deleteRoleTag = (index: number) => {
     updateProject(
       'role',
-      project.role.filter((_, i) => i !== index),
+      role.filter((_, i) => i !== index),
     );
   };
 
   const deleteSkillTag = (index: number) => {
     updateProject(
       'skill',
-      project.skill.filter((_, i) => i !== index),
+      skill.filter((_, i) => i !== index),
     );
   };
 
   useEffect(() => {
-    if (roleInputRef.current) {
-      roleInputRef.current.focus();
+    const input = document.querySelector(
+      `.${style.tagInput}`,
+    ) as HTMLInputElement; // 적절한 클래스 이름으로 변경
+    if (input) {
+      input.focus();
     }
-  }, [roleInputOpen]);
-
-  useEffect(() => {
-    if (skillInputRef.current) {
-      skillInputRef.current.focus();
-    }
-  }, [skillInputOpen]);
+  }, [roleInputOpen, skillInputOpen]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
-        roleInputOpen &&
         roleInputRef.current &&
         !roleInputRef.current.contains(event.target as Node)
       ) {
@@ -123,7 +123,6 @@ function ProjectTagSection() {
         setRoleInputOpen(false);
       }
       if (
-        skillInputOpen &&
         skillInputRef.current &&
         !skillInputRef.current.contains(event.target as Node)
       ) {
@@ -143,7 +142,7 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>나의 역할</span>
         <div className={style.tagSection}>
-          {project.role.map((role, index) => (
+          {role.map((role, index) => (
             <div key={index} className={style.tag}>
               {role}
               <img
@@ -176,7 +175,7 @@ function ProjectTagSection() {
             </div>
           )}
 
-          {project.role.length < 7 && (
+          {role.length < 7 && (
             <img
               className={style.addTag}
               src={AddTag}
@@ -190,7 +189,7 @@ function ProjectTagSection() {
       <div className={style.inputLabel}>
         <span className={style.label}>사용 기술</span>
         <div className={style.tagSection}>
-          {project.skill.map((skill, index) => (
+          {skill.map((skill, index) => (
             <div key={index} className={style.tag}>
               {skill}
               <img
@@ -220,7 +219,7 @@ function ProjectTagSection() {
             ''
           )}
 
-          {project.skill.length < 7 && (
+          {skill.length < 7 && (
             <img
               className={style.addTag}
               src={AddTag}
@@ -234,4 +233,4 @@ function ProjectTagSection() {
   );
 }
 
-export default ProjectTagSection;
+export default ProjectTagInput;

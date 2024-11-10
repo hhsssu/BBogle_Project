@@ -15,7 +15,15 @@ interface ActivityKeywordState {
 }
 
 const useActivityKeywordStore = create<ActivityKeywordState>((set) => ({
-  activityKeywords: [],
+  // TODO 더미데이터 삭제
+  activityKeywords: [
+    { id: 1, type: false, name: '기술1' },
+    { id: 2, type: false, name: '기술2' },
+    { id: 3, type: false, name: '기술3' },
+    { id: 4, type: true, name: '인성1' },
+    { id: 5, type: true, name: '인성2' },
+    { id: 6, type: true, name: '인성3' },
+  ],
 
   // 키워드 리스트 가져오기
   fetchActivityKeywords: async () => {

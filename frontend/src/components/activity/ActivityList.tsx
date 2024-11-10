@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-// import useActivityStore from '../../store/useActivityStore';
+import { useEffect, useState } from 'react';
+import useActivityStore from '../../store/useActivityStore';
 
 import ActivityCard from './ActivityCard';
 import ActivityStyles from './Activity.module.css';
@@ -12,7 +12,7 @@ import ActivitySearchModal from './activitySearch/ActivitySearchModal';
 
 function ActivityList() {
   const nav = useNavigate();
-  // const { activities, fetchActivities } = useActivityStore();
+  const { activities } = useActivityStore();
   // const {project, fetchProject} = useProjectStore();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,104 +20,20 @@ function ActivityList() {
   const navActivityCreate = () => {
     nav('create');
   };
+  // 경험 상세 페이지로 이동
+  const navDetail = (activityId: number) => {
+    nav(`${activityId}`);
+  };
 
   // 경험
-  // useEffect(() => {
-  //   fetchActivities();
-  //   console.log(`activities: `, activities);
-  // }, []);
+  useEffect(() => {
+    // fetchActivities();
+    console.log(`activities: `, activities);
+  }, []);
 
   // 검색 모달
   const handleOpenSearchModal = () => setIsOpen(true);
   const handleCloseSearchModal = () => setIsOpen(false);
-
-  // 더미 데이터 예시
-  const activities = [
-    {
-      activityId: 1,
-      title: '소셜 로그인 구현',
-      startDate: '2024-01-01',
-      endDate: '2024-02-01',
-      projectTitle: 'RunnerWay',
-      keywords: [
-        { id: 1, type: false, name: '기술1' },
-        { id: 2, type: false, name: '기술2' },
-        { id: 3, type: true, name: '인성1' },
-      ],
-    },
-    {
-      activityId: 2,
-      title: '카카오 API를 이용한 로그인 구현',
-      startDate: '2024-01-01',
-      endDate: '2024-02-01',
-      projectTitle: 'WON TOUCH!',
-      keywords: [
-        { id: 1, type: false, name: '기술1' },
-        { id: 2, type: false, name: '기술2' },
-        { id: 3, type: true, name: '인성1' },
-      ],
-    },
-    {
-      activityId: 3,
-      title: '20자20자20자를채워보자20자20자',
-      startDate: '2024-01-01',
-      endDate: '2024-02-01',
-      projectTitle: 'RunnerWay',
-      keywords: [
-        { id: 1, type: false, name: '기술1' },
-        { id: 2, type: false, name: '기술2' },
-        { id: 3, type: true, name: '인성1' },
-      ],
-    },
-    {
-      activityId: 4,
-      title: '소셜 로그인 구현',
-      startDate: '2024-01-01',
-      endDate: '2024-02-01',
-      projectTitle: 'Challet',
-      keywords: [
-        { id: 1, type: false, name: '기술1' },
-        { id: 2, type: false, name: '기술2' },
-        { id: 3, type: true, name: '인성1' },
-      ],
-    },
-    {
-      activityId: 5,
-      title: '소셜 로그인 구현',
-      startDate: '2024-01-01',
-      endDate: '2024-02-01',
-      projectTitle: 'RunnerWay',
-      keywords: [
-        { id: 1, type: false, name: '기술1' },
-        { id: 2, type: false, name: '기술2' },
-        { id: 3, type: true, name: '인성1' },
-      ],
-    },
-    {
-      activityId: 6,
-      title: '소셜 로그인 구현',
-      startDate: '2024-01-01',
-      endDate: '2024-02-01',
-      projectTitle: 'WON TOUCH!',
-      keywords: [
-        { id: 1, type: false, name: '기술1' },
-        { id: 2, type: false, name: '기술2' },
-        { id: 3, type: true, name: '인성1' },
-      ],
-    },
-    {
-      activityId: 7,
-      title: '소셜 로그인 구현',
-      startDate: '2024-01-01',
-      endDate: '2024-02-01',
-      projectTitle: 'Challet',
-      keywords: [
-        { id: 1, type: false, name: '기술1' },
-        { id: 2, type: false, name: '기술2' },
-        { id: 3, type: true, name: '인성1' },
-      ],
-    },
-  ];
 
   return (
     <>
@@ -149,10 +65,13 @@ function ActivityList() {
               <ActivityCard
                 activityId={activityCard.activityId}
                 title={activityCard.title}
-                startDate={new Date(activityCard.startDate)}
-                endDate={new Date(activityCard.endDate)}
+                startDate={activityCard.startDate}
+                endDate={activityCard.endDate}
+                projectId={activityCard.projectId}
                 projectTitle={activityCard.projectTitle ?? ''}
                 keywords={activityCard.keywords}
+                isExtract={false}
+                onClick={() => navDetail(activityCard.activityId)}
               />
             </div>
           ))

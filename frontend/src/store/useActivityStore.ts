@@ -47,6 +47,7 @@ const useActivityStore = create<ActivityState>((set) => ({
     projectTitle: '',
     keywords: [],
   },
+  // TODO 더미데이터 삭제
   activities: [
     {
       activityId: 1,

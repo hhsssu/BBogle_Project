@@ -47,4 +47,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activities = new ArrayList<>();
 
+    public void updateNickname(String newNickname) {
+        this.nickname = newNickname;
+    }
+
 }

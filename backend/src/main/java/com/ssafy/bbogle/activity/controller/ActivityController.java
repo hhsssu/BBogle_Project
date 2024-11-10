@@ -5,12 +5,15 @@ import com.ssafy.bbogle.activity.dto.request.ActivityUserCreateRequest;
 import com.ssafy.bbogle.activity.dto.request.ActivitySearchCondRequest;
 import com.ssafy.bbogle.activity.dto.response.ActivityDetailResponse;
 import com.ssafy.bbogle.activity.dto.response.ActivityListResponse;
+import com.ssafy.bbogle.activity.service.ActivityServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +26,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/activities")
+@RequiredArgsConstructor
 @Tag(name = "ActivityController", description = "경험정리 컨트롤러")
 public class ActivityController {
+
+    private final ActivityServiceImpl activityService;
 
     @Operation(summary = "경험 수동 등록", description = "keywords는 키워드 ID를 담은 리스트로 요청<br>"
         + "ID는 모두 Integer")
     @PostMapping()
     public ResponseEntity<String> createActivity(@RequestBody ActivityUserCreateRequest request) {
-        return null;
+        activityService.createActivity(request);
+        return ResponseEntity.status(HttpStatus.OK).body("경험 수동 등록 성공");
     }
 
     @Operation(summary = "내 경험 전체 조회", description = "요청 : word는 검색어, keywords는 키워드 ID를 담은 리스트, projects는 프로젝트 ID를 담은 리스트"

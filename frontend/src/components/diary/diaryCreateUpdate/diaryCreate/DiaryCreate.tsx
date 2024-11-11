@@ -13,6 +13,7 @@ import Loading from '../../../common/loading/Loading';
 import DiaryForm from '../diaryForm/DiaryForm';
 import useDiaryStore from '../../../../store/useDiaryStore';
 import Modal from '../../../common/modal/Modal';
+
 import { getDiaryTitle } from '../../../../api/diaryApi';
 
 function DiaryCreate() {
@@ -52,15 +53,12 @@ function DiaryCreate() {
         setErrMsgOn(false);
         console.log(title);
         updateTitle(title);
-        setFinLoadingOpen(false);
-        setTitleModalOpen(true);
       } catch (error) {
         console.log('개발일지 제목 생성 실패');
         console.log(error);
-
-        setFinLoadingOpen(false);
-        setTitleModalOpen(true);
       }
+      setFinLoadingOpen(false);
+      setTitleModalOpen(true);
     }
   };
 

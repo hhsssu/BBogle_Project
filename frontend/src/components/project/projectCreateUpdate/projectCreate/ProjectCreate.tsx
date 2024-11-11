@@ -10,6 +10,7 @@ import useProjectStore from '../../../../store/useProjectStore';
 
 import ProjectForm from '../projectForm/ProjectForm';
 import Modal from '../../../common/modal/Modal';
+import { addProject } from '../../../../api/projectApi';
 
 function ProjectCreate() {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ function ProjectCreate() {
     setCreateModalOpen(!isCreateModalOpen);
 
     console.log(project);
+    addProject(project);
     navigate('/project');
   };
 

@@ -23,7 +23,8 @@ interface Project {
 export const getProjectList = async () => {
   try {
     const response = await axiosInstance.get('/projects');
-    return response.data;
+
+    return response.data.projectList;
   } catch (error) {
     console.log('프로젝트 목록 가져오기 실패');
     console.log(error);
@@ -34,20 +35,23 @@ export const getProject = async (projectId: number) => {
   try {
     const response = await axiosInstance.get(`/projects/${projectId}`);
 
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log('개발일지 가져오기 실패');
+    console.log('프로젝트 가져오기 실패');
     console.log(error);
   }
 };
 
 export const addProject = async (project: Project) => {
+  console.log(project);
   try {
-    const response = await axiosInstance.post(`/projects`, {
+    await axiosInstance.post('/projects', {
       project,
     });
+    console.log('프로젝트 생성 성공');
 
-    return response.status;
+    // return response.status;
   } catch (error) {
     console.log('프로젝트 생성 실패');
     console.log(error);

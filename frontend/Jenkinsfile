@@ -10,6 +10,16 @@ pipeline {
             }
         }
 
+        stage('Set .ENV File') {
+            steps {
+                dir('frontend') {
+                    withCredentials([file(credentialsId: 'FRONT_ENV_FILE', variable: 'front_env_file')]) {
+                        sh 'cp $front_env_file ./.env'
+                    }
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {

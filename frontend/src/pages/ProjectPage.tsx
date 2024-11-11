@@ -5,6 +5,7 @@ import ProjectDetail from '../components/project/projectDetail/ProjectDetail';
 import ProjectCreate from '../components/project/projectCreateUpdate/projectCreate/ProjectCreate';
 import DiaryPage from './DiaryPage';
 import ProjectUpdate from '../components/project/projectCreateUpdate/projectUpdate/ProjectUpdate';
+import ProjectActivityExtract from '../components/project/projectActivityExtract/ProjectActivityExtract';
 
 function ProjectPage() {
   return (
@@ -18,6 +19,10 @@ function ProjectPage() {
           element={<ProjectUpdate></ProjectUpdate>}
         ></Route>
         <Route path=":pjtId/diary/*" element={<DiaryPage></DiaryPage>}></Route>
+        <Route
+          path=":pjtId/extract"
+          element={<ProjectActivityExtract />}
+        ></Route>
       </Routes>
     </div>
   );

@@ -105,6 +105,13 @@
   justify-content: space-between;
   user-select: none;
   cursor: pointer;
+  margin: 0 auto;
+}
+
+.selected {
+  border-radius: 1.25rem;
+  outline: 2px solid var(--Main-Point, #ff5c17);
+  background: rgba(255, 92, 23, 0.05);
 }
 
 /* 카드에 적힌 경험 제목 */
@@ -182,10 +189,11 @@
 /* 경험 없음 */
 .nothing {
   color: #a0a0a0;
-  font-size: 1rem;
-  margin: 10rem auto;
-  line-height: 1.4;
+  font-size: 0.875rem;
+  margin: 15vh auto;
+  line-height: 140%;
   user-select: none;
+  text-align: center;
 }
 
 /* 경험 추가 버튼 */

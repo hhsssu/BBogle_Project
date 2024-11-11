@@ -12,16 +12,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Table(name = "notification")
 public class Notification {
 
@@ -29,15 +28,15 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    // Project와의 관계 설정
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
 
     @Column(name = "time", nullable = false)
     private LocalTime time;
 
-    @Column(name = "status", columnDefinition = "TINYINT", nullable = false)
+    @Column(name = "status", nullable = false)
     private boolean status;
-
-
 }
+

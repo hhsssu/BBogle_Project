@@ -3,7 +3,6 @@ import { Activity } from '../../../store/useActivityStore';
 
 import styles from './ProjectActivity.module.css';
 
-import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 import ProjectActivityList from './ProjectActivityList';
 

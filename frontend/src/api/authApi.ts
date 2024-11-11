@@ -22,6 +22,17 @@ export const refreshAccessToken = async () => {
   }
 };
 
+// 유저 정보를 가져오는 API
+export const fetchUserDetail = async () => {
+  try {
+    const response = await axiosInstance.get('/users');
+    return response.data;
+  } catch (error) {
+    console.error('유저 정보를 가져오는 중 문제 발생 : ', error);
+    throw error;
+  }
+};
+
 // 유저 닉네임을 가져오는 API
 export const fetchUserNickname = async () => {
   try {
@@ -29,6 +40,16 @@ export const fetchUserNickname = async () => {
     return response.data.nickname;
   } catch (error) {
     console.error('유저 닉네임을 가져오는 중 문제 발생 : ', error);
+    throw error;
+  }
+};
+
+// 유저 닉네임을 수정하는 API
+export const updateUserNickName = async (nickname: string) => {
+  try {
+    await axiosInstance.patch('/users/nickname', { nickname });
+  } catch (error) {
+    console.error('유저 닉네임을 수정 중 문제 발생 : ', error);
     throw error;
   }
 };

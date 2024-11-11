@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { logoutUser } from '../api/authApi';
@@ -13,8 +14,7 @@ const useAuthStore = create<AuthStore>()(
     (set) => ({
       isAuthenticated: false,
 
-      setAuthenticated: (authenticated) =>
-        set({ isAuthenticated: authenticated }),
+      setAuthenticated: (auth) => set({ isAuthenticated: auth }),
 
       logout: async () => {
         try {
@@ -24,6 +24,9 @@ const useAuthStore = create<AuthStore>()(
 
           // accessToken 및 기타 인증 관련 데이터를 localStorage에서 삭제
           localStorage.clear();
+
+          // 쿠키에서 인증 관련 쿠키 제거
+          Cookies.remove('accessToken');
         } catch (error) {
           console.error('로그아웃 처리 중 문제 발생 : ', error);
         }

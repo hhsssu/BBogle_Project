@@ -3,10 +3,28 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 export const PrivateRoute = (): React.ReactElement | null => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
 
-  if (isAuthenticated) console.log('인증됨');
+  if (loading) {
+    // 로딩 중일 때 회색 배경과 스피너 표시
+    return (
+      <div
+        className="loading-overlay"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+        }}
+      ></div>
+    );
+  }
 
-  // 인증되지 않은 경우 로그인 페이지로 이동
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };

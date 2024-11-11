@@ -2,11 +2,15 @@ package com.ssafy.bbogle.activity.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "추출된 경험들 중 경험 선택 요청 DTO")
 public class ActivitySelectRequest {
 

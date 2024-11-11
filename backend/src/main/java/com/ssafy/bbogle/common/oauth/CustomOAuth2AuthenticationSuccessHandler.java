@@ -1,4 +1,4 @@
-package com.ssafy.bbogle.auth.service;
+package com.ssafy.bbogle.common.oauth;
 
 import com.ssafy.bbogle.common.jwt.JwtUtil;
 import com.ssafy.bbogle.common.util.RedisUtil;
@@ -46,6 +46,7 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         refreshCookie.setHttpOnly(true);
         refreshCookie.setPath("/");
         refreshCookie.setSecure(true);
+        refreshCookie.setMaxAge(5259400);
         response.addCookie(refreshCookie);
 
         // 액세스 토큰 전달
@@ -54,7 +55,7 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         accessCookie.setSecure(true);
         response.addCookie(accessCookie);
 
-        response.sendRedirect("http://localhost:5173/main");
+        response.sendRedirect("http://localhost:5173/");
 
     }
 }

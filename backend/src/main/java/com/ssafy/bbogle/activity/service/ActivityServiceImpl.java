@@ -1,6 +1,9 @@
 package com.ssafy.bbogle.activity.service;
 
+import com.ssafy.bbogle.activity.dto.request.ActivitySearchCondRequest;
 import com.ssafy.bbogle.activity.dto.request.ActivityUserCreateRequest;
+import com.ssafy.bbogle.activity.dto.response.ActivityListItemResponse;
+import com.ssafy.bbogle.activity.dto.response.ActivityListResponse;
 import com.ssafy.bbogle.activity.entity.Activity;
 import com.ssafy.bbogle.activity.entity.ActivityKeyword;
 import com.ssafy.bbogle.activity.repository.ActivityKeywordRepository;
@@ -15,6 +18,7 @@ import com.ssafy.bbogle.project.repository.ProjectRepository;
 import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.user.repository.UserRepository;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,5 +66,16 @@ public class ActivityServiceImpl implements ActivityService {
             ActivityKeyword activityKeyword = ActivityKeyword.addActivityKeyword(savedActivity, keyword);
             activityKeywordRepository.save(activityKeyword);
         }
+    }
+
+    @Override
+    public ActivityListResponse searchActivity(ActivitySearchCondRequest request) {
+
+        Long kakaoId = LoginUser.getKakaoId();
+        User user = userRepository.findByKakaoId(kakaoId)
+            .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        List<ActivityListItemResponse> result = activityRepository.getActivityList(user, request);
+        return null;
     }
 }

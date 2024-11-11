@@ -46,6 +46,7 @@ public class ActivityController {
         + "응답 : keywords 정보중 type은 0이면 기술, 1이면 인성 태그")
     @PostMapping("/search")
     public ResponseEntity<ActivityListResponse> searchActivity(@RequestBody ActivitySearchCondRequest request) {
+        ActivityListResponse result = activityService.searchActivity(request);
         return null;
     }
 

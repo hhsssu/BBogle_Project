@@ -1,5 +1,6 @@
 package com.ssafy.bbogle.project.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,6 +48,7 @@ public class ProjectUpdateRequest {
 
     @Schema(description = "알림 시간"
         + "second와 nano는 무시")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime notificationTime;
 
 }

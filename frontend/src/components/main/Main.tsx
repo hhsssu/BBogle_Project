@@ -15,17 +15,17 @@ import useUserStore from '../../store/useUserStore';
 
 function Main() {
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
-  const { fetchUser, user } = useUserStore();
+  const { fetchUserNickname, user } = useUserStore();
   const navigate = useNavigate();
   const [scrollGuide, setScrollGuide] = useState(true);
 
   useEffect(() => {
-    fetchUser();
+    fetchUserNickname();
     setActiveProjectId(null);
     setTimeout(() => {
       setScrollGuide(false);
     }, 5000);
-  }, [fetchUser, setActiveProjectId]);
+  }, [fetchUserNickname, setActiveProjectId]);
 
   // 카드 선택
   const handleCard = (id: number) => {

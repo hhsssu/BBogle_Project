@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { fetchUserNickname } from '../api/authApi';
+import {
+  fetchUserDetail,
+  fetchUserNickname,
+  updateUserNickName,
+} from '../api/authApi';
 import useAuthStore from './useAuthStore';
 
 // 회원 정보 타입 정의
@@ -15,6 +19,7 @@ interface User {
 interface UserStore {
   user: User | null;
   isEditingNickname: boolean;
+  fetchUserNickname: () => void;
   fetchUser: () => void;
   setEditNickname: () => void;
   updateNickname: (nickname: string) => Promise<void>;
@@ -29,7 +34,7 @@ const useUserStore = create<UserStore>()(
       isEditingNickname: false,
 
       // 유저 닉네임 가져오는 함수
-      fetchUser: async () => {
+      fetchUserNickname: async () => {
         const { setAuthenticated } = useAuthStore.getState();
         try {
           const nickname = await fetchUserNickname();
@@ -49,6 +54,27 @@ const useUserStore = create<UserStore>()(
         }
       },
 
+      // 유저 정보 가져오는 함수
+      fetchUser: async () => {
+        const { setAuthenticated } = useAuthStore.getState();
+        try {
+          const user = await fetchUserDetail();
+
+          set({
+            user: {
+              id: null,
+              nickname: user.nickname,
+              email: user.email,
+              profileImage: user.profileImage,
+            },
+          });
+          setAuthenticated(true);
+          console.log('정보 가져오기 성공:', user);
+        } catch (e) {
+          console.error('닉네임 가져오기 실패 : ', e);
+        }
+      },
+
       // 닉네임 편집 모드 상태 관리 함수
       setEditNickname: () => {
         set((state) => ({ isEditingNickname: !state.isEditingNickname }));
@@ -56,6 +82,7 @@ const useUserStore = create<UserStore>()(
 
       // 회원 정보 수정 함수
       updateNickname: async (nickname: string) => {
+        await updateUserNickName(nickname);
         set((state) => ({
           user: state.user ? { ...state.user, nickname } : state.user,
           isEditingNickname: false,

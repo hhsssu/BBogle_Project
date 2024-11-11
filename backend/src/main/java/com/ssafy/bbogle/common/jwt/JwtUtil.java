@@ -1,6 +1,8 @@
 package com.ssafy.bbogle.common.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -36,12 +38,15 @@ public class JwtUtil {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(this.getSecretKey()).build().parseClaimsJws(token);
+            getClaimsFromToken(token);
             return true;
-        }catch (Exception e) {
-            return false;
+        } catch (ExpiredJwtException e) {
+            throw e; // 만료된 토큰 예외를 던짐
+        } catch (JwtException e) {
+            throw e; // 유효하지 않은 토큰 예외를 던짐
         }
     }
+
 
     public boolean isAccessToken(String token){
         Claims claims = getClaimsFromToken(token);

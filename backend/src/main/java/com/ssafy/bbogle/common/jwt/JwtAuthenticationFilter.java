@@ -2,6 +2,8 @@ package com.ssafy.bbogle.common.jwt;
 
 import com.ssafy.bbogle.user.CustomUserDetails;
 import com.ssafy.bbogle.user.CustomUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,16 +30,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         FilterChain filterChain) throws ServletException, IOException {
 
         String token = resolveToken(request);
-        if (token != null && jwtUtil.validateToken(token) && jwtUtil.isAccessToken(token)) {
-            String kakaoId = jwtUtil.getKakaoIdFromToken(token);
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(kakaoId);
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        if (token != null) {
+            try {
+                if (jwtUtil.validateToken(token) && jwtUtil.isAccessToken(token)) {
+                    String kakaoId = jwtUtil.getKakaoIdFromToken(token);
+                    UserDetails userDetails = customUserDetailsService.loadUserByUsername(kakaoId);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (ExpiredJwtException e) {
+                // 만료된 토큰 예외 처리
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Token has expired");
+                return;
+            } catch (JwtException e) {
+                // 유효하지 않은 토큰 예외 처리
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Invalid token");
+                return;
+            }
         }
+
         filterChain.doFilter(request, response);
 
     }

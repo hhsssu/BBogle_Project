@@ -2,11 +2,14 @@ package com.ssafy.bbogle.summary.controller;
 
 import com.ssafy.bbogle.summary.dto.request.SummaryRequest;
 import com.ssafy.bbogle.summary.dto.response.SummaryResponse;
+import com.ssafy.bbogle.summary.service.SummaryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/projects")
+@RequiredArgsConstructor
 @Tag(name = "SummaryController", description = "회고 컨트롤러")
 public class SummaryController {
+
+    private final SummaryService summaryService;
 
     @Operation(summary = "회고 조회")
     @Parameters(value = {
@@ -27,7 +33,8 @@ public class SummaryController {
     })
     @GetMapping("/{projectId}/summary")
     public ResponseEntity<SummaryResponse> getSummary(@PathVariable("projectId") Integer projectId) {
-        return null;
+        SummaryResponse result = summaryService.getSummary(projectId);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @Operation(summary = "회고 수동 등록")
@@ -37,7 +44,8 @@ public class SummaryController {
     @PostMapping("/{projectId}/summary")
     public ResponseEntity<String> createSummary(@PathVariable("projectId") Integer projectId,
         @RequestBody SummaryRequest request) {
-        return null;
+        summaryService.createSummary(projectId, request);
+        return ResponseEntity.status(HttpStatus.OK).body("회고 등록 성공");
     }
 
     @Operation(summary = "회고 수정")
@@ -49,6 +57,7 @@ public class SummaryController {
     public ResponseEntity<String> updateSummary(@PathVariable("projectId") Integer projectId,
         @PathVariable("summaryId") Integer summaryId,
         @RequestBody SummaryRequest request) {
-        return null;
+        summaryService.updateSummary(summaryId, request);
+        return ResponseEntity.status(HttpStatus.OK).body("회고 수정 성공");
     }
 }

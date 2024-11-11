@@ -7,6 +7,11 @@ interface Diary {
   images: string[];
 }
 
+interface Question {
+  question: string;
+  description: string;
+}
+
 export const getDiaryList = async (projectId: number) => {
   try {
     const response = await axiosInstance.get(`/projects/${projectId}/diaries`);
@@ -32,17 +37,31 @@ export const getDiary = async (projectId: number, diaryId: number) => {
 };
 
 // 개발일지 TITLE 생성 API
-export const getDiaryTitle = async (answers: string[]) => {
-  try {
-    const response = await axios.post('FAST API 주소', { answers: answers });
+export const getDiaryTitle = async (
+  questions: Question[],
+  answers: string[],
+) => {
+  console.log(questions);
+  console.log(answers);
 
-    return response.data;
-  } catch (error) {
-    console.log('개발일지 제목 생성 실패');
-    console.log(error);
+  const response = await axios.post(
+    'http://localhost:8000/api/generate/title',
+    {
+      qna_list: [
+        { question: questions[0].question, answer: answers[0] },
+        { question: questions[1].question, answer: answers[1] },
+        { question: questions[2].question, answer: answers[2] },
+      ],
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
 
-    return '';
-  }
+  console.log(response);
+  return response.data;
 };
 
 export const addDiary = async (projectId: number, diary: Diary) => {

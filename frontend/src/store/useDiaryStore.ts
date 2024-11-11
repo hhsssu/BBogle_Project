@@ -24,6 +24,7 @@ interface DiaryState {
   getQnaList: () => void;
   initQnaList: () => void;
   updateAnswer: (index: number, value: string) => void;
+  updateTitle: (value: string) => void;
 
   // 개발일지 상세 조회 - img list
   images: string[];
@@ -59,16 +60,17 @@ const useDiaryStore = create<DiaryState>((set) => ({
       questionList: [
         // TODO 질문 문항 더미 리스트
         {
-          question: '어떤 작업을 하셨나요 ?',
+          question: '오늘의 목표는 무엇이었나요? 진행 상황을 공유해주세요.',
           description: '구현한 기능이나 작업물에 대해 설명해주세요.',
         },
         {
-          question: '작업 진행 중 힘든 점은 어떤 점이었나요 ?',
+          question: '진행하면서 어려운 점이 있었나요? 어떻게 해결했나요?',
           description:
             '구현 중 어려웠던 부분이나 팀원과의 갈등 ... 어떤 것이든 적어보세요 !',
         },
         {
-          question: '문제는 해결되었나요 ?',
+          question:
+            '오늘 잘한 점이나 추가로 기록하고 싶은 오늘의 특이사항이 있나요?',
           description:
             '해결하기 위해 실행한 노력들을 적어보세요 ! 아직 해결되지 않았다면, 고민한 내용을 적어도 좋아요.',
         },
@@ -82,16 +84,17 @@ const useDiaryStore = create<DiaryState>((set) => ({
       questionList: [
         // TODO 질문 문항 더미 리스트
         {
-          question: '어떤 작업을 하셨나요 ?',
+          question: '오늘의 목표는 무엇이었나요? 진행 상황을 공유해주세요.',
           description: '구현한 기능이나 작업물에 대해 설명해주세요.',
         },
         {
-          question: '작업 진행 중 힘든 점은 어떤 점이었나요 ?',
+          question: '진행하면서 어려운 점이 있었나요? 어떻게 해결했나요?',
           description:
             '구현 중 어려웠던 부분이나 팀원과의 갈등 ... 어떤 것이든 적어보세요 !',
         },
         {
-          question: '문제는 해결되었나요 ?',
+          question:
+            '오늘 잘한 점이나 추가로 기록하고 싶은 오늘의 특이사항이 있나요?',
           description:
             '해결하기 위해 실행한 노력들을 적어보세요 ! 아직 해결되지 않았다면, 고민한 내용을 적어도 좋아요.',
         },
@@ -106,6 +109,7 @@ const useDiaryStore = create<DiaryState>((set) => ({
     set((state) => ({
       answers: state.answers.map((answer, i) => (i === index ? value : answer)),
     })),
+  updateTitle: (value) => set(() => ({ title: value })),
 
   // 개발일지 상세 조회 - img list
   images: [],

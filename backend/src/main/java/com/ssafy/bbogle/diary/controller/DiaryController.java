@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
 @Tag(name = "DiaryController", description = "개발일지 컨트롤러")
 public class DiaryController {
 

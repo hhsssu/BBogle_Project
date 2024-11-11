@@ -1,6 +1,6 @@
 import ActivityStyles from './Activity.module.css';
 import MoreIcon from '../../assets/image/icon/More.svg';
-import { useNavigate } from 'react-router-dom';
+import DetailIcon from '../../assets/image/icon/Detail.svg';
 
 interface Keyword {
   id: number;
@@ -8,13 +8,18 @@ interface Keyword {
   name: string;
 }
 
-interface ExInfoProps {
+interface ActivityInfoProps {
   activityId: number;
   title: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | null;
+  endDate: Date | null;
+  projectId?: number;
   projectTitle?: string | undefined;
   keywords: Keyword[];
+  isExtract: boolean;
+  isSelected?: boolean;
+  onClick?: () => void;
+  onPreviewClick?: (activityId: number) => void;
 }
 
 // 경험 카드
@@ -25,27 +30,64 @@ function ActivityCard({
   endDate,
   keywords,
   projectTitle,
-}: ExInfoProps) {
-  const nav = useNavigate();
-  const navDetail = (exID: number) => {
-    nav(`${exID}`);
+  isExtract,
+  isSelected,
+  onClick,
+  onPreviewClick,
+}: ActivityInfoProps) {
+  // TODO 경험 추출에서 선택 시 미리보기에 값 전달
+
+  // 경험 추출 선택 페이지에서의 경험 카드
+  const handleDetail = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onPreviewClick) {
+      onPreviewClick(activityId);
+    }
+  };
+
+  // 경험 목록 페이지에서의 경험 카드
+  const handleMenu = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // TODO 수정 삭제 메뉴 뜨는 함수
+    // if (onMenuClick) {
+    //   onMenuClick();
+    // }
   };
 
   return (
-    <div className={ActivityStyles.card} onClick={() => navDetail(activityId)}>
+    <div
+      className={
+        isSelected
+          ? `${ActivityStyles.card} ${ActivityStyles.selected}`
+          : `${ActivityStyles.card} `
+      }
+      onClick={onClick}
+    >
       {/* 소제목과 더보기 메뉴 버튼 */}
       <div className={ActivityStyles.header}>
         <section className={ActivityStyles.between}>
           <div className={ActivityStyles.subtitle}>{title}</div>
           <button>
-            <img src={MoreIcon} alt="더 보기 메뉴" />
+            {isExtract ? (
+              <img
+                src={DetailIcon}
+                alt="미리보기 버튼"
+                onClick={handleDetail}
+              />
+            ) : (
+              <img src={MoreIcon} alt="더 보기 메뉴" onClick={handleMenu} />
+            )}
           </button>
         </section>
 
         {/* 시작일 ~ 종료일 */}
-        <div className={ActivityStyles.date}>
-          {startDate.toLocaleDateString()} ~ {endDate.toLocaleDateString()}
-        </div>
+        {startDate && endDate ? (
+          <div className={ActivityStyles.date}>
+            {startDate.toLocaleDateString()} ~ {endDate.toLocaleDateString()}
+          </div>
+        ) : (
+          ''
+        )}
       </div>
 
       {/* 프로젝트 명 & 태그 */}

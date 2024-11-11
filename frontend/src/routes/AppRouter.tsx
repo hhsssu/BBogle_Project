@@ -10,17 +10,17 @@ import MyPage from '../pages/MyPage';
 function AppRouter() {
   return (
     <Routes>
-      // 온보딩 페이지
+      {/* 온보딩 페이지 */}
       <Route path="/" element={<OnboardingPage />}></Route>
-      // 메인 페이지
-      <Route path="/main" element={<MainPage />}>
+      {/* 메인 페이지 */}
+      <Route path="main" element={<MainPage />}>
         <Route index element={<Main />} />
       </Route>
-      // 프로젝트 페이지
-      <Route path="/project/*" element={<ProjectPage></ProjectPage>} />
+      {/* 프로젝트 페이지 */}
+      <Route path="project/*" element={<ProjectPage></ProjectPage>} />
       <Route path="activity/*" element={<ActivityPage />} />
-      // 마이 페이지
-      <Route path="/my" element={<MyPage />}></Route>
+      {/* 마이 페이지 */}
+      <Route path="my" element={<MyPage />}></Route>
     </Routes>
   );
 }

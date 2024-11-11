@@ -8,6 +8,7 @@ COPY package.json .
 # RUN npm install --legacy-peer-deps
 RUN npm install
 #RUN npm install eslint-plugin-import --save-dev
+RUN npm install --save-dev @types/js-cookie
 
 COPY . .
 

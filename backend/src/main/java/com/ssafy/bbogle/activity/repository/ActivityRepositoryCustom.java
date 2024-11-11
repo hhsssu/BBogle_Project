@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ActivityRepositoryCustom {
 
-    List<ActivityListItemResponse> getActivityList(User user, ActivitySearchCondRequest request);
+    List<Activity> getActivityList(User user, ActivitySearchCondRequest request);
 
 }

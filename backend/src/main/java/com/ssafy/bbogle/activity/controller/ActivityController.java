@@ -32,7 +32,7 @@ public class ActivityController {
 
     private final ActivityServiceImpl activityService;
 
-    @Operation(summary = "경험 수동 등록", description = "keywords는 키워드 ID를 담은 리스트로 요청<br>"
+    @Operation(summary = "경험 수동 등록 (완료)", description = "keywords는 키워드 ID를 담은 리스트로 요청<br>"
         + "ID는 모두 Integer")
     @PostMapping()
     public ResponseEntity<String> createActivity(@RequestBody ActivityUserCreateRequest request) {
@@ -40,23 +40,24 @@ public class ActivityController {
         return ResponseEntity.status(HttpStatus.OK).body("경험 수동 등록 성공");
     }
 
-    @Operation(summary = "내 경험 전체 조회", description = "요청 : word는 검색어, keywords는 키워드 ID를 담은 리스트, projects는 프로젝트 ID를 담은 리스트"
+    @Operation(summary = "내 경험 조회 및 검색 (완료)", description = "요청 : word는 검색어, keywords는 키워드 ID를 담은 리스트, projects는 프로젝트 ID를 담은 리스트"
         + "ID는 모두 Integer<br>"
         + "word는 null, keywords 리스트 크기 0, projects 리스트 크기 0이면 전체조회<br><br>"
         + "응답 : keywords 정보중 type은 0이면 기술, 1이면 인성 태그")
     @PostMapping("/search")
     public ResponseEntity<ActivityListResponse> searchActivity(@RequestBody ActivitySearchCondRequest request) {
         ActivityListResponse result = activityService.searchActivity(request);
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @Operation(summary = "경험 상세 조회")
+    @Operation(summary = "경험 상세 조회 (완료)")
     @Parameters(value = {
         @Parameter(name = "activityId", description = "경험 ID", in = ParameterIn.PATH)
     })
     @GetMapping("/{activityId}")
     public ResponseEntity<ActivityDetailResponse> getActivityDetail(@PathVariable("activityId") Integer activityId){
-        return null;
+        ActivityDetailResponse result = activityService.getActivityDetail(activityId);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 
@@ -76,7 +77,8 @@ public class ActivityController {
     })
     @DeleteMapping("/{activityId}")
     public ResponseEntity<String> deleteActivity(@PathVariable("activityId") Integer activityId){
-        return null;
+        activityService.deleteActivity(activityId);
+        return ResponseEntity.status(HttpStatus.OK).body("경험 삭제 성공");
     }
 
 }

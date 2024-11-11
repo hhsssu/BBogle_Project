@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
-import DiaryCreate from '../components/diary/diaryCreate/DiaryCreate';
+import DiaryCreate from '../components/diary/diaryCreateUpdate/diaryCreate/DiaryCreate';
 import DiaryDetail from '../components/diary/diaryDetail/DiaryDetail';
-import DiaryUpdate from '../components/diary/diaryUpdate/DiaryUpdate';
+import DiaryUpdate from '../components/diary/diaryCreateUpdate/diaryUpdate/DiaryUpdate';
 
 function DiaryPage() {
   return (

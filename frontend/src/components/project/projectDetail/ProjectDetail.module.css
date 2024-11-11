@@ -4,231 +4,28 @@
   padding: 8vh 7vw;
 }
 
-.container > section {
-  padding: 3vh 1vw;
-}
-
 .backBtn {
+  display: flex;
   font-size: 14px;
   color: rgba(160, 160, 160, 1);
   cursor: pointer;
-}
-
-.info {
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.infoHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.25rem;
-}
-
-.pjtTitleContainer {
-  display: flex;
   align-items: center;
 }
 
-.img {
-  width: 3rem;
-  height: 3rem;
-  border: solid;
-  border-color: #e8e8e8;
-  border-width: 0.2px;
-  border-radius: 100%;
-  margin-right: 10px;
-}
-
-.title {
-  font-size: 30px;
-  font-weight: 600;
-  margin-right: 10px;
-}
-
-.settingBox {
+.pjtInfoSection {
   position: relative;
 }
 
-.setting {
-  width: 1rem;
-  color: rgba(160, 160, 160, 1);
-}
-
-.state {
-  width: 3rem;
-  height: 1rem;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 8px;
-}
-
-.stateActive {
-  background-color: rgba(30, 166, 252, 0.1);
-  color: rgba(30, 166, 252, 1);
-}
-
-.stateInActive {
-  background-color: rgba(239, 122, 133, 0.3);
-  color: rgba(255, 92, 23, 1);
-}
-
-.modalBox {
+.pjtEndBtn {
   position: absolute;
-  top: 40%;
-  left: 20%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 3.2rem;
-  height: 3.25rem;
-  padding: 0.5625rem 1rem;
-  gap: 0.8rem;
-  border-radius: 0.6rem;
-  box-shadow: 0px 8px 12px 3px #7e7e7e12;
-  background-color: white;
-}
-
-.modalContent {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.modalImg {
-  width: 1rem;
-}
-
-.endBtn {
+  top: 0;
+  right: 0;
   width: 9rem;
   height: 2.5rem;
+  margin-top: 1rem;
   border: none;
   border-radius: 8px;
   background-color: black;
   font-size: 16px;
   color: white;
-}
-
-.summary {
-  font-size: 16px;
-  margin-left: 1rem;
-  margin-bottom: 0.6rem;
-}
-
-.term {
-  font-size: 14px;
-  margin-left: 1rem;
-  margin-bottom: 2.25rem;
-  color: rgba(160, 160, 160, 1);
-}
-
-.tagList {
-  display: flex;
-  align-items: center;
-  margin-left: 1rem;
-  margin-bottom: 1rem;
-}
-
-.subTitle {
-  font-size: 12px;
-  font-weight: 600;
-  margin-right: 3.75rem;
-}
-
-.tag {
-  height: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10px;
-  background-color: rgba(30, 166, 252, 0.1);
-  color: rgba(30, 166, 252, 1);
-  border-radius: 5px;
-  margin-right: 0.8rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
-.tabSection {
-  display: flex;
-  justify-content: space-between;
-}
-
-.tabList {
-  display: flex;
-}
-
-.tab {
-  width: 7.8rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(108, 112, 114, 1);
-}
-
-.diaryCnt {
-  width: 1.5rem;
-  height: 1.125rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  color: rgba(255, 92, 23, 1);
-  border-radius: 1rem;
-  background-color: rgba(255, 92, 23, 0.1);
-  margin-left: 0.2rem;
-}
-
-.activeTab {
-  font-weight: 600;
-  border-bottom: solid;
-  border-color: rgba(255, 92, 23, 1);
-  color: rgba(255, 92, 23, 1);
-}
-
-.control {
-  display: flex;
-  align-items: end;
-  gap: 0.8rem;
-}
-
-.sortOptions {
-  display: flex;
-  gap: 1vh;
-  margin-bottom: 0.2rem;
-  cursor: pointer;
-}
-
-.sortActive {
-  font-weight: 600;
-}
-
-.sortInActive {
-  color: rgba(160, 160, 160, 1);
-}
-
-.addDiaryBtn {
-  width: 9rem;
-  height: 2.5rem;
-  border: none;
-  border-radius: 8px;
-  background-color: #ff5c17;
-  font-size: 16px;
-  color: white;
-}
-
-.diarySection {
-  display: flex;
-  justify-content: center;
 }

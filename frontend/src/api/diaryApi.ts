@@ -16,7 +16,7 @@ export const getDiaryList = async (projectId: number) => {
   try {
     const response = await axiosInstance.get(`/projects/${projectId}/diaries`);
 
-    return response.data;
+    return response.data.diaryList;
   } catch (error) {
     console.log('개발일지 목록 가져오기 실패');
     console.log(error);

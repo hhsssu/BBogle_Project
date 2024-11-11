@@ -1,12 +1,5 @@
 import axiosInstance from './axiosInstance';
 
-interface Time {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
-}
-
 interface Project {
   title: string;
   image: string;
@@ -17,7 +10,7 @@ interface Project {
   role: string[];
   skill: string[];
   notificationStatus: boolean;
-  notificationTime: Time;
+  notificationTime: string;
 }
 
 export const getProjectList = async () => {

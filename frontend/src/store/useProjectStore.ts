@@ -4,13 +4,6 @@ import RunnerWay from '../assets/image/RunnerWay.png';
 import { persist } from 'zustand/middleware';
 import { getProject, getProjectList } from '../api/projectApi';
 
-interface Time {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
-}
-
 interface ProjectCard {
   projectId: number;
   image: string;
@@ -34,7 +27,7 @@ interface Project {
   skill: string[];
   status: boolean;
   notificationStatus: boolean;
-  notificationTime: Time;
+  notificationTime: string;
 }
 
 interface ProjectState {
@@ -49,7 +42,7 @@ interface ProjectState {
   getProject: (pjtId: number) => void;
   updateProjectField: (
     field: string,
-    value: string | string[] | number | boolean | Time,
+    value: string | string[] | number | boolean,
   ) => void;
 
   // 프로젝트 생성/수정
@@ -84,12 +77,7 @@ const useProjectStore = create<ProjectState>()(
         role: [],
         skill: [],
         notificationStatus: false,
-        notificationTime: {
-          hour: 17,
-          minute: 30,
-          second: 0,
-          nano: 0,
-        },
+        notificationTime: '17:30',
       },
       setProject: (pjt) => set(() => ({ project: pjt })),
       initProject: () =>
@@ -106,12 +94,7 @@ const useProjectStore = create<ProjectState>()(
             role: [],
             skill: [],
             notificationStatus: false,
-            notificationTime: {
-              hour: 17,
-              minute: 30,
-              second: 0,
-              nano: 0,
-            },
+            notificationTime: '17:30',
           },
         })),
       getProject: async (pjtId) => {

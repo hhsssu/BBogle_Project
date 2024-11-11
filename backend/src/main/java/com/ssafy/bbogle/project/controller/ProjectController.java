@@ -16,14 +16,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -78,8 +71,9 @@ public class ProjectController {
                     + "알림 시간은 hour, minute 정보만 요청")
     @Parameters(value = {@Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)})
     @PatchMapping("/{projectId}")
-    public ResponseEntity<String> updateProject(@PathVariable("projectId") Integer projectId,
-                                                @RequestBody ProjectUpdateRequest request) {
+    public ResponseEntity<String> updateProject(
+            @PathVariable("projectId") Integer projectId,
+            @RequestBody ProjectUpdateRequest request) {
         projectService.updateProject(projectId, request);
         return ResponseEntity.ok("프로젝트가 성공적으로 수정되었습니다.");
     }
@@ -95,8 +89,9 @@ public class ProjectController {
     @Operation(summary = "프로젝트 종료", description = "프로젝트 종료 버튼을 누르면 프로젝트 상태를 종료로 변경 + AI 회고 저장")
     @Parameters(value = {@Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)})
     @PatchMapping("/{projectId}/end")
-    public ResponseEntity<String> endProject(@PathVariable("projectId") Integer projectId,
-                                             @RequestBody SummaryRequest request) {
+    public ResponseEntity<String> endProject(
+            @PathVariable("projectId") Integer projectId,
+            @RequestBody SummaryRequest request) {
         projectService.endProject(projectId, request);
         return ResponseEntity.ok("프로젝트가 성공적으로 종료되었습니다.");
     }
@@ -104,20 +99,20 @@ public class ProjectController {
     @Operation(summary = "프로젝트 알림 ON/OFF", description = "알림 켜짐(1), 꺼짐(0)")
     @Parameters(value = {@Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)})
     @PatchMapping("/{projectId}/notification")
-    public ResponseEntity<String> notificationProject(@PathVariable("projectId") Integer projectId,
-                                                      @RequestBody NotificationStatusRequest request) {
+    public ResponseEntity<String> notificationProject(
+            @PathVariable("projectId") Integer projectId,
+            @RequestBody NotificationStatusRequest request) {
         projectService.toggleNotificationStatus(projectId, request);
         return ResponseEntity.ok("알림 상태가 성공적으로 변경되었습니다.");
     }
-
-    // 경험 관련 => 일단 keep
 
     @Operation(summary = "특정 프로젝트에 대한 저장된 경험 조회", description = "경험추출시 기존 경험 조회에 사용")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @GetMapping("/{projectId}/activities")
-    public ResponseEntity<ActivityListResponse> getActivitiesByProjectId(@PathVariable("projectId") Integer projectId){
+    public ResponseEntity<ActivityListResponse> getActivitiesByProjectId(
+            @PathVariable("projectId") Integer projectId) {
         return null;
     }
 
@@ -126,9 +121,9 @@ public class ProjectController {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @PostMapping("/{projectId}/activities")
-    public ResponseEntity<String> selectActivity(@PathVariable("projectId") Integer projectId,
-                                                 @RequestBody ActivitySelectRequest request) {
-        // 기존 저장된 경험들과 선택된 경험 비교해서 수정 + 추출된 경험 중 선택된 경험 해당 프로젝트ID 달고 추가
+    public ResponseEntity<String> selectActivity(
+            @PathVariable("projectId") Integer projectId,
+            @RequestBody ActivitySelectRequest request) {
         return null;
     }
 }

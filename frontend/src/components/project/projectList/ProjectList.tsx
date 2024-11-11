@@ -34,7 +34,7 @@ function ProjectList() {
     <div className={style.container}>
       <section className={style.headerSection}>
         <div className={style.pageTitle}>프로젝트</div>
-        <button className={style.addPjtBtn} onClick={navCreate}>
+        <button className={style.pjtAddBtn} onClick={navCreate}>
           + 프로젝트 추가
         </button>
       </section>
@@ -47,32 +47,30 @@ function ProjectList() {
           {onlyProgress ? '전체보기' : '진행중인 것만 보기'}
         </div>
         {PJT_LIST.length !== 0 ? (
-          <div className={style.fins}>
+          <div className={style.projectGrid}>
             {onlyProgress
               ? PJT_LIST.filter((pjt) => pjt.status).map((card, index) => (
-                  <div onClick={() => navPjtDetail(card.projectId)}>
+                  <div key={index} onClick={() => navPjtDetail(card.projectId)}>
                     <ProjectCard
-                      key={index}
                       pjtId={card.projectId}
                       imageSrc={card.image}
                       title={card.title}
-                      state={card.status}
+                      status={card.status}
                       term={card.startDate + ' ~ ' + card.endDate}
-                      summary={card.description}
+                      description={card.description}
                       notificationStatus={card.notificationStatus}
                     />
                   </div>
                 ))
               : PJT_LIST.map((card, index) => (
-                  <div onClick={() => navPjtDetail(card.projectId)}>
+                  <div key={index} onClick={() => navPjtDetail(card.projectId)}>
                     <ProjectCard
-                      key={index}
                       pjtId={card.projectId}
                       imageSrc={card.image}
                       title={card.title}
-                      state={card.status}
+                      status={card.status}
                       term={card.startDate + ' ~ ' + card.endDate}
-                      summary={card.description}
+                      description={card.description}
                       notificationStatus={card.notificationStatus}
                     />
                   </div>
@@ -81,7 +79,7 @@ function ProjectList() {
         ) : (
           <div className={style.emptyPjtContainer}>
             <img
-              className={style.emptyFolder}
+              className={style.emptyIcon}
               src={EmptyFolder}
               alt="프로젝트 없음"
             />

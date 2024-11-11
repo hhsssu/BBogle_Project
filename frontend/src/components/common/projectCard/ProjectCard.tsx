@@ -13,9 +13,9 @@ interface Props {
   pjtId: number;
   imageSrc: string;
   title: string;
-  state: boolean;
+  status: boolean;
   term: string;
-  summary: string;
+  description: string;
   notificationStatus: boolean;
 }
 
@@ -23,9 +23,9 @@ function ProjectCard({
   pjtId,
   imageSrc,
   title,
-  state,
+  status,
   term,
-  summary,
+  description,
   notificationStatus,
 }: Props) {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ function ProjectCard({
     e.stopPropagation();
   };
 
-  const handleAlarmState = (e: React.MouseEvent) => {
+  const handleAlarmStatus = (e: React.MouseEvent) => {
     setAlarmOn(!isAlarmOn);
     e.stopPropagation();
   };
@@ -85,9 +85,9 @@ function ProjectCard({
                 {title.length > 10 ? title.substring(0, 11) + '...' : title}
               </span>
               <div
-                className={`${style.state} ${state ? style.stateActive : style.stateInactive}`}
+                className={`${style.status} ${status ? style.statusActive : style.statusInactive}`}
               >
-                {state ? '진행 중' : '종료'}
+                {status ? '진행 중' : '종료'}
               </div>
             </div>
             <div className={style.term}>{term}</div>
@@ -95,7 +95,7 @@ function ProjectCard({
 
           <div ref={moreIconRef}>
             <img
-              className={`${style.moreIcon} ${isModalOpen && style.selected}`}
+              className={`${style.moreIcon} ${isModalOpen && style.optionSelected}`}
               src={MoreVertical}
               alt="더보기"
               onClick={handleModalOpen}
@@ -122,20 +122,20 @@ function ProjectCard({
         </section>
 
         <section className={style.cardContent}>
-          <div className={style.summary}>{summary}</div>
+          <div className={style.description}>{description}</div>
           {isAlarmOn ? (
             <img
               className={style.bellIcon}
               src={ActiveBell}
               alt="알림 아이콘"
-              onClick={handleAlarmState}
+              onClick={handleAlarmStatus}
             />
           ) : (
             <img
               className={style.bellIcon}
               src={Bell}
               alt="알림 아이콘"
-              onClick={handleAlarmState}
+              onClick={handleAlarmStatus}
             />
           )}
         </section>

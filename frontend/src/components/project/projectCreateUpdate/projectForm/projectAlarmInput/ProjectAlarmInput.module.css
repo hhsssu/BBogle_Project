@@ -1,0 +1,40 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.inputLabel {
+  display: grid;
+  grid-template-columns: 20% 60%;
+  gap: 3rem;
+  align-items: center;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.alarmToggleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.toggle {
+  width: 1.875rem;
+  margin-right: 5%;
+  transition: transform 2s ease;
+}
+
+.timeInput {
+  width: 7rem;
+  border: none;
+  outline: none;
+  font-family: 'Pretendard-regular';
+  font-size: 14px;
+}
+
+.toggleInActive {
+  font-size: 14px;
+  color: rgba(232, 232, 232, 1);
+}

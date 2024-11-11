@@ -27,7 +27,6 @@ public class SwaggerConfig {
         return new OpenAPI()
             .components(components)
             .addSecurityItem(securityRequirement)
-            .addServersItem(new Server().url("/"))
             .info(new Info()
                 .title("Bbogle")
                 .description("API Documentation for Bbogle")

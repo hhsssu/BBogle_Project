@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuthStore from '../store/useAuthStore';
 import { fetchUserNickname } from '../api/authApi';
 
 export const useAuth = () => {
   const { isAuthenticated, setAuthenticated } = useAuthStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -18,11 +19,15 @@ export const useAuth = () => {
           } else {
             console.error('알 수 없는 오류:', error);
           }
+        } finally {
+          setLoading(false);
         }
       };
       verifyUser();
+    } else {
+      setLoading(false); // 인증된 경우 바로 로딩 상태 해제
     }
   }, [isAuthenticated, setAuthenticated]);
 
-  return { isAuthenticated };
+  return { isAuthenticated, loading };
 };

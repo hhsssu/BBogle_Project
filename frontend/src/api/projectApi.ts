@@ -24,6 +24,16 @@ export const getProjectList = async () => {
   }
 };
 
+// 진행중인 프로젝트 조회 API
+export const getProgressProjectList = async () => {
+  try {
+    const response = await axiosInstance.get('/projects/in-progress');
+    return response.data.projectList;
+  } catch (error) {
+    console.error('진행 중인 프로젝트 목록 조회 중 문제 발생 : ', error);
+  }
+};
+
 export const getProject = async (projectId: number) => {
   try {
     const response = await axiosInstance.get(`/projects/${projectId}`);

@@ -28,7 +28,6 @@ axiosInstance.interceptors.request.use(
         localStorage.setItem('accessToken', token!);
       } catch (error) {
         console.error('Access Token을 가져오는 데 실패했습니다:', error);
-        window.location.href = '/login'; // 실패 시 로그인 페이지로 이동
         return Promise.reject(error);
       }
     }
@@ -70,7 +69,6 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error('Access Token 재발급 실패', refreshError);
-        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }

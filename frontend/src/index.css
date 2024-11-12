@@ -58,8 +58,8 @@ button {
 }
 
 body {
-  -ms-overflow-style: none;
   user-select: none;
+  -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
   display: none;

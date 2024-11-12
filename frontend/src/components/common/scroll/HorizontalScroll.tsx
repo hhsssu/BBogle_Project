@@ -26,7 +26,6 @@ function HorizontalScroll({ children }: HorizontalScrollProps) {
       setStartX(e.pageX - listRef.current.offsetLeft);
       setScrollLeft(listRef.current.scrollLeft);
       setDragged(false); // 드래그 상태 초기화
-      document.body.style.userSelect = 'none'; // 드래그 중 텍스트 선택 방지
     }
   };
 
@@ -48,7 +47,6 @@ function HorizontalScroll({ children }: HorizontalScrollProps) {
   // 드래그 종료 핸들러
   const handleMouseUp = () => {
     setIsDragging(false);
-    document.body.style.userSelect = 'auto';
 
     // 드래그를 했으면 클릭 이벤트를 막기 위해 clicked 상태를 true로 설정
     if (dragged) {
@@ -76,7 +74,6 @@ function HorizontalScroll({ children }: HorizontalScrollProps) {
 
   const handleMouseLeave = () => {
     setIsDragging(false);
-    document.body.style.userSelect = 'auto';
   };
 
   return (

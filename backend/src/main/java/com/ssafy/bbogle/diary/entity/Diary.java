@@ -47,9 +47,11 @@ public class Diary {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Builder.Default
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DiaryImage> diaryImages = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 

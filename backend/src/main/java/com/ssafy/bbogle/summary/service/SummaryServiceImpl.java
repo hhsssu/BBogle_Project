@@ -24,11 +24,18 @@ public class SummaryServiceImpl implements SummaryService {
     @Transactional
     public SummaryResponse getSummary(Integer projectId) {
 
-        Summary summary = summaryRepository.findByProjectId(projectId)
-            .orElseThrow(()-> new CustomException(ErrorCode.SUMMARY_NOT_FOUND));
+        Project project = projectRepository.findById(projectId)
+            .orElseThrow(() -> new CustomException(ErrorCode.PROJECT_NOT_FOUND));
 
-        if(!LoginUser.getKakaoId().equals(summary.getProject().getUser().getKakaoId())){
+        if(!LoginUser.getKakaoId().equals(project.getUser().getKakaoId())){
             throw new CustomException(ErrorCode.UNAUTHORIZED_ACCESS_EXCEPTION);
+        }
+
+        Summary summary = summaryRepository.findByProjectId(projectId)
+            .orElse(null);
+
+        if (summary == null) {
+            return null;
         }
 
         return SummaryResponse.builder()

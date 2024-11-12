@@ -4,8 +4,7 @@ import KakaoLogin from '../../assets/image/KakaoLogin.png';
 function Onboarding() {
   const goToLogin = () => {
     // 리다이랙트 URL
-    window.location.href = 'https://k11b102.p.ssafy.io/api/oauth2/authorization/kakao';
-    // window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
+    window.location.href = 'https://bbogle.me/api/oauth2/authorization/kakao';
 
   };
 

@@ -6,7 +6,7 @@ export const PrivateRoute = (): React.ReactElement | null => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    // 로딩 중일 때 회색 배경과 스피너 표시
+    // 로딩 중일 때 흰 배경 표시
     return (
       <div
         className="loading-overlay"

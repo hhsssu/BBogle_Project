@@ -4,11 +4,15 @@ import com.ssafy.bbogle.diary.dto.request.DiaryCreateRequest;
 import com.ssafy.bbogle.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.bbogle.diary.dto.response.DiaryDetailResponse;
 import com.ssafy.bbogle.diary.dto.response.DiaryListResponse;
+import com.ssafy.bbogle.diary.dto.response.TodayDiaryListResponse;
+import com.ssafy.bbogle.diary.service.DiaryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,83 +26,86 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping()
 @Tag(name = "DiaryController", description = "개발일지 컨트롤러")
 public class DiaryController {
+    private final DiaryService diaryService;
 
     @Operation(summary = "오늘 내가 작성한 개발일지")
     @GetMapping("/diaries/today")
-    public ResponseEntity<DiaryListResponse> getTodayDiary() {
-        return null;
+    public ResponseEntity<TodayDiaryListResponse> getTodayDiary() {
+        return ResponseEntity.ok(diaryService.getTodayDiary());
     }
 
     @Operation(summary = "특정 프로젝트의 개발일지 목록 조회")
     @Parameters(value = {
-        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
+            @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @GetMapping("/projects/{projectId}/diaries")
     public ResponseEntity<DiaryListResponse> getAllDiaries(
-        @PathVariable("projectId") Integer projectId){
-        return null;
+            @PathVariable("projectId") Integer projectId) {
+        return ResponseEntity.ok(diaryService.getAllDiaries(projectId));
     }
 
-    @Operation(summary = "개발일지 등록")
-    @Parameters(value = {
-        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
-    })
-    @PostMapping("/projects/{projectId}/diaries")
-    public ResponseEntity<String> createDiary(
-        @PathVariable("projectId") Integer projectId,
-        @RequestBody DiaryCreateRequest request){
-        return null;
-    }
-
-    @Operation(summary = "개발일지 상세 조회")
-    @Parameters(value = {
-        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
-        @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
-    })
-    @GetMapping("/projects/{projectId}/diaries/{diaryId}")
-    public ResponseEntity<DiaryDetailResponse> getDiaryDetail(
-        @PathVariable("projectId") Integer projectId,
-        @PathVariable("diaryId") Integer diaryId
-    ){
-        return null;
-    }
-
-    @Operation(summary = "프로젝트의 모든 개발일지 상세 내용 조회")
+    @Operation(summary = "특정 프로젝트의 모든 개발일지 상세 조회")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @GetMapping("/projects/{projectId}/diaries/details")
     public ResponseEntity<List<DiaryDetailResponse>> getAllDiariesDetail(
             @PathVariable("projectId") Integer projectId) {
-        return null;
+        return ResponseEntity.ok(diaryService.getAllDiariesDetail(projectId));
+    }
+
+    @Operation(summary = "개발일지 등록")
+    @Parameters(value = {
+            @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
+    })
+    @PostMapping("/projects/{projectId}/diaries")
+    public ResponseEntity<String> createDiary(
+            @PathVariable("projectId") Integer projectId,
+            @Valid @RequestBody DiaryCreateRequest request) {
+        diaryService.createDiary(projectId, request);
+        return ResponseEntity.ok("개발일지가 성공적으로 생성되었습니다.");
+    }
+
+    @Operation(summary = "개발일지 상세 조회")
+    @Parameters(value = {
+            @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
+            @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
+    })
+    @GetMapping("/projects/{projectId}/diaries/{diaryId}")
+    public ResponseEntity<DiaryDetailResponse> getDiaryDetail(
+            @PathVariable("projectId") Integer projectId,
+            @PathVariable("diaryId") Integer diaryId) {
+        return ResponseEntity.ok(diaryService.getDiaryDetail(projectId, diaryId));
     }
 
     @Operation(summary = "개발일지 수정")
     @Parameters(value = {
-        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
-        @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
+            @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
+            @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
     })
     @PatchMapping("/projects/{projectId}/diaries/{diaryId}")
     public ResponseEntity<String> updateDiary(
-        @PathVariable("projectId") Integer projectId,
-        @PathVariable("diaryId") Integer diaryId,
-        @RequestBody DiaryUpdateRequest request){
-        return null;
+            @PathVariable("projectId") Integer projectId,
+            @PathVariable("diaryId") Integer diaryId,
+            @Valid @RequestBody DiaryUpdateRequest request) {
+        diaryService.updateDiary(projectId, diaryId, request);
+        return ResponseEntity.ok("개발일지가 성공적으로 수정되었습니다.");
     }
 
     @Operation(summary = "개발일지 삭제")
     @Parameters(value = {
-        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
-        @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
+            @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
+            @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
     })
     @DeleteMapping("/projects/{projectId}/diaries/{diaryId}")
     public ResponseEntity<String> deleteDiary(
-        @PathVariable("projectId") Integer projectId,
-        @PathVariable("diaryId") Integer diaryId){
-        return null;
+            @PathVariable("projectId") Integer projectId,
+            @PathVariable("diaryId") Integer diaryId) {
+        diaryService.deleteDiary(projectId, diaryId);
+        return ResponseEntity.ok("개발일지가 성공적으로 삭제되었습니다.");
     }
-
 }

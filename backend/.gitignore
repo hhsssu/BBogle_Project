@@ -1,6 +1,7 @@
 HELP.md
 .gradle
 build/
+application.yml
 application-key.yml
 application.yml
 !gradle/wrapper/gradle-wrapper.jar

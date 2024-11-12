@@ -6,13 +6,18 @@ import ActivityPage from '../pages/ActivityPage';
 import MainPage from '../pages/MainPage';
 import Main from '../components/main/Main';
 import MyPage from '../pages/MyPage';
+
+// 페이지 접근 제한
 import { PrivateRoute } from './PrivateRoute';
+import { PublicRoute } from './PublicRoute';
 
 function AppRouter() {
   return (
     <Routes>
       // 로그인 페이지
-      <Route path="/login" element={<OnboardingPage />}></Route>
+      <Route element={<PublicRoute />}>
+        <Route path="/login" element={<OnboardingPage />}></Route>
+      </Route>
       // 메인 페이지
       <Route element={<PrivateRoute />}>
         <Route path="/" element={<MainPage />}>

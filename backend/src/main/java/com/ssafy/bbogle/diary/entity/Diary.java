@@ -48,11 +48,19 @@ public class Diary {
     @Setter
     private String title;
 
+<<<<<<< HEAD
     @Setter
+=======
+    @Builder.Default
+>>>>>>> 21bf8190be19bdc6aa90798f84999ca48f6e0049
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DiaryImage> diaryImages = new HashSet<>();
 
+<<<<<<< HEAD
     @Setter
+=======
+    @Builder.Default
+>>>>>>> 21bf8190be19bdc6aa90798f84999ca48f6e0049
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Answer> answers = new HashSet<>();
 }

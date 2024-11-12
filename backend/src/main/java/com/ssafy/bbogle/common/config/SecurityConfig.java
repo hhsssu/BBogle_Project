@@ -38,11 +38,12 @@ public class SecurityConfig {
             .formLogin(AbstractHttpConfigurer::disable)
             .cors(Customizer.withDefaults())
 
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .sessionManagement(
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
             .authorizeHttpRequests((request) -> request
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated())
 
             .oauth2Login(oauth2 -> oauth2
@@ -53,7 +54,8 @@ public class SecurityConfig {
 
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
-            .exceptionHandling((exceptions -> exceptions.authenticationEntryPoint(unauthorizedEntryPoint())));
+            .exceptionHandling(
+                (exceptions -> exceptions.authenticationEntryPoint(unauthorizedEntryPoint())));
 
         return http.build();
 
@@ -70,7 +72,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns((List.of("http://localhost:5173", "http://localhost:8080", "https://k11b102.p.ssafy.io")));
+        configuration.setAllowedOriginPatterns(
+            (List.of("http://localhost:5173", "http://localhost:8080", "https://k11b102.p.ssafy.io",
+                "https://bbogle.me")));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
@@ -82,3 +86,4 @@ public class SecurityConfig {
     }
 
 }
+ 

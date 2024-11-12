@@ -26,8 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/api")
 @RequiredArgsConstructor
+=======
+@RequestMapping()
+>>>>>>> 21bf8190be19bdc6aa90798f84999ca48f6e0049
 @Tag(name = "DiaryController", description = "개발일지 컨트롤러")
 public class DiaryController {
     private final DiaryService diaryService;

@@ -34,4 +34,13 @@ public class ActivityKeyword {
     @JoinColumn(name = "keyword_id")
     private Keyword keyword;
 
+    public static ActivityKeyword addActivityKeyword(Activity activity, Keyword keyword){
+        ActivityKeyword activityKeyword = ActivityKeyword.builder()
+            .activity(activity)
+            .keyword(keyword)
+            .build();
+        activity.getActivityKeywords().add(activityKeyword);
+        return activityKeyword;
+    }
+
 }

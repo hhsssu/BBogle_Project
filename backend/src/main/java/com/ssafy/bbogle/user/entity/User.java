@@ -41,9 +41,11 @@ public class User {
     @Column(name = "profile_image", nullable = true)
     private String profileImage;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activities = new ArrayList<>();
 

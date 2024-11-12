@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/activities")
+@RequestMapping("/activities")
 @RequiredArgsConstructor
 @Tag(name = "ActivityController", description = "경험정리 컨트롤러")
 public class ActivityController {

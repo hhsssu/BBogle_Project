@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping()
 @Tag(name = "DiaryController", description = "개발일지 컨트롤러")
 public class DiaryController {
 

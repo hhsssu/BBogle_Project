@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/projects")
+@RequestMapping("/projects")
 @Tag(name = "ProjectController", description = "프로젝트 컨트롤러")
 public class ProjectController {
 

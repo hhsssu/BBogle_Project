@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -23,6 +24,9 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
     private final RedisUtil redisUtil;
+
+    @Value("${login.success.redirect}")
+    private String loginSuccessRedirect;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -55,7 +59,7 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
         accessCookie.setSecure(true);
         response.addCookie(accessCookie);
 
-        response.sendRedirect("http://localhost:5173/");
+        response.sendRedirect(loginSuccessRedirect);
 
     }
 }

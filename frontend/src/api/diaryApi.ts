@@ -46,22 +46,19 @@ export const getDiaryTitle = async (
 
   const response = await axios.post(
     'http://localhost:8000/api/generate/title',
-    {
-      qna_list: [
-        { question: questions[0].question, answer: answers[0] },
-        { question: questions[1].question, answer: answers[1] },
-        { question: questions[2].question, answer: answers[2] },
-      ],
-    },
+    [
+      { question: questions[0].question, answer: answers[0] },
+      { question: questions[1].question, answer: answers[1] },
+      { question: questions[2].question, answer: answers[2] },
+    ],
     {
       headers: {
         'Content-Type': 'application/json',
       },
     },
   );
-
   console.log(response);
-  return response.data;
+  // return response.data;
 };
 
 export const addDiary = async (projectId: number, diary: Diary) => {

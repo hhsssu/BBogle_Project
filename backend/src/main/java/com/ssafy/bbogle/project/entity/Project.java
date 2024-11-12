@@ -3,6 +3,7 @@ package com.ssafy.bbogle.project.entity;
 import com.ssafy.bbogle.activity.entity.Activity;
 import com.ssafy.bbogle.diary.entity.Diary;
 import com.ssafy.bbogle.notification.entity.Notification;
+import com.ssafy.bbogle.summary.entity.Summary;
 import com.ssafy.bbogle.user.entity.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
@@ -76,4 +78,7 @@ public class Project {
     // Notification과의 관계 추가
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notification> notifications = new ArrayList<>();
+
+    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Summary summary;
 }

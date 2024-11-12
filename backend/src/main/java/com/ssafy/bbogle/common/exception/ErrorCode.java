@@ -16,11 +16,10 @@ public enum ErrorCode {
     SUMMARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 회고를 찾을 수 없습니다."),
     KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 키워드를 찾을 수 없습니다."),
     ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 경험은 찾을 수 없습니다."),
+    NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 알림 설정을 찾을 수 없습니다."),
 
     // 403
-    UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다.")
-
-    ;
+    UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다.");
 
     private final HttpStatus status;
     private final String message;

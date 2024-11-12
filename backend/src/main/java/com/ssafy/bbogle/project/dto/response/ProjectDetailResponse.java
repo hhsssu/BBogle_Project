@@ -41,4 +41,9 @@ public class ProjectDetailResponse {
     @Schema(description = "사용 스킬 리스트")
     private List<String> skill;
 
+    @Schema(description = "알림 상태")
+    private Boolean notificationStatus;
+
+    @Schema(description = "알림 시간 (HH:mm)")
+    private String notificationTime;
 }

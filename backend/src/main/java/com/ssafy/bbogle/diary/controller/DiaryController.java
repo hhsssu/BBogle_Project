@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @Tag(name = "DiaryController", description = "개발일지 컨트롤러")
@@ -61,6 +63,16 @@ public class DiaryController {
         @PathVariable("projectId") Integer projectId,
         @PathVariable("diaryId") Integer diaryId
     ){
+        return null;
+    }
+
+    @Operation(summary = "프로젝트의 모든 개발일지 상세 내용 조회")
+    @Parameters(value = {
+            @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
+    })
+    @GetMapping("/projects/{projectId}/diaries/details")
+    public ResponseEntity<List<DiaryDetailResponse>> getAllDiariesDetail(
+            @PathVariable("projectId") Integer projectId) {
         return null;
     }
 

@@ -86,16 +86,21 @@ public class ProjectService {
         logger.info("전체 프로젝트 조회 요청을 받았습니다. kakaoId: {}", kakaoId);
 
         List<ProjectListItemResponse> projectList = projectRepository.findByUser_KakaoId(kakaoId).stream()
-                .map(project -> ProjectListItemResponse.builder()
-                        .projectId(project.getId())
-                        .title(project.getTitle())
-                        .description(project.getDescription())
-                        .image(project.getImage())
-                        .status(project.isStatus())
-                        .startDate(project.getStartDate())
-                        .endDate(project.getEndDate())
-                        .notificationStatus(project.isStatus())
-                        .build())
+                .map(project -> {
+                    Notification notification = notificationRepository.findByProject_Id(project.getId())
+                            .orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
+
+                    return ProjectListItemResponse.builder()
+                            .projectId(project.getId())
+                            .title(project.getTitle())
+                            .description(project.getDescription())
+                            .image(project.getImage())
+                            .status(project.isStatus())
+                            .startDate(project.getStartDate())
+                            .endDate(project.getEndDate())
+                            .notificationStatus(notification.isStatus())
+                            .build();
+                })
                 .collect(Collectors.toList());
         logger.info("전체 프로젝트 조회가 완료되었습니다. kakaoId: {}", kakaoId);
         return ProjectListResponse.builder().projectList(projectList).build();
@@ -106,16 +111,21 @@ public class ProjectService {
         logger.info("진행 중인 프로젝트 조회 요청을 받았습니다. kakaoId: {}", kakaoId);
 
         List<ProjectListItemResponse> projectList = projectRepository.findByUser_KakaoIdAndStatus(kakaoId, true).stream()
-                .map(project -> ProjectListItemResponse.builder()
-                        .projectId(project.getId())
-                        .title(project.getTitle())
-                        .description(project.getDescription())
-                        .image(project.getImage())
-                        .status(project.isStatus())
-                        .startDate(project.getStartDate())
-                        .endDate(project.getEndDate())
-                        .notificationStatus(project.isStatus())
-                        .build())
+                .map(project -> {
+                    Notification notification = notificationRepository.findByProject_Id(project.getId())
+                            .orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
+
+                    return ProjectListItemResponse.builder()
+                            .projectId(project.getId())
+                            .title(project.getTitle())
+                            .description(project.getDescription())
+                            .image(project.getImage())
+                            .status(project.isStatus())
+                            .startDate(project.getStartDate())
+                            .endDate(project.getEndDate())
+                            .notificationStatus(notification.isStatus())
+                            .build();
+                })
                 .collect(Collectors.toList());
         logger.info("진행 중인 프로젝트 조회가 완료되었습니다. kakaoId: {}", kakaoId);
         return ProjectListResponse.builder().projectList(projectList).build();
@@ -128,6 +138,9 @@ public class ProjectService {
 
         Project project = projectRepository.findByIdAndUser_KakaoId(projectId, kakaoId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PROJECT_NOT_FOUND));
+
+        Notification notification = notificationRepository.findByProject_Id(projectId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
 
         ProjectDetailResponse response = ProjectDetailResponse.builder()
                 .projectId(project.getId())
@@ -146,6 +159,8 @@ public class ProjectService {
                         .filter(tag -> tag.getType() == ProjectTagType.SKILL)
                         .map(ProjectTag::getName)
                         .collect(Collectors.toList()))
+                .notificationStatus(notification.isStatus())
+                .notificationTime(notification.getTime().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")))
                 .build();
 
         logger.info("프로젝트 상세 조회가 완료되었습니다. kakaoId: {}, projectId: {}", kakaoId, projectId);

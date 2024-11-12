@@ -1,5 +1,7 @@
 package com.ssafy.bbogle.activity.entity;
 
+import com.ssafy.bbogle.activity.dto.request.ActivityUpdateRequest;
+import com.ssafy.bbogle.keyword.entity.Keyword;
 import com.ssafy.bbogle.project.entity.Project;
 import com.ssafy.bbogle.user.entity.User;
 import jakarta.persistence.CascadeType;
@@ -60,4 +62,15 @@ public class Activity {
     @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ActivityKeyword> activityKeywords = new ArrayList<>();
 
+    public void removeKeyword(ActivityKeyword activityKeyword) {
+        this.activityKeywords.remove(activityKeyword);
+    }
+
+    public void updateActivity(ActivityUpdateRequest request, Project project){
+        this.title = request.getTitle();
+        this.content = request.getContent();
+        this.startDate = request.getStartDate();
+        this.endDate = request.getEndDate();
+        this.project = project;
+    }
 }

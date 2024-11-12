@@ -68,10 +68,11 @@ public class ActivityController {
     @PatchMapping("/{activityId}")
     public ResponseEntity<String> updateActivity(@PathVariable("activityId") Integer activityId,
         @RequestBody ActivityUpdateRequest request){
+        activityService.updateActivity(activityId, request);
         return null;
     }
 
-    @Operation(summary = "경험 삭제")
+    @Operation(summary = "경험 삭제 (완료)")
     @Parameters(value = {
         @Parameter(name = "activityId", description = "경험 ID", in = ParameterIn.PATH)
     })

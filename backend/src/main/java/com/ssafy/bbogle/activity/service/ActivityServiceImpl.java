@@ -1,6 +1,7 @@
 package com.ssafy.bbogle.activity.service;
 
 import com.ssafy.bbogle.activity.dto.request.ActivitySearchCondRequest;
+import com.ssafy.bbogle.activity.dto.request.ActivityUpdateRequest;
 import com.ssafy.bbogle.activity.dto.request.ActivityUserCreateRequest;
 import com.ssafy.bbogle.activity.dto.response.ActivityDetailResponse;
 import com.ssafy.bbogle.activity.dto.response.ActivityListItemResponse;
@@ -21,8 +22,10 @@ import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,6 +137,58 @@ public class ActivityServiceImpl implements ActivityService {
             .build();
     }
 
+
+    @Override
+    @Transactional
+    public void updateActivity(Integer activityId, ActivityUpdateRequest request) {
+
+        Long kakaoId = LoginUser.getKakaoId();
+
+        Activity activity = activityRepository.findById(activityId)
+            .orElseThrow(()-> new CustomException(ErrorCode.ACTIVITY_NOT_FOUND));
+
+        if (!activity.getUser().getKakaoId().equals(kakaoId)) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED_ACCESS_EXCEPTION);
+        }
+
+        // 새로 수정된 키워드
+        List<Keyword> newKeywords = (request.getKeywords() != null)
+            ? keywordRepository.findAllById(request.getKeywords())
+            : Collections.emptyList();
+
+        // 기존 등록되어 있던 키워드
+        List<Keyword> oldKewords = activity.getActivityKeywords().stream()
+            .map(ActivityKeyword::getKeyword)
+            .toList();
+
+        // 추가할 키워드
+        List<Keyword> keywordsToAdd = newKeywords.stream()
+            .filter(keyword -> !oldKewords.contains(keyword))
+            .toList();
+
+        // 삭제할 키워드
+        List<ActivityKeyword> keywordsToRemove = activity.getActivityKeywords().stream()
+            .filter(activityKeyword -> !newKeywords.contains(activityKeyword.getKeyword()))
+            .toList();
+
+        // 수정
+        keywordsToRemove.forEach(activity::removeKeyword);
+
+        for (Keyword keyword : keywordsToAdd) {
+            ActivityKeyword activityKeyword = ActivityKeyword.addActivityKeyword(activity, keyword);
+            activityKeywordRepository.save(activityKeyword);
+        }
+
+        Project project = null;
+        if (request.getProjectId() != null){
+            project = projectRepository.findById(request.getProjectId())
+                .orElseThrow(()->new CustomException(ErrorCode.PROJECT_NOT_FOUND));
+        }
+
+        activity.updateActivity(request, project);
+    }
+
+
     @Override
     @Transactional
     public void deleteActivity(Integer activityId) {
@@ -148,6 +203,5 @@ public class ActivityServiceImpl implements ActivityService {
         }
 
         activityRepository.delete(activity);
-
     }
 }

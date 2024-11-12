@@ -4,6 +4,7 @@ import com.ssafy.bbogle.user.dto.request.UpdateNicknameRequest;
 import com.ssafy.bbogle.user.dto.response.UserInfoResponse;
 import com.ssafy.bbogle.user.dto.response.UserNicknameResponse;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
@@ -14,4 +15,6 @@ public interface UserService {
     UserInfoResponse getUserInfo();
 
     void updateNickname(UpdateNicknameRequest request);
+
+    void updateProfileImage(MultipartFile file);
 }

@@ -53,4 +53,8 @@ public class User {
         this.nickname = newNickname;
     }
 
+    public void updateProfileImage(String newProfileImage) {
+        this.profileImage = newProfileImage;
+    }
+
 }

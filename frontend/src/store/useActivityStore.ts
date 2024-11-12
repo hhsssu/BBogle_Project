@@ -165,7 +165,11 @@ const useActivityStore = create<ActivityState>((set) => ({
   fetchActivities: async () => {
     try {
       // 경험 데이터를 가져오는 API 호출
-      const response = await axios.get(`${API_LINK}/activities/search`);
+      const response = await axios.post(`${API_LINK}/activities/search`, {
+        word: '',
+        keywords: [],
+        projects: [],
+      });
       set({ activities: Array.isArray(response.data) ? response.data : [] }); // 가져온 데이터를 상태에 저장
     } catch (error) {
       console.error('경험 데이터를 가져오는 데 실패했습니다:', error);

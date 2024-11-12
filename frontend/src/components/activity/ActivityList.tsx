@@ -12,7 +12,7 @@ import EmptyFolder from '../../assets/image/icon/EmptyFolder.svg';
 function ActivityList() {
   const nav = useNavigate();
   const navigate = useNavigate();
-  const { activities } = useActivityStore();
+  const { activities, fetchActivities } = useActivityStore();
   // const {project, fetchProject} = useProjectStore();
 
   // 경험 수동 생성으로 이동
@@ -26,7 +26,7 @@ function ActivityList() {
 
   // 경험
   useEffect(() => {
-    // fetchActivities();
+    fetchActivities();
     console.log(`activities: `, activities);
   }, []);
 

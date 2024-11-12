@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import DefaultProject from '../assets/image/icon/DefaultProject.svg';
-import RunnerWay from '../assets/image/RunnerWay.png';
 import { persist } from 'zustand/middleware';
 import { getProject, getProjectList } from '../api/projectApi';
 
@@ -101,24 +100,6 @@ const useProjectStore = create<ProjectState>()(
         const data = await getProject(pjtId);
         set(() => ({
           project: data,
-          // project: {
-          //   image: RunnerWay,
-          //   title: 'Runner Way',
-          //   description: '당신의 러닝을 함께하는 프로젝트',
-          //   status: true,
-          //   startDate: '2024-10-03',
-          //   endDate: '2024-11-30',
-          //   memberCount: 6,
-          //   role: ['FE', 'BE', 'INFRA', 'AI'],
-          //   skill: ['React', 'Spring', 'TypeScript', 'JPA', 'MongoDB'],
-          //   notificationStatus: true,
-          //   notificationTime: {
-          //     hour: 17,
-          //     minute: 30,
-          //     second: 0,
-          //     nano: 0,
-          //   },
-          // },
         }));
       },
       updateProjectField: (field, value) =>

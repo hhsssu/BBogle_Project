@@ -28,7 +28,6 @@ export const getProject = async (projectId: number) => {
   try {
     const response = await axiosInstance.get(`/projects/${projectId}`);
 
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log('프로젝트 가져오기 실패');
@@ -38,64 +37,58 @@ export const getProject = async (projectId: number) => {
 
 export const addProject = async (project: Project) => {
   console.log(project);
-  try {
-    await axiosInstance.post('/projects', {
-      project,
-    });
-    console.log('프로젝트 생성 성공');
 
-    // return response.status;
-  } catch (error) {
-    console.log('프로젝트 생성 실패');
-    console.log(error);
-  }
+  await axiosInstance.post('/projects', {
+    title: project.title,
+    image: project.image,
+    description: project.description,
+    startDate: project.startDate,
+    endDate: project.endDate,
+    memberCount: project.memberCount,
+    role: project.role,
+    skill: project.skill,
+    notificationStatus: project.notificationStatus,
+    notificationTime: project.notificationTime,
+  });
 };
 
-export const changeNotificationStatus = async (projectId: number) => {
-  try {
-    const response = await axiosInstance.patch(
-      `/projects/${projectId}/notification`,
-    );
-
-    return response.status;
-  } catch (error) {
-    console.log('알림 ON/OFF 설정 변경 실패');
-    console.log(error);
-  }
+export const changeNotificationStatus = async (
+  projectId: number,
+  status: boolean,
+) => {
+  await axiosInstance.patch(`/projects/${projectId}/notification`, {
+    status: status,
+  });
 };
 
 export const patchProject = async (projectId: number, project: Project) => {
-  try {
-    const response = await axiosInstance.patch(
-      `/projects/${projectId}`,
-      project,
-    );
+  console.log(project);
 
-    return response.status;
-  } catch (error) {
-    console.log('개발일지 수정 실패');
-    console.log(error);
-  }
+  const response = await axiosInstance.patch(`/projects/${projectId}`, {
+    title: project.title,
+    image: project.image,
+    description: project.description,
+    startDate: project.startDate,
+    endDate: project.endDate,
+    memberCount: project.memberCount,
+    role: project.role,
+    skill: project.skill,
+    notificationStatus: project.notificationStatus,
+    notificationTime: project.notificationTime,
+  });
+
+  return response.status;
 };
 
 export const deleteProject = async (projectId: number) => {
-  try {
-    const response = await axiosInstance.delete(`/projects/${projectId}`);
-
-    return response.status;
-  } catch (error) {
-    console.log('개발일지 삭제 실패');
-    console.log(error);
-  }
+  await axiosInstance.delete(`/projects/${projectId}`);
 };
 
 export const finishProject = async (projectId: number, content: string) => {
   try {
-    const response = await axiosInstance.patch(`/projects/${projectId}/end`, {
+    await axiosInstance.patch(`/projects/${projectId}/end`, {
       content,
     });
-
-    return response.status;
   } catch (error) {
     console.log('프로젝트 종료 실패');
     console.log(error);

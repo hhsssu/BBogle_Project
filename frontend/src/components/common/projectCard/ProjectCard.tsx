@@ -8,6 +8,10 @@ import style from './ProjectCard.module.css';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../modal/Modal';
+import {
+  changeNotificationStatus,
+  deleteProject,
+} from '../../../api/projectApi';
 
 interface Props {
   pjtId: number;
@@ -30,18 +34,33 @@ function ProjectCard({
 }: Props) {
   const navigate = useNavigate();
   const moreIconRef = useRef<HTMLImageElement>(null);
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [isAlarmOn, setAlarmOn] = useState(notificationStatus);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [isRequestPending, setRequestPending] = useState(false);
 
   const handleModalOpen = (e: React.MouseEvent) => {
     setModalOpen(!isModalOpen);
     e.stopPropagation();
   };
 
-  const handleAlarmStatus = (e: React.MouseEvent) => {
-    setAlarmOn(!isAlarmOn);
+  const handleAlarmStatus = async (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    if (isRequestPending) return;
+
+    setRequestPending(true);
+
+    try {
+      await changeNotificationStatus(pjtId, !isAlarmOn);
+      setAlarmOn(!isAlarmOn);
+    } catch (error) {
+      console.log('알림 ON/OFF 설정 변경 실패');
+      console.log(error);
+    } finally {
+      setRequestPending(false);
+    }
   };
 
   const navPjtUpdate = (e: React.MouseEvent) => {
@@ -54,9 +73,21 @@ function ProjectCard({
     setDeleteModalOpen(!isDeleteModalOpen);
   };
 
-  const deleteProject = () => {
+  const onDeleteProject = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
+
+    try {
+      await deleteProject(pjtId);
+      navigate(0);
+    } catch (error) {
+      console.log('개발일지 삭제 실패');
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    setAlarmOn(notificationStatus);
+  }, [notificationStatus]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -148,7 +179,7 @@ function ProjectCard({
             title={'정말 프로젝트를 삭제하시겠어요?'}
             content={'삭제 시 복구가 어려워요'}
             onClose={handleDeleteModal}
-            onConfirm={deleteProject}
+            onConfirm={onDeleteProject}
             confirmText={'확인'}
             cancleText={'취소'}
           />

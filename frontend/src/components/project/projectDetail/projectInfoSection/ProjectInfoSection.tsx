@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useProjectStore from '../../../../store/useProjectStore';
 import Modal from '../../../common/modal/Modal';
+import { deleteProject } from '../../../../api/projectApi';
 
 function ProjectInfoSection() {
   const { pjtId } = useParams();
@@ -35,8 +36,15 @@ function ProjectInfoSection() {
     navigate(`update`);
   };
 
-  const deleteProject = () => {
+  const onDeleteProject = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
+    try {
+      await deleteProject(Number(pjtId));
+      navigate('/project');
+    } catch (error) {
+      console.log('개발일지 삭제 실패');
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -125,7 +133,7 @@ function ProjectInfoSection() {
         title={'정말 프로젝트를 삭제하시겠어요?'}
         content={'삭제 시 복구가 어려워요'}
         onClose={handleDeleteModal}
-        onConfirm={deleteProject}
+        onConfirm={onDeleteProject}
         confirmText={'확인'}
         cancleText={'취소'}
       />

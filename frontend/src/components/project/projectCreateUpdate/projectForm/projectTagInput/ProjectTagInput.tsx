@@ -213,7 +213,12 @@ function ProjectTagInput({ role, skill }: Props) {
                 onChange={handleSkillInput}
                 onKeyDown={addSkill}
               />
-              <img src={EnterIcon} alt="등록" onClick={addSkill} />
+              <img
+                className={style.enterImg}
+                src={EnterIcon}
+                alt="등록"
+                onClick={addSkill}
+              />
             </div>
           ) : (
             ''

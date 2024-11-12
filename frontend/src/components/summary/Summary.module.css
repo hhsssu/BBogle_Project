@@ -50,9 +50,10 @@
   border-radius: 1.5rem;
   border: 1px solid #e8e8e8;
   color: #1c1516;
+  font-size: 0.875rem;
 }
 
-.editbox {
+.editbtn {
   position: absolute;
   right: 5%;
   justify-content: center;
@@ -64,5 +65,19 @@
 
 .edit {
   color: #a0a0a0;
+  font-size: 0.875rem;
+}
+
+.editbox {
+  line-height: 180%;
+  width: 100%;
+  min-height: 25vh;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  resize: none;
+  border: none;
+  background: rgba(232, 232, 232, 0.2);
+  color: #1c1516;
+  font-family: 'Pretendard';
   font-size: 0.875rem;
 }

@@ -73,9 +73,13 @@ function ProjectLogSection() {
           </div>
         )}
       </div>
-      <div className={style.tabContentSection}>
-        {tabIdx === 0 ? <DiaryList /> : <Summary />}
-      </div>{' '}
+      {tabIdx === 0 ? (
+        <div className={style.tabContentSection}>
+          <DiaryList />
+        </div>
+      ) : (
+        <Summary />
+      )}
     </div>
   );
 }

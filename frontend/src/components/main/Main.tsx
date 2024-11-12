@@ -1,16 +1,24 @@
 import style from './Main.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getProgressProjectList } from '../../api/projectApi';
+
+// lottie
 import Lottie from 'lottie-react';
 import Welcome from '../../assets/lottie/Welcome.json';
 import Scroll from '../../assets/lottie/Scroll.json';
 
+// 이미지
+import Empty from '../../assets/image/icon/EmptyFolder.svg';
+
+// 컴포넌트
 import ProjectCard from '../common/projectCard/ProjectCard';
 import GoToDiary from '../common/button/GoToDiary';
-import useProjectSelectStore from '../../store/useProjectSelectStore';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import HorizontalScroll from '../common/scroll/HorizontalScroll';
+
+// store
+import useProjectSelectStore from '../../store/useProjectSelectStore';
 import useUserStore from '../../store/useUserStore';
-import { getProgressProjectList } from '../../api/projectApi';
 
 interface Project {
   projectId: number;
@@ -62,7 +70,9 @@ function Main() {
           autoplay={true}
           className={style.welcome}
         />
-        <div className={style.greeting}>안녕하세요, {user?.nickname}님!</div>
+        <div className={style.greeting}>
+          안녕하세요, {user?.nickname || '-'}님!
+        </div>
       </div>
       <div className={style.diary}>
         <div>
@@ -87,25 +97,35 @@ function Main() {
             />
           </div>
         </div>
-        <HorizontalScroll
-          children={pjtList.map((pjt, index) => (
-            <div
-              className={`${style.pjtCard} ${activeProjectId === pjt.projectId ? style.active : ''}`}
-              onClick={() => handleCard(pjt.projectId)}
-              key={index}
-            >
-              <ProjectCard
-                pjtId={pjt.projectId}
-                imageSrc={pjt.image}
-                title={pjt.title}
-                status={pjt.status}
-                term={pjt.startDate + ' ~ ' + pjt.endDate}
-                description={pjt.description}
-                notificationStatus={false}
-              />
+        {pjtList.length > 0 ? (
+          <HorizontalScroll
+            children={pjtList.map((pjt, index) => (
+              <div
+                className={`${style.pjtCard} ${activeProjectId === pjt.projectId ? style.active : ''}`}
+                onClick={() => handleCard(pjt.projectId)}
+                key={index}
+              >
+                <ProjectCard
+                  pjtId={pjt.projectId}
+                  imageSrc={pjt.image}
+                  title={pjt.title}
+                  status={pjt.status}
+                  term={pjt.startDate + ' ~ ' + pjt.endDate}
+                  description={pjt.description}
+                  notificationStatus={false}
+                />
+              </div>
+            ))}
+          ></HorizontalScroll>
+        ) : (
+          <div className={style.empty}>
+            <img className={style.emptyIcon} src={Empty} alt="프로젝트 없음" />
+            <div className={style.emptyTextBox}>
+              <p>프로젝트가 없어요.</p>
+              <span className={style.boldText}>프로젝트를 생성해주세요!</span>
             </div>
-          ))}
-        ></HorizontalScroll>
+          </div>
+        )}
         <div className={style.button}>
           <GoToDiary
             isInactive={activeProjectId === null}

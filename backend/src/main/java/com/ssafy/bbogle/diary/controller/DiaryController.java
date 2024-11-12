@@ -4,6 +4,7 @@ import com.ssafy.bbogle.diary.dto.request.DiaryCreateRequest;
 import com.ssafy.bbogle.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.bbogle.diary.dto.response.DiaryDetailResponse;
 import com.ssafy.bbogle.diary.dto.response.DiaryListResponse;
+import com.ssafy.bbogle.diary.dto.response.QuestionResponse;
 import com.ssafy.bbogle.diary.dto.response.TodayDiaryListResponse;
 import com.ssafy.bbogle.diary.service.DiaryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,13 +33,13 @@ import java.util.List;
 public class DiaryController {
     private final DiaryService diaryService;
 
-    @Operation(summary = "오늘 내가 작성한 개발일지")
+    @Operation(summary = "오늘 내가 작성한 개발일지 [FINISH]")
     @GetMapping("/diaries/today")
     public ResponseEntity<TodayDiaryListResponse> getTodayDiary() {
         return ResponseEntity.ok(diaryService.getTodayDiary());
     }
 
-    @Operation(summary = "특정 프로젝트의 개발일지 목록 조회")
+    @Operation(summary = "특정 프로젝트의 개발일지 목록 조회 [FINISH]")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
@@ -48,7 +49,13 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.getAllDiaries(projectId));
     }
 
-    @Operation(summary = "특정 프로젝트의 모든 개발일지 상세 조회")
+    @Operation(summary = "개발일지 질문 목록 조회 [FINISH]")
+    @GetMapping("/diaries/questions")
+    public ResponseEntity<List<QuestionResponse>> getQuestions() {
+        return ResponseEntity.ok(diaryService.getQuestions());
+    }
+
+    @Operation(summary = "특정 프로젝트의 모든 개발일지 상세 조회 [FINISH]")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
@@ -58,7 +65,7 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.getAllDiariesDetail(projectId));
     }
 
-    @Operation(summary = "개발일지 등록")
+    @Operation(summary = "개발일지 등록 [FINISH]")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
@@ -70,7 +77,7 @@ public class DiaryController {
         return ResponseEntity.ok("개발일지가 성공적으로 생성되었습니다.");
     }
 
-    @Operation(summary = "개발일지 상세 조회")
+    @Operation(summary = "개발일지 상세 조회 [FINISH]")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
             @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
@@ -82,7 +89,7 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.getDiaryDetail(projectId, diaryId));
     }
 
-    @Operation(summary = "개발일지 수정")
+    @Operation(summary = "개발일지 수정 [FINISH]")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
             @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
@@ -96,7 +103,7 @@ public class DiaryController {
         return ResponseEntity.ok("개발일지가 성공적으로 수정되었습니다.");
     }
 
-    @Operation(summary = "개발일지 삭제")
+    @Operation(summary = "개발일지 삭제 [FINISH]")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
             @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)

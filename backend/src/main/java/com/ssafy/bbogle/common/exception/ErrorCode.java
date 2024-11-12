@@ -17,6 +17,8 @@ public enum ErrorCode {
     DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "개발일지를 찾을 수 없습니다."),
     DIARY_ALREADY_EXISTS(HttpStatus.CONFLICT, "오늘 이미 작성한 개발일지가 있습니다."),
     INVALID_ANSWER_COUNT(HttpStatus.BAD_REQUEST, "답변 개수가 질문 개수와 일치하지 않습니다."),
+    KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 키워드를 찾을 수 없습니다."),
+    ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 경험은 찾을 수 없습니다."),
     NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 알림 설정을 찾을 수 없습니다."),
 
 

@@ -6,7 +6,6 @@ import com.ssafy.bbogle.notification.entity.Notification;
 import com.ssafy.bbogle.summary.entity.Summary;
 import com.ssafy.bbogle.user.entity.User;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -52,12 +51,15 @@ public class Project {
     @Column(name = "image", nullable = true)
     private String image;
 
+    @Builder.Default
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectTag> tags = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Diary> diaries = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Activity> activities = new ArrayList<>();
 

@@ -49,10 +49,12 @@ public class Diary {
     private String title;
 
     @Setter
+    @Builder.Default
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DiaryImage> diaryImages = new HashSet<>();
 
     @Setter
+    @Builder.Default
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Answer> answers = new HashSet<>();
 }

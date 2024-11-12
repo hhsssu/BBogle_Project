@@ -60,6 +60,32 @@
   padding: 12px 8px;
 }
 
+.empty {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  margin: 8vh;
+  gap: 1rem;
+}
+
+.emptyIcon {
+  width: 7vw;
+}
+
+.emptyTextBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  /* margin-top: 30px; */
+  color: rgba(160, 160, 160, 1);
+}
+
+.boldText {
+  font-weight: 700;
+}
+
 .button {
   display: flex;
   justify-content: center;

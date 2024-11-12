@@ -16,8 +16,6 @@ export const refreshAccessToken = async () => {
     return response.data.accessToken;
   } catch (error) {
     console.error('Access Token 재발급 실패:', error);
-    // Access Token 재발급 실패 시 로그인 페이지로 리디렉션
-    window.location.href = '/login';
     return Promise.reject(error);
   }
 };

@@ -1,11 +1,30 @@
-// TODO : 로그인 페이지에 적용
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-export const PublicRoute: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+export const PublicRoute = (): React.ReactElement | null => {
+  const { isAuthenticated, loading } = useAuth();
 
-  // 로그인 상태라면 메인 페이지로 리디렉션
+  if (loading) {
+    // 로딩 중일 때 흰 배경 표시
+    return (
+      <div
+        className="loading-overlay"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'white',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+        }}
+      ></div>
+    );
+  }
+
   return isAuthenticated ? <Navigate to="/" /> : <Outlet />;
 };

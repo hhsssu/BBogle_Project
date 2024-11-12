@@ -153,7 +153,11 @@ function ProjectCard({
         </section>
 
         <section className={style.cardContent}>
-          <div className={style.description}>{description}</div>
+          <div className={style.description}>
+            {description.length > 20
+              ? description.substring(0, 21) + '...'
+              : description}
+          </div>
           {isAlarmOn ? (
             <img
               className={style.bellIcon}

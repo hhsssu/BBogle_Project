@@ -250,4 +250,16 @@ public class DiaryService {
                         .build())
                 .collect(Collectors.toList());
     }
+
+    public List<QuestionResponse> getQuestions() {
+        log.info("개발일지 질문 목록 조회 요청");
+
+        return questionRepository.findAllByOrderById().stream()
+                .map(question -> QuestionResponse.builder()
+                        .id(question.getId())
+                        .question(question.getContent())
+                        .description(question.getDescription())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

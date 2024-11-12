@@ -213,7 +213,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public void endProject(Integer projectId, SummaryRequest request) {
+    public void endProject(Integer projectId) {
         Long kakaoId = LoginUser.getKakaoId();
         logger.info("프로젝트 종료 요청을 받았습니다. kakaoId: {}, projectId: {}", kakaoId, projectId);
 
@@ -222,7 +222,6 @@ public class ProjectService {
 
         existingProject.setStatus(false);
 
-        projectRepository.save(existingProject);
         logger.info("프로젝트가 성공적으로 종료되었습니다. kakaoId: {}, projectId: {}", kakaoId, projectId);
     }
 

@@ -49,6 +49,7 @@ public class Diary {
     private String title;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     @Setter
 =======
     @Builder.Default
@@ -61,6 +62,15 @@ public class Diary {
 =======
     @Builder.Default
 >>>>>>> 21bf8190be19bdc6aa90798f84999ca48f6e0049
+=======
+    @Setter
+    @Builder.Default
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<DiaryImage> diaryImages = new HashSet<>();
+
+    @Setter
+    @Builder.Default
+>>>>>>> 0fbf51e3cffb1161018e0f80f633bed1794247fb
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Answer> answers = new HashSet<>();
 }

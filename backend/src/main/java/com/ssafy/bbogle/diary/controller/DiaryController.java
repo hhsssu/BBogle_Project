@@ -27,11 +27,16 @@ import java.util.List;
 
 @RestController
 <<<<<<< HEAD
+<<<<<<< HEAD
 @RequestMapping("/api")
 @RequiredArgsConstructor
 =======
 @RequestMapping()
 >>>>>>> 21bf8190be19bdc6aa90798f84999ca48f6e0049
+=======
+@RequiredArgsConstructor
+@RequestMapping()
+>>>>>>> 0fbf51e3cffb1161018e0f80f633bed1794247fb
 @Tag(name = "DiaryController", description = "개발일지 컨트롤러")
 public class DiaryController {
     private final DiaryService diaryService;

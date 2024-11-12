@@ -15,6 +15,7 @@ public enum ErrorCode {
     PROJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 프로젝트를 찾을 수 없습니다."),
     SUMMARY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 회고를 찾을 수 없습니다."),
 <<<<<<< HEAD
+<<<<<<< HEAD
     DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "개발일지를 찾을 수 없습니다."),
     DIARY_ALREADY_EXISTS(HttpStatus.CONFLICT, "오늘 이미 작성한 개발일지가 있습니다."),
     INVALID_ANSWER_COUNT(HttpStatus.BAD_REQUEST, "답변 개수가 질문 개수와 일치하지 않습니다."),
@@ -22,6 +23,13 @@ public enum ErrorCode {
     KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 키워드를 찾을 수 없습니다."),
     ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 경험은 찾을 수 없습니다."),
 >>>>>>> 21bf8190be19bdc6aa90798f84999ca48f6e0049
+=======
+    DIARY_NOT_FOUND(HttpStatus.NOT_FOUND, "개발일지를 찾을 수 없습니다."),
+    DIARY_ALREADY_EXISTS(HttpStatus.CONFLICT, "오늘 이미 작성한 개발일지가 있습니다."),
+    INVALID_ANSWER_COUNT(HttpStatus.BAD_REQUEST, "답변 개수가 질문 개수와 일치하지 않습니다."),
+    KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 키워드를 찾을 수 없습니다."),
+    ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 경험은 찾을 수 없습니다."),
+>>>>>>> 0fbf51e3cffb1161018e0f80f633bed1794247fb
     NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 알림 설정을 찾을 수 없습니다."),
 
 

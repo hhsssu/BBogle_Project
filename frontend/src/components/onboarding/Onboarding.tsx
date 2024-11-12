@@ -1,10 +1,12 @@
 import style from './Onboarding.module.css';
 import KakaoLogin from '../../assets/image/KakaoLogin.png';
 
+const API_LINK = import.meta.env.VITE_API_URL;
+
 function Onboarding() {
   const goToLogin = () => {
     // 리다이랙트 URL
-    window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
+    window.location.href = API_LINK + '/oauth2/authorization/kakao';
   };
 
   return (

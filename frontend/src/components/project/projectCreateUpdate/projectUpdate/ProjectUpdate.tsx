@@ -10,6 +10,7 @@ import useProjectStore from '../../../../store/useProjectStore';
 
 import ProjectForm from '../projectForm/ProjectForm';
 import Modal from '../../../common/modal/Modal';
+import { patchProject } from '../../../../api/projectApi';
 
 function ProjectUpdate() {
   const { pjtId } = useParams();
@@ -30,8 +31,8 @@ function ProjectUpdate() {
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
 
-  const navPjtDetail = () => {
-    navigate(`/project/${pjtId}`);
+  const navBack = () => {
+    navigate(-1);
   };
 
   const handleBackModal = () => {
@@ -58,11 +59,16 @@ function ProjectUpdate() {
     setUpdateModalOpen(true);
   };
 
-  const updateProject = () => {
+  const updateProject = async () => {
     setUpdateModalOpen(!isUpdateModalOpen);
 
-    console.log(project);
-    navigate(`/project/${pjtId}`);
+    try {
+      await patchProject(Number(pjtId), project);
+      navigate(`/project/${pjtId}`);
+    } catch (error) {
+      console.log('개발일지 수정 실패');
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -77,7 +83,7 @@ function ProjectUpdate() {
       <div className={style.container}>
         <div className={style.backBtn} onClick={handleBackModal}>
           <img src={Back} alt="뒤로가기 버튼" />
-          {project.title}
+          돌아가기
         </div>
 
         <span className={style.pageTitle}>프로젝트 수정</span>
@@ -103,7 +109,7 @@ function ProjectUpdate() {
         title={'이 페이지를 벗어나시겠어요?'}
         content={'작성 내용이 초기화됩니다.'}
         onClose={handleBackModal}
-        onConfirm={navPjtDetail}
+        onConfirm={navBack}
         confirmText={'이동'}
         cancleText={'취소'}
       />

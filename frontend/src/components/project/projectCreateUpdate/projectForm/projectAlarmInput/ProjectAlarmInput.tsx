@@ -5,16 +5,9 @@ import ToggleOff from '../../../../../assets/image/icon/ToggleOff.svg';
 
 import useProjectStore from '../../../../../store/useProjectStore';
 
-interface Time {
-  hour: number;
-  minute: number;
-  second: number;
-  nano: number;
-}
-
 interface Props {
   notificationStatus: boolean;
-  notificationTime: Time;
+  notificationTime: string;
 }
 
 function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
@@ -25,14 +18,8 @@ function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
   };
 
   const handleTime = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const time = event.target.value.split(':');
-    const notificationTime: Time = {
-      hour: Number(time[0]),
-      minute: Number(time[1]),
-      second: 0,
-      nano: 0,
-    };
-    updateProject('notificationTime', notificationTime);
+    const time = event.target.value;
+    updateProject('notificationTime', time);
   };
 
   return (
@@ -59,7 +46,7 @@ function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
               <input
                 className={style.timeInput}
                 type="time"
-                value={notificationTime.hour + ':' + notificationTime.minute}
+                value={notificationTime}
                 onChange={handleTime}
               />
             </div>

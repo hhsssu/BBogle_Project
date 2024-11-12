@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import useProjectStore from '../../../../store/useProjectStore';
 
 import DiaryList from '../../../diary/diaryList/DiaryList';
+import Summary from '../../../summary/Summary';
 
 function ProjectLogSection() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function ProjectLogSection() {
             개발일지
             <div className={style.diaryCnt}>{32}</div>
           </div>
-          {!PROJECT.status && (
+          {PROJECT.status && (
             <div
               className={`${style.tab} ${tabIdx === 1 && style.tabActive}`}
               onClick={() => changeTab(1)}
@@ -73,7 +74,7 @@ function ProjectLogSection() {
         )}
       </div>
       <div className={style.tabContentSection}>
-        {tabIdx === 0 ? <DiaryList /> : ''}
+        {tabIdx === 0 ? <DiaryList /> : <Summary />}
       </div>{' '}
     </div>
   );

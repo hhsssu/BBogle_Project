@@ -3,6 +3,7 @@ import Bell from '../../../assets/image/icon/Bell.svg';
 import ActiveBell from '../../../assets/image/icon/ActiveBell.svg';
 import Pencil from '../../../assets/image/icon/Pencil.svg';
 import RedTrash from '../../../assets/image/icon/RedTrash.svg';
+import DefaultProject from '../../../assets/image/icon/DefaultProject.svg';
 
 import style from './ProjectCard.module.css';
 import { useEffect, useRef, useState } from 'react';
@@ -12,6 +13,7 @@ import {
   changeNotificationStatus,
   deleteProject,
 } from '../../../api/projectApi';
+import ImageWithDefault from '../../my/ImageWithDefault';
 
 interface Props {
   pjtId: number;
@@ -109,7 +111,14 @@ function ProjectCard({
     <div>
       <div className={style.card}>
         <section className={style.cardHeader}>
-          <img className={style.img} src={imageSrc} alt="" />
+          <div className={style.img}>
+            <ImageWithDefault
+              src={imageSrc}
+              alt="로고"
+              defaultSrc={DefaultProject}
+            />
+          </div>
+
           <div>
             <div className={style.titleWrapper}>
               <span className={style.title}>

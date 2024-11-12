@@ -15,20 +15,20 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Set;
+
+import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 @Entity
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "diary")
 public class Diary {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -45,12 +45,14 @@ public class Diary {
     private LocalDate createDate;
 
     @Column(name = "title", nullable = false)
+    @Setter
     private String title;
 
+    @Setter
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DiaryImage> diaryImages = new ArrayList<>();
+    private Set<DiaryImage> diaryImages = new HashSet<>();
 
+    @Setter
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Answer> answers = new ArrayList<>();
-
+    private Set<Answer> answers = new HashSet<>();
 }

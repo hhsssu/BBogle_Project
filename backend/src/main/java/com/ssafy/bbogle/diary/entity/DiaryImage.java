@@ -32,5 +32,4 @@ public class DiaryImage {
 
     @Column(name = "url", nullable = false)
     private String url;
-
 }

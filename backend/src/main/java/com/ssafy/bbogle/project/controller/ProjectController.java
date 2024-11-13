@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/projects")
@@ -34,8 +35,9 @@ public class ProjectController {
                     + "알림은 꺼짐이 false(0), 켜짐이 true(1)<br>"
                     + "알림 시간은 hour, minute 정보만 요청")
     @PostMapping()
-    public ResponseEntity<String> createProject(@RequestBody ProjectCreateRequest request) {
-        projectService.createProject(request);
+    public ResponseEntity<String> createProject(
+        @RequestPart("request") ProjectCreateRequest request, @RequestPart("file") MultipartFile file ) {
+        projectService.createProject(request, file);
         return ResponseEntity.ok("프로젝트가 성공적으로 생성되었습니다.");
     }
 
@@ -72,8 +74,9 @@ public class ProjectController {
     @PatchMapping("/{projectId}")
     public ResponseEntity<String> updateProject(
             @PathVariable("projectId") Integer projectId,
-            @RequestBody ProjectUpdateRequest request) {
-        projectService.updateProject(projectId, request);
+            @RequestPart("request") ProjectUpdateRequest request,
+            @RequestPart("file") MultipartFile file ) {
+        projectService.updateProject(projectId, request, file);
         return ResponseEntity.ok("프로젝트가 성공적으로 수정되었습니다.");
     }
 

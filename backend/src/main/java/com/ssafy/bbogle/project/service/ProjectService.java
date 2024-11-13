@@ -3,6 +3,7 @@ package com.ssafy.bbogle.project.service;
 import com.ssafy.bbogle.common.exception.CustomException;
 import com.ssafy.bbogle.common.exception.ErrorCode;
 import com.ssafy.bbogle.common.util.LoginUser;
+import com.ssafy.bbogle.common.util.S3Util;
 import com.ssafy.bbogle.notification.entity.Notification;
 import com.ssafy.bbogle.notification.repository.NotificationRepository;
 import com.ssafy.bbogle.project.dto.request.NotificationStatusRequest;
@@ -18,6 +19,7 @@ import com.ssafy.bbogle.project.repository.ProjectRepository;
 import com.ssafy.bbogle.summary.dto.request.SummaryRequest;
 import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.user.repository.UserRepository;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProjectService {
@@ -35,23 +38,35 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final NotificationRepository notificationRepository;
+    private final S3Util s3Util;
 
     @Autowired
     public ProjectService(ProjectRepository projectRepository,
                           UserRepository userRepository,
-                          NotificationRepository notificationRepository) {
+                          NotificationRepository notificationRepository, S3Util s3Util) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.notificationRepository = notificationRepository;
+        this.s3Util = s3Util;
     }
 
     @Transactional
-    public void createProject(ProjectCreateRequest request) {
+    public void createProject(ProjectCreateRequest request, MultipartFile file) {
         Long kakaoId = LoginUser.getKakaoId();
         logger.info("프로젝트 생성 요청을 받았습니다. kakaoId: {}", kakaoId);
 
         User user = userRepository.findByKakaoId(kakaoId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        String imageUrl = null;
+
+        if (file != null && !file.isEmpty()) {
+            try {
+                imageUrl = s3Util.upload(file);
+            } catch (IOException e) {
+                throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+            }
+        }
 
         Project project = Project.builder()
                 .user(user)
@@ -61,7 +76,7 @@ public class ProjectService {
                 .endDate(request.getEndDate())
                 .memberCount(request.getMemberCount())
                 .status(true)
-                .image(request.getImage())
+                .image(imageUrl)
                 .tags(new ArrayList<>())  // 빈 리스트로 초기화하여 null 방지
                 .build();
 
@@ -169,19 +184,30 @@ public class ProjectService {
 
 
     @Transactional
-    public void updateProject(Integer projectId, ProjectUpdateRequest request) {
+    public void updateProject(Integer projectId, ProjectUpdateRequest request, MultipartFile file) {
         Long kakaoId = LoginUser.getKakaoId();
         logger.info("프로젝트 수정 요청을 받았습니다. kakaoId: {}, projectId: {}", kakaoId, projectId);
 
         Project existingProject = projectRepository.findByIdAndUser_KakaoId(projectId, kakaoId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PROJECT_NOT_FOUND));
 
+        String oldImageUrl = existingProject.getImage();
+        try {
+            existingProject.setImage(s3Util.upload(file));
+
+            if(oldImageUrl != null) {
+                s3Util.deleteFile(oldImageUrl);
+            }
+        } catch (IOException e) {
+            throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+        }
+
         existingProject.setTitle(request.getTitle());
         existingProject.setDescription(request.getDescription());
         existingProject.setStartDate(request.getStartDate());
         existingProject.setEndDate(request.getEndDate());
         existingProject.setMemberCount(request.getMemberCount());
-        existingProject.setImage(request.getImage());
+//        existingProject.setImage(request.getImage());
 
         existingProject.getTags().clear();
         saveProjectTags(existingProject, request.getRole(), ProjectTagType.ROLE);

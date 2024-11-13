@@ -62,9 +62,7 @@ function ProjectDetail() {
       <Modal
         isOpen={isFinModalOpen}
         title={'프로젝트를 종료하시겠어요?'}
-        content={
-          '종료 시 회고록이 생성되고 더 이상 개발일지를 작성할 수 없어요'
-        }
+        content={'종료 시 더 이상 개발일지를 작성할 수 없어요'}
         onClose={handleFinModal}
         onConfirm={finishProject}
         confirmText={'종료'}

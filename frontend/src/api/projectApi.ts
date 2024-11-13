@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosInstance from './axiosInstance';
 
 interface Project {
@@ -21,6 +22,11 @@ export const getProjectList = async () => {
   } catch (error) {
     console.log('프로젝트 목록 가져오기 실패');
     console.log(error);
+    if (axios.isAxiosError(error)) {
+      if (error.response!.status) {
+        return [];
+      }
+    }
   }
 };
 

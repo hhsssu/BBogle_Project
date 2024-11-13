@@ -14,9 +14,11 @@ import { useEffect, useState } from 'react';
 import ProfileImageUploader from './ProfileImageUploader';
 import { fetchTodayDiary } from '../../api/diaryApi';
 import DiaryCard from '../common/diaryCard/DiaryCard';
+import HorizontalScroll from '../common/scroll/HorizontalScroll';
 
 // 타입 정의
 interface DiaryItem {
+  projectId: number;
   diaryId: number;
   title: string;
   createDate: string;
@@ -47,9 +49,8 @@ function My() {
   }, [fetchUser]);
 
   // 카드 선택 시 프로젝트 페이지로 이동하는 함수
-  const selectCard = (cardId: number) => {
-    console.log(cardId);
-    navigate(`/project/${cardId}`);
+  const selectCard = (projectId: number, diaryId: number) => {
+    navigate(`/project/${projectId}/diary/${diaryId}`);
   };
 
   // 닉네임 업데이트 함수
@@ -143,16 +144,21 @@ function My() {
         </div>
         <div className={style.pjtList}>
           {diaryList.length > 0 ? (
-            diaryList.map((card, index) => (
-              <div key={index} onClick={() => selectCard(card.diaryId)}>
-                <DiaryCard
+            <HorizontalScroll
+              children={diaryList.map((card, index) => (
+                <div
                   key={index}
-                  diaryId={card.diaryId}
-                  title={card.title}
-                  date={card.createDate}
-                />
-              </div>
-            ))
+                  onClick={() => selectCard(card.projectId, card.diaryId)}
+                >
+                  <DiaryCard
+                    key={index}
+                    diaryId={card.diaryId}
+                    title={card.title}
+                    date={card.createDate}
+                  />
+                </div>
+              ))}
+            />
           ) : (
             <div className={style.empty}>
               <div className={style.guide}>

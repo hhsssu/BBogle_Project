@@ -19,9 +19,21 @@ export const createActivity = async (activity: Activity) => {
   }
 };
 
-// TODO 경험 수정
-export const updateActivity = async () => {
+// 경험 수정
+export const updateActivity = async (
+  activityId: number,
+  activity: Activity,
+) => {
   try {
+    const response = await axiosInstance.patch(`/activities/${activityId}`, {
+      title: activity.title,
+      content: activity.content,
+      startDate: activity.startDate,
+      endDate: activity.endDate,
+      keywords: activity.keywords,
+      projectId: activity.projectId,
+    });
+    return response.data;
   } catch (error) {
     console.error('경험 수정 실패: ', error);
   }

@@ -7,16 +7,35 @@ import ActivityStyles from '../Activity.module.css';
 import ActivityCreateStyles from './ActivityCreate.module.css';
 
 import BackIcon from '../../../assets/image/icon/Back.svg';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function ActivityUpdate() {
   const nav = useNavigate();
   const { activityId } = useParams();
   // activityId를 숫자로 변환
   const numericActivityId = activityId ? parseInt(activityId, 10) : 0;
+  const activity = useActivityStore((state) => state.activity);
+  const fetchActivityById = useActivityStore(
+    (state) => state.fetchActivityById,
+  );
+  const updateActivity = useActivityStore((state) => state.updateActivity);
 
-  // TODO updateActivity 선언해야함
-  const { activity, fetchActivityById } = useActivityStore();
+  // 폼 상태 관리
+  const [formData, setFormData] = useState<{
+    title: string;
+    content: string;
+    startDate: Date;
+    endDate: Date;
+    projectId: number | undefined;
+    keywords: { id: number; type: boolean; name: string }[];
+  }>({
+    title: activity.title,
+    content: activity.content,
+    startDate: new Date(activity.startDate),
+    endDate: new Date(activity.endDate),
+    projectId: activity.projectId ? activity.projectId : undefined,
+    keywords: activity.keywords,
+  });
 
   // ✅데이터 불러오기
   useEffect(() => {
@@ -30,17 +49,24 @@ function ActivityUpdate() {
 
   // 폼 제출 로직
   const handleFormSubmit = () => {
-    // TODO 폼 제출 로직 수정
-    // updateActivity({
-    //   activityId: numericActivityId, // 현재 활동의 ID
-    //   title,
-    //   content,
-    //   startDate,
-    //   endDate,
-    //   projectId: projectId ?? 0, // null일 경우 기본값 0 사용
-    //   keywords: selectedOptions, // 키워드 배열
-    // });
     event?.preventDefault();
+    updateActivity(
+      numericActivityId, // 현재 활동의 ID
+      formData,
+    );
+    nav(`${numericActivityId}`);
+  };
+
+  // 폼 데이터 업데이트
+  const handleFormChange = (updatedData: {
+    title: string;
+    content: string;
+    startDate: Date;
+    endDate: Date;
+    projectId: number | undefined;
+    keywords: { id: number; type: boolean; name: string }[];
+  }) => {
+    setFormData(updatedData);
   };
 
   return (
@@ -65,15 +91,9 @@ function ActivityUpdate() {
       </section>
 
       <ActivityForm
+        onChange={handleFormChange}
         onSubmit={handleFormSubmit}
-        initialValues={{
-          title: activity.title,
-          content: activity.content,
-          startDate: activity.startDate,
-          endDate: activity.endDate,
-          projectId: activity.projectId,
-          keywords: activity.keywords,
-        }}
+        initialValues={formData}
       />
     </>
   );

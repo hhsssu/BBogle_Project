@@ -36,6 +36,7 @@ public class Notification {
     @Column(name = "time", nullable = false)
     private LocalTime time;
 
+    @Setter
     @Column(name = "status", nullable = false)
     private boolean status;
 }

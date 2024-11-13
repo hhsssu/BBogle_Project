@@ -110,14 +110,16 @@ public class ProjectController {
         return ResponseEntity.ok("알림 상태가 성공적으로 변경되었습니다.");
     }
 
-    @Operation(summary = "특정 프로젝트에 대한 저장된 경험 조회", description = "경험추출시 기존 경험 조회에 사용")
+    @Operation(summary = "특정 프로젝트에 대한 저장된 경험 조회", description = "경험추출시 기존 경험 조회에 사용<br>"
+        + "조회 결과가 없으면 빈 리스트 반환")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @GetMapping("/{projectId}/activities")
     public ResponseEntity<ActivityListResponse> getActivitiesByProjectId(
             @PathVariable("projectId") Integer projectId) {
-        return null;
+        ActivityListResponse result = projectService.getActivitiesByProject(projectId);
+        return ResponseEntity.ok(result);
     }
 
     @Operation(summary = "추출된 경험 선택", description = "경험추출한 후 저장할 항목 선택할 때 사용")
@@ -128,7 +130,8 @@ public class ProjectController {
     public ResponseEntity<String> selectActivity(
             @PathVariable("projectId") Integer projectId,
             @RequestBody ActivitySelectRequest request) {
-        return null;
+        projectService.selectActivity(projectId, request);
+        return ResponseEntity.ok("선택한 경험 저장 완료");
     }
 
     @Operation(summary = "내 프로젝트 조회 - 검색 조건용 (완료)", description = "검색 조건이나 개발일지 프로젝트 선택시 사용<br>"

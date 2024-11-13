@@ -16,6 +16,7 @@ import com.ssafy.bbogle.keyword.entity.QKeyword;
 //import com.ssafy.bbogle.project.entity.QProject;
 //import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.project.entity.QProject;
+import com.ssafy.bbogle.user.entity.QUser;
 import com.ssafy.bbogle.user.entity.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,22 @@ public class ActivityRepositoryCustomImpl implements ActivityRepositoryCustom {
         return activities;
 
 
+    }
+
+    @Override
+    public List<Activity> findByUserKakaoIdAndProjectId(Long kakaoId, Integer projectId) {
+
+        QActivity activity = QActivity.activity;
+        QProject project = QProject.project;
+        QUser user = QUser.user;
+
+        return queryFactory
+            .selectFrom(activity)
+            .join(activity.user, user)
+            .join(activity.project, project).fetchJoin()
+            .where(user.kakaoId.eq(kakaoId)
+                .and(project.id.eq(projectId)))
+            .fetch();
     }
 
 

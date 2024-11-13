@@ -10,4 +10,6 @@ public interface ActivityRepositoryCustom {
 
     List<Activity> getActivityList(User user, ActivitySearchCondRequest request);
 
+    List<Activity> findByUserKakaoIdAndProjectId(Long kakaoId, Integer projectId);
+
 }

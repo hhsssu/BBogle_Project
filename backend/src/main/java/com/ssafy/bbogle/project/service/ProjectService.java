@@ -1,9 +1,17 @@
 package com.ssafy.bbogle.project.service;
 
+import com.ssafy.bbogle.activity.dto.request.ActivitySelectRequest;
+import com.ssafy.bbogle.activity.dto.response.ActivityListItemResponse;
+import com.ssafy.bbogle.activity.dto.response.ActivityListResponse;
+import com.ssafy.bbogle.activity.entity.Activity;
+import com.ssafy.bbogle.activity.entity.ActivityKeyword;
+import com.ssafy.bbogle.activity.repository.ActivityRepository;
 import com.ssafy.bbogle.common.exception.CustomException;
 import com.ssafy.bbogle.common.exception.ErrorCode;
 import com.ssafy.bbogle.common.util.LoginUser;
 import com.ssafy.bbogle.common.util.S3Util;
+import com.ssafy.bbogle.keyword.dto.response.KeywordInfoResponse;
+import com.ssafy.bbogle.keyword.repository.KeywordRepository;
 import com.ssafy.bbogle.notification.entity.Notification;
 import com.ssafy.bbogle.notification.repository.NotificationRepository;
 import com.ssafy.bbogle.project.dto.request.NotificationStatusRequest;
@@ -41,15 +49,20 @@ public class ProjectService {
     private final UserRepository userRepository;
     private final NotificationRepository notificationRepository;
     private final S3Util s3Util;
+    private final ActivityRepository activityRepository;
+    private final KeywordRepository keywordRepository;
 
     @Autowired
     public ProjectService(ProjectRepository projectRepository,
                           UserRepository userRepository,
-                          NotificationRepository notificationRepository, S3Util s3Util) {
+                          NotificationRepository notificationRepository, S3Util s3Util,
+        ActivityRepository activityRepository, KeywordRepository keywordRepository) {
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
         this.notificationRepository = notificationRepository;
         this.s3Util = s3Util;
+        this.activityRepository = activityRepository;
+        this.keywordRepository = keywordRepository;
     }
 
     @Transactional
@@ -314,5 +327,51 @@ public class ProjectService {
         return ProjectTitleListResponse.builder()
             .projects(projectTitleList)
             .build();
+    }
+
+    @Transactional
+    public ActivityListResponse getActivitiesByProject(Integer projectId) {
+        Long kakaoId = LoginUser.getKakaoId();
+
+        List<Activity> activities = activityRepository.findByUserKakaoIdAndProjectId(kakaoId, projectId);
+
+        List<ActivityListItemResponse> activitiesList = new ArrayList<>();
+        for (Activity activity : activities) {
+            List<ActivityKeyword> activityKeywords = activity.getActivityKeywords();
+            List<KeywordInfoResponse> keywordInfo = keywordRepository.getKeywordInfoList(activityKeywords);
+
+            ActivityListItemResponse activityListItemResponse = ActivityListItemResponse.builder()
+                .activityId(activity.getId())
+                .title(activity.getTitle())
+                .startDate(activity.getStartDate())
+                .endDate(activity.getEndDate())
+                .keywords(keywordInfo)
+                .projectTitle(activity.getProject().getTitle())
+                .build();
+            activitiesList.add(activityListItemResponse);
+        }
+
+        return ActivityListResponse.builder()
+            .activities(activitiesList)
+            .build();
+    }
+
+    @Transactional
+    public void selectActivity(Integer projectId, ActivitySelectRequest request) {
+
+        Project project = projectRepository.findById(projectId)
+            .orElseThrow(() -> new CustomException(ErrorCode.PROJECT_NOT_FOUND));
+
+        // 기존 프로젝트 관련 경험들 중에 선택되지 않은 경험은 삭제
+        Long kakaoId = LoginUser.getKakaoId();
+        List<Activity> existingActivities = activityRepository.findByUserKakaoIdAndProjectId(kakaoId, projectId);
+        List<Integer> savedExistingActivities = request.getSavedActivities();
+
+        existingActivities.stream()
+            .filter(activity -> !savedExistingActivities.contains(activity.getId()))
+            .forEach(activityRepository::delete);
+
+        // 새로 들어온 request를 저장
+
     }
 }

@@ -1,15 +1,20 @@
-import ProjectCard from '../../common/projectCard/ProjectCard';
 import style from './ProjectList.module.css';
+
+import Bubble from '../../../assets/lottie/Bubble.json';
+import EmptyFolder from '../../../assets/image/icon/EmptyFolder.svg';
+import Loading from '../../common/loading/Loading';
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useProjectStore from '../../../store/useProjectStore';
 
-import EmptyFolder from '../../../assets/image/icon/EmptyFolder.svg';
+import ProjectCard from '../../common/projectCard/ProjectCard';
+import useProjectStore from '../../../store/useProjectStore';
 
 function ProjectList() {
   const [onlyProgress, setOnlyProgress] = useState(false);
 
-  const PJT_LIST = useProjectStore((state) => state.projectList);
+  const isProjectLoading = useProjectStore((state) => state.isProjectLoading);
+  const projectList = useProjectStore((state) => state.projectList);
   const getProjectList = useProjectStore((state) => state.getProjectList);
 
   const navigate = useNavigate();
@@ -30,6 +35,16 @@ function ProjectList() {
     getProjectList();
   }, []);
 
+  if (isProjectLoading) {
+    return (
+      <Loading
+        isLoading={isProjectLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
+
   return (
     <div className={style.container}>
       <section className={style.headerSection}>
@@ -46,23 +61,28 @@ function ProjectList() {
         >
           {onlyProgress ? '전체보기' : '진행중인 것만 보기'}
         </div>
-        {PJT_LIST.length !== 0 ? (
+        {projectList.length !== 0 ? (
           <div className={style.projectGrid}>
             {onlyProgress
-              ? PJT_LIST.filter((pjt) => pjt.status).map((card, index) => (
-                  <div key={index} onClick={() => navPjtDetail(card.projectId)}>
-                    <ProjectCard
-                      pjtId={card.projectId}
-                      imageSrc={card.image}
-                      title={card.title}
-                      status={card.status}
-                      term={card.startDate + ' ~ ' + card.endDate}
-                      description={card.description}
-                      notificationStatus={card.notificationStatus}
-                    />
-                  </div>
-                ))
-              : PJT_LIST.map((card, index) => (
+              ? projectList
+                  .filter((pjt) => pjt.status)
+                  .map((card, index) => (
+                    <div
+                      key={index}
+                      onClick={() => navPjtDetail(card.projectId)}
+                    >
+                      <ProjectCard
+                        pjtId={card.projectId}
+                        imageSrc={card.image}
+                        title={card.title}
+                        status={card.status}
+                        term={card.startDate + ' ~ ' + card.endDate}
+                        description={card.description}
+                        notificationStatus={card.notificationStatus}
+                      />
+                    </div>
+                  ))
+              : projectList.map((card, index) => (
                   <div key={index} onClick={() => navPjtDetail(card.projectId)}>
                     <ProjectCard
                       pjtId={card.projectId}

@@ -1,7 +1,7 @@
 import style from './ProjectDetail.module.css';
 
 import Back from '../../../assets/image/icon/Back.svg';
-import Bubble from '../../../assets/lottie/Bubble.json';
+// import Bubble from '../../../assets/lottie/Bubble.json';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,15 +11,16 @@ import useProjectStore from '../../../store/useProjectStore';
 import ProjectInfoSection from './projectInfoSection/ProjectInfoSection';
 import ProjectLogSection from './projectLogSection/ProjectLogSection';
 import Modal from '../../common/modal/Modal';
-import Loading from '../../common/loading/Loading';
+// import Loading from '../../common/loading/Loading';
+import { finishProject } from '../../../api/projectApi';
 
 function ProjectDetail() {
-  const PROJECT = useProjectStore((state) => state.project);
+  const project = useProjectStore((state) => state.project);
 
   const navigate = useNavigate();
 
   const [isFinModalOpen, setFinModalOpen] = useState(false);
-  const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
+  // const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
 
   const navPjtList = () => {
     navigate('/project');
@@ -29,13 +30,14 @@ function ProjectDetail() {
     setFinModalOpen(!isFinModalOpen);
   };
 
-  const finishProject = () => {
+  const onFinishProject = async () => {
     setFinModalOpen(false);
-    setFinLoadingOpen(true);
+    // setFinLoadingOpen(true);
 
-    setTimeout(() => {
-      setFinLoadingOpen(false);
-    }, 2000);
+    await finishProject(project.projectId);
+    navigate(0);
+
+    // setFinLoadingOpen(false);
   };
 
   return (
@@ -49,7 +51,7 @@ function ProjectDetail() {
         <div className={style.pjtInfoSection}>
           <ProjectInfoSection />
 
-          {PROJECT.status && (
+          {project.status && (
             <button className={style.pjtEndBtn} onClick={handleFinModal}>
               프로젝트 종료
             </button>
@@ -64,16 +66,16 @@ function ProjectDetail() {
         title={'프로젝트를 종료하시겠어요?'}
         content={'종료 시 더 이상 개발일지를 작성할 수 없어요'}
         onClose={handleFinModal}
-        onConfirm={finishProject}
+        onConfirm={onFinishProject}
         confirmText={'종료'}
         cancleText={'취소'}
       />
 
-      <Loading
+      {/* <Loading
         isLoading={isFinLoadingOpen}
         title="회고록 작성 중 ..."
         animationData={Bubble}
-      />
+      /> */}
     </div>
   );
 }

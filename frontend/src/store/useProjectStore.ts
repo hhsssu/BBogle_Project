@@ -1,11 +1,10 @@
 import { create } from 'zustand';
-import DefaultProject from '../assets/image/icon/DefaultProject.svg';
 import { persist } from 'zustand/middleware';
 import { getProject, getProjectList } from '../api/projectApi';
 
 interface ProjectCard {
   projectId: number;
-  image: string;
+  image: string | null;
   title: string;
   description: string;
   status: boolean;
@@ -17,7 +16,7 @@ interface ProjectCard {
 interface Project {
   projectId: number;
   title: string;
-  image: string;
+  image: string | null;
   description: string;
   startDate: string;
   endDate: string;
@@ -30,6 +29,9 @@ interface Project {
 }
 
 interface ProjectState {
+  // 프로젝트 데이터 로딩 상태
+  isProjectLoading: boolean;
+
   // 프로젝트 리스트
   projectList: ProjectCard[];
   getProjectList: () => void;
@@ -45,6 +47,8 @@ interface ProjectState {
   ) => void;
 
   // 프로젝트 생성/수정
+  projectImage: File | null;
+  setProjectImage: (value: File) => void;
   titleError: boolean;
   setTitleError: (value: boolean) => void;
   termError: boolean;
@@ -56,17 +60,21 @@ interface ProjectState {
 const useProjectStore = create<ProjectState>()(
   persist(
     (set) => ({
+      // 프로젝트 데이터 로딩 상태
+      isProjectLoading: false,
+
       // 프로젝트 리스트
       projectList: [],
       getProjectList: async () => {
+        set(() => ({ isProjectLoading: true }));
         const data = await getProjectList();
-        set(() => ({ projectList: data }));
+        set(() => ({ projectList: data, isProjectLoading: false }));
       },
 
       // 프로젝트 하나
       project: {
         projectId: -1,
-        image: DefaultProject,
+        image: null,
         title: '',
         description: '',
         status: false,
@@ -81,9 +89,10 @@ const useProjectStore = create<ProjectState>()(
       setProject: (pjt) => set(() => ({ project: pjt })),
       initProject: () =>
         set(() => ({
+          projectImage: null,
           project: {
             projectId: -1,
-            image: DefaultProject,
+            image: null,
             title: '',
             description: '',
             status: false,
@@ -97,15 +106,41 @@ const useProjectStore = create<ProjectState>()(
           },
         })),
       getProject: async (pjtId) => {
+        set(() => ({ isProjectLoading: true }));
+
         const data = await getProject(pjtId);
+
+        if (data.image) {
+          // 이미지 URL을 사용해 Blob으로 변환
+          const response = await fetch(data.image);
+          const blob = await response.blob();
+
+          // Blob을 File로 변환
+          const file = new File([blob], 'project_image.jpg', {
+            type: blob.type,
+          });
+
+          set(() => ({
+            isProjectLoading: false,
+            project: data,
+            projectImage: file,
+          }));
+
+          return;
+        }
+
         set(() => ({
+          isProjectLoading: false,
           project: data,
+          projectImage: null,
         }));
       },
       updateProjectField: (field, value) =>
         set((state) => ({ project: { ...state.project, [field]: value } })),
 
       // 프로젝트 생성/수정
+      projectImage: null,
+      setProjectImage: (value) => set(() => ({ projectImage: value })),
       titleError: false,
       setTitleError: (value) => set(() => ({ titleError: value })),
       termError: false,

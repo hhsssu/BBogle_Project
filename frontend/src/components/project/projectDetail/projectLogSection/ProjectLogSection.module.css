@@ -1,7 +1,11 @@
+.container {
+  /* width: 100vw; */
+}
+
 .tabSection {
   display: flex;
   justify-content: space-between;
-  padding: 3vh 1vw;
+  padding: 2vh 1vw;
 }
 
 .tabList {
@@ -70,5 +74,6 @@
 
 .tabContentSection {
   display: flex;
+  width: 100%;
   justify-content: center;
 }

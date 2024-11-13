@@ -51,6 +51,10 @@
   margin: 1vh 0vw 1vh 5.4vw; /* 위 | 오른쪽 | 아래 | 왼쪽 */
 }
 
+.description strong {
+  font-weight: bold; /* 필요 시 추가 */
+}
+
 .answerContainer {
   position: relative;
   width: 100%;

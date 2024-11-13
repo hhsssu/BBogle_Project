@@ -8,7 +8,7 @@ import DiaryImgInput from './diaryImgInput/DiaryImgInput';
 
 function DiaryForm() {
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answers);
+  const answerList = useDiaryStore((state) => state.answerList);
 
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const questionRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);

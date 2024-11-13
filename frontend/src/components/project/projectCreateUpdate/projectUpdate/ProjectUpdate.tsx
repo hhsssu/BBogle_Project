@@ -17,6 +17,7 @@ function ProjectUpdate() {
   const navigate = useNavigate();
 
   const project = useProjectStore((state) => state.project);
+  const projectImage = useProjectStore((state) => state.projectImage);
   const getProject = useProjectStore((state) => state.getProject);
 
   const {
@@ -63,7 +64,7 @@ function ProjectUpdate() {
     setUpdateModalOpen(!isUpdateModalOpen);
 
     try {
-      await patchProject(Number(pjtId), project);
+      await patchProject(Number(pjtId), project, projectImage);
       navigate(`/project/${pjtId}`);
     } catch (error) {
       console.log('개발일지 수정 실패');

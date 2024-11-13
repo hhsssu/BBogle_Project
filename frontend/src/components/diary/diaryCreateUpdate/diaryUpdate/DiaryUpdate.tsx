@@ -1,5 +1,6 @@
 import style from '../DiaryCreateUpdate.module.css';
 
+import Bubble from '../../../../assets/lottie/Bubble.json';
 import AlertTriangle from '../../../../assets/image/icon/AlertTriangle.svg';
 import Back from '../../../../assets/image/icon/Back.svg';
 import DiaryForm from '../diaryForm/DiaryForm';
@@ -9,13 +10,19 @@ import useDiaryStore from '../../../../store/useDiaryStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Modal from '../../../common/modal/Modal';
+import { patchDiary } from '../../../../api/diaryApi';
+import Loading from '../../../common/loading/Loading';
 
 function DiaryUpdate() {
   const navigate = useNavigate();
   const { pjtId, diaryId } = useParams();
 
-  const answerList = useDiaryStore((state) => state.answers);
-  const getQnaList = useDiaryStore((state) => state.getQnaList);
+  const isLoading = useDiaryStore((state) => state.isLoading);
+
+  const diaryTitle = useDiaryStore((state) => state.title);
+  const answerList = useDiaryStore((state) => state.answerList);
+  const imageList = useDiaryStore((state) => state.imageList);
+  const getDiaryDetail = useDiaryStore((state) => state.getDiaryDetail);
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
@@ -30,12 +37,18 @@ function DiaryUpdate() {
     setBackModalOpen(!isBackModalOpen);
   };
 
-  const updateDiary = () => {
+  const updateDiary = async () => {
     if (textLengthErr) {
       setErrMsgOn(true);
     } else {
       setTextLengthErr(true);
       setErrMsgOn(false);
+
+      await patchDiary(Number(pjtId), Number(diaryId), {
+        title: diaryTitle,
+        answers: answerList,
+        images: imageList,
+      });
 
       alert('개발일지 수정 완료!');
       navigate(`/project/${pjtId}/diary/${diaryId}`);
@@ -55,12 +68,22 @@ function DiaryUpdate() {
   };
 
   useEffect(() => {
-    getQnaList();
-  }, []);
+    getDiaryDetail(Number(pjtId), Number(diaryId));
+  }, [getDiaryDetail]);
 
   useEffect(() => {
     checkTotalLength();
   }, [answerList]);
+
+  if (isLoading) {
+    return (
+      <Loading
+        isLoading={isLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   return (
     <div className={style.container}>
@@ -69,7 +92,7 @@ function DiaryUpdate() {
         돌아가기
       </div>
 
-      <div className={style.diaryTitle}>내용 한 줄 요약</div>
+      <div className={style.diaryTitle}>{diaryTitle}</div>
 
       <DiaryForm />
 

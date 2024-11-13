@@ -36,6 +36,17 @@ export const getDiary = async (projectId: number, diaryId: number) => {
   }
 };
 
+export const getQuestion = async () => {
+  try {
+    const response = await axiosInstance.get('/diaries/questions');
+
+    return response.data;
+  } catch (error) {
+    console.log('질문 목록 가져오기 실패');
+    console.log(error);
+  }
+};
+
 // 개발일지 TITLE 생성 API
 export const getDiaryTitle = async (
   questions: Question[],
@@ -66,7 +77,9 @@ export const addDiary = async (projectId: number, diary: Diary) => {
     const response = await axiosInstance.post(
       `/projects/${projectId}/diaries`,
       {
-        diary,
+        title: diary.title,
+        answers: diary.answers,
+        images: diary.images,
       },
     );
 
@@ -83,16 +96,11 @@ export const patchDiary = async (
   diary: Diary,
 ) => {
   try {
-    const response = await axiosInstance.patch(
-      `/projects/${projectId}/diaries/${diaryId}`,
-      {
-        title: diary.title,
-        answers: diary.answers,
-        images: diary.images,
-      },
-    );
-
-    return response.status;
+    await axiosInstance.patch(`/projects/${projectId}/diaries/${diaryId}`, {
+      title: diary.title,
+      answers: diary.answers,
+      images: diary.images,
+    });
   } catch (error) {
     console.log('개발일지 수정 실패');
     console.log(error);
@@ -101,11 +109,7 @@ export const patchDiary = async (
 
 export const deleteDiary = async (projectId: number, diaryId: number) => {
   try {
-    const response = await axiosInstance.delete(
-      `/projects/${projectId}/diaries/${diaryId}`,
-    );
-
-    return response.status;
+    await axiosInstance.delete(`/projects/${projectId}/diaries/${diaryId}`);
   } catch (error) {
     console.log('개발일지 삭제 실패');
     console.log(error);

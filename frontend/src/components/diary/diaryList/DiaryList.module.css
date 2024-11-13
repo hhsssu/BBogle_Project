@@ -1,11 +1,43 @@
-.fins {
-  width: 100vw;
+.container {
+  width: 95%;
+}
+
+.projectGrid {
+  /* width: 100vw; */
+  /* box-sizing: border-box;*/
+  width: 100%;
   height: 50vh;
   display: grid;
-  place-items: center;
+  /* place-items: center; */
   grid-template-columns: repeat(auto-fill, minmax(292px, 1fr));
   overflow-y: auto;
   scrollbar-width: none;
-  gap: 24px 8px;
+  gap: 6px 8px;
   padding: 8px;
+}
+
+.emptyDiaryContainer {
+  display: flex;
+  height: 40vh;
+  align-items: center;
+  justify-self: center;
+  margin: 0;
+  gap: 1rem;
+}
+
+.emptyIcon {
+  width: 7.5rem;
+}
+
+.emptyTextBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  color: rgba(160, 160, 160, 1);
+}
+
+.boldText {
+  font-weight: 700;
 }

@@ -9,28 +9,33 @@ import { useEffect, useState } from 'react';
 
 import useProjectStore from '../../../../store/useProjectStore';
 
-import Loading from '../../../common/loading/Loading';
+// import Loading from '../../../common/loading/Loading';
 import DiaryForm from '../diaryForm/DiaryForm';
 import useDiaryStore from '../../../../store/useDiaryStore';
 import Modal from '../../../common/modal/Modal';
+import { addDiary } from '../../../../api/diaryApi';
+import Loading from '../../../common/loading/Loading';
 
-import { getDiaryTitle } from '../../../../api/diaryApi';
+// import { getDiaryTitle } from '../../../../api/diaryApi';
 
 function DiaryCreate() {
   const navigate = useNavigate();
 
+  const isLoading = useDiaryStore((state) => state.isLoading);
+
   const project = useProjectStore((state) => state.project);
-  const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answers);
-  const initQnaList = useDiaryStore((state) => state.initQnaList);
+  // const questionList = useDiaryStore((state) => state.questionList);
   const diaryTitle = useDiaryStore((state) => state.title);
+  const answerList = useDiaryStore((state) => state.answerList);
+  const imageList = useDiaryStore((state) => state.imageList);
+  const initDiary = useDiaryStore((state) => state.initDiary);
   const updateTitle = useDiaryStore((state) => state.updateTitle);
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
 
   const [isBackModalOpen, setBackModalOpen] = useState(false);
-  const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
+  // const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
   const [isTitleModalOpen, setTitleModalOpen] = useState(false);
 
   const navPjtDetail = () => {
@@ -41,23 +46,23 @@ function DiaryCreate() {
     setBackModalOpen(!isBackModalOpen);
   };
 
-  const addDiary = async () => {
+  const submitDiaryForm = async () => {
     if (textLengthErr) {
       setErrMsgOn(true);
     } else {
-      setFinLoadingOpen(true);
-      try {
-        const title = await getDiaryTitle(questionList, answerList);
+      // setFinLoadingOpen(true);
+      // try {
+      //   const title = await getDiaryTitle(questionList, answerList);
 
-        setTextLengthErr(true);
-        setErrMsgOn(false);
-        console.log(title);
-        updateTitle(title);
-      } catch (error) {
-        console.log('개발일지 제목 생성 실패');
-        console.log(error);
-      }
-      setFinLoadingOpen(false);
+      //   setTextLengthErr(true);
+      //   setErrMsgOn(false);
+      //   console.log(title);
+      //   updateTitle(title);
+      // } catch (error) {
+      //   console.log('개발일지 제목 생성 실패');
+      //   console.log(error);
+      // }
+      // setFinLoadingOpen(false);
       setTitleModalOpen(true);
     }
   };
@@ -72,7 +77,16 @@ function DiaryCreate() {
     setTitleModalOpen(false);
   };
 
-  const onConfirm = () => {
+  const onAddDiary = async () => {
+    if (diaryTitle === '') {
+      alert('제목을 입력해주세요');
+      return;
+    }
+    await addDiary(project.projectId, {
+      title: diaryTitle,
+      answers: answerList,
+      images: imageList,
+    });
     alert('개발일지 저장 완료');
     navigate(`/project/${project.projectId}`);
   };
@@ -90,12 +104,22 @@ function DiaryCreate() {
   };
 
   useEffect(() => {
-    initQnaList();
-  }, []);
+    initDiary();
+  }, [initDiary]);
 
   useEffect(() => {
     checkTotalLength();
   }, [answerList]);
+
+  if (isLoading) {
+    return (
+      <Loading
+        isLoading={isLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   return (
     <div className={style.container}>
@@ -107,7 +131,7 @@ function DiaryCreate() {
       <DiaryForm />
       <button
         className={`${style.submitBtn} ${textLengthErr && style.failBtn}`}
-        onClick={addDiary}
+        onClick={submitDiaryForm}
       >
         완료
       </button>
@@ -126,11 +150,11 @@ function DiaryCreate() {
         confirmText={'이동'}
         cancleText={'취소'}
       />
-      <Loading
-        isLoading={isFinLoadingOpen}
+      {/*<Loading
+        // isLoading={isFinLoadingOpen}
         title="개발일지 작성 중 ..."
         animationData={Bubble}
-      />
+      />*/}
 
       {/* AI 생성 제목 확인 모달 */}
 
@@ -151,7 +175,7 @@ function DiaryCreate() {
               <button className={style.cancle} onClick={onClose}>
                 취소
               </button>
-              <button className={style.confirm} onClick={onConfirm}>
+              <button className={style.confirm} onClick={onAddDiary}>
                 개발일지 저장
               </button>
             </div>

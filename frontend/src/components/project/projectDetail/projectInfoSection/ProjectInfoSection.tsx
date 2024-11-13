@@ -1,5 +1,6 @@
 import style from './ProjectInfoSection.module.css';
 
+import Bubble from '../../../../assets/lottie/Bubble.json';
 import Setting from '../../../../assets/image/icon/Setting.svg';
 import Pencil from '../../../../assets/image/icon/Pencil.svg';
 import RedTrash from '../../../../assets/image/icon/RedTrash.svg';
@@ -8,14 +9,16 @@ import DefaultProject from '../../../../assets/image/icon/DefaultProject.svg';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useProjectStore from '../../../../store/useProjectStore';
-import Modal from '../../../common/modal/Modal';
 import { deleteProject } from '../../../../api/projectApi';
 import ImageWithDefault from '../../../my/ImageWithDefault';
+import Modal from '../../../common/modal/Modal';
+import Loading from '../../../common/loading/Loading';
 
 function ProjectInfoSection() {
   const { pjtId } = useParams();
   const PROJECT = useProjectStore((state) => state.project);
   const getProject = useProjectStore((state) => state.getProject);
+  const isProjectLoading = useProjectStore((state) => state.isProjectLoading);
 
   const settingIconRef = useRef<HTMLImageElement>(null);
 
@@ -51,7 +54,7 @@ function ProjectInfoSection() {
 
   useEffect(() => {
     getProject(Number(pjtId));
-  }, []);
+  }, [getProject, pjtId]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -68,6 +71,16 @@ function ProjectInfoSection() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  if (isProjectLoading) {
+    return (
+      <Loading
+        isLoading={isProjectLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   return (
     <div className={style.container}>

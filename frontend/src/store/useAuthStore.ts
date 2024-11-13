@@ -6,6 +6,8 @@ import { logoutUser } from '../api/authApi';
 interface AuthStore {
   isAuthenticated: boolean;
   setAuthenticated: (authenticated: boolean) => void;
+  loading: boolean;
+  setLoading: (status: boolean) => void;
   logout: () => Promise<void>;
 }
 
@@ -13,8 +15,10 @@ const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
       isAuthenticated: false,
+      loading: true,
 
       setAuthenticated: (auth) => set({ isAuthenticated: auth }),
+      setLoading: (status) => set({ loading: status }),
 
       logout: async () => {
         try {

@@ -17,7 +17,7 @@ import ImageWithDefault from '../../my/ImageWithDefault';
 
 interface Props {
   pjtId: number;
-  imageSrc: string;
+  imageSrc: string | null;
   title: string;
   status: boolean;
   term: string;
@@ -122,7 +122,7 @@ function ProjectCard({
           <div>
             <div className={style.titleWrapper}>
               <span className={style.title}>
-                {title.length > 10 ? title.substring(0, 11) + '...' : title}
+                {title.length > 7 ? title.substring(0, 8) + '...' : title}
               </span>
               <div
                 className={`${style.status} ${status ? style.statusActive : style.statusInactive}`}

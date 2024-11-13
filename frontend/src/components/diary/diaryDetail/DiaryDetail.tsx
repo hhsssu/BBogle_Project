@@ -1,5 +1,6 @@
 import style from './DiaryDetail.module.css';
 
+import Bubble from '../../../assets/lottie/Bubble.json';
 import Back from '../../../assets/image/icon/Back.svg';
 
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,14 +11,18 @@ import useDiaryStore from '../../../store/useDiaryStore';
 
 import DiaryEntryView from './diaryEntryView/DiaryEntryView';
 import DiaryImgView from './diaryImgView/DiaryImgView';
+import Loading from '../../common/loading/Loading';
 
 function DiaryDetail() {
   const navigate = useNavigate();
-  const { pjtId } = useParams();
+  const { pjtId, diaryId } = useParams();
+
+  const isLoading = useDiaryStore((state) => state.isLoading);
+
   const projectTitle = useProjectStore((state) => state.project.title);
   const questionList = useDiaryStore((state) => state.questionList);
-  const answerList = useDiaryStore((state) => state.answers);
-  const getQnaList = useDiaryStore((state) => state.getQnaList);
+  const answerList = useDiaryStore((state) => state.answerList);
+  const getDiaryDetail = useDiaryStore((state) => state.getDiaryDetail);
 
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
@@ -47,7 +52,7 @@ function DiaryDetail() {
   };
 
   useEffect(() => {
-    getQnaList();
+    getDiaryDetail(Number(pjtId), Number(diaryId));
 
     window.addEventListener('resize', updateLineHeight);
     // window.addEventListener('scroll', handleScroll);
@@ -69,6 +74,16 @@ function DiaryDetail() {
   useEffect(() => {
     updateLineHeight();
   }, [questionList]);
+
+  if (isLoading) {
+    return (
+      <Loading
+        isLoading={isLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   return (
     <div className={style.container}>

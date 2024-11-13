@@ -5,8 +5,9 @@ import Pencil from '../../../assets/image/icon/Pencil.svg';
 import RedTrash from '../../../assets/image/icon/RedTrash.svg';
 
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Modal from '../modal/Modal';
+import { deleteDiary } from '../../../api/diaryApi';
 
 interface Props {
   diaryId: number;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 function DiaryCard({ diaryId, title, date }: Props) {
+  const { pjtId } = useParams();
   const navigate = useNavigate();
   const moreIconRef = useRef<HTMLImageElement>(null);
   const [isModalOpen, setModalOpen] = useState(false);
@@ -34,8 +36,10 @@ function DiaryCard({ diaryId, title, date }: Props) {
     setDeleteModalOpen(!isDeleteModalOpen);
   };
 
-  const deleteDiary = () => {
+  const onDeleteDiary = async () => {
+    await deleteDiary(Number(pjtId), diaryId);
     setDeleteModalOpen(!isDeleteModalOpen);
+    navigate(0);
   };
 
   useEffect(() => {
@@ -95,7 +99,7 @@ function DiaryCard({ diaryId, title, date }: Props) {
           title={'정말 개발일지를 삭제하시겠어요?'}
           content={'삭제 시 복구가 어려워요'}
           onClose={handleDeleteModal}
-          onConfirm={deleteDiary}
+          onConfirm={onDeleteDiary}
           confirmText={'확인'}
           cancleText={'취소'}
         />

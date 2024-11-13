@@ -50,12 +50,15 @@ interface DiaryState {
   title: string;
   questionList: Question[];
   answerList: string[];
-  imageList: string[];
+  imageUrlList: string[];
+  imageFileList: File[];
 
   // title, answer 변동 시 활용
   updateTitle: (value: string) => void;
   updateAnswer: (index: number, value: string) => void;
-  // updateImg: (value: string) => void;
+  updateImgUrl: (value: string) => void;
+  updateImgFile: (value: File) => void;
+  deleteImage: (index: number) => void;
 }
 
 const useDiaryStore = create<DiaryState>((set) => ({
@@ -92,13 +95,27 @@ const useDiaryStore = create<DiaryState>((set) => ({
       return qna.answer;
     });
 
+    if (data.images) {
+      data.images.map(async (image: string) => {
+        const response = await fetch(image);
+        const blob = await response.blob();
+
+        // Blob을 File로 변환
+        const file = new File([blob], 'project_image.jpg', {
+          type: blob.type,
+        });
+
+        set((state) => ({ imageFileList: [...state.imageFileList, file] }));
+      });
+    }
+
     unstable_batchedUpdates(() => {
       set(() => ({
         // diary: data,
         title: data.title,
         questionList: questions,
         answerList: answers,
-        imageList: data.images,
+        imageUrlList: data.images,
       }));
     });
 
@@ -115,6 +132,8 @@ const useDiaryStore = create<DiaryState>((set) => ({
       title: '',
       questionList: data,
       answerList: ['', '', ''],
+      imageUrlList: [],
+      imageFileList: [],
     }));
     set(() => ({ isLoading: false }));
   },
@@ -127,7 +146,8 @@ const useDiaryStore = create<DiaryState>((set) => ({
     { id: 2, question: '', description: '' },
   ],
   answerList: ['', '', ''],
-  imageList: [],
+  imageUrlList: [],
+  imageFileList: [],
 
   // title, answer 변동 시 활용
   updateTitle: (value) =>
@@ -140,10 +160,19 @@ const useDiaryStore = create<DiaryState>((set) => ({
         i === index ? value : answer,
       ),
     })),
-  // updateImg: (value: string) =>
-  //   set((state) => ({
-  //     images: [...state.images, value],
-  //   })),
+  updateImgUrl: (value) =>
+    set((state) => ({
+      imageUrlList: [...state.imageUrlList, value],
+    })),
+  updateImgFile: (value) =>
+    set((state) => ({
+      imageFileList: [...state.imageFileList, value],
+    })),
+  deleteImage: (index) =>
+    set((state) => ({
+      imageUrlList: state.imageUrlList.filter((_, i) => i !== index),
+      imageFileList: state.imageFileList.filter((_, i) => i !== index),
+    })),
 }));
 
 export default useDiaryStore;

@@ -4,7 +4,7 @@ import axiosInstance from './axiosInstance';
 interface Diary {
   title: string;
   answers: string[];
-  images: string[];
+  images: File[];
 }
 
 interface Question {
@@ -73,17 +73,34 @@ export const getDiaryTitle = async (
 };
 
 export const addDiary = async (projectId: number, diary: Diary) => {
-  try {
-    const response = await axiosInstance.post(
-      `/projects/${projectId}/diaries`,
-      {
-        title: diary.title,
-        answers: diary.answers,
-        images: diary.images,
-      },
-    );
+  console.log(diary);
 
-    return response.status;
+  const formData = new FormData();
+
+  formData.append(
+    'request',
+    new Blob(
+      [
+        JSON.stringify({
+          title: diary.title,
+          answers: diary.answers,
+        }),
+      ],
+      { type: 'application/json' },
+    ),
+  );
+
+  // 각 파일을 FormData에 개별적으로 추가
+  diary.images.forEach((file) => {
+    formData.append('files', file);
+  });
+
+  try {
+    await axiosInstance.post(`/projects/${projectId}/diaries`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   } catch (error) {
     console.log('개발일지 등록 실패');
     console.log(error);
@@ -95,12 +112,38 @@ export const patchDiary = async (
   diaryId: number,
   diary: Diary,
 ) => {
+  console.log(diary);
+
+  const formData = new FormData();
+
+  formData.append(
+    'request',
+    new Blob(
+      [
+        JSON.stringify({
+          title: diary.title,
+          answers: diary.answers,
+        }),
+      ],
+      { type: 'application/json' },
+    ),
+  );
+
+  // 각 파일을 FormData에 개별적으로 추가
+  diary.images.forEach((file) => {
+    formData.append('files', file);
+  });
+
   try {
-    await axiosInstance.patch(`/projects/${projectId}/diaries/${diaryId}`, {
-      title: diary.title,
-      answers: diary.answers,
-      images: diary.images,
-    });
+    await axiosInstance.patch(
+      `/projects/${projectId}/diaries/${diaryId}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
   } catch (error) {
     console.log('개발일지 수정 실패');
     console.log(error);

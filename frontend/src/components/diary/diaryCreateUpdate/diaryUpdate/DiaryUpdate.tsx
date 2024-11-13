@@ -21,7 +21,7 @@ function DiaryUpdate() {
 
   const diaryTitle = useDiaryStore((state) => state.title);
   const answerList = useDiaryStore((state) => state.answerList);
-  const imageList = useDiaryStore((state) => state.imageList);
+  const imageFileList = useDiaryStore((state) => state.imageFileList);
   const getDiaryDetail = useDiaryStore((state) => state.getDiaryDetail);
 
   const [textLengthErr, setTextLengthErr] = useState(true);
@@ -47,7 +47,7 @@ function DiaryUpdate() {
       await patchDiary(Number(pjtId), Number(diaryId), {
         title: diaryTitle,
         answers: answerList,
-        images: imageList,
+        images: imageFileList,
       });
 
       alert('개발일지 수정 완료!');

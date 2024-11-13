@@ -207,7 +207,6 @@ public class ProjectService {
         existingProject.setStartDate(request.getStartDate());
         existingProject.setEndDate(request.getEndDate());
         existingProject.setMemberCount(request.getMemberCount());
-//        existingProject.setImage(request.getImage());
 
         existingProject.getTags().clear();
         saveProjectTags(existingProject, request.getRole(), ProjectTagType.ROLE);

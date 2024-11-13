@@ -3,19 +3,22 @@ import style from './DiaryImgInput.module.css';
 import ImageUpload from '../../../../../assets/image/default/Image.svg';
 import Close from '../../../../../assets/image/icon/Close.svg';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import useDiaryStore from '../../../../../store/useDiaryStore';
 
 interface Props {
   index: number;
   question: string;
   description: string;
-  circleRef: React.RefObject<HTMLDivElement> | null;
+  addCircleRef: (ref: React.RefObject<HTMLDivElement>) => void;
 }
 
-function DiaryImgInput({ index, question, description, circleRef }: Props) {
+function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
+  const circleRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [files, setFiles] = useState<string[]>([]);
+  const { imageUrlList, updateImgUrl, updateImgFile, deleteImage } =
+    useDiaryStore();
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
@@ -23,7 +26,7 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
   const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const handleImgUploadClick = () => {
-    if (fileInputRef.current && files.length < 3) {
+    if (fileInputRef.current && imageUrlList.length < 3) {
       fileInputRef.current.click();
     }
   };
@@ -39,31 +42,7 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
     const file = event.dataTransfer.files?.[0];
 
     if (file) {
-      if (file) {
-        // 파일 크기 및 형식 확인
-        if (file.size > MAX_FILE_SIZE) {
-          alert('이미지 파일 크기는 5MB를 초과할 수 없습니다.');
-          return;
-        }
-        if (!SUPPORTED_FORMATS.includes(file.type)) {
-          alert('지원하는 이미지 형식은 PNG, JPG입니다.');
-          return;
-        }
-      }
-
-      // 업로드 진행률 시뮬레이션
-      let progress = 0;
-      const interval = setInterval(() => {
-        if (progress < 100) {
-          progress += 10;
-          setUploadProgress(progress);
-        } else {
-          clearInterval(interval);
-        }
-      }, 100);
-
-      const newImageUrl = URL.createObjectURL(file); // 새 이미지 URL 생성
-      setFiles((prevImgArr) => [...prevImgArr, newImageUrl]); // 이미지 상태 업데이트
+      validateFile(file);
     }
   };
 
@@ -71,38 +50,56 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
     const file = event.target.files?.[0];
 
     if (file) {
-      if (file) {
-        // 파일 크기 및 형식 확인
-        if (file.size > MAX_FILE_SIZE) {
-          alert('이미지 파일 크기는 5MB를 초과할 수 없습니다.');
-          return;
-        }
-        if (!SUPPORTED_FORMATS.includes(file.type)) {
-          alert('지원하는 이미지 형식은 PNG, JPG입니다.');
-          return;
-        }
-      }
-
-      // 업로드 진행률 시뮬레이션
-      let progress = 0;
-      const interval = setInterval(() => {
-        if (progress < 100) {
-          progress += 10;
-          setUploadProgress(progress);
-        } else {
-          clearInterval(interval);
-        }
-      }, 100);
-
-      const newImageUrl = URL.createObjectURL(file); // 새 이미지 URL 생성
-      setFiles((prevImgArr) => [...prevImgArr, newImageUrl]); // 이미지 상태 업데이트
+      validateFile(file);
     }
   };
 
-  const handleImageDelete = (deleteIndex: number) => {
-    setFiles((prevFiles) => prevFiles.filter((_, idx) => idx !== deleteIndex));
+  const validateFile = (file: File) => {
+    if (file) {
+      // 파일 크기 및 형식 확인
+      if (file.size > MAX_FILE_SIZE) {
+        alert('이미지 파일 크기는 5MB를 초과할 수 없습니다.');
+        return;
+      }
+      if (!SUPPORTED_FORMATS.includes(file.type)) {
+        alert('지원하는 이미지 형식은 PNG, JPG입니다.');
+        return;
+      }
+    }
+
+    uploadPreviewImage(file);
+
+    updateImgFile(file);
   };
 
+  const uploadPreviewImage = (file: File) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      updateImgUrl(reader.result as string);
+    };
+
+    reader.readAsDataURL(file);
+
+    // 업로드 진행률 시뮬레이션
+    let progress = 0;
+    const interval = setInterval(() => {
+      if (progress < 100) {
+        progress += 10;
+        setUploadProgress(progress);
+      } else {
+        clearInterval(interval);
+      }
+    }, 100);
+  };
+
+  const handleImageDelete = (deleteIndex: number) => {
+    deleteImage(deleteIndex);
+  };
+
+  useEffect(() => {
+    addCircleRef(circleRef);
+  }, []);
   return (
     <div className={style.container}>
       <div className={style.questionContainer}>
@@ -113,9 +110,9 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
       </div>
       <p className={style.description}>{description}</p>
       <div className={style.imgContainer}>
-        {files.length > 0 && (
+        {imageUrlList.length > 0 && (
           <div className={style.imgInputBlock}>
-            {files.map((file, index) => (
+            {imageUrlList.map((file, index) => (
               <div key={index} className={style.imgExBlock}>
                 <img
                   key={index + 'img'}
@@ -143,7 +140,7 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
           </div>
         )}
 
-        {files.length < 3 && (
+        {imageUrlList.length < 3 && (
           <div
             className={style.imgInputInfo}
             onDrop={handleDrop}

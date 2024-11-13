@@ -21,7 +21,7 @@ function DiaryUpdate() {
 
   const diaryTitle = useDiaryStore((state) => state.title);
   const answerList = useDiaryStore((state) => state.answerList);
-  const imageList = useDiaryStore((state) => state.imageList);
+  const imageFileList = useDiaryStore((state) => state.imageFileList);
   const getDiaryDetail = useDiaryStore((state) => state.getDiaryDetail);
 
   const [textLengthErr, setTextLengthErr] = useState(true);
@@ -47,7 +47,7 @@ function DiaryUpdate() {
       await patchDiary(Number(pjtId), Number(diaryId), {
         title: diaryTitle,
         answers: answerList,
-        images: imageList,
+        images: imageFileList,
       });
 
       alert('개발일지 수정 완료!');
@@ -68,12 +68,14 @@ function DiaryUpdate() {
   };
 
   useEffect(() => {
-    getDiaryDetail(Number(pjtId), Number(diaryId));
-  }, [getDiaryDetail]);
-
-  useEffect(() => {
+    console.log('초기  길이 확인');
     checkTotalLength();
   }, [answerList]);
+
+  useEffect(() => {
+    console.log('diary detail 상태 초기화');
+    getDiaryDetail(Number(pjtId), Number(diaryId));
+  }, []);
 
   if (isLoading) {
     return (

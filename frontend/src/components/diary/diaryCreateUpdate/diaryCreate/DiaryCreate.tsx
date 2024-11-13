@@ -27,7 +27,7 @@ function DiaryCreate() {
   // const questionList = useDiaryStore((state) => state.questionList);
   const diaryTitle = useDiaryStore((state) => state.title);
   const answerList = useDiaryStore((state) => state.answerList);
-  const imageList = useDiaryStore((state) => state.imageList);
+  const imageFileList = useDiaryStore((state) => state.imageFileList);
   const initDiary = useDiaryStore((state) => state.initDiary);
   const updateTitle = useDiaryStore((state) => state.updateTitle);
 
@@ -85,7 +85,7 @@ function DiaryCreate() {
     await addDiary(project.projectId, {
       title: diaryTitle,
       answers: answerList,
-      images: imageList,
+      images: imageFileList,
     });
     alert('개발일지 저장 완료');
     navigate(`/project/${project.projectId}`);
@@ -104,12 +104,12 @@ function DiaryCreate() {
   };
 
   useEffect(() => {
-    initDiary();
-  }, [initDiary]);
-
-  useEffect(() => {
     checkTotalLength();
   }, [answerList]);
+
+  useEffect(() => {
+    initDiary();
+  }, []);
 
   if (isLoading) {
     return (

@@ -50,6 +50,7 @@ public class DiaryService {
 
         List<TodayDiaryListItemResponse> diaries = todayDiaries.stream()
                 .map(diary -> TodayDiaryListItemResponse.builder()
+                        .projectId(diary.getProject().getId())
                         .diaryId(diary.getId())
                         .title(diary.getTitle())
                         .createDate(diary.getCreateDate())
@@ -124,19 +125,21 @@ public class DiaryService {
 
         // files가 비어있지 않다면 파일 저장
         if (files != null && !files.isEmpty()) {
-            diary.setDiaryImages(new HashSet<>()); // null을 허용하되 필요 시 초기화
+            diary.setDiaryImages(new HashSet<>());
             files.forEach(image -> {
-                String imageUrl = null;
-                try {
-                    imageUrl = s3Util.upload(image);
-                } catch (IOException e) {
-                    throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+                if (!image.isEmpty()) {  // 각 파일이 비어있지 않은 경우에만 처리
+                    String imageUrl = null;
+                    try {
+                        imageUrl = s3Util.upload(image);
+                    } catch (IOException e) {
+                        throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+                    }
+                    DiaryImage diaryImage = DiaryImage.builder()
+                            .diary(diary)
+                            .url(imageUrl)
+                            .build();
+                    diary.getDiaryImages().add(diaryImage);
                 }
-                DiaryImage diaryImage = DiaryImage.builder()
-                        .diary(diary)
-                        .url(imageUrl)
-                        .build();
-                diary.getDiaryImages().add(diaryImage);
             });
         }
 
@@ -171,7 +174,6 @@ public class DiaryService {
                 .build();
     }
 
-
     @Transactional
     public void updateDiary(Integer projectId, Integer diaryId, DiaryUpdateRequest request, List<MultipartFile> files) {
         Long kakaoId = LoginUser.getKakaoId();
@@ -203,40 +205,40 @@ public class DiaryService {
             }
         }
 
-        // 기존 사진 정보 지우기
-        for(DiaryImage oldImage : diary.getDiaryImages()){
-            String oldImageUrl = oldImage.getUrl();
-            s3Util.deleteFile(oldImageUrl);
+        // 기존 사진들이 있다면 삭제
+        if (diary.getDiaryImages() != null) {
+            for (DiaryImage oldImage : diary.getDiaryImages()) {
+                String oldImageUrl = oldImage.getUrl();
+                s3Util.deleteFile(oldImageUrl);
+            }
+            diary.getDiaryImages().clear();
         }
 
-        if(diary.getDiaryImages() == null){
-            diary.setDiaryImages(new HashSet<>());
-        }
-        diary.getDiaryImages().clear();
+        // 새로운 파일들이 있는 경우에만 처리
+        if (files != null && !files.isEmpty()) {
+            if (diary.getDiaryImages() == null) {
+                diary.setDiaryImages(new HashSet<>());
+            }
 
-
-
-        // 파일 리스트가 비어있지 않으면 변경된 사진으로 재업로드
-        if ( files != null && !files.isEmpty()) {
             files.forEach(image -> {
-                String imageUrl = null;
-                try {
-                    imageUrl = s3Util.upload(image);
-                } catch (IOException e) {
-                    throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+                if (!image.isEmpty()) {  // 각 파일이 비어있지 않은 경우에만 처리
+                    String imageUrl = null;
+                    try {
+                        imageUrl = s3Util.upload(image);
+                    } catch (IOException e) {
+                        throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+                    }
+                    DiaryImage diaryImage = DiaryImage.builder()
+                            .diary(diary)
+                            .url(imageUrl)
+                            .build();
+                    diary.getDiaryImages().add(diaryImage);
                 }
-
-                DiaryImage diaryImage = DiaryImage.builder()
-                        .diary(diary)
-                        .url(imageUrl)
-                        .build();
-                diary.getDiaryImages().add(diaryImage);
             });
         }
 
         log.info("개발일지 수정 완료. kakaoId: {}, projectId: {}, diaryId: {}", kakaoId, projectId, diaryId);
     }
-
 
     @Transactional
     public void deleteDiary(Integer projectId, Integer diaryId) {

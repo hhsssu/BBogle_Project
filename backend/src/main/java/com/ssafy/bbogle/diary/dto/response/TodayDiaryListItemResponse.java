@@ -22,4 +22,5 @@ public class TodayDiaryListItemResponse {
     @Schema(description = "프로젝트 이름")
     private String projectTitle;
 
+    private Integer projectId;    // 프로젝트 ID 필드 추가
 }

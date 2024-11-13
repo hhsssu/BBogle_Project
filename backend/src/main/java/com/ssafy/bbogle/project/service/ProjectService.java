@@ -217,10 +217,15 @@ public class ProjectService {
         Long kakaoId = LoginUser.getKakaoId();
         logger.info("프로젝트 종료 요청을 받았습니다. kakaoId: {}, projectId: {}", kakaoId, projectId);
 
+        // 프로젝트 상태 변경
         Project existingProject = projectRepository.findByIdAndUser_KakaoId(projectId, kakaoId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PROJECT_NOT_FOUND));
-
         existingProject.setStatus(false);
+
+        // 알림 상태도 false로 변경
+        Notification notification = notificationRepository.findByProject_Id(projectId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
+        notification.setStatus(false);
 
         logger.info("프로젝트가 성공적으로 종료되었습니다. kakaoId: {}, projectId: {}", kakaoId, projectId);
     }

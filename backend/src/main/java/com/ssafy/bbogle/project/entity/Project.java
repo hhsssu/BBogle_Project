@@ -56,6 +56,7 @@ public class Project {
     @Column(name = "member_count", nullable = false)
     private Integer memberCount;
 
+    @Setter
     @Column(name = "status", columnDefinition = "TINYINT", nullable = false)
     private boolean status;
 

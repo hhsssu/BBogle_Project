@@ -96,6 +96,8 @@ const useDiaryStore = create<DiaryState>((set) => ({
     });
 
     if (data.images) {
+      set(() => ({ imageFileList: [] }));
+
       data.images.map(async (image: string) => {
         const response = await fetch(image);
         const blob = await response.blob();

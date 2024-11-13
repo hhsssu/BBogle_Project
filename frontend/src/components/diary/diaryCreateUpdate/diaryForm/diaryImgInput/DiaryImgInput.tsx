@@ -16,8 +16,13 @@ interface Props {
 function DiaryImgInput({ index, question, description, circleRef }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { imageUrlList, updateImgUrl, updateImgFile, deleteImage } =
-    useDiaryStore();
+  const {
+    imageUrlList,
+    imageFileList,
+    updateImgUrl,
+    updateImgFile,
+    deleteImage,
+  } = useDiaryStore();
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
@@ -94,6 +99,9 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
 
   const handleImageDelete = (deleteIndex: number) => {
     deleteImage(deleteIndex);
+
+    console.log(imageUrlList);
+    console.log(imageFileList);
   };
 
   return (

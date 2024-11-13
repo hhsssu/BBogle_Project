@@ -90,10 +90,17 @@ export const addDiary = async (projectId: number, diary: Diary) => {
     ),
   );
 
-  // 각 파일을 FormData에 개별적으로 추가
-  diary.images.forEach((file) => {
-    formData.append('files', file);
-  });
+  if (diary.images.length === 0) {
+    formData.append(
+      'files',
+      new Blob([], { type: 'application/octet-stream' }),
+    );
+  } else {
+    // 각 파일을 FormData에 개별적으로 추가
+    diary.images.forEach((file) => {
+      formData.append('files', file);
+    });
+  }
 
   try {
     await axiosInstance.post(`/projects/${projectId}/diaries`, formData, {
@@ -129,10 +136,17 @@ export const patchDiary = async (
     ),
   );
 
-  // 각 파일을 FormData에 개별적으로 추가
-  diary.images.forEach((file) => {
-    formData.append('files', file);
-  });
+  if (diary.images.length === 0) {
+    formData.append(
+      'files',
+      new Blob([], { type: 'application/octet-stream' }),
+    );
+  } else {
+    // 각 파일을 FormData에 개별적으로 추가
+    diary.images.forEach((file) => {
+      formData.append('files', file);
+    });
+  }
 
   try {
     await axiosInstance.patch(

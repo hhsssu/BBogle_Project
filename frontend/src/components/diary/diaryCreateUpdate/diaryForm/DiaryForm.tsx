@@ -1,6 +1,6 @@
 import style from './DiaryForm.module.css';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import useDiaryStore from '../../../../store/useDiaryStore';
 import DiaryEntryInput from './diaryEntryInput/DiaryEntryInput';

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { refreshAccessToken } from '../api/authApi';
+import useAuthStore from '../store/useAuthStore';
 
 const API_LINK = import.meta.env.VITE_API_URL;
 
@@ -115,7 +116,11 @@ axiosInstance.interceptors.response.use(
         }
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        console.error('Access Token 재발급 실패', refreshError);
+        // RefreshToken이 만료된 경우 예외 처리
+        const { setAuthenticated, setLoading } = useAuthStore.getState();
+        setAuthenticated(false);
+        setLoading(false);
+
         return Promise.reject(refreshError);
       } finally {
         // 토큰 갱신 상태 초기화

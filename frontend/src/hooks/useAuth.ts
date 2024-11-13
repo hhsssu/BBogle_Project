@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import useAuthStore from '../store/useAuthStore';
 import { fetchUserNickname } from '../api/authApi';
 
 export const useAuth = () => {
-  const { isAuthenticated, setAuthenticated } = useAuthStore();
-  const [loading, setLoading] = useState(true);
+  const { isAuthenticated, setAuthenticated, loading, setLoading } =
+    useAuthStore();
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -28,7 +28,7 @@ export const useAuth = () => {
     } else {
       setLoading(false); // 인증된 경우 바로 로딩 상태 해제
     }
-  }, [isAuthenticated, setAuthenticated]);
+  }, [isAuthenticated, setAuthenticated, setLoading]);
 
   return { isAuthenticated, loading };
 };

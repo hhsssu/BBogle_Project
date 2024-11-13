@@ -42,11 +42,12 @@ function Main() {
     const fetchProjects = async () => {
       const projectList = await getProgressProjectList();
       console.log('projectList : ', projectList);
-      setPjtList(projectList);
+      if (projectList) setPjtList(projectList);
     };
 
     // 유저 닉네임 조회
     fetchUserNickname();
+
     // 진행 중인 프로젝트 조회
     fetchProjects();
 

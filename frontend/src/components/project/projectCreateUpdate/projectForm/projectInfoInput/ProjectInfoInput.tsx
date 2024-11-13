@@ -7,7 +7,7 @@ import { useRef } from 'react';
 import useProjectStore from '../../../../../store/useProjectStore';
 
 interface Props {
-  image: string;
+  image: string | null;
   title: string;
   description: string;
 }

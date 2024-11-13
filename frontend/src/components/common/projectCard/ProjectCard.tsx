@@ -17,7 +17,7 @@ import ImageWithDefault from '../../my/ImageWithDefault';
 
 interface Props {
   pjtId: number;
-  imageSrc: string;
+  imageSrc: string | null;
   title: string;
   status: boolean;
   term: string;

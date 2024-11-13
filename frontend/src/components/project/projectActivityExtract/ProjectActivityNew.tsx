@@ -41,12 +41,16 @@ function ProjectActivityNew({
   };
 
   // 모든 경험 선택/해제 처리 함수
+  // TODO activityId 관련 오류
+
   const handleSelectAll = () => {
     // 선택 또는 해제된 상태에 따라 모든 활동을 선택하거나 해제
     const newSelectedState = !isAllSelected;
     const updatedSelectedActivities = activities.reduce(
       (acc, activity) => {
-        acc[activity.activityId] = newSelectedState;
+        if (activity.activityId !== undefined) {
+          acc[activity.activityId] = newSelectedState;
+        }
         return acc;
       },
       {} as { [key: number]: boolean },
@@ -59,7 +63,11 @@ function ProjectActivityNew({
   useEffect(() => {
     const allSelected =
       activities.length > 0 &&
-      activities.every((activity) => selectedActivities[activity.activityId]);
+      activities.every((activity) => {
+        return activity.activityId !== undefined
+          ? selectedActivities[activity.activityId]
+          : false;
+      });
     setIsAllSelected(allSelected);
   }, [selectedActivities, activities]);
 

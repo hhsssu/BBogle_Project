@@ -31,16 +31,16 @@ export const createSummary = async (content: string) => {
 
 // TODO 회고 ID?
 // 회고 수정
-export const updateSummary = async (content: string) => {
-  try {
-    // const response = await axiosInstance.patch(
-    //   `/projects/${projectId}/summary/${summaryId}`,
-    //   {
-    //     content: content,
-    //   },
-    // );
-    // console.log('회고 수정 성공: ', response.data);
-  } catch (error) {
-    console.error('프로젝트 회고 수정 실패: ', error);
-  }
-};
+// export const updateSummary = async (content: string) => {
+// try {
+// const response = await axiosInstance.patch(
+//   `/projects/${projectId}/summary/${summaryId}`,
+//   {
+//     content: content,
+//   },
+// );
+// console.log('회고 수정 성공: ', response.data);
+//   } catch (error) {
+//     console.error('프로젝트 회고 수정 실패: ', error);
+//   }
+// };

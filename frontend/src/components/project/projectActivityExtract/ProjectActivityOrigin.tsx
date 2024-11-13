@@ -46,7 +46,8 @@ function ProjectActivityOrigin({
     const newSelectedState = !isAllSelected;
     const updatedSelectedActivities = activities.reduce(
       (acc, activity) => {
-        acc[activity.activityId] = newSelectedState;
+        if (activity.activityId !== undefined)
+          acc[activity.activityId] = newSelectedState;
         return acc;
       },
       {} as { [key: number]: boolean },
@@ -59,7 +60,11 @@ function ProjectActivityOrigin({
   useEffect(() => {
     const allSelected =
       activities.length > 0 &&
-      activities.every((activity) => selectedActivities[activity.activityId]);
+      activities.every((activity) => {
+        return activity.activityId !== undefined
+          ? selectedActivities[activity.activityId]
+          : false;
+      });
     setIsAllSelected(allSelected);
   }, [selectedActivities, activities]);
 

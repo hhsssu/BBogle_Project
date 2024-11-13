@@ -12,7 +12,8 @@ import EmptyFolder from '../../assets/image/icon/EmptyFolder.svg';
 function ActivityList() {
   const nav = useNavigate();
   const navigate = useNavigate();
-  const { activities } = useActivityStore();
+  const activities = useActivityStore((state) => state.activities);
+  const fetchActivities = useActivityStore((state) => state.fetchActivities);
   // const {project, fetchProject} = useProjectStore();
 
   // 경험 수동 생성으로 이동
@@ -26,8 +27,7 @@ function ActivityList() {
 
   // 경험
   useEffect(() => {
-    // fetchActivities();
-    console.log(`activities: `, activities);
+    fetchActivities();
   }, []);
 
   const handleSearchPage = () => {
@@ -49,31 +49,28 @@ function ActivityList() {
         <span>키워드, 내용으로 검색</span>
       </button>
 
-      {/* 검색 모달 */}
-      {/* <ActivitySearchModal
-        isOpen={isOpen}
-        title={'경험 검색'}
-        onConfirm={navActivityCreate}
-        onClose={handleCloseSearchModal}
-      /> */}
-
       <section className={ActivityStyles.list}>
-        {activities.length > 0 ? (
-          activities.map((activityCard, index) => (
-            <div key={index}>
-              <ActivityCard
-                activityId={activityCard.activityId}
-                title={activityCard.title}
-                startDate={activityCard.startDate}
-                endDate={activityCard.endDate}
-                projectId={activityCard.projectId}
-                projectTitle={activityCard.projectTitle ?? ''}
-                keywords={activityCard.keywords}
-                isExtract={false}
-                onClick={() => navDetail(activityCard.activityId)}
-              />
-            </div>
-          ))
+        {Array.isArray(activities) && activities.length > 0 ? (
+          activities.map((activityCard, index) => {
+            if (activityCard.activityId === undefined) {
+              return null;
+            }
+            return (
+              <div key={index}>
+                <ActivityCard
+                  activityId={activityCard.activityId!}
+                  title={activityCard.title}
+                  startDate={new Date(activityCard.startDate)}
+                  endDate={new Date(activityCard.endDate)}
+                  projectId={activityCard.projectId}
+                  projectTitle={activityCard.projectTitle ?? ''}
+                  keywords={activityCard.keywords}
+                  isExtract={false}
+                  onClick={() => navDetail(activityCard.activityId!)}
+                />
+              </div>
+            );
+          })
         ) : (
           <>
             <div></div>

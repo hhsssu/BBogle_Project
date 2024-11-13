@@ -52,6 +52,21 @@ export const updateUserNickName = async (nickname: string) => {
   }
 };
 
+// 유저 프로필 이미지를 수정하는 API
+export const updateUserProfile = async (profile: FormData) => {
+  try {
+    // 서버에 이미지 업로드 요청
+    await axiosInstance.patch('/users/profile', profile, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  } catch (error) {
+    console.error('프로필 이미지 업로드 중 문제 발생', error);
+    throw error;
+  }
+};
+
 // 로그아웃 API
 export const logoutUser = async () => {
   try {

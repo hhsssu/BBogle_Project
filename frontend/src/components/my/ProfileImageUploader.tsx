@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import style from './ProfileImageUploader.module.css';
 import ImageWithDefault from './ImageWithDefault';
+import { updateUserProfile } from '../../api/authApi';
+import useUserStore from '../../store/useUserStore';
 
 // 이미지 파일
 import DownloadIcon from '../../assets/image/icon/Download.svg';
 import DefaultImage from '../../assets/image/default/Image.svg';
 import DefaultProfile from '../../assets/image/default/Profile.svg';
-import useUserStore from '../../store/useUserStore';
 
 interface ProfileImageUploaderProps {
   initialImage: null | string;
@@ -107,8 +108,33 @@ function ProfileImageUploader({
   };
 
   // 프로필 이미지 업데이트를 관리하는 함수
-  const handleUpdate = () => {
-    updateProfile(previewImage || '');
+  const handleUpdate = async () => {
+    if (!previewImage) {
+      alert('업로드할 이미지를 선택해주세요.');
+      return;
+    }
+
+    // File 객체로 변환
+    // 미리보기 이미지 URL을 통해 이미지 데이터 가져옴
+    const response = await fetch(previewImage);
+
+    //  Blob으로 변환
+    const blob = await response.blob();
+
+    // Blob 객체를 사용해 새로운 File 객체 생성
+    const file = new File([blob], 'profile_image.png', { type: blob.type });
+
+    // Form Data 생성
+    const formData = new FormData();
+    formData.append('profileImage', file);
+
+    try {
+      updateUserProfile(formData || null);
+      updateProfile(previewImage);
+    } catch (error) {
+      console.log(error);
+    }
+
     console.log('이미지 업데이트');
     onComplete(); // 수정 완료 후 모달 닫기
   };

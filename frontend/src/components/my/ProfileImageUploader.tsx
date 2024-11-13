@@ -87,6 +87,7 @@ function ProfileImageUploader({
 
     // 업로드 진행률 시뮬레이션
     let progress = 0;
+
     const interval = setInterval(() => {
       if (progress < 100) {
         progress += 10;
@@ -100,10 +101,25 @@ function ProfileImageUploader({
   // 미리보기 이미지를 다운로드하는 함수
   const downloadImage = () => {
     if (previewImage) {
-      const link = document.createElement('a');
-      link.href = previewImage;
-      link.download = 'uploaded_image.png';
-      link.click();
+      fetch(previewImage, { method: 'GET' })
+        .then((res) => {
+          return res.blob();
+        })
+        .then((blob) => {
+          const blobURL = URL.createObjectURL(blob);
+
+          // a 태그 생성 및 다운로드 속성 설정
+          const link = document.createElement('a');
+          link.href = blobURL;
+          link.download = `uploaded_image`; // 파일명 설정
+          link.click();
+
+          // a 태그 제거
+          link.remove();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
 

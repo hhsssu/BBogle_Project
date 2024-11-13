@@ -115,3 +115,13 @@ export const deleteDiary = async (projectId: number, diaryId: number) => {
     console.log(error);
   }
 };
+
+// 오늘 작성한 개발일지 조회 API
+export const fetchTodayDiary = async () => {
+  try {
+    const response = await axiosInstance.get('/diaries/today');
+    return response.data.diaries;
+  } catch (error) {
+    console.error('오늘 작성한 개발일지 조회 중 문제 발생', error);
+  }
+};

@@ -56,4 +56,5 @@
   resize: none;
   scrollbar-width: none;
   font-family: 'Pretendard-Regular';
+  white-space: pre-line;
 }

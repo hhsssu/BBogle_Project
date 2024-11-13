@@ -11,7 +11,10 @@
 
 .infoContainer > :nth-child(1) {
   width: 200px;
+  height: 200px;
+  aspect-ratio: 1 / 1;
   margin-right: 36px;
+  cursor: pointer;
 }
 
 .greeting {
@@ -30,9 +33,14 @@
   align-items: center;
 }
 
+.editIcon {
+  cursor: pointer;
+}
+
 .edit > div > img {
   margin-left: 8px;
   width: 14px;
+  cursor: pointer;
 }
 
 .editDesc {

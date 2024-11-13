@@ -26,6 +26,10 @@
   font-weight: 600;
 }
 
+.pjtSection {
+  height: 50vh;
+}
+
 .checkProgress {
   display: inline-flex;
   align-items: center;
@@ -58,9 +62,10 @@
 
 .emptyPjtContainer {
   display: flex;
+  height: 60vh;
   align-items: center;
   justify-self: center;
-  margin: 4rem;
+  margin: 0;
   gap: 1rem;
 }
 

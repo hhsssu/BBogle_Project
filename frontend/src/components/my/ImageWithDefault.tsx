@@ -28,7 +28,7 @@ function ImageWithDefault({
         width: '100%',
         height: '100%',
         objectFit: 'cover',
-        cursor: 'pointer',
+        borderRadius: '50%',
       }}
     />
   );

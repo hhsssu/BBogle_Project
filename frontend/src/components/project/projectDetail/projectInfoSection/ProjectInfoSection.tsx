@@ -3,12 +3,14 @@ import style from './ProjectInfoSection.module.css';
 import Setting from '../../../../assets/image/icon/Setting.svg';
 import Pencil from '../../../../assets/image/icon/Pencil.svg';
 import RedTrash from '../../../../assets/image/icon/RedTrash.svg';
+import DefaultProject from '../../../../assets/image/icon/DefaultProject.svg';
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useProjectStore from '../../../../store/useProjectStore';
 import Modal from '../../../common/modal/Modal';
 import { deleteProject } from '../../../../api/projectApi';
+import ImageWithDefault from '../../../my/ImageWithDefault';
 
 function ProjectInfoSection() {
   const { pjtId } = useParams();
@@ -71,11 +73,14 @@ function ProjectInfoSection() {
     <div className={style.container}>
       <div className={style.infoHeader}>
         <div className={style.pjtTitleContainer}>
-          <img
-            className={style.img}
-            src={PROJECT.image}
-            alt="프로젝트 이미지"
-          />
+          <div className={style.img}>
+            <ImageWithDefault
+              src={PROJECT.image}
+              alt="로고"
+              defaultSrc={DefaultProject}
+            />
+          </div>
+
           <span className={style.title}>{PROJECT.title}</span>
           <div ref={settingIconRef} className={style.settingBox}>
             <img

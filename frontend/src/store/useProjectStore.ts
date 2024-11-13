@@ -29,6 +29,9 @@ interface Project {
 }
 
 interface ProjectState {
+  // 프로젝트 데이터 로딩 상태
+  isProjectLoading: boolean;
+
   // 프로젝트 리스트
   projectList: ProjectCard[];
   getProjectList: () => void;
@@ -57,11 +60,15 @@ interface ProjectState {
 const useProjectStore = create<ProjectState>()(
   persist(
     (set) => ({
+      // 프로젝트 데이터 로딩 상태
+      isProjectLoading: false,
+
       // 프로젝트 리스트
       projectList: [],
       getProjectList: async () => {
+        set(() => ({ isProjectLoading: true }));
         const data = await getProjectList();
-        set(() => ({ projectList: data }));
+        set(() => ({ projectList: data, isProjectLoading: false }));
       },
 
       // 프로젝트 하나
@@ -99,9 +106,33 @@ const useProjectStore = create<ProjectState>()(
           },
         })),
       getProject: async (pjtId) => {
+        set(() => ({ isProjectLoading: true }));
+
         const data = await getProject(pjtId);
+
+        if (data.image) {
+          // 이미지 URL을 사용해 Blob으로 변환
+          const response = await fetch(data.image);
+          const blob = await response.blob();
+
+          // Blob을 File로 변환
+          const file = new File([blob], 'project_image.jpg', {
+            type: blob.type,
+          });
+
+          set(() => ({
+            isProjectLoading: false,
+            project: data,
+            projectImage: file,
+          }));
+
+          return;
+        }
+
         set(() => ({
+          isProjectLoading: false,
           project: data,
+          projectImage: null,
         }));
       },
       updateProjectField: (field, value) =>

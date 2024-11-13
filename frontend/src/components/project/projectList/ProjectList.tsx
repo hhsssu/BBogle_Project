@@ -1,14 +1,19 @@
-import ProjectCard from '../../common/projectCard/ProjectCard';
 import style from './ProjectList.module.css';
+
+import Bubble from '../../../assets/lottie/Bubble.json';
+import EmptyFolder from '../../../assets/image/icon/EmptyFolder.svg';
+import Loading from '../../common/loading/Loading';
+
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useProjectStore from '../../../store/useProjectStore';
 
-import EmptyFolder from '../../../assets/image/icon/EmptyFolder.svg';
+import ProjectCard from '../../common/projectCard/ProjectCard';
+import useProjectStore from '../../../store/useProjectStore';
 
 function ProjectList() {
   const [onlyProgress, setOnlyProgress] = useState(false);
 
+  const isProjectLoading = useProjectStore((state) => state.isProjectLoading);
   const projectList = useProjectStore((state) => state.projectList);
   const getProjectList = useProjectStore((state) => state.getProjectList);
 
@@ -29,6 +34,16 @@ function ProjectList() {
   useEffect(() => {
     getProjectList();
   }, []);
+
+  if (isProjectLoading) {
+    return (
+      <Loading
+        isLoading={isProjectLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   return (
     <div className={style.container}>

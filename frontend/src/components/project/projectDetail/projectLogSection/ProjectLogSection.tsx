@@ -6,6 +6,7 @@ import useProjectStore from '../../../../store/useProjectStore';
 
 import DiaryList from '../../../diary/diaryList/DiaryList';
 import useDiaryStore from '../../../../store/useDiaryStore';
+import Summary from '../../../summary/Summary';
 
 function ProjectLogSection() {
   const navigate = useNavigate();
@@ -75,9 +76,13 @@ function ProjectLogSection() {
           </div>
         )}
       </div>
-      <div className={style.tabContentSection}>
-        {tabIdx === 0 ? <DiaryList /> : ''}
-      </div>{' '}
+      {tabIdx === 0 ? (
+        <div className={style.tabContentSection}>
+          <DiaryList />
+        </div>
+      ) : (
+        <Summary />
+      )}
     </div>
   );
 }

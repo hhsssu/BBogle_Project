@@ -32,9 +32,18 @@ function ProjectActivityList({
               projectTitle={activityCard.projectTitle ?? ''}
               keywords={activityCard.keywords}
               isExtract={true}
-              isSelected={!!selectedActivities[activityCard.activityId]}
-              onClick={() => handleSelect(activityCard.activityId)}
-              onPreviewClick={() => handlePreview(activityCard.activityId)}
+              isSelected={
+                activityCard.activityId !== undefined &&
+                !!selectedActivities[activityCard.activityId]
+              }
+              onClick={() =>
+                activityCard.activityId !== undefined &&
+                handleSelect(activityCard.activityId)
+              }
+              onPreviewClick={() =>
+                activityCard.activityId !== undefined &&
+                handlePreview(activityCard.activityId)
+              }
             />
           </div>
         ))

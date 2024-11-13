@@ -9,10 +9,10 @@ interface Keyword {
 }
 
 interface ActivityInfoProps {
-  activityId: number;
+  activityId?: number | undefined;
   title: string;
-  startDate: Date | null;
-  endDate: Date | null;
+  startDate: Date;
+  endDate: Date;
   projectId?: number;
   projectTitle?: string | undefined;
   keywords: Keyword[];
@@ -40,7 +40,7 @@ function ActivityCard({
   // 경험 추출 선택 페이지에서의 경험 카드
   const handleDetail = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (onPreviewClick) {
+    if (onPreviewClick && activityId !== undefined) {
       onPreviewClick(activityId);
     }
   };

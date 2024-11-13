@@ -16,6 +16,9 @@ function ProjectInfoInput({ image, title, description }: Props) {
   const updateProject = useProjectStore((state) => state.updateProjectField);
   const { titleError, setTitleError, setErrMsgOn } = useProjectStore();
 
+  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+  const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
+
   // const [imgSrc, setImgSrc] = useState(project.imgSrc);
   const imgInputRef = useRef<HTMLInputElement>(null);
 
@@ -27,11 +30,31 @@ function ProjectInfoInput({ image, title, description }: Props) {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
     if (file) {
-      const newImageUrl = URL.createObjectURL(file); // 새 이미지 URL 생성
-      // setImgSrc(newImageUrl); // 이미지 상태 업데이트
-      updateProject('image', newImageUrl);
+      // 파일 크기 및 형식 확인
+      if (file.size > MAX_FILE_SIZE) {
+        alert('이미지 파일 크기는 5MB를 초과할 수 없습니다.');
+        return;
+      }
+      if (!SUPPORTED_FORMATS.includes(file.type)) {
+        alert('지원하는 이미지 형식은 JPG, PNE입니다.');
+        return;
+      }
+
+      uploadImage(file);
     }
+  };
+
+  const uploadImage = (file: File) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      updateProject('image', reader.result as string);
+    };
+
+    reader.readAsDataURL(file);
+    console.log(file);
   };
 
   const handleTitleError = (value: boolean) => {

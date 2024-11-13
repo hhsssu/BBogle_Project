@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import DefaultProject from '../assets/image/icon/DefaultProject.svg';
 import { persist } from 'zustand/middleware';
 import { getProject, getProjectList } from '../api/projectApi';
 
@@ -66,7 +65,7 @@ const useProjectStore = create<ProjectState>()(
       // 프로젝트 하나
       project: {
         projectId: -1,
-        image: DefaultProject,
+        image: '',
         title: '',
         description: '',
         status: false,
@@ -83,7 +82,7 @@ const useProjectStore = create<ProjectState>()(
         set(() => ({
           project: {
             projectId: -1,
-            image: DefaultProject,
+            image: '',
             title: '',
             description: '',
             status: false,

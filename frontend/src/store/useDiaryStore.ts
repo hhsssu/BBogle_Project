@@ -56,6 +56,8 @@ interface DiaryState {
   // title, answer 변동 시 활용
   updateTitle: (value: string) => void;
   updateAnswer: (index: number, value: string) => void;
+
+  // 이미지 처리
   updateImgUrl: (value: string) => void;
   updateImgFile: (value: File) => void;
   deleteImage: (index: number) => void;
@@ -137,6 +139,7 @@ const useDiaryStore = create<DiaryState>((set) => ({
       imageUrlList: [],
       imageFileList: [],
     }));
+
     set(() => ({ isLoading: false }));
   },
 
@@ -162,6 +165,8 @@ const useDiaryStore = create<DiaryState>((set) => ({
         i === index ? value : answer,
       ),
     })),
+
+  // 이미지 처리
   updateImgUrl: (value) =>
     set((state) => ({
       imageUrlList: [...state.imageUrlList, value],

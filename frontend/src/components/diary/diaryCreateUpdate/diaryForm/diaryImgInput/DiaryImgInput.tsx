@@ -3,26 +3,22 @@ import style from './DiaryImgInput.module.css';
 import ImageUpload from '../../../../../assets/image/default/Image.svg';
 import Close from '../../../../../assets/image/icon/Close.svg';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useDiaryStore from '../../../../../store/useDiaryStore';
 
 interface Props {
   index: number;
   question: string;
   description: string;
-  circleRef: React.RefObject<HTMLDivElement> | null;
+  addCircleRef: (ref: React.RefObject<HTMLDivElement>) => void;
 }
 
-function DiaryImgInput({ index, question, description, circleRef }: Props) {
+function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
+  const circleRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const {
-    imageUrlList,
-    imageFileList,
-    updateImgUrl,
-    updateImgFile,
-    deleteImage,
-  } = useDiaryStore();
+  const { imageUrlList, updateImgUrl, updateImgFile, deleteImage } =
+    useDiaryStore();
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
@@ -74,6 +70,16 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
     uploadPreviewImage(file);
 
     updateImgFile(file);
+  };
+
+  const uploadPreviewImage = (file: File) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      updateImgUrl(reader.result as string);
+    };
+
+    reader.readAsDataURL(file);
 
     // 업로드 진행률 시뮬레이션
     let progress = 0;
@@ -87,23 +93,13 @@ function DiaryImgInput({ index, question, description, circleRef }: Props) {
     }, 100);
   };
 
-  const uploadPreviewImage = (file: File) => {
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      updateImgUrl(reader.result as string);
-    };
-
-    reader.readAsDataURL(file);
-  };
-
   const handleImageDelete = (deleteIndex: number) => {
     deleteImage(deleteIndex);
-
-    console.log(imageUrlList);
-    console.log(imageFileList);
   };
 
+  useEffect(() => {
+    addCircleRef(circleRef);
+  }, []);
   return (
     <div className={style.container}>
       <div className={style.questionContainer}>

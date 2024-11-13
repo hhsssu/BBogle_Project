@@ -104,12 +104,12 @@ function DiaryCreate() {
   };
 
   useEffect(() => {
-    initDiary();
-  }, [initDiary]);
-
-  useEffect(() => {
     checkTotalLength();
   }, [answerList]);
+
+  useEffect(() => {
+    initDiary();
+  }, []);
 
   if (isLoading) {
     return (

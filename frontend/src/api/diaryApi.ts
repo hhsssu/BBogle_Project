@@ -52,9 +52,6 @@ export const getDiaryTitle = async (
   questions: Question[],
   answers: string[],
 ) => {
-  console.log(questions);
-  console.log(answers);
-
   const response = await axios.post(
     'http://localhost:8000/api/generate/title',
     [
@@ -73,8 +70,6 @@ export const getDiaryTitle = async (
 };
 
 export const addDiary = async (projectId: number, diary: Diary) => {
-  console.log(diary);
-
   const formData = new FormData();
 
   formData.append(
@@ -119,8 +114,6 @@ export const patchDiary = async (
   diaryId: number,
   diary: Diary,
 ) => {
-  console.log(diary);
-
   const formData = new FormData();
 
   formData.append(

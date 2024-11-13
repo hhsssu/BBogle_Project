@@ -11,7 +11,7 @@ import ActivityCreateStyles from './ActivityCreate.module.css';
 
 import BlueXIcon from '../../../assets/image/icon/BlueX.svg';
 import YellowXIcon from '../../../assets/image/icon/YellowX.svg';
-import useActivityStore from '../../../store/useActivityStore';
+// import useActivityStore from '../../../store/useActivityStore';
 
 interface ActivityFormProps {
   activityId?: number; // 작성 페이지에서는 받을 필요 없음
@@ -48,15 +48,15 @@ function ActivityForm({
     (state) => state.fetchActivityKeywords,
   );
   // TODO 폼 오류 설정하기
-  const {
-    titleError,
-    setTitleError,
-    contentError,
-    setContentError,
-    termError,
-    setTermError,
-    setErrMsgOn,
-  } = useActivityStore();
+  // const {
+  //   titleError,
+  //   setTitleError,
+  //   contentError,
+  //   setContentError,
+  //   termError,
+  //   setTermError,
+  //   setErrMsgOn,
+  // } = useActivityStore();
 
   const [title, setTitle] = useState(initialValues.title);
   const [content, setContent] = useState(initialValues.content);

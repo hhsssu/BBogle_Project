@@ -7,6 +7,7 @@ import com.ssafy.bbogle.project.dto.request.ProjectCreateRequest;
 import com.ssafy.bbogle.project.dto.request.ProjectUpdateRequest;
 import com.ssafy.bbogle.project.dto.response.ProjectListResponse;
 import com.ssafy.bbogle.project.dto.response.ProjectDetailResponse;
+import com.ssafy.bbogle.project.dto.response.ProjectTitleListResponse;
 import com.ssafy.bbogle.project.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,6 +15,8 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -126,5 +129,16 @@ public class ProjectController {
             @PathVariable("projectId") Integer projectId,
             @RequestBody ActivitySelectRequest request) {
         return null;
+    }
+
+    @Operation(summary = "내 프로젝트 조회 - 검색 조건용 (완료)", description = "검색 조건이나 개발일지 프로젝트 선택시 사용<br>"
+        + "프로젝트 아이디, 제목만 조회함")
+    @Parameters(value = {
+        @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
+    })
+    @GetMapping("/title")
+    public ResponseEntity<ProjectTitleListResponse> getAllProjectTitle() {
+        ProjectTitleListResponse result = projectService.getAllProjectTitle();
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 }

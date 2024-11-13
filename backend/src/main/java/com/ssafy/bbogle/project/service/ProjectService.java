@@ -12,6 +12,8 @@ import com.ssafy.bbogle.project.dto.request.ProjectUpdateRequest;
 import com.ssafy.bbogle.project.dto.response.ProjectDetailResponse;
 import com.ssafy.bbogle.project.dto.response.ProjectListItemResponse;
 import com.ssafy.bbogle.project.dto.response.ProjectListResponse;
+import com.ssafy.bbogle.project.dto.response.ProjectTitleItemResponse;
+import com.ssafy.bbogle.project.dto.response.ProjectTitleListResponse;
 import com.ssafy.bbogle.project.entity.Project;
 import com.ssafy.bbogle.project.entity.ProjectTag;
 import com.ssafy.bbogle.project.entity.ProjectTagType;
@@ -287,5 +289,30 @@ public class ProjectService {
                 .collect(Collectors.toList());
 
         project.getTags().addAll(projectTags);
+    }
+
+    @Transactional
+    public ProjectTitleListResponse getAllProjectTitle() {
+
+        Long kakaoId = LoginUser.getKakaoId();
+
+        List<ProjectTitleItemResponse> projectTitleList = new ArrayList<>();
+
+        List<Project> projects = projectRepository.findByUser_KakaoId(kakaoId);
+
+        // 프로젝트가 조회 된다면
+        if (!projects.isEmpty()) {
+            for (Project project : projects) {
+                ProjectTitleItemResponse item = ProjectTitleItemResponse.builder()
+                    .projectId(project.getId())
+                    .title(project.getTitle())
+                    .build();
+                projectTitleList.add(item);
+            }
+        }
+
+        return ProjectTitleListResponse.builder()
+            .projects(projectTitleList)
+            .build();
     }
 }

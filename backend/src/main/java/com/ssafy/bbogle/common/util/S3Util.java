@@ -50,10 +50,6 @@ public class S3Util {
 
         String fileName = generateFileName(file.getOriginalFilename());
 
-        // 업로드될 예상 URL 출력
-        String fileUrl = amazonS3.getUrl(bucket, fileName).toString();
-        System.out.println("파일이 업로드될 예상 URL: " + fileUrl);
-
         // 이미지 리사이징 및 JPEG 형식으로 변환
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Thumbnails.of(file.getInputStream())

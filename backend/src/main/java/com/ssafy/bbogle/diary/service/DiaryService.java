@@ -3,6 +3,7 @@ package com.ssafy.bbogle.diary.service;
 import com.ssafy.bbogle.common.exception.CustomException;
 import com.ssafy.bbogle.common.exception.ErrorCode;
 import com.ssafy.bbogle.common.util.LoginUser;
+import com.ssafy.bbogle.common.util.S3Util;
 import com.ssafy.bbogle.diary.dto.request.DiaryCreateRequest;
 import com.ssafy.bbogle.diary.dto.request.DiaryUpdateRequest;
 import com.ssafy.bbogle.diary.dto.response.*;
@@ -16,6 +17,7 @@ import com.ssafy.bbogle.project.entity.Project;
 import com.ssafy.bbogle.project.repository.ProjectRepository;
 import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.user.repository.UserRepository;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Slf4j
@@ -36,6 +39,7 @@ public class DiaryService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
+    private final S3Util s3Util;
 
     public TodayDiaryListResponse getTodayDiary() {
         Long kakaoId = LoginUser.getKakaoId();
@@ -81,7 +85,7 @@ public class DiaryService {
     }
 
     @Transactional
-    public void createDiary(Integer projectId, DiaryCreateRequest request) {
+    public void createDiary(Integer projectId, DiaryCreateRequest request, List<MultipartFile> files) {
         Long kakaoId = LoginUser.getKakaoId();
         log.info("개발일지 작성 요청. kakaoId: {}, projectId: {}", kakaoId, projectId);
 
@@ -117,10 +121,17 @@ public class DiaryService {
             }
         }
 
-        // diaryImages가 null일 수 있으므로 체크 후 초기화
-        if (request.getImages() != null && !request.getImages().isEmpty()) {
+
+        // files가 비어있지 않다면 파일 저장
+        if (files != null && !files.isEmpty()) {
             diary.setDiaryImages(new HashSet<>()); // null을 허용하되 필요 시 초기화
-            request.getImages().forEach(imageUrl -> {
+            files.forEach(image -> {
+                String imageUrl = null;
+                try {
+                    imageUrl = s3Util.upload(image);
+                } catch (IOException e) {
+                    throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+                }
                 DiaryImage diaryImage = DiaryImage.builder()
                         .diary(diary)
                         .url(imageUrl)
@@ -162,7 +173,7 @@ public class DiaryService {
 
 
     @Transactional
-    public void updateDiary(Integer projectId, Integer diaryId, DiaryUpdateRequest request) {
+    public void updateDiary(Integer projectId, Integer diaryId, DiaryUpdateRequest request, List<MultipartFile> files) {
         Long kakaoId = LoginUser.getKakaoId();
         log.info("개발일지 수정 요청. kakaoId: {}, projectId: {}, diaryId: {}", kakaoId, projectId, diaryId);
 
@@ -192,12 +203,29 @@ public class DiaryService {
             }
         }
 
-        if (request.getImages() != null && !request.getImages().isEmpty()) {
-            if (diary.getDiaryImages() == null) {
-                diary.setDiaryImages(new HashSet<>()); // null일 경우 초기화
-            }
-            diary.getDiaryImages().clear();
-            request.getImages().forEach(imageUrl -> {
+        // 기존 사진 정보 지우기
+        for(DiaryImage oldImage : diary.getDiaryImages()){
+            String oldImageUrl = oldImage.getUrl();
+            s3Util.deleteFile(oldImageUrl);
+        }
+
+        if(diary.getDiaryImages() == null){
+            diary.setDiaryImages(new HashSet<>());
+        }
+        diary.getDiaryImages().clear();
+
+
+
+        // 파일 리스트가 비어있지 않으면 변경된 사진으로 재업로드
+        if ( files != null && !files.isEmpty()) {
+            files.forEach(image -> {
+                String imageUrl = null;
+                try {
+                    imageUrl = s3Util.upload(image);
+                } catch (IOException e) {
+                    throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+                }
+
                 DiaryImage diaryImage = DiaryImage.builder()
                         .diary(diary)
                         .url(imageUrl)

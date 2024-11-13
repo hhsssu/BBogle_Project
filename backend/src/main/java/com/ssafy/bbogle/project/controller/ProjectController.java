@@ -30,7 +30,7 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @Operation(summary = "프로젝트 생성 [完]",
+    @Operation(summary = "프로젝트 생성 [完] - Postman으로 하세요",
             description = "role과 skill은 List<String> 형태로 요청<br>"
                     + "알림은 꺼짐이 false(0), 켜짐이 true(1)<br>"
                     + "알림 시간은 hour, minute 정보만 요청")
@@ -66,7 +66,7 @@ public class ProjectController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "프로젝트 정보 수정 [完]",
+    @Operation(summary = "프로젝트 정보 수정 [完] - Postman으로 하세요",
             description = "role과 skill은 List<String> 형태로 요청<br>"
                     + "알림은 꺼짐이 false(0), 켜짐이 true(1)<br>"
                     + "알림 시간은 hour, minute 정보만 요청")

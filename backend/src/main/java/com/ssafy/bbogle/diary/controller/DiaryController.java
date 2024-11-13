@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,15 +67,16 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.getAllDiariesDetail(projectId));
     }
 
-    @Operation(summary = "개발일지 등록 [FINISH]")
+    @Operation(summary = "개발일지 등록 [FINISH] - Postman으로 하세요")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH)
     })
     @PostMapping("/projects/{projectId}/diaries")
     public ResponseEntity<String> createDiary(
             @PathVariable("projectId") Integer projectId,
-            @Valid @RequestBody DiaryCreateRequest request) {
-        diaryService.createDiary(projectId, request);
+            @Valid @RequestPart("request") DiaryCreateRequest request,
+            @RequestPart("files") List<MultipartFile> files) {
+        diaryService.createDiary(projectId, request, files);
         return ResponseEntity.ok("개발일지가 성공적으로 생성되었습니다.");
     }
 
@@ -89,7 +92,7 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.getDiaryDetail(projectId, diaryId));
     }
 
-    @Operation(summary = "개발일지 수정 [FINISH]")
+    @Operation(summary = "개발일지 수정 [FINISH] - Postman으로 하세요")
     @Parameters(value = {
             @Parameter(name = "projectId", description = "프로젝트 ID", in = ParameterIn.PATH),
             @Parameter(name = "diaryId", description = "개발일지 ID", in = ParameterIn.PATH)
@@ -98,8 +101,9 @@ public class DiaryController {
     public ResponseEntity<String> updateDiary(
             @PathVariable("projectId") Integer projectId,
             @PathVariable("diaryId") Integer diaryId,
-            @Valid @RequestBody DiaryUpdateRequest request) {
-        diaryService.updateDiary(projectId, diaryId, request);
+            @Valid @RequestPart("request") DiaryUpdateRequest request,
+            @RequestPart("files") List<MultipartFile> files) {
+        diaryService.updateDiary(projectId, diaryId, request, files);
         return ResponseEntity.ok("개발일지가 성공적으로 수정되었습니다.");
     }
 

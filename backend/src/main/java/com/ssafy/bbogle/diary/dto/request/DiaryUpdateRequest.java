@@ -23,6 +23,6 @@ public class DiaryUpdateRequest {
     @Schema(description = "답변")
     private List<String> answers;
 
-    @Schema(description = "첨부 이미지")
-    private List<String> images;
+//    @Schema(description = "첨부 이미지")
+//    private List<String> images;
 }

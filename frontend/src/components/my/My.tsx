@@ -1,25 +1,26 @@
 import style from './My.module.css';
+
+// 이미지 파일
 import EditIcon from '../../assets/image/icon/Edit.svg';
 import Empty from '../../assets/image/default/Diary.png';
 import EnterIcon from '../../assets/image/icon/Enter.svg';
-import ImageWithDefault from './ImageWithDefault';
-import RunnerWay from '../../assets/image/RunnerWay.png'; // TODO : 임시 이미지
 import DefaultImage from '../../assets/image/default/Profile.svg';
-import ProjectCard from '../common/projectCard/ProjectCard';
+
+import ImageWithDefault from './ImageWithDefault';
 import GoToDiary from '../common/button/GoToDiary';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import { useEffect, useState } from 'react';
 import ProfileImageUploader from './ProfileImageUploader';
+import { fetchTodayDiary } from '../../api/diaryApi';
+import DiaryCard from '../common/diaryCard/DiaryCard';
 
 // 타입 정의
 interface DiaryItem {
-  id: number;
-  imageSrc: string;
+  diaryId: number;
   title: string;
-  state: boolean;
-  term: string;
-  summary: string;
+  createDate: string;
+  projectTitle: string;
 }
 
 function My() {
@@ -33,22 +34,17 @@ function My() {
   } = useUserStore();
   const [newNickname, setNewNickname] = useState(user?.nickname || '');
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+  const [diaryList, setDiaryList] = useState<DiaryItem[]>([]);
 
   useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+    const fetchDiaries = async () => {
+      const todayDiary = await fetchTodayDiary();
+      if (todayDiary) setDiaryList(todayDiary);
+    };
 
-  // TODO : 개발일지 임시 데이터
-  const diaryList: DiaryItem[] = [
-    {
-      id: 6,
-      imageSrc: RunnerWay,
-      title: 'Park Run Adventures',
-      state: false,
-      term: '2024.07.01 ~ 2024.09.01',
-      summary: '도시 공원을 탐방하며 달리기 즐기기',
-    },
-  ];
+    fetchUser();
+    fetchDiaries();
+  }, [fetchUser]);
 
   // 카드 선택 시 프로젝트 페이지로 이동하는 함수
   const selectCard = (cardId: number) => {
@@ -148,16 +144,12 @@ function My() {
         <div className={style.pjtList}>
           {diaryList.length > 0 ? (
             diaryList.map((card, index) => (
-              <div key={index} onClick={() => selectCard(card.id)}>
-                <ProjectCard
+              <div key={index} onClick={() => selectCard(card.diaryId)}>
+                <DiaryCard
                   key={index}
-                  pjtId={card.id}
-                  imageSrc={card.imageSrc}
+                  diaryId={card.diaryId}
                   title={card.title}
-                  status={card.state}
-                  term={card.term}
-                  description={card.summary}
-                  notificationStatus={false}
+                  date={card.createDate}
                 />
               </div>
             ))

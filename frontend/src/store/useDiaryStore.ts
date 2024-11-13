@@ -5,17 +5,6 @@ interface Question {
   description: string;
 }
 
-// {
-//   "diaryId": 0,
-//   "title": "string",
-//   "answers": [
-//     "string"
-//   ],
-//   "images": [
-//     "string"
-//   ]
-// }
-
 interface DiaryState {
   // 개발일지 작성, 수정 및 상세 조회 - qna list
   questionList: Question[];

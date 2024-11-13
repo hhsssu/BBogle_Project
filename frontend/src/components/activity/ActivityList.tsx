@@ -52,26 +52,21 @@ function ActivityList() {
       <section className={ActivityStyles.list}>
         {Array.isArray(activities) && activities.length > 0 ? (
           activities.map((activityCard, index) => {
-            // startDate와 endDate가 null일 경우, new Date()를 호출하지 않음
-            const startDate = activityCard.startDate
-              ? new Date(activityCard.startDate)
-              : null;
-            const endDate = activityCard.endDate
-              ? new Date(activityCard.endDate)
-              : null;
-
+            if (activityCard.activityId === undefined) {
+              return null;
+            }
             return (
               <div key={index}>
                 <ActivityCard
-                  activityId={activityCard.activityId}
+                  activityId={activityCard.activityId!}
                   title={activityCard.title}
-                  startDate={startDate}
-                  endDate={endDate}
+                  startDate={new Date(activityCard.startDate)}
+                  endDate={new Date(activityCard.endDate)}
                   projectId={activityCard.projectId}
                   projectTitle={activityCard.projectTitle ?? ''}
                   keywords={activityCard.keywords}
                   isExtract={false}
-                  onClick={() => navDetail(activityCard.activityId)}
+                  onClick={() => navDetail(activityCard.activityId!)}
                 />
               </div>
             );

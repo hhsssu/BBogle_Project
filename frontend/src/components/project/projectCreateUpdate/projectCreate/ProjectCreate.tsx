@@ -16,6 +16,7 @@ function ProjectCreate() {
   const navigate = useNavigate();
 
   const project = useProjectStore((state) => state.project);
+  const projectImage = useProjectStore((state) => state.projectImage);
   const initProject = useProjectStore((state) => state.initProject);
 
   const {
@@ -62,7 +63,7 @@ function ProjectCreate() {
     setCreateModalOpen(!isCreateModalOpen);
 
     try {
-      await addProject(project);
+      await addProject(project, projectImage);
       navigate('/project');
     } catch (error) {
       alert('프로젝트 생성에 실패하였습니다');

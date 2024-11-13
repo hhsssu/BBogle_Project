@@ -4,7 +4,7 @@ import { getProject, getProjectList } from '../api/projectApi';
 
 interface ProjectCard {
   projectId: number;
-  image: string;
+  image: string | null;
   title: string;
   description: string;
   status: boolean;
@@ -16,7 +16,7 @@ interface ProjectCard {
 interface Project {
   projectId: number;
   title: string;
-  image: string;
+  image: string | null;
   description: string;
   startDate: string;
   endDate: string;
@@ -44,6 +44,8 @@ interface ProjectState {
   ) => void;
 
   // 프로젝트 생성/수정
+  projectImage: File | null;
+  setProjectImage: (value: File) => void;
   titleError: boolean;
   setTitleError: (value: boolean) => void;
   termError: boolean;
@@ -65,7 +67,7 @@ const useProjectStore = create<ProjectState>()(
       // 프로젝트 하나
       project: {
         projectId: -1,
-        image: '',
+        image: null,
         title: '',
         description: '',
         status: false,
@@ -80,9 +82,10 @@ const useProjectStore = create<ProjectState>()(
       setProject: (pjt) => set(() => ({ project: pjt })),
       initProject: () =>
         set(() => ({
+          projectImage: null,
           project: {
             projectId: -1,
-            image: '',
+            image: null,
             title: '',
             description: '',
             status: false,
@@ -105,6 +108,8 @@ const useProjectStore = create<ProjectState>()(
         set((state) => ({ project: { ...state.project, [field]: value } })),
 
       // 프로젝트 생성/수정
+      projectImage: null,
+      setProjectImage: (value) => set(() => ({ projectImage: value })),
       titleError: false,
       setTitleError: (value) => set(() => ({ titleError: value })),
       termError: false,

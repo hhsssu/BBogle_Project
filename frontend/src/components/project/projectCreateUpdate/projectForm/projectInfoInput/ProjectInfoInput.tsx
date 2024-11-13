@@ -14,7 +14,8 @@ interface Props {
 
 function ProjectInfoInput({ image, title, description }: Props) {
   const updateProject = useProjectStore((state) => state.updateProjectField);
-  const { titleError, setTitleError, setErrMsgOn } = useProjectStore();
+  const { setProjectImage, titleError, setTitleError, setErrMsgOn } =
+    useProjectStore();
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
@@ -42,11 +43,12 @@ function ProjectInfoInput({ image, title, description }: Props) {
         return;
       }
 
-      uploadImage(file);
+      uploadPreviewImage(file);
+      setProjectImage(file);
     }
   };
 
-  const uploadImage = (file: File) => {
+  const uploadPreviewImage = (file: File) => {
     const reader = new FileReader();
 
     reader.onloadend = () => {

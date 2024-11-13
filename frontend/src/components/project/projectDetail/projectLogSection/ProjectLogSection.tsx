@@ -39,7 +39,7 @@ function ProjectLogSection() {
             개발일지
             <div className={style.diaryCnt}>{32}</div>
           </div>
-          {PROJECT.status && (
+          {!PROJECT.status && (
             <div
               className={`${style.tab} ${tabIdx === 1 && style.tabActive}`}
               onClick={() => changeTab(1)}

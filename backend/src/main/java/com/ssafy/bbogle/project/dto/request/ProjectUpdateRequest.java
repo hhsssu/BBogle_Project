@@ -20,9 +20,6 @@ public class ProjectUpdateRequest {
     @Schema(description = "프로젝트명")
     private String title;
 
-    @Schema(description = "프로젝트 사진")
-    private String image;
-
     @Schema(description = "프로젝트 개요")
     private String description;
 

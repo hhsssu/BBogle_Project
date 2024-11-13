@@ -58,8 +58,8 @@ public class UserController {
         @Parameter(name = "profileImage", description = "프로필 사진")
     })
     @PatchMapping("/profile")
-    public ResponseEntity<String> updateProfile(@RequestParam("profileImage") MultipartFile file) {
-        // 파일 S3 업로드 로직 필요
+    public ResponseEntity<String> updateProfileImage(@RequestParam("profileImage") MultipartFile file) {
+        userService.updateProfileImage(file);
         return ResponseEntity.status(HttpStatus.OK).body("프로필 사진 수정 성공");
     }
 

@@ -4,6 +4,7 @@ import com.ssafy.bbogle.common.exception.CustomException;
 import com.ssafy.bbogle.common.exception.ErrorCode;
 import com.ssafy.bbogle.common.util.LoginUser;
 import com.ssafy.bbogle.common.util.RedisUtil;
+import com.ssafy.bbogle.common.util.S3Util;
 import com.ssafy.bbogle.user.dto.request.UpdateNicknameRequest;
 import com.ssafy.bbogle.user.dto.response.UserInfoResponse;
 import com.ssafy.bbogle.user.dto.response.UserNicknameResponse;
@@ -11,9 +12,11 @@ import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.user.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RedisUtil redisUtil;
+    private final S3Util s3Util;
 
     @Override
     public UserNicknameResponse getUserNickname() {
@@ -67,5 +71,28 @@ public class UserServiceImpl implements UserService {
             .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
 
         user.updateNickname(request.getNickname());
+    }
+
+    @Override
+    @Transactional
+    public void updateProfileImage(MultipartFile file) {
+        Long kakaoId = LoginUser.getKakaoId();
+        User user = userRepository.findByKakaoId(kakaoId)
+            .orElseThrow(()->new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        String oldProfileImage = user.getProfileImage();
+
+        try {
+            user.updateProfileImage(s3Util.upload(file));
+
+            if (oldProfileImage != null) {
+                s3Util.deleteFile(oldProfileImage);
+            }
+        } catch (IOException e) {
+            throw new CustomException(ErrorCode.FILE_UPLOAD_FAILED);
+        }
+
+
+
     }
 }

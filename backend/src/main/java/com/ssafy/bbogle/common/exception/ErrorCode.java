@@ -22,6 +22,9 @@ public enum ErrorCode {
     ACTIVITY_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 경험은 찾을 수 없습니다."),
     NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 알림 설정을 찾을 수 없습니다."),
 
+    // 400
+    FILE_UPLOAD_FAILED(HttpStatus.BAD_REQUEST, "파일 업로드에 실패했습니다."),
+
 
     // 403
     UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.FORBIDDEN, "접근 권한이 없습니다.");

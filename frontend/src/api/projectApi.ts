@@ -100,11 +100,9 @@ export const deleteProject = async (projectId: number) => {
   await axiosInstance.delete(`/projects/${projectId}`);
 };
 
-export const finishProject = async (projectId: number, content: string) => {
+export const finishProject = async (projectId: number) => {
   try {
-    await axiosInstance.patch(`/projects/${projectId}/end`, {
-      content,
-    });
+    await axiosInstance.patch(`/projects/${projectId}/end`);
   } catch (error) {
     console.log('프로젝트 종료 실패');
     console.log(error);

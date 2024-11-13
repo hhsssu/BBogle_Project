@@ -5,14 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import useProjectStore from '../../../../store/useProjectStore';
 
 import DiaryList from '../../../diary/diaryList/DiaryList';
+import useDiaryStore from '../../../../store/useDiaryStore';
 
 function ProjectLogSection() {
   const navigate = useNavigate();
 
   const [tabIdx, setTabIdx] = useState(0);
-  const [sortIdx, setSortIdx] = useState(0);
+
+  const { sortIdx, setSortIdx } = useDiaryStore();
 
   const PROJECT = useProjectStore((state) => state.project);
+  const diaryCnt = useDiaryStore((state) => state.diaryList.length);
 
   const changeTab = (idx: number) => {
     setTabIdx(idx);
@@ -27,7 +30,7 @@ function ProjectLogSection() {
   };
 
   return (
-    <div>
+    <div className={style.container}>
       <div className={style.tabSection}>
         {/* 탭 */}
         <div className={style.tabList}>
@@ -36,7 +39,7 @@ function ProjectLogSection() {
             onClick={() => changeTab(0)}
           >
             개발일지
-            <div className={style.diaryCnt}>{32}</div>
+            <div className={style.diaryCnt}>{diaryCnt}</div>
           </div>
           {!PROJECT.status && (
             <div

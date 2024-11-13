@@ -35,7 +35,12 @@ function QnaInput({
         <span className={style.question}>{question}</span>
       </div>
 
-      <p className={style.description}>{description}</p>
+      <p
+        className={style.description}
+        dangerouslySetInnerHTML={{
+          __html: description,
+        }}
+      ></p>
 
       <div className={style.answerContainer}>
         <textarea

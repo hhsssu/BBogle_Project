@@ -27,6 +27,11 @@ export const getDiary = async (projectId: number, diaryId: number) => {
   try {
     const response = await axiosInstance.get(
       `/projects/${projectId}/diaries/${diaryId}`,
+      // {
+      //   headers: {
+      //     'Cache-Control': 'no-cache',
+      //   },
+      // },
     );
 
     return response.data;

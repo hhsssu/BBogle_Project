@@ -70,6 +70,7 @@ const useDiaryStore = create<DiaryState>((set) => ({
   // 개발일지 전체 목록 조회
   diaryList: [],
   getDiaryList: async (pjtId) => {
+    set(() => ({ isLoading: true }));
     const data = await getDiaryList(pjtId);
     set(() => ({ diaryList: data }));
   },

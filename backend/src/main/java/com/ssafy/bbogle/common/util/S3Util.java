@@ -48,30 +48,34 @@ public class S3Util {
             throw new IllegalArgumentException("파일 크기가 5MB를 초과할 수 없습니다.");
         }
 
+//        String fileName = generateFileName(file.getOriginalFilename());
+//
+//        // 이미지 리사이징 및 JPEG 형식으로 변환
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        Thumbnails.of(file.getInputStream())
+//            .size(500, 500)  // 정사각형 사이즈로 리사이징
+//            .outputFormat("jpeg")  // JPEG 형식으로 설정
+//            .outputQuality(0.7)  // 품질 설정 (70%)
+//            .toOutputStream(outputStream);
+//
+//        // 리사이즈된 이미지 데이터 생성
+//        byte[] imageData = outputStream.toByteArray();
+//
+//        // 메타데이터 설정 - JPEG 타입으로 명시
+//        ObjectMetadata metadata = new ObjectMetadata();
+//        metadata.setContentType("image/jpeg");
+//        metadata.setContentLength(imageData.length);
+//
+//        // Amazon S3에 업로드
+//        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
+//
+//        PutObjectRequest putRequest = new PutObjectRequest(bucket, fileName, inputStream, metadata);
+//        amazonS3.putObject(putRequest);
+//
+//        return amazonS3.getUrl(bucket, fileName).toString();
+
         String fileName = generateFileName(file.getOriginalFilename());
-
-        // 이미지 리사이징 및 JPEG 형식으로 변환
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Thumbnails.of(file.getInputStream())
-            .size(500, 500)  // 정사각형 사이즈로 리사이징
-            .outputFormat("jpeg")  // JPEG 형식으로 설정
-            .outputQuality(0.7)  // 품질 설정 (70%)
-            .toOutputStream(outputStream);
-
-        // 리사이즈된 이미지 데이터 생성
-        byte[] imageData = outputStream.toByteArray();
-
-        // 메타데이터 설정 - JPEG 타입으로 명시
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentType("image/jpeg");
-        metadata.setContentLength(imageData.length);
-
-        // Amazon S3에 업로드
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
-
-        PutObjectRequest putRequest = new PutObjectRequest(bucket, fileName, inputStream, metadata);
-        amazonS3.putObject(putRequest);
-
+        amazonS3.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null));
         return amazonS3.getUrl(bucket, fileName).toString();
     }
 

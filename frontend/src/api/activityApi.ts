@@ -4,7 +4,7 @@ import axiosInstance from './axiosInstance';
 // 경험 수동 생성
 export const createActivity = async (activity: Activity) => {
   try {
-    const response = await axiosInstance.post('/activiies', {
+    const response = await axiosInstance.post('/activities', {
       title: activity.title,
       content: activity.content,
       startDate: activity.startDate,

@@ -24,6 +24,8 @@ function DiaryDetail() {
   const answerList = useDiaryStore((state) => state.answerList);
   const getDiaryDetail = useDiaryStore((state) => state.getDiaryDetail);
 
+  const diaryTitle = useDiaryStore((state) => state.title);
+
   const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
 
@@ -92,7 +94,7 @@ function DiaryDetail() {
         {projectTitle}
       </div>
 
-      <div className={style.diaryTitle}>내용 요약 한 줄</div>
+      <div className={style.diaryTitle}>{diaryTitle}</div>
       <button className={style.updateBtn} onClick={navDiaryUpdate}>
         수정
       </button>

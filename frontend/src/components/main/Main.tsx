@@ -59,7 +59,11 @@ function Main() {
 
   // 카드 선택
   const handleCard = (id: number) => {
-    setActiveProjectId(id);
+    if (id === activeProjectId) {
+      setActiveProjectId(null);
+    } else {
+      setActiveProjectId(id);
+    }
   };
 
   return (

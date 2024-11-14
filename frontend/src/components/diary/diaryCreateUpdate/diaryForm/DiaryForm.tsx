@@ -26,7 +26,6 @@ function DiaryForm() {
   const updateLineHeight = () => {
     lineRefArr.current.map(
       (line: React.RefObject<HTMLDivElement>, index: number) => {
-        console.log(circleRefArr);
         if (line.current && circleRefArr.current[index]?.current) {
           const topLoc =
             Number(circleRefArr.current[index].current?.offsetTop) +
@@ -35,9 +34,6 @@ function DiaryForm() {
             circleRefArr.current[index + 1].current?.offsetTop,
           );
           line.current.style.height = `${bottomCircle - topLoc}px`;
-          console.log(
-            `여기까지 오면 길이계산 된건데 : ${bottomCircle - topLoc}`,
-          );
         }
       },
     );

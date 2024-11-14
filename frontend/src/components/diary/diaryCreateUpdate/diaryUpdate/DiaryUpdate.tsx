@@ -8,7 +8,7 @@ import DiaryForm from '../diaryForm/DiaryForm';
 import useDiaryStore from '../../../../store/useDiaryStore';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Modal from '../../../common/modal/Modal';
 import { patchDiary } from '../../../../api/diaryApi';
 import Loading from '../../../common/loading/Loading';
@@ -23,6 +23,7 @@ function DiaryUpdate() {
   const answerList = useDiaryStore((state) => state.answerList);
   const imageFileList = useDiaryStore((state) => state.imageFileList);
   const getDiaryDetail = useDiaryStore((state) => state.getDiaryDetail);
+  const updateTitle = useDiaryStore((state) => state.updateTitle);
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
@@ -35,6 +36,12 @@ function DiaryUpdate() {
 
   const handleBackModal = () => {
     setBackModalOpen(!isBackModalOpen);
+  };
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    updateTitle(value);
   };
 
   const updateDiary = async () => {
@@ -94,7 +101,14 @@ function DiaryUpdate() {
         돌아가기
       </div>
 
-      <div className={style.diaryTitle}>{diaryTitle}</div>
+      {/* <div className={style.diaryTitle}>{diaryTitle}</div> */}
+      <input
+        className={style.diaryTitle}
+        type="text"
+        value={diaryTitle}
+        maxLength={50}
+        onChange={handleTitleChange}
+      />
 
       <DiaryForm />
 

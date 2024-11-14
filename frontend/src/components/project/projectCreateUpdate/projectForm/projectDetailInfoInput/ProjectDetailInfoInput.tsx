@@ -45,10 +45,10 @@ function ProjectDetailInfoInput({ startDate, endDate, memberCount }: Props) {
           <span>프로젝트 기간</span>
           <span className={style.requiredMark}>*</span>
         </p>
-        <div className={style.termInputContainer}>
-          <div
-            className={`${style.termSection} ${termError && style.termError}`}
-          >
+        <div
+          className={`${style.termInputContainer} ${termError && style.termError}`}
+        >
+          <div className={style.termSection}>
             <div className={style.dateWrapper}>
               <p className={style.dateLabel}>시작일</p>
               <input
@@ -59,7 +59,7 @@ function ProjectDetailInfoInput({ startDate, endDate, memberCount }: Props) {
                 onChange={handleStartDate}
               />
             </div>
-            <span className={style.separator}>~</span>
+            {/* <span className={style.separator}>~</span> */}
             <div className={style.dateWrapper}>
               <p className={style.dateLabel}>종료일</p>
               <input

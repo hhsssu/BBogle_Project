@@ -162,3 +162,80 @@
   max-width: 500px;
   position: relative;
 }
+
+/* 알람 허용 Card */
+.permission {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 312px;
+  background-color: #f3f3f387;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+/* 현재 권한 상태 */
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.alarmGuide {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.guideDetail {
+  font-size: 14px;
+}
+
+/* From Uiverse.io by namecho */
+.switch {
+  margin-left: auto;
+  position: relative;
+  display: inline-block;
+  width: 48px; /* 가로 길이 48px */
+  height: 24px; /* 세로 길이 24px */
+}
+
+.switch input[type='checkbox'] {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cccccc;
+  transition: 0.4s;
+  border-radius: 12px; /* 세로 길이의 절반 */
+}
+
+.slider::before {
+  position: absolute;
+  content: '';
+  height: 18px; /* 토글의 높이 18px */
+  width: 18px; /* 토글의 너비 18px */
+  left: 3px; /* 여백 조정 */
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+  background-color: #1c1516;
+}
+
+input:checked + .slider::before {
+  transform: translateX(24px); /* 토글 이동 거리 조정 */
+}

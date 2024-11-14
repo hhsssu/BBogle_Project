@@ -73,7 +73,7 @@ function ActivityUpdate() {
     }
 
     // 2. 날짜 오류 확인
-    if (activity.startDate > activity.endDate) {
+    if (activity.startDate === undefined || activity.endDate === undefined) {
       setTermError(true);
       setErrMsgOn(true);
       return;
@@ -147,7 +147,7 @@ function ActivityUpdate() {
 
       <Modal
         isOpen={isCreateModalOpen}
-        title={'경험을 생성하시겠어요?'}
+        title={'경험을 수정하시겠어요?'}
         content={''}
         onClose={handleCreateModal}
         onConfirm={handleUpdateActivity}

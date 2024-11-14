@@ -21,11 +21,12 @@ function AlarmPermissinon() {
         <div className={style.alarmGuide}>
           {permission ? '알림 권한이 켜져 있어요' : '알림 권한이 꺼져 있어요'}
         </div>
-        <label
-          className={style.switch}
-          onChange={() => setPermission(!permission)}
-        >
-          <input type="checkbox" checked={permission} />
+        <label className={style.switch}>
+          <input
+            type="checkbox"
+            checked={permission}
+            onChange={() => setPermission(!permission)}
+          />
           <span className={style.slider}></span>
         </label>
       </div>

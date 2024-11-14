@@ -74,7 +74,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(
             (List.of("http://localhost:5173", "http://localhost:8080", "https://k11b102.p.ssafy.io",
-                "https://bbogle.me")));
+                "https://bbogle.me","https://itsbbogletime.s3.ap-northeast-2.amazonaws.com")));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));

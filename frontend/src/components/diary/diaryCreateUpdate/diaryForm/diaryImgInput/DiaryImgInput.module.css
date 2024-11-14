@@ -44,7 +44,7 @@
 .imgContainer {
   width: 90%;
   box-sizing: border-box;
-  height: 50vh;
+  height: 50%;
   margin: 2vh 0vw 8vh 5vw;
   padding: 3vh 2vw;
   border: solid;
@@ -59,8 +59,12 @@
 }
 
 .imgInputBlock {
-  display: flex;
-  gap: 1rem;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(184px, 1fr));
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .imgExBlock {
@@ -104,8 +108,8 @@
   align-items: center;
   gap: 1rem;
   border-radius: 26px;
-  width: 40vw;
-  height: 16vh;
+  width: 50%;
+  height: 20%;
   cursor: pointer;
 }
 

@@ -36,10 +36,12 @@
 }
 
 .imgContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(184px, 1fr));
   align-items: center;
   justify-content: center;
   gap: 2rem;
+  margin: 4vh 4vw;
 }
 
 .imgExBlock {
@@ -50,6 +52,7 @@
 .imgEx {
   width: 10rem;
   height: 10rem;
+  object-fit: cover;
 }
 
 .download {

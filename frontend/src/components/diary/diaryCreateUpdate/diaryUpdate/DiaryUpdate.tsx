@@ -103,8 +103,9 @@ function DiaryUpdate() {
 
       {/* <div className={style.diaryTitle}>{diaryTitle}</div> */}
       <input
-        className={style.diaryTitle}
+        className={`${style.diaryTitle} ${style.diaryInput}`}
         type="text"
+        placeholder="제목을 입력하세요"
         value={diaryTitle}
         maxLength={50}
         onChange={handleTitleChange}

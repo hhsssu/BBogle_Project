@@ -13,10 +13,17 @@
 }
 
 .diaryTitle {
+  min-width: 20rem;
+  border: none;
+  border-bottom: solid;
+  border-color: rgba(232, 232, 232, 1);
+  outline: none;
   font-size: 24px;
   font-weight: 600;
   align-self: center;
+  text-align: center;
   margin: 8vh 0;
+  padding: 1vh 1vw;
 }
 
 .submitBtn {
@@ -62,6 +69,7 @@
 }
 
 .titleModalContainer {
+  position: relative;
   background-color: #ffffff;
   border-radius: 20px;
   padding: 30px 28px;
@@ -89,7 +97,11 @@
   border-color: rgba(160, 160, 160, 1);
   padding: 0.4rem;
   outline: none;
-  margin-bottom: 16px;
+  margin-bottom: 4vh;
+}
+
+.errorInput {
+  border-color: red;
 }
 
 .actions {
@@ -120,4 +132,12 @@
   font-size: 1rem;
   cursor: pointer;
   flex: 1;
+}
+
+.titleEmpty {
+  position: absolute;
+  top: 56%;
+  left: 28%;
+  font-size: 10px;
+  color: red;
 }

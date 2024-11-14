@@ -125,7 +125,7 @@ function ProfileImageUploader({
 
   // 프로필 이미지 업데이트를 관리하는 함수
   const handleUpdate = async () => {
-    if (!previewImage) {
+    if (!previewImage || previewImage === initialImage) {
       alert('업로드할 이미지를 선택해주세요.');
       return;
     }

@@ -9,17 +9,20 @@ import {
 } from '../api/activityApi';
 
 export interface Activity {
-  activityId?: number | undefined;
+  activityId: number;
   title: string;
   content: string;
   startDate: Date;
   endDate: Date;
-  projectId?: number | undefined;
+  projectId: number | undefined;
   projectTitle?: string;
   keywords: ActivityKeyword[];
 }
 
 interface ActivityState {
+  // 경험 데이터 로딩 상태
+  isActivityLoading: boolean;
+
   // 단일 경험
   activity: Activity;
 
@@ -29,8 +32,17 @@ interface ActivityState {
   // 경험 수동 생성
   createActivity: (activity: Activity) => void;
 
-  // TODO 경험 수정
+  // 경험 수정
   updateActivity: (activityId: number, activity: Activity) => void;
+
+  // 경험 생성&수정 시 필드 수정
+  updateActivityField: (
+    field: string,
+    value: string | Number[] | number,
+  ) => void;
+
+  // 경험 데이터 초기화
+  resetActivity: () => void;
 
   // 경험 전체 리스트 & 검색
   fetchActivities: () => void;
@@ -56,17 +68,18 @@ interface ActivityState {
 const useActivityStore = create<ActivityState>()(
   persist(
     (set) => ({
+      // 데이터 로딩 상태
+      isActivityLoading: false,
       activity: {
-        activityId: 0,
+        activityId: -1,
         title: '',
         content: '',
         startDate: new Date(),
         endDate: new Date(),
-        projectId: 0,
+        projectId: undefined,
         projectTitle: '',
         keywords: [],
       },
-
       activities: [],
 
       // 경험 수동 생성
@@ -86,17 +99,37 @@ const useActivityStore = create<ActivityState>()(
           ),
         }));
       },
+      // 경험 필드 수정
+      updateActivityField: (field, value) =>
+        set((state) => ({ activity: { ...state.activity, [field]: value } })),
+
+      // 경험 데이터 초기화
+      resetActivity: () =>
+        set(() => ({
+          activity: {
+            activityId: -1,
+            title: '',
+            content: '',
+            startDate: new Date(),
+            endDate: new Date(),
+            projectId: undefined,
+            projectTitle: '',
+            keywords: [],
+          },
+        })),
 
       // 경험 전체 리스트 & 검색
       fetchActivities: async () => {
+        set(() => ({ isActivityLoading: true }));
         const data = await fetchActivitiesApi();
-        set({ activities: data || [] });
+        set({ activities: data, isActivityLoading: false });
       },
 
       // 경험 상세 (ID 검색)
       fetchActivityById: async (activityId: number) => {
+        set(() => ({ isActivityLoading: true }));
         const data = await fetchActivityByIdApi(activityId);
-        set({ activity: data });
+        set({ activity: data, isActivityLoading: false });
       },
 
       // 경험 생성/수정 필수 확인
@@ -113,6 +146,8 @@ const useActivityStore = create<ActivityState>()(
       name: 'activityStorage',
       partialize: (state) => ({
         activity: state.activity,
+        activities: state.activities,
+        isActivityLoading: state.isActivityLoading,
       }),
     },
   ),

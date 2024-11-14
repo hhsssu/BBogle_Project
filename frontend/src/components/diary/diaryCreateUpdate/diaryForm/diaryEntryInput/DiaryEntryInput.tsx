@@ -1,29 +1,36 @@
 import style from './DiaryEntryInput.module.css';
 
 import useDiaryStore from '../../../../../store/useDiaryStore';
+import { useEffect, useRef } from 'react';
 
 interface Props {
   index: number;
   question: string;
   description: string;
   answer: string;
-  circleRef: React.RefObject<HTMLDivElement> | null;
+  addCircleRef: (ref: React.RefObject<HTMLDivElement>) => void;
   lineRef: React.RefObject<HTMLDivElement> | null;
 }
 
-function QnaInput({
+function DiaryEntryInput({
   index,
   question,
   description,
   answer,
-  circleRef,
+  addCircleRef,
   lineRef,
 }: Props) {
+  const circleRef = useRef<HTMLDivElement>(null);
+
   const updateAnswer = useDiaryStore((state) => state.updateAnswer);
 
   const handleText = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateAnswer(index - 1, event.target.value);
   };
+
+  useEffect(() => {
+    addCircleRef(circleRef);
+  }, []);
 
   return (
     <div className={style.container}>
@@ -55,4 +62,4 @@ function QnaInput({
   );
 }
 
-export default QnaInput;
+export default DiaryEntryInput;

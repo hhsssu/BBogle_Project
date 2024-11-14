@@ -4,7 +4,7 @@ import axiosInstance from './axiosInstance';
 interface Diary {
   title: string;
   answers: string[];
-  images: string[];
+  images: File[];
 }
 
 interface Question {
@@ -52,9 +52,6 @@ export const getDiaryTitle = async (
   questions: Question[],
   answers: string[],
 ) => {
-  console.log(questions);
-  console.log(answers);
-
   const response = await axios.post(
     'http://localhost:8000/api/generate/title',
     [
@@ -73,17 +70,39 @@ export const getDiaryTitle = async (
 };
 
 export const addDiary = async (projectId: number, diary: Diary) => {
-  try {
-    const response = await axiosInstance.post(
-      `/projects/${projectId}/diaries`,
-      {
-        title: diary.title,
-        answers: diary.answers,
-        images: diary.images,
-      },
-    );
+  const formData = new FormData();
 
-    return response.status;
+  formData.append(
+    'request',
+    new Blob(
+      [
+        JSON.stringify({
+          title: diary.title,
+          answers: diary.answers,
+        }),
+      ],
+      { type: 'application/json' },
+    ),
+  );
+
+  if (diary.images.length === 0) {
+    formData.append(
+      'files',
+      new Blob([], { type: 'application/octet-stream' }),
+    );
+  } else {
+    // 각 파일을 FormData에 개별적으로 추가
+    diary.images.forEach((file) => {
+      formData.append('files', file);
+    });
+  }
+
+  try {
+    await axiosInstance.post(`/projects/${projectId}/diaries`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   } catch (error) {
     console.log('개발일지 등록 실패');
     console.log(error);
@@ -95,12 +114,43 @@ export const patchDiary = async (
   diaryId: number,
   diary: Diary,
 ) => {
-  try {
-    await axiosInstance.patch(`/projects/${projectId}/diaries/${diaryId}`, {
-      title: diary.title,
-      answers: diary.answers,
-      images: diary.images,
+  const formData = new FormData();
+
+  formData.append(
+    'request',
+    new Blob(
+      [
+        JSON.stringify({
+          title: diary.title,
+          answers: diary.answers,
+        }),
+      ],
+      { type: 'application/json' },
+    ),
+  );
+
+  if (diary.images.length === 0) {
+    formData.append(
+      'files',
+      new Blob([], { type: 'application/octet-stream' }),
+    );
+  } else {
+    // 각 파일을 FormData에 개별적으로 추가
+    diary.images.forEach((file) => {
+      formData.append('files', file);
     });
+  }
+
+  try {
+    await axiosInstance.patch(
+      `/projects/${projectId}/diaries/${diaryId}`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
   } catch (error) {
     console.log('개발일지 수정 실패');
     console.log(error);

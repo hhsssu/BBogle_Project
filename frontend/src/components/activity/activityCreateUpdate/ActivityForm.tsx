@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import useActivityKeywordStore from '../../../store/useActivityKeywordStore';
-// import useProjectStore from '../../../store/useProjectStore';
+import useProjectStore from '../../../store/useProjectStore';
 // import { ActivityFormData } from '../../../store/useActivityStore';
 
 import useBeforeUnload from '../../../hooks/useBeforeUnload';
@@ -11,41 +11,59 @@ import ActivityCreateStyles from './ActivityCreate.module.css';
 
 import BlueXIcon from '../../../assets/image/icon/BlueX.svg';
 import YellowXIcon from '../../../assets/image/icon/YellowX.svg';
+// import useActivityStore from '../../../store/useActivityStore';
 
 interface ActivityFormProps {
   activityId?: number; // 작성 페이지에서는 받을 필요 없음
+  onChange: (updatedData: {
+    title: string;
+    content: string;
+    startDate: Date;
+    endDate: Date;
+    projectId: number | undefined;
+    keywords: { id: number; type: boolean; name: string }[];
+  }) => void;
   onSubmit: (event: React.FormEvent) => void;
   initialValues: {
     title: string;
     content: string;
-    startDate: Date | null;
-    endDate: Date | null;
-    projectId: number | null;
+    startDate: Date;
+    endDate: Date;
+    projectId: number | undefined;
     keywords: { id: number; type: boolean; name: string }[];
   };
 }
 
-function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
-  // TODO 프로젝트 API 가져오기
-  // const { projects, fetchProjects } = useProjectStore();
+function ActivityForm({
+  onChange,
+  onSubmit,
+  initialValues,
+}: ActivityFormProps) {
+  const projectList = useProjectStore((state) => state.projectList);
+  const getProjectList = useProjectStore((state) => state.getProjectList);
+  const activityKeywords = useActivityKeywordStore(
+    (state) => state.activityKeywords,
+  );
+  const fetchActivityKeywords = useActivityKeywordStore(
+    (state) => state.fetchActivityKeywords,
+  );
+  // TODO 폼 오류 설정하기
+  // const {
+  //   titleError,
+  //   setTitleError,
+  //   contentError,
+  //   setContentError,
+  //   termError,
+  //   setTermError,
+  //   setErrMsgOn,
+  // } = useActivityStore();
 
-  // 경험 키워드 목록 가져오기
-  const { activityKeywords, fetchActivityKeywords } = useActivityKeywordStore();
-
-  // TODO 프로젝트 더미데이터 삭제
-  const projects = [
-    { id: 1, name: 'RunnerWay' },
-    { id: 2, name: 'WON TOUCH!' },
-    { id: 3, name: 'SFD' },
-    { id: 4, name: 'Challet' },
-  ];
   const [title, setTitle] = useState(initialValues.title);
   const [content, setContent] = useState(initialValues.content);
   const [startDate, setStartDate] = useState(initialValues.startDate);
   const [endDate, setEndDate] = useState(initialValues.endDate);
   const [projectId, setProjectId] = useState(initialValues.projectId);
   const [keywords, setKeywords] = useState(initialValues.keywords);
-  // const [projectTitle, setProjectTitle] = useState('');
 
   // 페이지 이탈 방지 경고 설정
   const [isWrite, setIsWrite] = useState(false);
@@ -60,15 +78,24 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
   // ✅데이터 불러오기
   useEffect(() => {
     fetchActivityKeywords();
-    // fetchProjects();
+    getProjectList();
   }, [initialValues]);
 
   // ✅입력이 변경된 상태에서 페이지 이탈 시 경고 알림
   const handleInputChange =
-    (setter: (value: string) => void) =>
+    (
+      setter: (value: string) => void,
+      field: keyof ActivityFormProps['initialValues'],
+    ) =>
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setter(event.target.value);
-      setIsWrite(true); // 입력이 변경될 때마다 isWrite 상태를 true로 설정
+      setIsWrite(true);
+
+      // 필드 업데이트 후 부모 컴포넌트에 전체 데이터 전달
+      onChange({
+        ...initialValues,
+        [field]: event.target.value,
+      });
     };
 
   // ✅선택할 때마다 키워드 추가
@@ -127,7 +154,7 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
           maxLength={20}
           placeholder="제목을 입력하세요 (최대 20자)"
           value={title}
-          onChange={handleInputChange(setTitle)}
+          onChange={handleInputChange(setTitle, 'title')}
           className={ActivityCreateStyles.subtitle}
         />
 
@@ -145,7 +172,7 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
           rows={10}
           placeholder="내용을 입력하세요 (최대 700자)"
           value={content}
-          onChange={handleInputChange(setContent)}
+          onChange={handleInputChange(setContent, 'content')}
           className={ActivityCreateStyles.content}
           onInput={handleTextareaChange}
         />
@@ -166,9 +193,7 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
             <input
               type="date"
               value={startDate ? startDate.toISOString().split('T')[0] : ''}
-              onChange={(e) =>
-                setStartDate(e.target.value ? new Date(e.target.value) : null)
-              }
+              onChange={(e) => setStartDate(new Date(e.target.value))}
               className={ActivityCreateStyles.graybox}
             />
           </div>
@@ -177,9 +202,7 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
             <input
               type="date"
               value={endDate ? endDate.toISOString().split('T')[0] : ''}
-              onChange={(e) =>
-                setEndDate(e.target.value ? new Date(e.target.value) : null)
-              }
+              onChange={(e) => setEndDate(new Date(e.target.value))}
               className={ActivityCreateStyles.graybox}
             />
           </div>
@@ -199,7 +222,7 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
               키워드를 선택하세요
             </option>
             <optgroup label="기술 키워드">
-              {keywords
+              {activityKeywords
                 .filter((keyword) => !keyword.type)
                 .map((keyword) => (
                   <option value={keyword.name} key={keyword.name}>
@@ -208,8 +231,8 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
                 ))}
             </optgroup>
             <optgroup label="인성 키워드">
-              {keywords
-                .filter((keyword) => !keyword.type)
+              {activityKeywords
+                .filter((keyword) => keyword.type)
                 .map((keyword) => (
                   <option value={keyword.name} key={keyword.name}>
                     {keyword.name}
@@ -251,9 +274,9 @@ function ActivityForm({ onSubmit, initialValues }: ActivityFormProps) {
           className={ActivityCreateStyles.graybox}
         >
           <option value="">선택 안함</option>
-          {projects.map((option) => (
-            <option value={option.id} key={option.id}>
-              {option.name}
+          {projectList.map((option) => (
+            <option value={option.projectId} key={option.projectId}>
+              {option.title}
             </option>
           ))}
         </select>

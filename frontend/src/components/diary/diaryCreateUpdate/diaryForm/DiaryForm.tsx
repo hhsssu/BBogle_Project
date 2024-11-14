@@ -12,14 +12,21 @@ function DiaryForm() {
 
   const lineRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
   const questionRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
-  const circleRefArr = useRef<React.RefObject<HTMLDivElement>[]>([]);
+  const circleRefArr = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
   const positionArr = useRef<number[]>([]);
+
+  const addCircleRef = (ref: React.RefObject<HTMLDivElement>) => {
+    if (ref.current && !circleRefArr.current.includes(ref)) {
+      circleRefArr.current.push(ref);
+    }
+  };
 
   // const [currentIdx, setCurrentIdx] = useState(0);
 
   const updateLineHeight = () => {
     lineRefArr.current.map(
       (line: React.RefObject<HTMLDivElement>, index: number) => {
+        console.log(circleRefArr);
         if (line.current && circleRefArr.current[index]?.current) {
           const topLoc =
             Number(circleRefArr.current[index].current?.offsetTop) +
@@ -28,6 +35,9 @@ function DiaryForm() {
             circleRefArr.current[index + 1].current?.offsetTop,
           );
           line.current.style.height = `${bottomCircle - topLoc}px`;
+          console.log(
+            `여기까지 오면 길이계산 된건데 : ${bottomCircle - topLoc}`,
+          );
         }
       },
     );
@@ -40,6 +50,16 @@ function DiaryForm() {
   };
 
   useEffect(() => {
+    for (let index = 0; index <= questionList.length; index++) {
+      if (!questionRefArr.current[index]) {
+        questionRefArr.current[index] = React.createRef();
+      }
+    }
+
+    updateLineHeight();
+  }, [questionList]);
+
+  useEffect(() => {
     window.addEventListener('resize', updateLineHeight);
     // window.addEventListener('scroll', handleScroll);
 
@@ -48,21 +68,6 @@ function DiaryForm() {
       // window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    for (let index = 0; index <= questionList.length; index++) {
-      if (!circleRefArr.current[index]) {
-        circleRefArr.current[index] = React.createRef();
-      }
-      if (!questionRefArr.current[index]) {
-        questionRefArr.current[index] = React.createRef();
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    updateLineHeight();
-  }, [questionList]);
 
   // let lastScrollY = 0;
   // const handleScroll = () => {
@@ -117,7 +122,7 @@ function DiaryForm() {
               question={question.question}
               description={question.description}
               answer={answerList[index]}
-              circleRef={circleRefArr.current[index]}
+              addCircleRef={addCircleRef}
               lineRef={lineRefArr.current[index]}
             />
           </div>
@@ -130,7 +135,7 @@ function DiaryForm() {
           description={
             '관련된 이미지를 최대 3장까지 첨부할 수 있어요 ! (1장 당 최대 5MB)'
           }
-          circleRef={circleRefArr.current[3]}
+          addCircleRef={addCircleRef}
         />
       </div>
     </div>

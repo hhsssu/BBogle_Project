@@ -27,7 +27,7 @@ function DiaryCreate() {
 
   const { project, getProject } = useProjectStore();
   // const questionList = useDiaryStore((state) => state.questionList);
-  const { diaryTitle, answerList, imageFileList, initDiary, updateTitle } =
+  const { title, answerList, imageFileList, initDiary, updateTitle } =
     useDiaryStore();
 
   const [textLengthErr, setTextLengthErr] = useState(true);
@@ -80,17 +80,23 @@ function DiaryCreate() {
   };
 
   const onAddDiary = async () => {
-    if (diaryTitle === '') {
+    if (title === '') {
       setTitleEmpty(true);
       return;
     }
-    await addDiary(project.projectId, {
-      title: diaryTitle,
-      answers: answerList,
-      images: imageFileList,
-    });
-    alert('개발일지 저장 완료');
-    navigate(`/project/${project.projectId}`);
+
+    try {
+      await addDiary(project.projectId, {
+        title: title,
+        answers: answerList,
+        images: imageFileList,
+      });
+      alert('개발일지 저장 완료');
+      navigate(`/project/${project.projectId}`);
+    } catch (error) {
+      console.log('개발일지 등록 실패');
+      console.log(error);
+    }
   };
 
   const checkTotalLength = () => {
@@ -175,7 +181,7 @@ function DiaryCreate() {
             )}
             <input
               className={`${style.titleInput} ${isTitleEmpty && style.errorInput}`}
-              value={diaryTitle}
+              value={title}
               maxLength={50}
               onChange={handleTitleChange}
             />

@@ -70,7 +70,6 @@ const useActivityStore = create<ActivityState>()(
     (set) => ({
       // 데이터 로딩 상태
       isActivityLoading: false,
-
       activity: {
         activityId: -1,
         title: '',
@@ -81,7 +80,6 @@ const useActivityStore = create<ActivityState>()(
         projectTitle: '',
         keywords: [],
       },
-
       activities: [],
 
       // 경험 수동 생성
@@ -148,6 +146,8 @@ const useActivityStore = create<ActivityState>()(
       name: 'activityStorage',
       partialize: (state) => ({
         activity: state.activity,
+        activities: state.activities,
+        isActivityLoading: state.isActivityLoading,
       }),
     },
   ),

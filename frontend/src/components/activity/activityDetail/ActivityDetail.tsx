@@ -8,6 +8,8 @@ import BackIcon from '../../../assets/image/icon/Back.svg';
 // TODO ID로 경험 찾기 구현 해야함
 import { useEffect } from 'react';
 import useActivityStore from '../../../store/useActivityStore';
+import Loading from '../../common/loading/Loading';
+import Bubble from '../../../assets/lottie/Bubble.json';
 
 function ActivityDetail() {
   const navigate = useNavigate();
@@ -17,6 +19,9 @@ function ActivityDetail() {
   const activity = useActivityStore((state) => state.activity);
   const fetchActivityById = useActivityStore(
     (state) => state.fetchActivityById,
+  );
+  const isActivityLoading = useActivityStore(
+    (state) => state.isActivityLoading,
   );
 
   // 수정 이동
@@ -33,8 +38,20 @@ function ActivityDetail() {
   };
 
   useEffect(() => {
-    fetchActivityById(numericActivityId);
+    if (numericActivityId) {
+      fetchActivityById(numericActivityId);
+    }
   }, [numericActivityId]);
+
+  if (isActivityLoading) {
+    return (
+      <Loading
+        isLoading={isActivityLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   const startDate = activity.startDate ? new Date(activity.startDate) : null;
   const endDate = activity.endDate ? new Date(activity.endDate) : null;
@@ -76,20 +93,22 @@ function ActivityDetail() {
         <p className={ActivityStyles.semibold}>관련 키워드</p>
         <div className={ActivityStyles.flex}>
           {activity.keywords.length > 0 ? (
-            activity.keywords.map((keyword, index) => (
-              <div key={index}>
-                {/* 기술태그 0 blue / 인성태그 1 yellow */}
-                {!keyword.type ? (
-                  <span className={ActivityStyles.bluekeyword}>
-                    {keyword.name}
-                  </span>
-                ) : (
-                  <span className={ActivityStyles.yellowkeyword}>
-                    {keyword.name}
-                  </span>
-                )}
-              </div>
-            ))
+            activity.keywords
+              .filter((keyword) => keyword !== null)
+              .map((keyword, index) => (
+                <div key={index}>
+                  {/* 기술태그 0 blue / 인성태그 1 yellow */}
+                  {!keyword.type ? (
+                    <span className={ActivityStyles.bluekeyword}>
+                      {keyword.name}
+                    </span>
+                  ) : (
+                    <span className={ActivityStyles.yellowkeyword}>
+                      {keyword.name}
+                    </span>
+                  )}
+                </div>
+              ))
           ) : (
             <div>-</div>
           )}

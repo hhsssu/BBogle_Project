@@ -3,18 +3,21 @@ import { useEffect } from 'react';
 import useActivityStore from '../../store/useActivityStore';
 
 import ActivityCard from './ActivityCard';
+import Loading from '../common/loading/Loading';
 import ActivityStyles from './Activity.module.css';
 
 import SearchIcon from '../../assets/image/icon/Search.svg';
 import EmptyFolder from '../../assets/image/icon/EmptyFolder.svg';
-// import useProjectStore from '../../store/useProjectStore';
+import Bubble from '../../assets/lottie/Bubble.json';
 
 function ActivityList() {
   const nav = useNavigate();
   const navigate = useNavigate();
   const activities = useActivityStore((state) => state.activities);
   const fetchActivities = useActivityStore((state) => state.fetchActivities);
-  // const {project, fetchProject} = useProjectStore();
+  const isActivityLoading = useActivityStore(
+    (state) => state.isActivityLoading,
+  );
 
   // 경험 수동 생성으로 이동
   const navActivityCreate = () => {
@@ -33,6 +36,16 @@ function ActivityList() {
   const handleSearchPage = () => {
     navigate('search');
   };
+
+  if (isActivityLoading) {
+    return (
+      <Loading
+        isLoading={isActivityLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   return (
     <>

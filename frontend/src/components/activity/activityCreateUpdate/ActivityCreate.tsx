@@ -33,11 +33,28 @@ function ActivityCreate() {
 
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  useEffect(() => {
+    resetActivity();
+    setTitleError(false);
+    setContentError(true);
+    setTermError(false);
+    setErrMsgOn(false);
+
+    // 초기화가 완료되면 표시하도록 상태 설정
+    setIsInitialized(true);
+  }, []);
+
+  if (!isInitialized) {
+    return null;
+  }
 
   // ✅ 돌아가기
   const handleGoBack = () => {
     nav('/activity');
   };
+  console.log(activity.keywords);
 
   const handleBackModal = () => {
     setBackModalOpen(!isBackModalOpen);
@@ -48,7 +65,7 @@ function ActivityCreate() {
   };
 
   // ✅ 폼 제출 로직
-  const submitForm = () => {
+  const submitForm = async () => {
     // 1. 빈 값 오류 확인
     if (activity.title === '') {
       setTitleError(true);
@@ -63,7 +80,7 @@ function ActivityCreate() {
     }
 
     // 2. 날짜 오류 확인
-    if (activity.startDate > activity.endDate) {
+    if (activity.startDate === undefined || activity.endDate === undefined) {
       setTermError(true);
       setErrMsgOn(true);
       return;
@@ -77,14 +94,6 @@ function ActivityCreate() {
     setCreateModalOpen(!isCreateModalOpen);
     createActivity(activity);
   };
-
-  useEffect(() => {
-    resetActivity();
-    setTitleError(false);
-    setContentError(true);
-    setTermError(false);
-    setErrMsgOn(false);
-  }, []);
 
   return (
     <>

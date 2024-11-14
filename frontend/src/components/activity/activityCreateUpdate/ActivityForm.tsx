@@ -28,7 +28,10 @@ function ActivityForm({
   projectId,
   keywords,
 }: Props) {
-  const updateActivity = useActivityStore((state) => state.updateActivityField);
+  const updateActivityField = useActivityStore(
+    (state) => state.updateActivityField,
+  );
+
   // 폼 오류 설정하기
   const {
     titleError,
@@ -96,7 +99,7 @@ function ActivityForm({
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
-    updateActivity('title', value);
+    updateActivityField('title', value);
     if (value !== '') {
       // 제목 값이 없을 때 오류 처리
       handleTitleError(false);
@@ -109,7 +112,7 @@ function ActivityForm({
   ) => {
     const value = event.target.value;
 
-    updateActivity('content', value);
+    updateActivityField('content', value);
     if (content !== '') {
       // 내용 값이 없을 때 오류 처리
       handleContentError(false);
@@ -127,7 +130,7 @@ function ActivityForm({
   // ✅시작 날짜 입력
   const handleStartDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    updateActivity('startDate', value);
+    updateActivityField('startDate', value);
     // 시작 날짜가 종료 날짜보다 이후일 때 오류 처리
     handleTermError(false);
   };
@@ -135,7 +138,7 @@ function ActivityForm({
   // ✅종료 날짜 입력
   const handleEndDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    updateActivity('endDate', value);
+    updateActivityField('endDate', value);
     // 시작 날짜가 종료 날짜보다 이후일 때 오류 처리
     handleTermError(false);
   };
@@ -151,9 +154,9 @@ function ActivityForm({
       !selectedKeywords.includes(selectedKeyword.id) // ID 중복 체크
     ) {
       if (selectedKeywords.length < 3) {
-        const updatedKeywords = [...selectedKeywords, selectedKeyword.id];
+        const updatedKeywords = [...keywords, selectedKeyword.id];
         setSelectedKeywords(updatedKeywords);
-        updateActivity('keywords', updatedKeywords); // ID 값만 전달
+        updateActivityField('keywords', updatedKeywords); // ID 값만 전달
       } else {
         alert('키워드는 최대 3개까지 선택 가능합니다.');
       }
@@ -164,13 +167,13 @@ function ActivityForm({
   const deleteKeyword = (keywordId: number) => {
     const updatedKeywords = selectedKeywords.filter((id) => id !== keywordId);
     setSelectedKeywords(updatedKeywords);
-    updateActivity('keywords', updatedKeywords); // ID 값만 전달
+    updateActivityField('keywords', updatedKeywords); // ID 값만 전달
   };
 
   // ✅프로젝트 ID & Title
   const handleProjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value); // 숫자로 변환
-    updateActivity('projectId', value);
+    updateActivityField('projectId', value);
   };
 
   return (

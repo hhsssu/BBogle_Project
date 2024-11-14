@@ -4,7 +4,7 @@ import Bubble from '../../../../assets/lottie/Bubble.json';
 import AlertTriangle from '../../../../assets/image/icon/AlertTriangle.svg';
 import Back from '../../../../assets/image/icon/Back.svg';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import useProjectStore from '../../../../store/useProjectStore';
@@ -23,13 +23,12 @@ function DiaryCreate() {
 
   const isLoading = useDiaryStore((state) => state.isLoading);
 
-  const project = useProjectStore((state) => state.project);
+  const { pjtId } = useParams();
+
+  const { project, getProject } = useProjectStore();
   // const questionList = useDiaryStore((state) => state.questionList);
-  const diaryTitle = useDiaryStore((state) => state.title);
-  const answerList = useDiaryStore((state) => state.answerList);
-  const imageFileList = useDiaryStore((state) => state.imageFileList);
-  const initDiary = useDiaryStore((state) => state.initDiary);
-  const updateTitle = useDiaryStore((state) => state.updateTitle);
+  const { diaryTitle, answerList, imageFileList, initDiary, updateTitle } =
+    useDiaryStore();
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
@@ -37,6 +36,8 @@ function DiaryCreate() {
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   // const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
   const [isTitleModalOpen, setTitleModalOpen] = useState(false);
+
+  const [isTitleEmpty, setTitleEmpty] = useState(false);
 
   const navPjtDetail = () => {
     navigate(`/project/${project.projectId}`);
@@ -70,6 +71,7 @@ function DiaryCreate() {
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
+    setTitleEmpty(false);
     updateTitle(value);
   };
 
@@ -79,7 +81,7 @@ function DiaryCreate() {
 
   const onAddDiary = async () => {
     if (diaryTitle === '') {
-      alert('제목을 입력해주세요');
+      setTitleEmpty(true);
       return;
     }
     await addDiary(project.projectId, {
@@ -108,7 +110,9 @@ function DiaryCreate() {
   }, [answerList]);
 
   useEffect(() => {
+    setTitleEmpty(false);
     initDiary();
+    getProject(Number(pjtId));
   }, []);
 
   if (isLoading) {
@@ -165,10 +169,14 @@ function DiaryCreate() {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className={style.title}>개발일지 작성이 완료되었습니다!</h2>
-            <p className={style.content}>생성된 제목을 확인해주세요.</p>
+            <p className={`${style.content}`}>생성된 제목을 확인해주세요.</p>
+            {isTitleEmpty && (
+              <p className={style.titleEmpty}>제목을 입력해주세요</p>
+            )}
             <input
-              className={style.titleInput}
+              className={`${style.titleInput} ${isTitleEmpty && style.errorInput}`}
               value={diaryTitle}
+              maxLength={50}
               onChange={handleTitleChange}
             />
             <div className={style.actions}>

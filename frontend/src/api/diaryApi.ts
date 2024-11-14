@@ -97,16 +97,11 @@ export const addDiary = async (projectId: number, diary: Diary) => {
     });
   }
 
-  try {
-    await axiosInstance.post(`/projects/${projectId}/diaries`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  } catch (error) {
-    console.log('개발일지 등록 실패');
-    console.log(error);
-  }
+  await axiosInstance.post(`/projects/${projectId}/diaries`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 export const patchDiary = async (

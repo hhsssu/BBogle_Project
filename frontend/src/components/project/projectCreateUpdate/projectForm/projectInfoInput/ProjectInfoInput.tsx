@@ -114,7 +114,7 @@ function ProjectInfoInput({ image, title, description }: Props) {
               maxLength={20}
               value={title}
               onChange={handleTitleChange}
-              placeholder="프로젝트 이름을 입력해주세요 ! (20자 이내)"
+              placeholder="프로젝트 이름을 입력하세요 (최대 20자)"
             />
             {titleError && (
               <span className={style.error}>
@@ -132,6 +132,7 @@ function ProjectInfoInput({ image, title, description }: Props) {
           rows={3}
           maxLength={100}
           value={description}
+          placeholder="프로젝트 설명을 입력하세요 (최대 100자)"
           onChange={handleDescriptionChange}
         ></textarea>
       </div>

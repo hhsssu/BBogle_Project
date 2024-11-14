@@ -95,7 +95,7 @@ const useProjectStore = create<ProjectState>()(
             image: null,
             title: '',
             description: '',
-            status: false,
+            status: true,
             startDate: '',
             endDate: '',
             memberCount: 1,

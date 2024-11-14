@@ -23,42 +23,39 @@ function ProjectAlarmInput({ notificationStatus, notificationTime }: Props) {
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.inputLabel}>
-        <span className={style.label}>알림 설정</span>
-        <div className={style.alarmToggleContainer}>
-          {notificationStatus ? (
-            <img
-              className={style.toggle}
-              src={ToggleOn}
-              onClick={handleToggleState}
-            />
-          ) : (
-            <img
-              className={style.toggle}
-              src={ToggleOff}
-              onClick={handleToggleState}
-            />
-          )}
+    <div className={style.inputLabel}>
+      <span className={style.label}>알림 설정</span>
+      <div className={style.alarmToggleContainer}>
+        {notificationStatus ? (
+          <img
+            className={style.toggle}
+            src={ToggleOn}
+            onClick={handleToggleState}
+          />
+        ) : (
+          <img
+            className={style.toggle}
+            src={ToggleOff}
+            onClick={handleToggleState}
+          />
+        )}
 
-          {notificationStatus ? (
-            <div>
-              <input
-                className={style.timeInput}
-                type="time"
-                value={notificationTime}
-                onChange={handleTime}
-              />
-            </div>
-          ) : (
-            <div className={style.toggleInActive}>
-              <span>오후 </span>
-              <span>05:30</span>
-            </div>
-          )}
-        </div>
+        {notificationStatus ? (
+          <div>
+            <input
+              className={style.timeInput}
+              type="time"
+              value={notificationTime}
+              onChange={handleTime}
+            />
+          </div>
+        ) : (
+          <div className={style.toggleInActive}>
+            <span>오후 </span>
+            <span>05:30</span>
+          </div>
+        )}
       </div>
-      <div></div>
     </div>
   );
 }

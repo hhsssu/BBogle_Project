@@ -23,10 +23,12 @@ function ProjectForm() {
         memberCount={project.memberCount}
       />
       <ProjectTagInput role={project.role} skill={project.skill} />
-      <ProjectAlarmInput
-        notificationStatus={project.notificationStatus}
-        notificationTime={project.notificationTime}
-      />
+      {project.status && (
+        <ProjectAlarmInput
+          notificationStatus={project.notificationStatus}
+          notificationTime={project.notificationTime}
+        />
+      )}
     </div>
   );
 }

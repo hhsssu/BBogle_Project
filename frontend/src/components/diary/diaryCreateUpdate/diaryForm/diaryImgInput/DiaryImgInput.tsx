@@ -100,6 +100,7 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
   useEffect(() => {
     addCircleRef(circleRef);
   }, []);
+
   return (
     <div className={style.container}>
       <div className={style.questionContainer}>

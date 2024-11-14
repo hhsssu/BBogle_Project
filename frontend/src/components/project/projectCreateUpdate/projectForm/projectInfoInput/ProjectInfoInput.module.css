@@ -2,13 +2,14 @@
 }
 
 .inputLabel {
-  display: grid;
-  grid-template-columns: 20% 80%;
+  display: flex;
+  gap: 2vw;
   align-items: center;
   margin-bottom: 3%;
 }
 
 .label {
+  min-width: 140px;
   font-size: 14px;
   font-weight: 600;
 }

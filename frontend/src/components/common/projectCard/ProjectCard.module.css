@@ -111,6 +111,7 @@
 .cardContent {
   display: flex;
   justify-content: space-between;
+  min-height: 1.4rem;
   align-items: center;
   padding-left: 6px;
   padding-right: 2px;

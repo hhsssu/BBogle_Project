@@ -1,19 +1,19 @@
 .container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
 }
 
 .inputLabel {
-  display: grid;
-  grid-template-columns: 20% 60%;
-  gap: 3rem;
+  display: flex;
+  gap: 2.6vw;
   align-items: center;
   margin-bottom: 5%;
 }
 
 .label {
+  min-width: 130px;
   font-size: 14px;
   font-weight: 600;
 }

@@ -167,21 +167,22 @@ function ProjectCard({
               ? description.substring(0, 21) + '...'
               : description}
           </div>
-          {isAlarmOn ? (
-            <img
-              className={style.bellIcon}
-              src={ActiveBell}
-              alt="알림 아이콘"
-              onClick={handleAlarmStatus}
-            />
-          ) : (
-            <img
-              className={style.bellIcon}
-              src={Bell}
-              alt="알림 아이콘"
-              onClick={handleAlarmStatus}
-            />
-          )}
+          {status &&
+            (isAlarmOn ? (
+              <img
+                className={style.bellIcon}
+                src={ActiveBell}
+                alt="알림 아이콘"
+                onClick={handleAlarmStatus}
+              />
+            ) : (
+              <img
+                className={style.bellIcon}
+                src={Bell}
+                alt="알림 아이콘"
+                onClick={handleAlarmStatus}
+              />
+            ))}
         </section>
       </div>
 

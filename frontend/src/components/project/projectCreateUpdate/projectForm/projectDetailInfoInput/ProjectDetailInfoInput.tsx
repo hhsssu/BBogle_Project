@@ -59,7 +59,7 @@ function ProjectDetailInfoInput({ startDate, endDate, memberCount }: Props) {
                 onChange={handleStartDate}
               />
             </div>
-            <span className={style.separator}>~</span>
+            {/* <span className={style.separator}>~</span> */}
             <div className={style.dateWrapper}>
               <p className={style.dateLabel}>종료일</p>
               <input

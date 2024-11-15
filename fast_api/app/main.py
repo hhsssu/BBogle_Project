@@ -1,15 +1,18 @@
-# main.py
-
 from typing import List
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
+import asyncio
+import json
+import logging
+import uuid
+import pika
+
 from .services.devlog_summary_service import DevLogSummaryService
 from .services.retrospective_service import RetrospectiveService
 from .services.experience_service import ExperienceService
 from .schemas.retrospective_schema import DailyLog, RetrospectiveResponse
 from .schemas.experience_schema import Keyword, ExperienceResponse, ExperienceRequest
 from .config import settings
-import logging
 
 # 로깅 설정
 logging.basicConfig(
@@ -22,14 +25,16 @@ app = FastAPI(
     title="개발일지 요약 및 경험 생성 서비스 API | ANSMOON 1.0.2",
     description="개발일지의 질문-답변을 분석하여 제목 및 회고 내용을 생성하고, 키워드 기반으로 경험을 추출하는 서비스입니다.",
     version="1.0.2",
+    root_path="/ai",
     docs_url="/docs",
-    redoc_url=None
+    redoc_url=None,
+    openapi_url="/openapi.json",
 )
 
 # CORS 설정
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://example.com"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -65,15 +70,15 @@ experience_service = ExperienceService(settings)
     response_description="생성된 개발일지 제목"
 )
 async def summarize_devlog(qna_list: List[dict] = Body(...)):
-    logger.info("개발일지 제목 생성 API 호출")
+    logger.info("개발일지 제목 생성 API 호출 (HTTP)")
     try:
         if not qna_list:
             raise HTTPException(status_code=400, detail="질문과 답이 없습니다.")
         result = await summary_service.generate_summary(qna_list)
-        logger.info("제목 생성 성공")
+        logger.info("제목 생성 성공 (HTTP)")
         return {"title": result}
     except Exception as e:
-        logger.error(f"제목 생성 중 오류 발생: {e}")
+        logger.error(f"제목 생성 중 오류 발생 (HTTP): {e}")
         raise HTTPException(
             status_code=500,
             detail="제목 생성 중 오류가 발생했습니다."
@@ -108,19 +113,20 @@ async def summarize_devlog(qna_list: List[dict] = Body(...)):
     response_description="생성된 프로젝트 회고록"
 )
 async def generate_retrospective(request: List[DailyLog]):
+    logger.info("개발일지 회고록 생성 API 호출 (HTTP)")
     try:
+        if not request:
+            raise HTTPException(status_code=400, detail="회고록 생성에 필요한 데이터가 없습니다.")
         result = await retrospective_service.generate_retrospective(request)
+        logger.info("회고록 생성 성공 (HTTP)")
         return RetrospectiveResponse(retrospective=result)
     except Exception as e:
-        logger.error(f"회고록 생성 중 오류 발생: {e}")
+        logger.error(f"회고록 생성 중 오류 발생 (HTTP): {e}")
         raise HTTPException(
             status_code=500,
             detail="회고록 생성 중 오류가 발생했습니다."
         )
 
-
-# 서비스 초기화
-experience_service = ExperienceService(settings)
 
 @app.post(
     "/ai/generate/experience",

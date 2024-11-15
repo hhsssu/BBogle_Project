@@ -58,7 +58,8 @@ export const getDiaryTitle = async (
   answers: string[],
 ) => {
   const response = await axios.post(
-    'http://localhost:8000/ai/generate/title',
+    // 'http://localhost:8000/ai/ai/generate/title',
+    'https://bbogle.me/ai/ai/generate/title',
     [
       { question: questions[0].question, answer: answers[0] },
       { question: questions[1].question, answer: answers[1] },

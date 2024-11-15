@@ -72,10 +72,11 @@ export const createSummaryAi = async (projectId: number) => {
     daily_log: entry.answers,
   }));
 
-  console.log('회고록 생성 요청');
+  // console.log('회고록 생성 요청');
 
   const response = await axios.post(
-    'http://localhost:8000/ai/generate/summary',
+    // 'http://localhost:8000/ai/ai/generate/summary',
+    'https://bbogle.me/ai/generate/summary',
     request,
     {
       headers: {
@@ -84,7 +85,26 @@ export const createSummaryAi = async (projectId: number) => {
     },
   );
 
-  console.log('회고록 생성 완료' + response.data.retrospective.split(0, 6));
+  // console.log('회고록 생성 완료' + response.data.retrospective.slice(0, 6));
+  // console.log(response.data.retrospective);
 
-  return response.data.retrospective;
+  // return response.data.retrospective;
+
+  // TODO 경험 생성부분 테스트용
+  const keywords = await axiosInstance.get('/keywords');
+
+  // console.log(keywords.data.keywords);
+
+  const ExResponse = await axios.post(
+    // 'http://localhost:8000/ai/ai/generate/experience',
+    'https://bbogle.me/ai/generate/experience',
+    {
+      retrospective_content: response.data.retrospective,
+      keywords: keywords.data.keywords,
+    },
+  );
+
+  console.log(ExResponse.data);
+
+  // return response.data.retrospective;
 };

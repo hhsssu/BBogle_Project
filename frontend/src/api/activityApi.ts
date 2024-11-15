@@ -78,13 +78,19 @@ export const deleteActivity = async (activityId: number) => {
 
 // 경험 AI 생성
 export const createActivityAi = async () => {
+  const data = await axiosInstance.get('/keywords');
+
+  console.log(data.data.keywords);
+
   const response = await axios.post(
-    'http://localhost:8000/ai/generate/experience',
+    'https://bbogle.me/ai/generate/experience',
     {
-      retrospective_content: 'string',
-      keywords: 'string',
+      // 객체 따로 설정해줘야함
+      retrospective_content: 'retrospective',
+      keywords: data.data.keywords,
     },
   );
 
-  return response.data;
+  console.log(response.data);
+  // return response.data;
 };

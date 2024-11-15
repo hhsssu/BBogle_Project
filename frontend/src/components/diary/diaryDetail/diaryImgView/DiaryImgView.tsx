@@ -10,13 +10,12 @@ interface Props {
 }
 
 function DiaryImgView({ index, question, circleRef }: Props) {
-  const { title, imageUrlList } = useDiaryStore();
+  const { title, imageList } = useDiaryStore();
 
-  const handleImageDownload = (index: number) => {
-    const imageUrl = imageUrlList[index];
-    if (!imageUrl) return;
+  const handleImageDownload = (index: number, url: string) => {
+    if (!url) return;
 
-    fetch(imageUrl, { method: 'GET' })
+    fetch(url + '?' + new Date().getTime(), { method: 'GET' })
       .then((res) => {
         return res.blob();
       })
@@ -26,7 +25,7 @@ function DiaryImgView({ index, question, circleRef }: Props) {
         // a 태그 생성 및 다운로드 속성 설정
         const link = document.createElement('a');
         link.href = blobURL;
-        link.download = `${title}_${index + 1}`; // 파일명 설정
+        link.download = `${title}_${index + 1}.jpg`; // 파일명 설정
         link.click();
 
         // a 태그 제거
@@ -47,15 +46,15 @@ function DiaryImgView({ index, question, circleRef }: Props) {
       </div>
 
       <div className={style.imgContainer}>
-        {imageUrlList.map((file, index) => (
+        {[...imageList.keys()].map((url, index) => (
           <div key={index} className={style.imgExBlock}>
-            <img key={index + 'img'} className={style.imgEx} src={file}></img>
+            <img key={index + 'img'} className={style.imgEx} src={url}></img>
             <img
               key={index + 'Download'}
               className={style.download}
               src={Download}
               alt="삭제"
-              onClick={() => handleImageDownload(index)}
+              onClick={() => handleImageDownload(index, url)}
             />
           </div>
         ))}

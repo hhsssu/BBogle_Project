@@ -130,7 +130,7 @@ const useProjectStore = create<ProjectState>()(
 
         if (data.image) {
           // 이미지 URL을 사용해 Blob으로 변환
-          const response = await fetch(data.image);
+          const response = await fetch(data.image + '?' + new Date().getTime());
           const blob = await response.blob();
 
           // Blob을 File로 변환

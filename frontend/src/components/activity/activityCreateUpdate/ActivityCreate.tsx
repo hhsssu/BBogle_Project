@@ -54,7 +54,6 @@ function ActivityCreate() {
   const handleGoBack = () => {
     nav('/activity');
   };
-  console.log(activity.keywords);
 
   const handleBackModal = () => {
     setBackModalOpen(!isBackModalOpen);
@@ -89,10 +88,16 @@ function ActivityCreate() {
     setCreateModalOpen(true);
   };
 
-  // 경험 생성
+  // ✅ 경험 생성
   const handleCreateActivity = async () => {
     setCreateModalOpen(!isCreateModalOpen);
-    createActivity(activity);
+
+    try {
+      await createActivity(activity);
+      nav('/activity');
+    } catch (error) {
+      // console.error('경험 생성 오류 발생: ', error);
+    }
   };
 
   return (

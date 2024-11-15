@@ -34,7 +34,7 @@ function ActivityDetail() {
 
   // 돌아가기
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/activity');
   };
 
   useEffect(() => {

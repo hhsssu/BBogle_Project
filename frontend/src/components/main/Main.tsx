@@ -1,5 +1,5 @@
 import style from './Main.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getProgressProjectList } from '../../api/projectApi';
 
@@ -19,6 +19,8 @@ import HorizontalScroll from '../common/scroll/HorizontalScroll';
 // store
 import useProjectSelectStore from '../../store/useProjectSelectStore';
 import useUserStore from '../../store/useUserStore';
+import { getFCMToken, requestPermission } from '../../config/firebase';
+import { transferToken } from '../../api/alarmApi';
 
 interface Project {
   projectId: number;
@@ -32,11 +34,35 @@ interface Project {
 }
 
 function Main() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const isRedirected = queryParams.get('login') === 'true';
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
   const { fetchUserNickname, user } = useUserStore();
-  const navigate = useNavigate();
   const [scrollGuide, setScrollGuide] = useState(true); // 스크롤 가이드 상태관리
   const [pjtList, setPjtList] = useState<Project[]>([]); // 프로젝트 리스트 상태관리
+
+  useEffect(() => {
+    // 로그인 후 메인으로 넘어온 경우에만
+    if (isRedirected) {
+      console.log('isRedirect : ', isRedirected);
+      const askNotificationPermission = async () => {
+        const isGranted = await requestPermission();
+        // 알림 권한을 허용받은 경우이거나, 이미 알림 권한이 허용되어 있는 경우
+        if (isGranted) {
+          const token = await getFCMToken(); // FCM 토큰 발급
+          // store에 저장된 fcm 토큰
+          // FCM 토큰을 발급 받음
+          if (token) {
+            // 백엔드로 토큰 전송
+            await transferToken(token);
+          }
+        }
+      };
+      askNotificationPermission();
+    }
+  }, [isRedirected]);
 
   useEffect(() => {
     const fetchProjects = async () => {

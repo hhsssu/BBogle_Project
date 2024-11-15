@@ -4,7 +4,7 @@ import axiosInstance from './axiosInstance';
 interface Diary {
   title: string;
   answers: string[];
-  images: File[];
+  images: string[];
 }
 
 interface Question {
@@ -131,8 +131,16 @@ export const patchDiary = async (
     );
   } else {
     // 각 파일을 FormData에 개별적으로 추가
-    diary.images.forEach((file) => {
-      formData.append('files', file);
+    diary.images.forEach(async (file, i) => {
+      const response = await fetch(file);
+      const blob = await response.blob();
+
+      // Blob을 File로 변환
+      const image = new File([blob], `project_image_${i}.jpg`, {
+        type: blob.type,
+      });
+
+      formData.append('files', image);
     });
   }
 

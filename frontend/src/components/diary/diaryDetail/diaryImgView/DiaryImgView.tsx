@@ -26,7 +26,7 @@ function DiaryImgView({ index, question, circleRef }: Props) {
         // a 태그 생성 및 다운로드 속성 설정
         const link = document.createElement('a');
         link.href = blobURL;
-        link.download = `${title}_${index + 1}`; // 파일명 설정
+        link.download = `${title}_${index + 1}.jpg`; // 파일명 설정
         link.click();
 
         // a 태그 제거

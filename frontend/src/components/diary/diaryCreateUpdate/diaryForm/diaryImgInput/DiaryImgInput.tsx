@@ -69,7 +69,7 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
 
     uploadPreviewImage(file);
 
-    updateImgFile(file);
+    // updateImgFile(file);
   };
 
   const uploadPreviewImage = (file: File) => {
@@ -93,8 +93,8 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
     }, 100);
   };
 
-  const handleImageDelete = (deleteIndex: number) => {
-    deleteImage(deleteIndex);
+  const handleImageDelete = (deleteUrl: string) => {
+    deleteImage(deleteUrl);
   };
 
   useEffect(() => {
@@ -125,7 +125,7 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
                   className={style.close}
                   src={Close}
                   alt="삭제"
-                  onClick={() => handleImageDelete(index)}
+                  onClick={() => handleImageDelete(file)}
                 />
               </div>
             ))}

@@ -27,8 +27,15 @@ function DiaryCreate() {
 
   const { project, getProject } = useProjectStore();
   // const questionList = useDiaryStore((state) => state.questionList);
-  const { title, answerList, imageFileList, initDiary, updateTitle } =
-    useDiaryStore();
+  const {
+    title,
+    answerList,
+    imageUrlList,
+    imageFileList,
+    initDiary,
+    updateTitle,
+    updateImgFile,
+  } = useDiaryStore();
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
@@ -52,6 +59,19 @@ function DiaryCreate() {
       setErrMsgOn(true);
     } else {
       // setFinLoadingOpen(true);
+
+      if (imageUrlList) {
+        imageUrlList.map(async (image: string, i) => {
+          const response = await fetch(image);
+          const blob = await response.blob();
+
+          // Blob을 File로 변환
+          const file = new File([blob], `project_image_${i}.jpg`, {
+            type: blob.type,
+          });
+          updateImgFile(file);
+        });
+      }
       // try {
       //   const title = await getDiaryTitle(questionList, answerList);
 

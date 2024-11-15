@@ -60,7 +60,7 @@ interface DiaryState {
   // 이미지 처리
   updateImgUrl: (value: string) => void;
   updateImgFile: (value: File) => void;
-  deleteImage: (index: number) => void;
+  deleteImage: (url: string) => void;
 }
 
 const useDiaryStore = create<DiaryState>((set) => ({
@@ -97,21 +97,21 @@ const useDiaryStore = create<DiaryState>((set) => ({
       return qna.answer;
     });
 
-    if (data.images) {
-      set(() => ({ imageFileList: [] }));
+    // if (data.images) {
+    //   set(() => ({ imageFileList: [] }));
 
-      data.images.map(async (image: string) => {
-        const response = await fetch(image);
-        const blob = await response.blob();
+    //   data.images.map(async (image: string, i) => {
+    //     const response = await fetch(image);
+    //     const blob = await response.blob();
 
-        // Blob을 File로 변환
-        const file = new File([blob], 'project_image.jpg', {
-          type: blob.type,
-        });
+    //     // Blob을 File로 변환
+    //     const file = new File([blob], `project_image_${i}.jpg`, {
+    //       type: blob.type,
+    //     });
 
-        set((state) => ({ imageFileList: [...state.imageFileList, file] }));
-      });
-    }
+    //     set((state) => ({ imageFileList: [...state.imageFileList, file] }));
+    //   });
+    // }
 
     unstable_batchedUpdates(() => {
       set(() => ({
@@ -120,6 +120,7 @@ const useDiaryStore = create<DiaryState>((set) => ({
         questionList: questions,
         answerList: answers,
         imageUrlList: data.images,
+        imageFileList: [],
       }));
     });
 
@@ -175,10 +176,10 @@ const useDiaryStore = create<DiaryState>((set) => ({
     set((state) => ({
       imageFileList: [...state.imageFileList, value],
     })),
-  deleteImage: (index) =>
+  deleteImage: (url) =>
     set((state) => ({
-      imageUrlList: state.imageUrlList.filter((_, i) => i !== index),
-      imageFileList: state.imageFileList.filter((_, i) => i !== index),
+      imageUrlList: state.imageUrlList.filter((item) => item !== url),
+      // imageFileList: state.imageFileList.filter((_, i) => i !== index),
     })),
 }));
 

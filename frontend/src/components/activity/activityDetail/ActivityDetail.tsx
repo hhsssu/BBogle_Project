@@ -1,4 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import useActivityStore from '../../../store/useActivityStore';
+
+import { deleteActivity } from '../../../api/activityApi';
+
 import ActivityStyles from '../Activity.module.css';
 import ActivityDetailStyles from './ActivityDetail.module.css';
 
@@ -6,10 +12,9 @@ import EditIcon from '../../../assets/image/icon/Pencil.svg';
 import DeleteIcon from '../../../assets/image/icon/RedTrash.svg';
 import BackIcon from '../../../assets/image/icon/Back.svg';
 // TODO ID로 경험 찾기 구현 해야함
-import { useEffect } from 'react';
-import useActivityStore from '../../../store/useActivityStore';
 import Loading from '../../common/loading/Loading';
 import Bubble from '../../../assets/lottie/Bubble.json';
+import Modal from '../../common/modal/Modal';
 
 function ActivityDetail() {
   const navigate = useNavigate();
@@ -24,13 +29,28 @@ function ActivityDetail() {
     (state) => state.isActivityLoading,
   );
 
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
   // 수정 이동
   const NavEdit = () => {
     navigate(`/activity/update/${numericActivityId}`);
   };
 
+  // 삭제 모달
+  const handleDeleteModal = () => {
+    setDeleteModalOpen(!isDeleteModalOpen);
+  };
+
   // 삭제
-  const handleDelete = () => {};
+  const handleDeleteActivity = async () => {
+    setDeleteModalOpen(!isDeleteModalOpen);
+    try {
+      await deleteActivity(numericActivityId);
+      navigate('/activity');
+    } catch (error) {
+      console.error('경험 삭제 실패: ', error);
+    }
+  };
 
   // 돌아가기
   const handleGoBack = () => {
@@ -128,13 +148,23 @@ function ActivityDetail() {
             수정
           </span>
         </button>
-        <button onClick={handleDelete} className={ActivityStyles.flex}>
+        <button onClick={handleDeleteModal} className={ActivityStyles.flex}>
           <img src={DeleteIcon} alt="삭제" />
           <span className={`${ActivityStyles.red} ${ActivityStyles.small}`}>
             삭제
           </span>
         </button>
       </section>
+
+      <Modal
+        isOpen={isDeleteModalOpen}
+        title={'정말 경험을 삭제하시겠어요?'}
+        content={'삭제 시 복구가 어려워요'}
+        onClose={handleDeleteModal}
+        onConfirm={handleDeleteActivity}
+        confirmText={'확인'}
+        cancleText={'취소'}
+      />
     </>
   );
 }

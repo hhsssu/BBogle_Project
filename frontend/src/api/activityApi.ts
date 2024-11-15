@@ -66,3 +66,11 @@ export const fetchActivityById = async (activityId: number) => {
     console.error('경험 상세 조회 실패: ', error);
   }
 };
+
+export const deleteActivity = async (activityId: number) => {
+  try {
+    await axiosInstance.delete(`/activities/${activityId}`);
+  } catch (error) {
+    console.error('경험 삭제 실패: ', error);
+  }
+};

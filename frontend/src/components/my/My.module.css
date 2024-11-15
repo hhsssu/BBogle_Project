@@ -127,12 +127,13 @@
 
 .message > div:nth-child(1) {
   color: #a0a0a0;
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 6px;
 }
 
 .message > div:nth-child(2) {
   color: #a0a0a0;
-  font-size: 16;
+  font-size: 18px;
   font-weight: 700;
 }
 

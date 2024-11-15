@@ -15,7 +15,6 @@ import ProfileImageUploader from './ProfileImageUploader';
 import { fetchTodayDiary } from '../../api/diaryApi';
 import DiaryCard from '../common/diaryCard/DiaryCard';
 import HorizontalScroll from '../common/scroll/HorizontalScroll';
-import AlarmPermissinon from './AlarmPermission';
 
 // 타입 정의
 interface DiaryItem {

@@ -19,6 +19,8 @@ import HorizontalScroll from '../common/scroll/HorizontalScroll';
 // store
 import useProjectSelectStore from '../../store/useProjectSelectStore';
 import useUserStore from '../../store/useUserStore';
+import { getFCMToken, requestPermission } from '../../config/firebase';
+import { transferToken } from '../../api/alarmApi';
 
 interface Project {
   projectId: number;
@@ -37,6 +39,20 @@ function Main() {
   const navigate = useNavigate();
   const [scrollGuide, setScrollGuide] = useState(true); // 스크롤 가이드 상태관리
   const [pjtList, setPjtList] = useState<Project[]>([]); // 프로젝트 리스트 상태관리
+
+  useEffect(() => {
+    const askNotificationPermission = async () => {
+      const isGranted = await requestPermission();
+      if (isGranted) {
+        const token = await getFCMToken(); // FCM 토큰 발급
+        if (token) {
+          // 백엔드로 토큰 전송
+          await transferToken(token);
+        }
+      }
+    };
+    askNotificationPermission();
+  }, []);
 
   useEffect(() => {
     const fetchProjects = async () => {

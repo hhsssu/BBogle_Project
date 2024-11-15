@@ -17,8 +17,7 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
   const circleRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { imageUrlList, updateImgUrl, updateImgFile, deleteImage } =
-    useDiaryStore();
+  const { imageList, updateImgList, deleteImage } = useDiaryStore();
 
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
@@ -26,7 +25,7 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
   const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const handleImgUploadClick = () => {
-    if (fileInputRef.current && imageUrlList.length < 3) {
+    if (fileInputRef.current && imageList.size < 3) {
       fileInputRef.current.click();
     }
   };
@@ -69,14 +68,15 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
 
     uploadPreviewImage(file);
 
-    updateImgFile(file);
+    // updateImgFile(file);
   };
 
   const uploadPreviewImage = (file: File) => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      updateImgUrl(reader.result as string);
+      // updateImgUrl(reader.result as string);
+      updateImgList(reader.result as string, file);
     };
 
     reader.readAsDataURL(file);
@@ -93,8 +93,8 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
     }, 100);
   };
 
-  const handleImageDelete = (deleteIndex: number) => {
-    deleteImage(deleteIndex);
+  const handleImageDelete = (deleteUrl: string) => {
+    deleteImage(deleteUrl);
   };
 
   useEffect(() => {
@@ -111,21 +111,17 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
       </div>
       <p className={style.description}>{description}</p>
       <div className={style.imgContainer}>
-        {imageUrlList.length > 0 && (
+        {imageList.size > 0 && (
           <div className={style.imgInputBlock}>
-            {imageUrlList.map((file, index) => (
-              <div key={index} className={style.imgExBlock}>
+            {[...imageList.keys()].map((key, i) => (
+              <div key={i} className={style.imgExBlock}>
+                <img key={i + 'img'} className={style.imgEx} src={key}></img>
                 <img
-                  key={index + 'img'}
-                  className={style.imgEx}
-                  src={file}
-                ></img>
-                <img
-                  key={index + 'Close'}
+                  key={i + 'Close'}
                   className={style.close}
                   src={Close}
                   alt="삭제"
-                  onClick={() => handleImageDelete(index)}
+                  onClick={() => handleImageDelete(key)}
                 />
               </div>
             ))}
@@ -141,7 +137,7 @@ function DiaryImgInput({ index, question, description, addCircleRef }: Props) {
           </div>
         )}
 
-        {imageUrlList.length < 3 && (
+        {imageList.size < 3 && (
           <div
             className={style.imgInputInfo}
             onDrop={handleDrop}

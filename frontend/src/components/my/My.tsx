@@ -179,7 +179,7 @@ function My() {
           )}
         </div>
       </div>
-      <AlarmPermissinon />
+      {/* <AlarmPermissinon /> */}
     </div>
   );
 }

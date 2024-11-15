@@ -26,7 +26,7 @@ function DiaryCreate() {
 
   const { project, getProject } = useProjectStore();
   const questionList = useDiaryStore((state) => state.questionList);
-  const { title, answerList, imageFileList, initDiary, updateTitle } =
+  const { title, answerList, imageList, initDiary, updateTitle } =
     useDiaryStore();
 
   const [textLengthErr, setTextLengthErr] = useState(true);
@@ -88,7 +88,7 @@ function DiaryCreate() {
       await addDiary(project.projectId, {
         title: title,
         answers: answerList,
-        images: imageFileList,
+        images: imageList,
       });
       alert('개발일지 저장 완료');
       navigate(`/project/${project.projectId}`);

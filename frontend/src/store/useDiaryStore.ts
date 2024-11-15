@@ -50,16 +50,14 @@ interface DiaryState {
   title: string;
   questionList: Question[];
   answerList: string[];
-  imageUrlList: string[];
-  imageFileList: File[];
+  imageList: Map<string, File>;
 
   // title, answer 변동 시 활용
   updateTitle: (value: string) => void;
   updateAnswer: (index: number, value: string) => void;
 
   // 이미지 처리
-  updateImgUrl: (value: string) => void;
-  updateImgFile: (value: File) => void;
+  updateImgList: (key: string, value: File) => void;
   deleteImage: (url: string) => void;
 }
 
@@ -97,25 +95,26 @@ const useDiaryStore = create<DiaryState>((set) => ({
       return qna.answer;
     });
 
-    // if (data.images) {
-    //   set(() => ({ imageFileList: [] }));
+    if (data.images) {
+      set(() => ({ imageList: new Map<string, File>() }));
 
-    //   data.images.map(async (image: string, i) => {
-    //     const response = await fetch(image);
-    //     const blob = await response.blob();
+      data.images.map(async (url: string, i: number) => {
+        const response = await fetch(url + '?' + new Date().getTime());
+        const blob = await response.blob();
 
-    //     // Blob을 File로 변환
-    //     const file = new File([blob], `project_image_${i}.jpg`, {
-    //       type: blob.type,
-    //     });
+        // Blob을 File로 변환
+        const file = new File([blob], `project_image_${i}.jpg`, {
+          type: blob.type,
+        });
 
-    //     set((state) => ({ imageFileList: [...state.imageFileList, file] }));
-    //   });
-    // }
+        set((state) => ({
+          imageList: new Map(state.imageList).set(url, file),
+        }));
+      });
+    }
 
     unstable_batchedUpdates(() => {
       set(() => ({
-        // diary: data,
         title: data.title,
         questionList: questions,
         answerList: answers,
@@ -152,8 +151,7 @@ const useDiaryStore = create<DiaryState>((set) => ({
     { id: 2, question: '', description: '' },
   ],
   answerList: ['', '', ''],
-  imageUrlList: [],
-  imageFileList: [],
+  imageList: new Map<string, File>(),
 
   // title, answer 변동 시 활용
   updateTitle: (value) =>
@@ -168,19 +166,18 @@ const useDiaryStore = create<DiaryState>((set) => ({
     })),
 
   // 이미지 처리
-  updateImgUrl: (value) =>
+  updateImgList: (key: string, value: File) =>
     set((state) => ({
-      imageUrlList: [...state.imageUrlList, value],
+      imageList: new Map(state.imageList).set(key, value),
     })),
-  updateImgFile: (value) =>
-    set((state) => ({
-      imageFileList: [...state.imageFileList, value],
-    })),
-  deleteImage: (url) =>
-    set((state) => ({
-      imageUrlList: state.imageUrlList.filter((item) => item !== url),
-      // imageFileList: state.imageFileList.filter((_, i) => i !== index),
-    })),
+  deleteImage: (key: string) =>
+    set((state) => {
+      const newImageList = new Map(state.imageList);
+      newImageList.delete(key); // delete 메서드 호출
+      return {
+        imageList: newImageList, // 삭제된 결과를 반영
+      };
+    }),
 }));
 
 export default useDiaryStore;

@@ -10,13 +10,12 @@ interface Props {
 }
 
 function DiaryImgView({ index, question, circleRef }: Props) {
-  const { title, imageUrlList } = useDiaryStore();
+  const { title, imageList } = useDiaryStore();
 
-  const handleImageDownload = (index: number) => {
-    const imageUrl = imageUrlList[index];
-    if (!imageUrl) return;
+  const handleImageDownload = (index: number, url: string) => {
+    if (!url) return;
 
-    fetch(imageUrl, { method: 'GET' })
+    fetch(url + '?' + new Date().getTime(), { method: 'GET' })
       .then((res) => {
         return res.blob();
       })
@@ -47,15 +46,15 @@ function DiaryImgView({ index, question, circleRef }: Props) {
       </div>
 
       <div className={style.imgContainer}>
-        {imageUrlList.map((file, index) => (
+        {[...imageList.keys()].map((url, index) => (
           <div key={index} className={style.imgExBlock}>
-            <img key={index + 'img'} className={style.imgEx} src={file}></img>
+            <img key={index + 'img'} className={style.imgEx} src={url}></img>
             <img
               key={index + 'Download'}
               className={style.download}
               src={Download}
               alt="삭제"
-              onClick={() => handleImageDownload(index)}
+              onClick={() => handleImageDownload(index, url)}
             />
           </div>
         ))}

@@ -4,7 +4,7 @@ import axiosInstance from './axiosInstance';
 interface Diary {
   title: string;
   answers: string[];
-  images: string[];
+  images: Map<string, File>;
 }
 
 interface Question {
@@ -85,15 +85,14 @@ export const addDiary = async (projectId: number, diary: Diary) => {
     ),
   );
 
-  if (diary.images.length === 0) {
+  if (diary.images.size === 0) {
     formData.append(
       'files',
       new Blob([], { type: 'application/octet-stream' }),
     );
   } else {
-    // 각 파일을 FormData에 개별적으로 추가
-    diary.images.forEach((file) => {
-      formData.append('files', file);
+    [...diary.images.values()].map((image) => {
+      formData.append('files', image);
     });
   }
 
@@ -124,22 +123,13 @@ export const patchDiary = async (
     ),
   );
 
-  if (diary.images.length === 0) {
+  if (diary.images.size === 0) {
     formData.append(
       'files',
       new Blob([], { type: 'application/octet-stream' }),
     );
   } else {
-    // 각 파일을 FormData에 개별적으로 추가
-    diary.images.forEach(async (file, i) => {
-      const response = await fetch(file);
-      const blob = await response.blob();
-
-      // Blob을 File로 변환
-      const image = new File([blob], `project_image_${i}.jpg`, {
-        type: blob.type,
-      });
-
+    [...diary.images.values()].map((image) => {
       formData.append('files', image);
     });
   }

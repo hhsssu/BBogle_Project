@@ -21,7 +21,7 @@ function DiaryUpdate() {
     isLoading,
     title,
     answerList,
-    imageUrlList,
+    imageList,
     getDiaryDetail,
     updateTitle,
   } = useDiaryStore();
@@ -55,7 +55,7 @@ function DiaryUpdate() {
       await patchDiary(Number(pjtId), Number(diaryId), {
         title: title,
         answers: answerList,
-        images: imageUrlList,
+        images: imageList,
       });
 
       alert('개발일지 수정 완료!');

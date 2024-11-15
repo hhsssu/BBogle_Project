@@ -4,65 +4,51 @@ import Search from '../../../assets/image/icon/Search.svg';
 import useActivityKeywordStore from '../../../store/useActivityKeywordStore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useProjectStore from '../../../store/useProjectStore';
+import useActivityStore from '../../../store/useActivityStore';
 
 function ActivitySearch() {
   const navigate = useNavigate();
-  const { activityKeywords } = useActivityKeywordStore();
-  const [selectProjects, setSelectProjects] = useState<number[]>([]);
-  const [selectKeywords, setSelectKeywords] = useState<number[]>([]);
+
+  // 프로젝트
+  const projectTitles = useProjectStore((state) => state.projectTitles);
+  const getProjectTitles = useProjectStore((state) => state.getProjectTitles);
+
+  // 키워드
+  const activityKeywords = useActivityKeywordStore(
+    (state) => state.activityKeywords,
+  );
+  const fetchActivityKeywords = useActivityKeywordStore(
+    (state) => state.fetchActivityKeywords,
+  );
+
+  //  list로 보낼 검색 데이터
+  const setSearchCriteria = useActivityStore(
+    (state) => state.setSearchCriteria,
+  );
+  const searchCriteria = useActivityStore((state) => state.searchCriteria);
+
+  const [searchWord, setSearchWord] = useState(searchCriteria.word);
+  const [selectProjects, setSelectProjects] = useState<number[]>(
+    searchCriteria.projects,
+  );
+  const [selectKeywords, setSelectKeywords] = useState<number[]>(
+    searchCriteria.keywords,
+  );
 
   useEffect(() => {
-    console.log('keyword : ', selectKeywords);
-    console.log('project: ', selectProjects);
-  }, [selectKeywords, selectProjects]);
+    getProjectTitles();
+    fetchActivityKeywords();
+  }, []);
 
-  // TODO: 임시 데이터
-  const projectList = [
-    {
-      projectId: 1,
-      image: 'https://example.com/image1.jpg',
-      title: 'Project Alpha',
-      description:
-        'A project focused on improving user experience in mobile applications.',
-      status: true,
-      startDate: '2024-10-01',
-      endDate: '2024-11-01',
-      notificationStatus: true,
-    },
-    {
-      projectId: 2,
-      image: 'https://example.com/image2.jpg',
-      title: 'Project Beta',
-      description:
-        'A project aimed at optimizing backend performance for high traffic.',
-      status: false,
-      startDate: '2024-09-15',
-      endDate: '2024-10-15',
-      notificationStatus: false,
-    },
-    {
-      projectId: 3,
-      image: 'https://example.com/image3.jpg',
-      title: 'Project Gamma',
-      description:
-        'A frontend refactoring project to enhance code quality and maintainability.',
-      status: true,
-      startDate: '2024-08-10',
-      endDate: '2024-09-10',
-      notificationStatus: true,
-    },
-    {
-      projectId: 4,
-      image: 'https://example.com/image4.jpg',
-      title: 'Project Delta',
-      description:
-        'A security-focused project ensuring data protection in web applications.',
-      status: true,
-      startDate: '2024-07-01',
-      endDate: '2024-08-01',
-      notificationStatus: false,
-    },
-  ];
+  useEffect(() => {
+    // 검색어, 키워드, 프로젝트를 list 컴포넌트에 전달
+    setSearchCriteria({
+      word: searchWord,
+      keywords: selectKeywords,
+      projects: selectProjects,
+    });
+  }, [searchWord, selectProjects, selectKeywords]);
 
   // 키워드 선택 및 해제 함수
   const handleKeywords = (id: number) => async () => {
@@ -83,6 +69,17 @@ function ActivitySearch() {
     );
   };
 
+  // 검색어 입력
+  const handleWordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearchWord(value);
+  };
+
+  // 검색 요청
+  const handleActivitySearch = async () => {
+    navigate('/activity');
+  };
+
   return (
     <div className={style.container}>
       <div className={style.searchContainer}>
@@ -94,20 +91,24 @@ function ActivitySearch() {
           }}
         />
         <div>
-          <img src={Search} alt="" />
+          <img src={Search} alt="검색" />
           <input
             className={style.searchBar}
             type="text"
             placeholder="검색어를 입력하세요 (제목)"
+            value={searchWord}
+            onChange={handleWordChange}
           />
         </div>
-        <button className={style.searchButton}>검색</button>
+        <button onClick={handleActivitySearch} className={style.searchButton}>
+          검색
+        </button>
       </div>
       <div className={style.filterContainer}>
         <div className={style.filter}>
           <div className={style.title}>프로젝트명</div>
           <div className={style.tags}>
-            {projectList.map((project, idx) => (
+            {projectTitles.map((project, idx) => (
               <div
                 key={idx}
                 className={`${style.tag} ${style.project} ${selectProjects.includes(project.projectId) ? style.active : ''}`}

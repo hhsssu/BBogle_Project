@@ -154,7 +154,7 @@ function ActivityForm({
       !selectedKeywords.includes(selectedKeyword.id) // ID 중복 체크
     ) {
       if (selectedKeywords.length < 3) {
-        const updatedKeywords = [...keywords, selectedKeyword.id];
+        const updatedKeywords = [...selectedKeywords, selectedKeyword.id];
         setSelectedKeywords(updatedKeywords);
         updateActivityField('keywords', updatedKeywords); // ID 값만 전달
       } else {

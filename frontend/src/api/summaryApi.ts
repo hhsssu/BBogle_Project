@@ -1,9 +1,9 @@
 import axios from 'axios';
 import axiosInstance from './axiosInstance';
-// import useProjectStore from '../store/useProjectStore';
+import useProjectStore from '../store/useProjectStore';
 
 // 프로젝트 ID 가져오기
-// const projectId = useProjectStore((state) => state.project.projectId);
+const projectId = useProjectStore((state) => state.project.projectId);
 
 interface DiaryDetail {
   diaryId: number;

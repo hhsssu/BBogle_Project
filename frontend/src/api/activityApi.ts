@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
 import axiosInstance from './axiosInstance';
 
@@ -65,4 +66,17 @@ export const fetchActivityById = async (activityId: number) => {
   } catch (error) {
     console.error('경험 상세 조회 실패: ', error);
   }
+};
+
+// 경험 AI 생성
+export const createActivityAi = async () => {
+  const response = await axios.post(
+    'http://localhost:8000/ai/generate/experience',
+    {
+      retrospective_content: 'string',
+      keywords: 'string',
+    },
+  );
+
+  return response.data;
 };

@@ -9,14 +9,13 @@ import { useEffect, useState } from 'react';
 
 import useProjectStore from '../../../../store/useProjectStore';
 
-// import Loading from '../../../common/loading/Loading';
+import Loading from '../../../common/loading/Loading';
 import DiaryForm from '../diaryForm/DiaryForm';
 import useDiaryStore from '../../../../store/useDiaryStore';
 import Modal from '../../../common/modal/Modal';
 import { addDiary } from '../../../../api/diaryApi';
-import Loading from '../../../common/loading/Loading';
 
-// import { getDiaryTitle } from '../../../../api/diaryApi';
+import { getDiaryTitle } from '../../../../api/diaryApi';
 
 function DiaryCreate() {
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ function DiaryCreate() {
   const { pjtId } = useParams();
 
   const { project, getProject } = useProjectStore();
-  // const questionList = useDiaryStore((state) => state.questionList);
+  const questionList = useDiaryStore((state) => state.questionList);
   const { title, answerList, imageFileList, initDiary, updateTitle } =
     useDiaryStore();
 
@@ -34,7 +33,7 @@ function DiaryCreate() {
   const [errMsgOn, setErrMsgOn] = useState(false);
 
   const [isBackModalOpen, setBackModalOpen] = useState(false);
-  // const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
+  const [isFinLoadingOpen, setFinLoadingOpen] = useState(false);
   const [isTitleModalOpen, setTitleModalOpen] = useState(false);
 
   const [isTitleEmpty, setTitleEmpty] = useState(false);
@@ -51,19 +50,19 @@ function DiaryCreate() {
     if (textLengthErr) {
       setErrMsgOn(true);
     } else {
-      // setFinLoadingOpen(true);
-      // try {
-      //   const title = await getDiaryTitle(questionList, answerList);
+      setFinLoadingOpen(true);
+      try {
+        const title = await getDiaryTitle(questionList, answerList);
 
-      //   setTextLengthErr(true);
-      //   setErrMsgOn(false);
-      //   console.log(title);
-      //   updateTitle(title);
-      // } catch (error) {
-      //   console.log('개발일지 제목 생성 실패');
-      //   console.log(error);
-      // }
-      // setFinLoadingOpen(false);
+        setTextLengthErr(true);
+        setErrMsgOn(false);
+        console.log(title);
+        updateTitle(title);
+      } catch (error) {
+        console.log('개발일지 제목 생성 실패');
+        console.log(error);
+      }
+      setFinLoadingOpen(false);
       setTitleModalOpen(true);
     }
   };
@@ -160,11 +159,11 @@ function DiaryCreate() {
         confirmText={'이동'}
         cancleText={'취소'}
       />
-      {/*<Loading
-        // isLoading={isFinLoadingOpen}
+      <Loading
+        isLoading={isFinLoadingOpen}
         title="개발일지 작성 중 ..."
         animationData={Bubble}
-      />*/}
+      />
 
       {/* AI 생성 제목 확인 모달 */}
 

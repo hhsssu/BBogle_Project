@@ -58,7 +58,7 @@ export const getDiaryTitle = async (
   answers: string[],
 ) => {
   const response = await axios.post(
-    'http://localhost:8000/api/generate/title',
+    'http://localhost:8000/ai/generate/title',
     [
       { question: questions[0].question, answer: answers[0] },
       { question: questions[1].question, answer: answers[1] },
@@ -71,7 +71,7 @@ export const getDiaryTitle = async (
     },
   );
   console.log(response);
-  return response.data;
+  return response.data.title;
 };
 
 export const addDiary = async (projectId: number, diary: Diary) => {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import EmptySummary from '../../assets/image/icon/EmptySummary.svg';
 
@@ -6,11 +7,14 @@ import styles from './Summary.module.css';
 import SummaryDetail from './SummaryDetail';
 import SummaryUpdate from './SummaryUpdate';
 import SummaryCreate from './SummaryCreate';
+import { createSummaryAi } from '../../api/summaryApi';
 
 function Summary() {
   const [openSection] = useState(false);
   const [detailSection, setDetailSection] = useState(true);
   const [createSection, setCreateSection] = useState(false);
+
+  const { pjtId } = useParams();
 
   // 수정 컴포넌트 보이기
   const handleEdit = () => {
@@ -29,6 +33,14 @@ function Summary() {
   };
 
   //TODO 회고 AI 생성 API 연결
+  const handleCreateAi = () => {
+    try {
+      createSummaryAi(Number(pjtId));
+    } catch (error) {
+      console.log('회고록 생성 실패');
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -51,7 +63,9 @@ function Summary() {
             </p>
           </div>
           <div className={styles.center}>
-            <button className={styles.orangebtn}>AI 생성하기</button>
+            <button className={styles.orangebtn} onClick={handleCreateAi}>
+              AI 생성하기
+            </button>
             <button className={styles.blackbtn} onClick={handleCreate}>
               직접 작성하기
             </button>

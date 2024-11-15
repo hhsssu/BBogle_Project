@@ -42,11 +42,7 @@ export const getProgressProjectList = async () => {
 
 export const getProject = async (projectId: number) => {
   try {
-    const response = await axiosInstance.get(`/projects/${projectId}`, {
-      headers: {
-        'Cache-Control': 'no-cache',
-      },
-    });
+    const response = await axiosInstance.get(`/projects/${projectId}`);
 
     return response.data;
   } catch (error) {

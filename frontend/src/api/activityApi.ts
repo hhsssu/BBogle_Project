@@ -41,9 +41,9 @@ export const updateActivity = async (
 
 // 경험 목록 조회
 export const fetchActivities = async (
-  word: string | null = null,
-  keywords: number[] = [],
-  projects: number[] = [],
+  word: string | null,
+  keywords: number[],
+  projects: number[],
 ) => {
   try {
     const response = await axiosInstance.post('/activities/search', {

@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getProject, getProjectList } from '../api/projectApi';
+import {
+  getProject,
+  getProjectList,
+  getProjectTitles,
+} from '../api/projectApi';
 
 interface ProjectCard {
   projectId: number;
@@ -28,6 +32,11 @@ interface Project {
   notificationTime: string;
 }
 
+interface ProjectTitle {
+  projectId: number;
+  title: string;
+}
+
 interface ProjectState {
   // 프로젝트 데이터 로딩 상태
   isProjectLoading: boolean;
@@ -35,6 +44,8 @@ interface ProjectState {
   // 프로젝트 리스트
   projectList: ProjectCard[];
   getProjectList: () => void;
+  projectTitles: ProjectTitle[];
+  getProjectTitles: () => void;
 
   // 프로젝트 하나
   project: Project;
@@ -69,6 +80,13 @@ const useProjectStore = create<ProjectState>()(
         set(() => ({ isProjectLoading: true }));
         const data = await getProjectList();
         set(() => ({ projectList: data, isProjectLoading: false }));
+      },
+
+      projectTitles: [],
+      getProjectTitles: async () => {
+        set(() => ({ isProjectLoading: true }));
+        const data = await getProjectTitles();
+        set(() => ({ projectTitles: data, isProjectLoading: false }));
       },
 
       // 프로젝트 하나

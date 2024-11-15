@@ -16,8 +16,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Integer> {
 
     @Query("SELECT d FROM Diary d " +
             "WHERE d.project.id = :projectId " +
-            "ORDER BY d.createDate DESC")
-    List<Diary> findByProject_IdOrderByCreateDateDesc(@Param("projectId") Integer projectId);
+            "ORDER BY d.id ASC")  // createDate DESC -> id ASC
+    List<Diary> findByProject_IdOrderById(@Param("projectId") Integer projectId);
 
     @Query("SELECT d FROM Diary d " +
             "LEFT JOIN FETCH d.answers a " +
@@ -30,8 +30,8 @@ public interface DiaryRepository extends JpaRepository<Diary, Integer> {
             "LEFT JOIN FETCH d.project " +
             "WHERE d.user.kakaoId = :kakaoId " +
             "AND d.createDate = :createDate " +
-            "ORDER BY d.createDate DESC")
-    List<Diary> findByUser_KakaoIdAndCreateDateOrderByCreateDateDesc(
+            "ORDER BY d.id ASC")  // createDate DESC -> id ASC
+    List<Diary> findByUser_KakaoIdAndCreateDateOrderById(
             @Param("kakaoId") Long kakaoId,
             @Param("createDate") LocalDate createDate);
 
@@ -40,7 +40,7 @@ public interface DiaryRepository extends JpaRepository<Diary, Integer> {
             "LEFT JOIN FETCH a.question " +
             "LEFT JOIN FETCH d.diaryImages " +
             "WHERE d.project.id = :projectId " +
-            "ORDER BY d.createDate DESC")
+            "ORDER BY d.id ASC")  // createDate DESC -> id ASC
     List<Diary> findByProject_IdWithDetails(@Param("projectId") Integer projectId);
 
     @EntityGraph(attributePaths = {"answers", "answers.question", "diaryImages"})

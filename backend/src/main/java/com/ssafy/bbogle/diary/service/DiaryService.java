@@ -17,7 +17,9 @@ import com.ssafy.bbogle.project.entity.Project;
 import com.ssafy.bbogle.project.repository.ProjectRepository;
 import com.ssafy.bbogle.user.entity.User;
 import com.ssafy.bbogle.user.repository.UserRepository;
+
 import java.io.IOException;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -46,7 +49,7 @@ public class DiaryService {
         log.info("오늘의 개발일지 조회 요청. kakaoId: {}", kakaoId);
 
         List<Diary> todayDiaries = diaryRepository
-                .findByUser_KakaoIdAndCreateDateOrderByCreateDateDesc(kakaoId, LocalDate.now());
+                .findByUser_KakaoIdAndCreateDateOrderById(kakaoId, LocalDate.now());  // ID 기준 정렬
 
         List<TodayDiaryListItemResponse> diaries = todayDiaries.stream()
                 .map(diary -> TodayDiaryListItemResponse.builder()
@@ -70,7 +73,7 @@ public class DiaryService {
         Project project = projectRepository.findByIdAndUser_KakaoId(projectId, kakaoId)
                 .orElseThrow(() -> new CustomException(ErrorCode.PROJECT_NOT_FOUND));
 
-        List<Diary> diaries = diaryRepository.findByProject_IdOrderByCreateDateDesc(projectId);
+        List<Diary> diaries = diaryRepository.findByProject_IdOrderById(projectId);  // ID 기준 정렬
 
         List<DiaryListItemResponse> diaryList = diaries.stream()
                 .map(diary -> DiaryListItemResponse.builder()
@@ -262,6 +265,7 @@ public class DiaryService {
         List<Diary> diaries = diaryRepository.findByProject_IdWithDetails(projectId);
 
         return diaries.stream()
+                .sorted(Comparator.comparing(Diary::getId))  // ID 기준 오름차순 정렬
                 .map(diary -> DiaryDetailResponse.builder()
                         .diaryId(diary.getId())
                         .title(diary.getTitle())
@@ -275,6 +279,7 @@ public class DiaryService {
                                         .build())
                                 .collect(Collectors.toList()))
                         .images(diary.getDiaryImages().stream()
+                                .sorted(Comparator.comparing(DiaryImage::getId))  // 이미지도 ID 기준 정렬 추가
                                 .map(DiaryImage::getUrl)
                                 .collect(Collectors.toList()))
                         .build())

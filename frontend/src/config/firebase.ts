@@ -40,12 +40,9 @@ export const requestPermission = async () => {
       console.log('알림 권한을 허용하지 않았습니다.');
       return false;
     }
-  }
-  // TODO 확인용
-  else if (Notification.permission === 'granted') {
-    console.log('알림 권한이 허용되어 있습니다.');
-  } else if (Notification.permission === 'denied') {
-    console.log('알림 권한이 거절되어 있습니다.');
+  } else if (Notification.permission === 'granted') {
+    console.log('일림 권한이 허용되어 있습니다.');
+    return false;
   }
 };
 

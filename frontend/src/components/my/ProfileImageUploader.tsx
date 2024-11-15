@@ -101,7 +101,7 @@ function ProfileImageUploader({
   // 미리보기 이미지를 다운로드하는 함수
   const downloadImage = () => {
     if (previewImage) {
-      fetch(previewImage, { method: 'GET' })
+      fetch(previewImage + '?' + new Date().getTime(), { method: 'GET' })
         .then((res) => {
           return res.blob();
         })
@@ -111,7 +111,7 @@ function ProfileImageUploader({
           // a 태그 생성 및 다운로드 속성 설정
           const link = document.createElement('a');
           link.href = blobURL;
-          link.download = `uploaded_image`; // 파일명 설정
+          link.download = `uploaded_image.png`; // 파일명 설정
           link.click();
 
           // a 태그 제거

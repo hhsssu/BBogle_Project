@@ -17,13 +17,14 @@ function DiaryUpdate() {
   const navigate = useNavigate();
   const { pjtId, diaryId } = useParams();
 
-  const isLoading = useDiaryStore((state) => state.isLoading);
-
-  const diaryTitle = useDiaryStore((state) => state.title);
-  const answerList = useDiaryStore((state) => state.answerList);
-  const imageFileList = useDiaryStore((state) => state.imageFileList);
-  const getDiaryDetail = useDiaryStore((state) => state.getDiaryDetail);
-  const updateTitle = useDiaryStore((state) => state.updateTitle);
+  const {
+    isLoading,
+    title,
+    answerList,
+    imageList,
+    getDiaryDetail,
+    updateTitle,
+  } = useDiaryStore();
 
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
@@ -52,9 +53,9 @@ function DiaryUpdate() {
       setErrMsgOn(false);
 
       await patchDiary(Number(pjtId), Number(diaryId), {
-        title: diaryTitle,
+        title: title,
         answers: answerList,
-        images: imageFileList,
+        images: imageList,
       });
 
       alert('개발일지 수정 완료!');
@@ -105,7 +106,7 @@ function DiaryUpdate() {
       <input
         className={style.diaryTitle}
         type="text"
-        value={diaryTitle}
+        value={title}
         maxLength={50}
         onChange={handleTitleChange}
       />

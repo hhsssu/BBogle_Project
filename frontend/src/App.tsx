@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import style from './App.module.css';
 import SideBar from './components/common/sideBar/SideBar';
 import AppRouter from './routes/AppRouter';
 import useSideBarStore from './store/useSideBarStore';
 import { onMessageListener } from './config/firebase';
-import { useEffect, useState } from 'react';
 import useActivityStore from './store/useActivityStore';
 
 function App() {

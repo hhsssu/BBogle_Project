@@ -27,9 +27,6 @@ function ActivityUpdate() {
     (state) => state.updateActivityField,
   );
 
-  // keywords id만 저장
-  const keywordIds = activity.keywords.map((keyword) => keyword.id);
-
   // 폼 오류 설정하기
   const {
     titleError,
@@ -45,6 +42,8 @@ function ActivityUpdate() {
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
+  const keywordIds = [...activity.keywords] as unknown as number[];
+
   // ✅데이터 불러오기
   useEffect(() => {
     fetchActivityById(numericActivityId);
@@ -52,7 +51,7 @@ function ActivityUpdate() {
 
   // ✅돌아가기
   const handleGoBack = () => {
-    nav(-1);
+    nav(`/activity/${activityId}`);
   };
 
   const handleBackModal = () => {
@@ -94,7 +93,13 @@ function ActivityUpdate() {
   // ✅경험 생성
   const handleUpdateActivity = async () => {
     setCreateModalOpen(!isCreateModalOpen);
-    updateActivity(numericActivityId, activity);
+
+    try {
+      await updateActivity(numericActivityId, activity);
+      nav(`/activity/${activityId}`);
+    } catch (error) {
+      // console.error('경험 수정 오류 발생: ', error);
+    }
   };
 
   useEffect(() => {

@@ -19,6 +19,13 @@ export interface Activity {
   keywords: ActivityKeyword[];
 }
 
+// 경험 검색 관련
+interface SearchCriteria {
+  word: string;
+  keywords: number[];
+  projects: number[];
+}
+
 interface ActivityState {
   // 경험 데이터 로딩 상태
   isActivityLoading: boolean;
@@ -44,11 +51,24 @@ interface ActivityState {
   // 경험 데이터 초기화
   resetActivity: () => void;
 
+  // 검색 데이터 초기화
+  resetSearchCriteria: () => void;
+
   // 경험 전체 리스트 & 검색
-  fetchActivities: () => void;
+  fetchActivities: (
+    word: string | null,
+    keywords: number[],
+    projects: number[],
+  ) => void;
 
   // 경험 상세 (ID 검색)
   fetchActivityById: (activityId: number) => void;
+
+  // 경험 검색 데이터
+  searchCriteria: SearchCriteria;
+
+  // 경험 검색 데이터 설정
+  setSearchCriteria: (criteria: SearchCriteria) => void;
 
   // 경험 생성/수정 필수 확인
   // 빈 제목 에러
@@ -119,9 +139,13 @@ const useActivityStore = create<ActivityState>()(
         })),
 
       // 경험 전체 리스트 & 검색
-      fetchActivities: async () => {
+      fetchActivities: async (
+        word: string | null,
+        keywords: number[],
+        projects: number[],
+      ) => {
         set(() => ({ isActivityLoading: true }));
-        const data = await fetchActivitiesApi();
+        const data = await fetchActivitiesApi(word, keywords, projects);
         set({ activities: data, isActivityLoading: false });
       },
 
@@ -131,6 +155,19 @@ const useActivityStore = create<ActivityState>()(
         const data = await fetchActivityByIdApi(activityId);
         set({ activity: data, isActivityLoading: false });
       },
+
+      // 경험 검색 데이터
+      searchCriteria: {
+        word: '',
+        keywords: [],
+        projects: [],
+      },
+      setSearchCriteria: (criteria) => set({ searchCriteria: criteria }),
+
+      resetSearchCriteria: () =>
+        set(() => ({
+          searchCriteria: { word: '', keywords: [], projects: [] },
+        })),
 
       // 경험 생성/수정 필수 확인
       titleError: false,

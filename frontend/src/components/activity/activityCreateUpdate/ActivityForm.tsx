@@ -58,6 +58,7 @@ function ActivityForm({
   );
   // 선택된 키워드
   const [selectedKeywords, setSelectedKeywords] = useState<number[]>(keywords);
+  console.log(selectedKeywords);
 
   // ✅입력이 변경된 상태에서 페이지 이탈 시 경고 알림
   // 페이지를 떠나기 전에 경고 메시지 표시
@@ -155,6 +156,7 @@ function ActivityForm({
     ) {
       if (selectedKeywords.length < 3) {
         const updatedKeywords = [...selectedKeywords, selectedKeyword.id];
+        console.log('updatedKeywords: ', updatedKeywords);
         setSelectedKeywords(updatedKeywords);
         updateActivityField('keywords', updatedKeywords); // ID 값만 전달
       } else {

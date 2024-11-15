@@ -23,9 +23,9 @@ function ActivityUpdate() {
   );
   const updateActivity = useActivityStore((state) => state.updateActivity);
   const resetActivity = useActivityStore((state) => state.resetActivity);
-  const updateActivityField = useActivityStore(
-    (state) => state.updateActivityField,
-  );
+  // const updateActivityField = useActivityStore(
+  //   (state) => state.updateActivityField,
+  // );
 
   // 폼 오류 설정하기
   const {
@@ -42,7 +42,8 @@ function ActivityUpdate() {
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
-  const keywordIds = [...activity.keywords] as unknown as number[];
+  const keywordIds = activity.keywords.map((keyword) => keyword.id);
+  // const keywordIds = [...activity.keywords] as unknown as number[];
 
   // ✅데이터 불러오기
   useEffect(() => {
@@ -85,7 +86,7 @@ function ActivityUpdate() {
     }
 
     // 3. keywords 값 확인
-    updateActivityField('keywords', keywordIds);
+    // updateActivityField('keywords', keywordIds);
 
     setCreateModalOpen(true);
   };

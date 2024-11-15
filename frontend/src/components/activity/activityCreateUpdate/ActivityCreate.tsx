@@ -19,6 +19,7 @@ function ActivityCreate() {
   const createActivity = useActivityStore((state) => state.createActivity);
   const resetActivity = useActivityStore((state) => state.resetActivity);
 
+  const keywordIds = activity.keywords.map((keyword) => keyword.id);
   // 폼 오류 설정하기
   const {
     titleError,
@@ -120,7 +121,7 @@ function ActivityCreate() {
         startDate={activity.startDate}
         endDate={activity.endDate}
         projectId={activity.projectId}
-        keywords={activity.keywords.map((keyword) => keyword.id)}
+        keywords={keywordIds}
       />
       <button
         className={`${ActivityStyles.btn} ${ActivityCreateStyles.regist} ${(titleError || contentError || termError) && errMsgOn && ActivityCreateStyles.failBtn}`}

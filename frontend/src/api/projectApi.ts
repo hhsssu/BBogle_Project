@@ -154,3 +154,13 @@ export const finishProject = async (projectId: number) => {
     console.log(error);
   }
 };
+
+// 프로젝트 조회 - 검색 조건용 (프로젝트 id, 제목만 나옴)
+export const getProjectTitles = async () => {
+  try {
+    const response = await axiosInstance.get('/projects/title');
+    return response.data.projects;
+  } catch (error) {
+    console.error('경험 제목 불러오기 실패: ', error);
+  }
+};

@@ -42,9 +42,9 @@ export const updateActivity = async (
 
 // 경험 목록 조회
 export const fetchActivities = async (
-  word: string | null = null,
-  keywords: number[] = [],
-  projects: number[] = [],
+  word: string | null,
+  keywords: number[],
+  projects: number[],
 ) => {
   try {
     const response = await axiosInstance.post('/activities/search', {
@@ -65,6 +65,14 @@ export const fetchActivityById = async (activityId: number) => {
     return response.data;
   } catch (error) {
     console.error('경험 상세 조회 실패: ', error);
+  }
+};
+
+export const deleteActivity = async (activityId: number) => {
+  try {
+    await axiosInstance.delete(`/activities/${activityId}`);
+  } catch (error) {
+    console.error('경험 삭제 실패: ', error);
   }
 };
 

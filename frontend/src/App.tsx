@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import style from './App.module.css';
 import SideBar from './components/common/sideBar/SideBar';
 import AppRouter from './routes/AppRouter';
 import useSideBarStore from './store/useSideBarStore';
 import { onMessageListener } from './config/firebase';
+import { useEffect, useState } from 'react';
+import useActivityStore from './store/useActivityStore';
 
 function App() {
   const { isOpen } = useSideBarStore();
   const location = useLocation();
+
+  const searchCriteria = useActivityStore((state) => state.searchCriteria);
+  const resetSearchCriteria = useActivityStore(
+    (state) => state.resetSearchCriteria,
+  );
 
   // 현재 경로가 '/login'이면 SideBar를 렌더링하지 않음
   const isOnboarding = location.pathname === '/login';
@@ -32,6 +38,17 @@ function App() {
       .catch((err) => console.log('메시지 수신 실패: ', err));
   }, []);
 
+  useEffect(() => {
+    if (!location.pathname.startsWith('/activity')) {
+      if (
+        searchCriteria.word.length > 0 ||
+        searchCriteria.keywords.length > 0 ||
+        searchCriteria.projects.length > 0
+      ) {
+        resetSearchCriteria();
+      }
+    }
+  }, [location.pathname]);
   return (
     <div className={style['app-container']}>
       {/* 현재 경로가 '/login'이 아닌 경우에만 SideBar를 표시 */}

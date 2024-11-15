@@ -1,41 +1,34 @@
-// firebase-messaging-sw.js
-// Firebase 라이브러리를 서비스 워커에서 사용할 수 있도록 import
-importScripts('https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js');
+// Firebase 라이브러리를 importScripts로 가져오기
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
 importScripts(
-  'https://www.gstatic.com/firebasejs/10.1.0/firebase-messaging.js',
+  'https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js',
 );
 
-// Firebase 설정 객체 정의
+// Firebase 설정
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: 'AIzaSyAR8FQp4IyRD7xOZJdlw3uKpokhTJrg0EA',
+  authDomain: 'bbogle-c47b4.firebaseapp.com',
+  projectId: 'bbogle-c47b4',
+  storageBucket: 'bbogle-c47b4.firebasestorage.app',
+  messagingSenderId: '284508974366',
+  appId: '1:284508974366:web:89fb4006f16b03621f6d0f',
 };
 
 // Firebase 초기화
 firebase.initializeApp(firebaseConfig);
 
-// Firebase Cloud Messaging 인스턴스 생성
+// Messaging 인스턴스 생성
 const messaging = firebase.messaging();
 
-// 백그라운드 메시지를 수신할 때의 핸들러 정의
+// 백그라운드 메시지 처리
 messaging.onBackgroundMessage((payload) => {
-  console.log('백그라운드에서 메시지를 수신했습니다.', payload);
+  console.log('서비스 워커 백그라운드 메시지 수신:', payload);
 
-  // 수신된 메시지에서 제목과 본문을 추출하여 알림으로 표시
-  if (payload.notification) {
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-      body: payload.notification.body,
-      icon: 'icon', // 알림 아이콘을 지정
-    };
+  const notificationTitle = payload.notification.title || '알림 제목';
+  const notificationOptions = {
+    body: payload.notification.body || '알림 내용',
+    icon: payload.notification.icon || '/default-icon.png',
+  };
 
-    // 서비스 워커 컨텍스트에서 알림 표시
-    self.registration.showNotification(notificationTitle, notificationOptions);
-  } else {
-    console.log('notification 필드가 포함되지 않은 메시지입니다.');
-  }
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });

@@ -37,7 +37,7 @@ function Main() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const isRedirected = queryParams.get('redirect') === 'true';
+  const isRedirected = queryParams.get('login') === 'true';
   const { activeProjectId, setActiveProjectId } = useProjectSelectStore();
   const { fetchUserNickname, user } = useUserStore();
   const [scrollGuide, setScrollGuide] = useState(true); // 스크롤 가이드 상태관리
@@ -46,17 +46,15 @@ function Main() {
   useEffect(() => {
     // 로그인 후 메인으로 넘어온 경우에만
     if (isRedirected) {
+      console.log('isRedirect : ', isRedirected);
       const askNotificationPermission = async () => {
         const isGranted = await requestPermission();
-
         // 알림 권한을 허용받은 경우이거나, 이미 알림 권한이 허용되어 있는 경우
         if (isGranted) {
           const token = await getFCMToken(); // FCM 토큰 발급
           // store에 저장된 fcm 토큰
-          const prevToken = token;
-
-          // FCM 토큰을 발급 받았고, 메모리에 저장된 토큰이 없거나 다른 경우(만료된 경우) 토큰 갱신
-          if (token && prevToken !== token) {
+          // FCM 토큰을 발급 받음
+          if (token) {
             // 백엔드로 토큰 전송
             await transferToken(token);
           }

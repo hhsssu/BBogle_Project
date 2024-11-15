@@ -41,8 +41,8 @@ export const requestPermission = async () => {
       return false;
     }
   } else if (Notification.permission === 'granted') {
-    console.log('일림 권한이 허용되어 있습니다.');
-    return false;
+    console.log('일림 권한이 이미 허용되어 있습니다.');
+    return true;
   }
 };
 

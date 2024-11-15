@@ -1,8 +1,23 @@
+import axios from 'axios';
 import axiosInstance from './axiosInstance';
 import useProjectStore from '../store/useProjectStore';
 
 // 프로젝트 ID 가져오기
 const projectId = useProjectStore((state) => state.project.projectId);
+
+interface DiaryDetail {
+  diaryId: number;
+  title: string;
+  createDate: string;
+  answers: [
+    {
+      question: string;
+      description: string;
+      answer: string;
+    },
+  ];
+  images: string[];
+}
 
 // 회고 가져오기
 export const fetchSummaryInfo = async () => {
@@ -44,3 +59,52 @@ export const createSummary = async (content: string) => {
 //     console.error('프로젝트 회고 수정 실패: ', error);
 //   }
 // };
+
+// 회고 AI 생성
+export const createSummaryAi = async (projectId: number) => {
+  const data = await axiosInstance.get(
+    `/projects/${projectId}/diaries/details`,
+  );
+
+  const request = data.data.map((entry: DiaryDetail) => ({
+    date: entry.createDate,
+    summary: entry.title,
+    daily_log: entry.answers,
+  }));
+
+  // console.log('회고록 생성 요청');
+
+  const response = await axios.post(
+    // 'http://localhost:8000/ai/ai/generate/summary',
+    'https://bbogle.me/ai/generate/summary',
+    request,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+
+  // console.log('회고록 생성 완료' + response.data.retrospective.slice(0, 6));
+  // console.log(response.data.retrospective);
+
+  // return response.data.retrospective;
+
+  // TODO 경험 생성부분 테스트용
+  const keywords = await axiosInstance.get('/keywords');
+
+  // console.log(keywords.data.keywords);
+
+  const ExResponse = await axios.post(
+    // 'http://localhost:8000/ai/ai/generate/experience',
+    'https://bbogle.me/ai/generate/experience',
+    {
+      retrospective_content: response.data.retrospective,
+      keywords: keywords.data.keywords,
+    },
+  );
+
+  console.log(ExResponse.data);
+
+  // return response.data.retrospective;
+};

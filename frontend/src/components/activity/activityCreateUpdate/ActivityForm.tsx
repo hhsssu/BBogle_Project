@@ -16,7 +16,7 @@ interface Props {
   startDate: Date;
   endDate: Date;
   projectId: number | undefined;
-  keywords: number[];
+  keywords: { id: number; type: boolean; name: string }[];
 }
 
 // 경험 수동 생성 & 수정 폼 컴포넌트
@@ -57,8 +57,9 @@ function ActivityForm({
     (state) => state.fetchActivityKeywords,
   );
   // 선택된 키워드
-  const [selectedKeywords, setSelectedKeywords] = useState<number[]>(keywords);
-  console.log(selectedKeywords);
+  const [selectedKeywords, setSelectedKeywords] = useState<number[]>(
+    keywords.map((keyword) => keyword.id),
+  );
 
   // ✅입력이 변경된 상태에서 페이지 이탈 시 경고 알림
   // 페이지를 떠나기 전에 경고 메시지 표시
@@ -101,6 +102,7 @@ function ActivityForm({
     const value = event.target.value;
 
     updateActivityField('title', value);
+    updateActivityField('keywords', selectedKeywords); // ID 값만 전달
     if (value !== '') {
       // 제목 값이 없을 때 오류 처리
       handleTitleError(false);
@@ -114,6 +116,7 @@ function ActivityForm({
     const value = event.target.value;
 
     updateActivityField('content', value);
+    updateActivityField('keywords', selectedKeywords); // ID 값만 전달
     if (content !== '') {
       // 내용 값이 없을 때 오류 처리
       handleContentError(false);
@@ -134,6 +137,7 @@ function ActivityForm({
     updateActivityField('startDate', value);
     // 시작 날짜가 종료 날짜보다 이후일 때 오류 처리
     handleTermError(false);
+    updateActivityField('keywords', selectedKeywords); // ID 값만 전달
   };
 
   // ✅종료 날짜 입력
@@ -142,6 +146,7 @@ function ActivityForm({
     updateActivityField('endDate', value);
     // 시작 날짜가 종료 날짜보다 이후일 때 오류 처리
     handleTermError(false);
+    updateActivityField('keywords', selectedKeywords); // ID 값만 전달
   };
 
   // ✅키워드 선택
@@ -156,7 +161,6 @@ function ActivityForm({
     ) {
       if (selectedKeywords.length < 3) {
         const updatedKeywords = [...selectedKeywords, selectedKeyword.id];
-        console.log('updatedKeywords: ', updatedKeywords);
         setSelectedKeywords(updatedKeywords);
         updateActivityField('keywords', updatedKeywords); // ID 값만 전달
       } else {

@@ -23,9 +23,6 @@ function ActivityUpdate() {
   );
   const updateActivity = useActivityStore((state) => state.updateActivity);
   const resetActivity = useActivityStore((state) => state.resetActivity);
-  // const updateActivityField = useActivityStore(
-  //   (state) => state.updateActivityField,
-  // );
 
   // 폼 오류 설정하기
   const {
@@ -41,9 +38,6 @@ function ActivityUpdate() {
 
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
-
-  const keywordIds = activity.keywords.map((keyword) => keyword.id);
-  // const keywordIds = [...activity.keywords] as unknown as number[];
 
   // ✅데이터 불러오기
   useEffect(() => {
@@ -84,10 +78,6 @@ function ActivityUpdate() {
       setErrMsgOn(true);
       return;
     }
-
-    // 3. keywords 값 확인
-    // updateActivityField('keywords', keywordIds);
-
     setCreateModalOpen(true);
   };
 
@@ -132,7 +122,7 @@ function ActivityUpdate() {
         startDate={activity.startDate}
         endDate={activity.endDate}
         projectId={activity.projectId}
-        keywords={keywordIds}
+        keywords={activity.keywords}
       />
       <button
         className={`${ActivityStyles.btn} ${ActivityCreateStyles.regist} ${(titleError || contentError || termError) && errMsgOn && ActivityCreateStyles.failBtn}`}

@@ -54,7 +54,6 @@ function DiaryCreate() {
       try {
         const title = await getDiaryTitle(questionList, answerList);
 
-        setTextLengthErr(true);
         setErrMsgOn(false);
         console.log(title);
         updateTitle(title);
@@ -90,6 +89,7 @@ function DiaryCreate() {
         answers: answerList,
         images: imageList,
       });
+      setTextLengthErr(true);
       alert('개발일지 저장 완료');
       navigate(`/project/${project.projectId}`);
     } catch (error) {

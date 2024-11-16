@@ -12,6 +12,12 @@
   align-items: center;
 }
 
+.titleContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
 .diaryTitle {
   font-size: 24px;
   font-weight: 600;
@@ -29,6 +35,15 @@
   border-color: rgba(232, 232, 232, 1);
   background-color: rgba(240, 240, 240, 0.4);
   outline: none;
+}
+
+.titleErrMsg {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  bottom: 4.2vh;
+  font-size: 12px;
+  color: red;
 }
 
 .submitBtn {

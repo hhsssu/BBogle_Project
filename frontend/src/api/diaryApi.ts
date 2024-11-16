@@ -58,8 +58,6 @@ export const getDiaryTitle = async (
   answers: string[],
 ) => {
   const response = await axiosInstance.post(
-    // 'http://localhost:8000/ai/ai/generate/title',
-    // 'https://bbogle.me/ai/ai/generate/title',
     '/rabbitmq/send/title',
     [
       { question: questions[0].question, answer: answers[0] },
@@ -72,7 +70,7 @@ export const getDiaryTitle = async (
       },
     },
   );
-  // console.log(response);
+  console.log(response);
   return response.data.result;
 };
 

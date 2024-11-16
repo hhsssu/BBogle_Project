@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import axiosInstance from './axiosInstance';
 // import useProjectStore from '../store/useProjectStore';
 
@@ -75,11 +75,11 @@ export const createSummaryAi = async (projectId: number) => {
 
   // console.log('회고록 생성 요청');
 
-  const response = await axios.post(
-    // const response = await axiosInstance.post(
+  // const response = await axios.post(
+  const response = await axiosInstance.post(
     // 'http://localhost:8000/ai/ai/generate/summary',
     // 'https://bbogle.me/ai/generate/summary',
-    'https://bbogle.me/api/rabbitmq/send/retrospective',
+    '/rabbitmq/send/retrospective',
     request,
     // {
     //   headers: {
@@ -98,11 +98,11 @@ export const createSummaryAi = async (projectId: number) => {
 
   // console.log(keywords.data.keywords);
 
-  const ExResponse = await axios.post(
-    // const ExResponse = await axiosInstance.post(
+  // const ExResponse = await axios.post(
+  const ExResponse = await axiosInstance.post(
     // 'http://localhost:8000/ai/ai/generate/experience',
     // 'https://bbogle.me/ai/generate/experience',
-    'https://bbogle.me/api/rabbitmq/send/experience',
+    '/rabbitmq/send/experience',
     {
       retrospective_content: response.data.retrospective,
       keywords: keywords.data.keywords,

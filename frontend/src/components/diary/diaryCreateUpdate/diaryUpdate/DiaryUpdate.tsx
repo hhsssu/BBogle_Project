@@ -102,7 +102,6 @@ function DiaryUpdate() {
         돌아가기
       </div>
 
-      {/* <div className={style.diaryTitle}>{diaryTitle}</div> */}
       <input
         className={`${style.diaryTitle} ${style.diaryInput}`}
         type="text"

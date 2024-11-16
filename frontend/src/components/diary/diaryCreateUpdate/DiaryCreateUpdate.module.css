@@ -22,11 +22,12 @@
 }
 
 .diaryInput {
-  min-width: 20rem;
+  width: 40%;
   border: none;
   border-bottom: solid;
+  border-radius: 5px;
   border-color: rgba(232, 232, 232, 1);
-  background-color: rgba(240, 240, 240, 1);
+  background-color: rgba(240, 240, 240, 0.4);
   outline: none;
 }
 

@@ -66,6 +66,7 @@ export const createSummaryAi = async (projectId: number) => {
   const response = await axiosInstance.post(
     '/rabbitmq/send/retrospective',
     request,
+    { timeout: 60000 }, // 30초 타임아웃
   );
 
   console.log(response.data.retrospective);
@@ -75,10 +76,14 @@ export const createSummaryAi = async (projectId: number) => {
   // TODO 경험 생성부분 테스트용
   const keywords = await axiosInstance.get('/keywords');
 
-  const ExResponse = await axiosInstance.post('/rabbitmq/send/experience', {
-    retrospective_content: response.data.retrospective,
-    keywords: keywords.data.keywords,
-  });
+  const ExResponse = await axiosInstance.post(
+    '/rabbitmq/send/experience',
+    {
+      retrospective_content: response.data.retrospective,
+      keywords: keywords.data.keywords,
+    },
+    { timeout: 60000 }, // 30초 타임아웃
+  );
 
   console.log(ExResponse.data);
 

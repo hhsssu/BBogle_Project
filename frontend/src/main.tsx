@@ -8,10 +8,10 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker
     .register('/firebase-messaging-sw.js')
     .then((registration) => {
-      console.log('서비스 워커 등록 성공:', registration);
+      console.log('서비스 워커 등록 완료 : ', registration.scope);
     })
     .catch((error) => {
-      console.error('서비스 워커 등록 중 오류 발생:', error);
+      console.log('서비스 워커 등록 중 문제 발생: ', error);
     });
 }
 

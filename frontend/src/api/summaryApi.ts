@@ -76,17 +76,19 @@ export const createSummaryAi = async (projectId: number) => {
   // console.log('회고록 생성 요청');
 
   const response = await axios.post(
+    // const response = await axiosInstance.post(
     // 'http://localhost:8000/ai/ai/generate/summary',
-    'https://bbogle.me/ai/generate/summary',
+    // 'https://bbogle.me/ai/generate/summary',
+    'https://bbogle.me/api/rabbitmq/send/retrospective',
     request,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
+    // {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // },
   );
 
-  // console.log('회고록 생성 완료' + response.data.retrospective.slice(0, 6));
+  console.log('회고록 생성 완료' + response.data.retrospective.slice(0, 6));
   // console.log(response.data.retrospective);
 
   // return response.data.retrospective;
@@ -97,8 +99,10 @@ export const createSummaryAi = async (projectId: number) => {
   // console.log(keywords.data.keywords);
 
   const ExResponse = await axios.post(
+    // const ExResponse = await axiosInstance.post(
     // 'http://localhost:8000/ai/ai/generate/experience',
-    'https://bbogle.me/ai/generate/experience',
+    // 'https://bbogle.me/ai/generate/experience',
+    'https://bbogle.me/api/rabbitmq/send/experience',
     {
       retrospective_content: response.data.retrospective,
       keywords: keywords.data.keywords,

@@ -5,7 +5,7 @@
 }
 
 .backBtn {
-  display: flex;
+  display: inline-flex;
   font-size: 14px;
   color: rgba(160, 160, 160, 1);
   cursor: pointer;

@@ -19,16 +19,3 @@ firebase.initializeApp(firebaseConfig);
 
 // Messaging 인스턴스 생성
 const messaging = firebase.messaging();
-
-// 백그라운드 메시지 처리
-messaging.onBackgroundMessage((payload) => {
-  console.log('서비스 워커 백그라운드 메시지 수신:', payload);
-
-  const notificationTitle = payload.notification.title || '알림 제목';
-  const notificationOptions = {
-    body: payload.notification.body || '알림 내용',
-    icon: payload.notification.icon || '/default-icon.png',
-  };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
-});

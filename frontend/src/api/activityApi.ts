@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
 import axiosInstance from './axiosInstance';
 
@@ -77,18 +76,19 @@ export const deleteActivity = async (activityId: number) => {
 };
 
 // 경험 AI 생성
-export const createActivityAi = async () => {
+export const createActivityAi = async (content: string) => {
   const data = await axiosInstance.get('/keywords');
 
-  console.log(data.data.keywords);
+  // console.log(data.data.keywords);
 
-  const response = await axios.post(
-    'https://bbogle.me/ai/generate/experience',
+  const response = await axiosInstance.post(
+    '/rabbitmq/send/experience',
+    // 'https://bbogle.me/ai/generate/experience',
     {
-      // 객체 따로 설정해줘야함
-      retrospective_content: 'retrospective',
+      retrospective_content: content,
       keywords: data.data.keywords,
     },
+    { timeout: 180000 }, // 3분 타임아웃
   );
 
   console.log(response.data);

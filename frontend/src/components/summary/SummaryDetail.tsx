@@ -13,7 +13,7 @@ function SummaryDetail({ onEditClick, content }: SummaryDetailProps) {
         <img src={Edit} alt="수정" />
         <span className={styles.edit}>수정</span>
       </button>
-      <div>{content}</div>
+      <div className={styles.content}>{content}</div>
     </section>
   );
 }

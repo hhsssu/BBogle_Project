@@ -104,7 +104,11 @@ const useSummaryStore = create<SummaryState>()(
 
       // 회고 AI 생성
       createSummaryAi: async (projectId: number) => {
-        await createSummaryAiApi(projectId);
+        set(() => ({ isSummaryLoading: true }));
+        const data = await createSummaryAiApi(projectId);
+        await createSummaryApi(projectId, data);
+        set(() => ({ isSummaryLoading: false }));
+        window.location.reload();
       },
 
       // 회고 작성 시 오류 (내용값 오류)

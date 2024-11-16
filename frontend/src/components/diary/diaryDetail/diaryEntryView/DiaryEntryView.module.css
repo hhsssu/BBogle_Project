@@ -47,7 +47,7 @@
 
 .textArea {
   width: 90%;
-  height: 30vh;
+  min-height: 30vh;
   margin: 2vh 0vw 6vh 5vw;
   padding: 3vh 2vw;
   border: none;
@@ -59,4 +59,5 @@
   white-space: pre-wrap;
   word-break: break-all;
   overflow-wrap: break-word;
+  line-height: 140%;
 }

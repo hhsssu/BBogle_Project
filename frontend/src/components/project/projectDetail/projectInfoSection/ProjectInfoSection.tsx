@@ -22,6 +22,8 @@ function ProjectInfoSection() {
 
   const settingIconRef = useRef<HTMLImageElement>(null);
 
+  const [isExpandOpen, setExpandOpen] = useState(false);
+
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -41,6 +43,10 @@ function ProjectInfoSection() {
     navigate(`update`);
   };
 
+  const handleExpand = () => {
+    setExpandOpen(!isExpandOpen);
+  };
+
   const onDeleteProject = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
     try {
@@ -54,6 +60,7 @@ function ProjectInfoSection() {
 
   useEffect(() => {
     getProject(Number(pjtId));
+    setExpandOpen(false);
   }, [getProject, pjtId]);
 
   useEffect(() => {
@@ -123,27 +130,38 @@ function ProjectInfoSection() {
         </div>
       </div>
 
-      <div className={style.description}>{PROJECT.description}</div>
+      <div
+        className={`${style.description} ${!isExpandOpen && style.descriptionUnexpand}`}
+      >
+        {PROJECT.description}
+      </div>
+      <p className={style.expandBtn} onClick={handleExpand}>
+        {isExpandOpen ? '접기' : '더보기'}
+      </p>
       <div className={style.term}>
         {PROJECT.startDate} ~ {PROJECT.endDate} / {PROJECT.memberCount} 명
       </div>
 
       <div className={style.tagList}>
         <span className={style.tagLabel}>나의 역할</span>
-        {PROJECT.role.map((role, index) => (
-          <div key={index} className={style.tag}>
-            {role}
-          </div>
-        ))}
+        <div className={style.tagSection}>
+          {PROJECT.role.map((role, index) => (
+            <div key={index} className={style.tag}>
+              {role}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className={style.tagList}>
         <span className={style.tagLabel}>사용 기술</span>
-        {PROJECT.skill.map((skill, index) => (
-          <div key={index} className={style.tag}>
-            {skill}
-          </div>
-        ))}
+        <div className={style.tagSection}>
+          {PROJECT.skill.map((skill, index) => (
+            <div key={index} className={style.tag}>
+              {skill}
+            </div>
+          ))}
+        </div>
       </div>
 
       <Modal

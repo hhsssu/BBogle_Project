@@ -26,6 +26,7 @@ function DiaryUpdate() {
     updateTitle,
   } = useDiaryStore();
 
+  const [titleErr, setTitleErr] = useState(false);
   const [textLengthErr, setTextLengthErr] = useState(true);
   const [errMsgOn, setErrMsgOn] = useState(false);
 
@@ -43,10 +44,17 @@ function DiaryUpdate() {
     const value = e.target.value;
 
     updateTitle(value);
+
+    if (value.length === 0) {
+      setTitleErr(true);
+    } else {
+      setTitleErr(false);
+      setErrMsgOn(false);
+    }
   };
 
   const updateDiary = async () => {
-    if (textLengthErr) {
+    if (titleErr || textLengthErr) {
       setErrMsgOn(true);
     } else {
       setTextLengthErr(true);
@@ -78,6 +86,7 @@ function DiaryUpdate() {
   useEffect(() => {
     console.log('초기  길이 확인');
     checkTotalLength();
+    setTitleErr(false);
   }, [answerList]);
 
   useEffect(() => {
@@ -102,20 +111,27 @@ function DiaryUpdate() {
         돌아가기
       </div>
 
-      {/* <div className={style.diaryTitle}>{diaryTitle}</div> */}
-      <input
-        className={`${style.diaryTitle} ${style.diaryInput}`}
-        type="text"
-        placeholder="제목을 입력하세요"
-        value={title}
-        maxLength={50}
-        onChange={handleTitleChange}
-      />
+      <div className={style.titleContainer}>
+        <input
+          className={`${style.diaryTitle} ${style.diaryInput}`}
+          type="text"
+          placeholder="제목을 입력하세요"
+          value={title}
+          maxLength={30}
+          onChange={handleTitleChange}
+        />
+        {titleErr && (
+          <div className={style.titleErrMsg}>
+            <img className={style.warnIcon} src={AlertTriangle} alt="경고" />
+            <span>제목은 필수 입력 값입니다.</span>{' '}
+          </div>
+        )}
+      </div>
 
       <DiaryForm />
 
       <button
-        className={`${style.submitBtn} ${textLengthErr && style.failBtn}`}
+        className={`${style.submitBtn} ${(titleErr || textLengthErr) && style.failBtn}`}
         onClick={updateDiary}
       >
         완료
@@ -123,7 +139,8 @@ function DiaryUpdate() {
       {errMsgOn && (
         <div className={style.errMsg}>
           <img className={style.warnIcon} src={AlertTriangle} alt="경고" />
-          답변 길이가 너무 짧습니다! 50자 이상 작성해주세요{' '}
+          제목을 작성하지 않았거나, 답변 길이가 너무 짧습니다! 50자 이상
+          작성해주세요{' '}
         </div>
       )}
 

@@ -61,36 +61,37 @@ function DiaryCard({ diaryId, title, date }: Props) {
   return (
     <div>
       <div className={style.card}>
-        <section className={style.cardHeader}>
+        <section className={style.cardContents}>
           <span className={style.title}>
-            {title.length > 15 ? title.substring(0, 16) + '...' : title}
+            {/* {title.length > 15 ? title.substring(0, 16) + '...' : title} */}
+            {title}
           </span>
-          <div
-            ref={moreIconRef}
-            className={`${style.moreIconContainer} ${isModalOpen && style.selected}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              className={style.moreIcon}
-              src={MoreVertical}
-              alt="더보기"
-              onClick={handleModalOpen}
-            />
-            {isModalOpen && (
-              <div className={style.modalBox}>
-                <div className={style.modalContent} onClick={navDiaryUpdate}>
-                  <img className={style.modalImg} src={Pencil} alt="수정" />
-                  <p>수정</p>
-                </div>
-                <div className={style.modalContent} onClick={handleDeleteModal}>
-                  <img className={style.modalImg} src={RedTrash} alt="삭제" />
-                  삭제
-                </div>
-              </div>
-            )}
-          </div>
+          <div className={style.date}>{date}</div>
         </section>
-        <div className={style.date}>{date}</div>
+        <div
+          ref={moreIconRef}
+          className={`${style.moreIconContainer} ${isModalOpen && style.selected}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <img
+            className={style.moreIcon}
+            src={MoreVertical}
+            alt="더보기"
+            onClick={handleModalOpen}
+          />
+          {isModalOpen && (
+            <div className={style.modalBox}>
+              <div className={style.modalContent} onClick={navDiaryUpdate}>
+                <img className={style.modalImg} src={Pencil} alt="수정" />
+                <p>수정</p>
+              </div>
+              <div className={style.modalContent} onClick={handleDeleteModal}>
+                <img className={style.modalImg} src={RedTrash} alt="삭제" />
+                삭제
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {isDeleteModalOpen && (

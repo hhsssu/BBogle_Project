@@ -21,7 +21,6 @@ if ('serviceWorker' in navigator) {
   }
 }
 
-
 // React 앱 렌더링
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>

@@ -66,7 +66,7 @@ export const createSummaryAi = async (projectId: number) => {
   const response = await axiosInstance.post(
     '/rabbitmq/send/retrospective',
     request,
-    { timeout: 60000 }, // 30초 타임아웃
+    { timeout: 180000 }, // 30초 타임아웃
   );
 
   console.log(response.data.retrospective);
@@ -82,7 +82,7 @@ export const createSummaryAi = async (projectId: number) => {
       retrospective_content: response.data.retrospective,
       keywords: keywords.data.keywords,
     },
-    { timeout: 60000 }, // 30초 타임아웃
+    { timeout: 180000 }, // 30초 타임아웃
   );
 
   console.log(ExResponse.data);

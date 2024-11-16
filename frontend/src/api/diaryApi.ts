@@ -65,9 +65,7 @@ export const getDiaryTitle = async (
       { question: questions[2].question, answer: answers[2] },
     ],
     {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      timeout: 180000,
     },
   );
   console.log(response);

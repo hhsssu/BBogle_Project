@@ -136,13 +136,19 @@
 }
 
 .tagLabel {
+  min-width: 80px;
   font-size: 12px;
   font-weight: 600;
   margin-right: 3.75rem;
 }
 
+.tagSection {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .tag {
-  height: 1.2rem;
+  min-height: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,7 +156,8 @@
   background-color: rgba(30, 166, 252, 0.1);
   color: rgba(30, 166, 252, 1);
   border-radius: 5px;
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
   margin-right: 0.8rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0.2rem 0.5rem;
 }

@@ -23,7 +23,7 @@
 }
 
 .tag {
-  height: 1.2rem;
+  min-height: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,8 +34,7 @@
   margin-right: 0.8rem;
   margin-top: 0.1rem;
   margin-bottom: 0.1rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0.2rem 0.5rem;
 }
 
 .close {

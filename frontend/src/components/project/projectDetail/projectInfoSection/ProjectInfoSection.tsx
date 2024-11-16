@@ -144,20 +144,24 @@ function ProjectInfoSection() {
 
       <div className={style.tagList}>
         <span className={style.tagLabel}>나의 역할</span>
-        {PROJECT.role.map((role, index) => (
-          <div key={index} className={style.tag}>
-            {role}
-          </div>
-        ))}
+        <div className={style.tagSection}>
+          {PROJECT.role.map((role, index) => (
+            <div key={index} className={style.tag}>
+              {role}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className={style.tagList}>
         <span className={style.tagLabel}>사용 기술</span>
-        {PROJECT.skill.map((skill, index) => (
-          <div key={index} className={style.tag}>
-            {skill}
-          </div>
-        ))}
+        <div className={style.tagSection}>
+          {PROJECT.skill.map((skill, index) => (
+            <div key={index} className={style.tag}>
+              {skill}
+            </div>
+          ))}
+        </div>
       </div>
 
       <Modal

@@ -43,12 +43,14 @@
   font-size: 20px;
   font-weight: 600;
   margin-left: 2vw;
+  user-select: text;
 }
 
 .description {
   font-size: 16px;
   color: rgba(160, 160, 160, 1);
   margin: 1vh 0vw 1vh 5.4vw; /* 위 | 오른쪽 | 아래 | 왼쪽 */
+  user-select: text;
 }
 
 .description strong {

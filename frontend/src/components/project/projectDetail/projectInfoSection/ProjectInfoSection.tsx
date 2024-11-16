@@ -22,6 +22,7 @@ function ProjectInfoSection() {
 
   const settingIconRef = useRef<HTMLImageElement>(null);
 
+  const [isClamped, setClamped] = useState(false);
   const [isExpandOpen, setExpandOpen] = useState(false);
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -29,6 +30,12 @@ function ProjectInfoSection() {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const navigate = useNavigate();
+
+  const calculateLineCountFromNewlines = (text: string) => {
+    const lines = text.split('\n'); // 줄바꿈 문자 기준으로 나누기
+    console.log(lines);
+    setClamped(lines.length > 3);
+  };
 
   const handleModalOpen = () => {
     setModalOpen(!isModalOpen);
@@ -62,6 +69,12 @@ function ProjectInfoSection() {
     getProject(Number(pjtId));
     setExpandOpen(false);
   }, [getProject, pjtId]);
+
+  useEffect(() => {
+    if (PROJECT.description) {
+      calculateLineCountFromNewlines(PROJECT.description);
+    }
+  }, [PROJECT.description]); // description이 변경될 때만 실행
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -135,9 +148,11 @@ function ProjectInfoSection() {
       >
         {PROJECT.description}
       </div>
-      <p className={style.expandBtn} onClick={handleExpand}>
-        {isExpandOpen ? '접기' : '더보기'}
-      </p>
+      {isClamped && (
+        <p className={style.expandBtn} onClick={handleExpand}>
+          {isExpandOpen ? '접기' : '더보기'}
+        </p>
+      )}
       <div className={style.term}>
         {PROJECT.startDate} ~ {PROJECT.endDate} / {PROJECT.memberCount} 명
       </div>

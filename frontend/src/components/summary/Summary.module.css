@@ -51,6 +51,7 @@
   border: 1px solid #e8e8e8;
   color: #1c1516;
   font-size: 0.875rem;
+  user-select: text;
 }
 
 .editbtn {

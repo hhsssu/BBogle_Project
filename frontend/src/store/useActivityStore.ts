@@ -77,7 +77,7 @@ interface ActivityState {
   // 빈 내용 에러
   contentError: boolean;
   setContentError: (value: boolean) => void;
-  // 시작기간이 종료기간보다 뒤일 때 에러
+  // 기간 설정 에러
   termError: boolean;
   setTermError: (value: boolean) => void;
   // 에러 메시지

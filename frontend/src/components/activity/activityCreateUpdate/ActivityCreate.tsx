@@ -120,7 +120,7 @@ function ActivityCreate() {
         startDate={activity.startDate}
         endDate={activity.endDate}
         projectId={activity.projectId}
-        keywords={activity.keywords.map((keyword) => keyword.id)}
+        keywords={activity.keywords}
       />
       <button
         className={`${ActivityStyles.btn} ${ActivityCreateStyles.regist} ${(titleError || contentError || termError) && errMsgOn && ActivityCreateStyles.failBtn}`}

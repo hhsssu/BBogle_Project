@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import axiosInstance from './axiosInstance';
 
 interface Diary {
@@ -57,9 +57,8 @@ export const getDiaryTitle = async (
   questions: Question[],
   answers: string[],
 ) => {
-  const response = await axios.post(
-    // 'http://localhost:8000/ai/ai/generate/title',
-    'https://bbogle.me/ai/ai/generate/title',
+  const response = await axiosInstance.post(
+    '/rabbitmq/send/title',
     [
       { question: questions[0].question, answer: answers[0] },
       { question: questions[1].question, answer: answers[1] },
@@ -72,7 +71,7 @@ export const getDiaryTitle = async (
     },
   );
   console.log(response);
-  return response.data.title;
+  return response.data.result;
 };
 
 export const addDiary = async (projectId: number, diary: Diary) => {

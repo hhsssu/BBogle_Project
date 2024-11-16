@@ -49,6 +49,7 @@ function App() {
       }
     }
   }, [location.pathname]);
+  
   return (
     <div className={style['app-container']}>
       {/* 현재 경로가 '/login'이 아닌 경우에만 SideBar를 표시 */}

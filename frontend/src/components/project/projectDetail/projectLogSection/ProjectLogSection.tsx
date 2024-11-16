@@ -1,5 +1,4 @@
 import style from './ProjectLogSection.module.css';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useProjectStore from '../../../../store/useProjectStore';
@@ -11,7 +10,7 @@ import Summary from '../../../summary/Summary';
 function ProjectLogSection() {
   const navigate = useNavigate();
 
-  const [tabIdx, setTabIdx] = useState(0);
+  const { tabIdx, setTabIdx } = useProjectStore();
 
   const { sortIdx, setSortIdx } = useDiaryStore();
 

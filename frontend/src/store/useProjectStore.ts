@@ -66,6 +66,10 @@ interface ProjectState {
   setTermError: (value: boolean) => void;
   errMsgOn: boolean;
   setErrMsgOn: (value: boolean) => void;
+
+  // 탭 index
+  tabIdx: number;
+  setTabIdx: (value: number) => void;
 }
 
 const useProjectStore = create<ProjectState>()(
@@ -165,11 +169,16 @@ const useProjectStore = create<ProjectState>()(
       setTermError: (value) => set(() => ({ termError: value })),
       errMsgOn: false,
       setErrMsgOn: (value) => set(() => ({ errMsgOn: value })),
+
+      // 탭 index
+      tabIdx: 0,
+      setTabIdx: (value) => set(() => ({ tabIdx: value })),
     }),
     {
       name: 'projectStorage',
       partialize: (state) => ({
         project: state.project,
+        tabIdx: state.tabIdx,
       }),
     },
   ),

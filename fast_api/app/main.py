@@ -1,11 +1,7 @@
 from typing import List
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
-import asyncio
-import json
 import logging
-import uuid
-import pika
 
 from .services.devlog_summary_service import DevLogSummaryService
 from .services.retrospective_service import RetrospectiveService
@@ -112,11 +108,18 @@ async def summarize_devlog(qna_list: List[dict] = Body(...)):
 """,
     response_description="생성된 프로젝트 회고록"
 )
-async def generate_retrospective(request: List[DailyLog]):
+async def generate_retrospective(request: List[DailyLog] = Body(...)):
+    """
+    개발일지 회고록 생성 API
+    :param request: List[DailyLog]
+    :return: RetrospectiveResponse
+    """
     logger.info("개발일지 회고록 생성 API 호출 (HTTP)")
     try:
         if not request:
             raise HTTPException(status_code=400, detail="회고록 생성에 필요한 데이터가 없습니다.")
+
+        # RetrospectiveService를 통해 회고록 생성
         result = await retrospective_service.generate_retrospective(request)
         logger.info("회고록 생성 성공 (HTTP)")
         return RetrospectiveResponse(retrospective=result)
@@ -126,7 +129,6 @@ async def generate_retrospective(request: List[DailyLog]):
             status_code=500,
             detail="회고록 생성 중 오류가 발생했습니다."
         )
-
 
 @app.post(
     "/ai/generate/experience",

@@ -97,9 +97,28 @@
 .description {
   font-size: 16px;
   margin-left: 1rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.2rem;
   white-space: pre-line;
   line-height: 140%;
+  overflow: hidden;
+  max-height: none; /* 기본 상태 */
+  transition: max-height 0.3s ease; /* 열고 닫히는 애니메이션 */
+}
+
+.descriptionUnexpand {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 4.2rem; /* 3줄 높이로 제한 (16px * 140% * 3) */
+}
+
+.expandBtn {
+  font-size: 14px;
+  margin-left: 1rem;
+  margin-bottom: 0.6rem;
+  color: blue;
+  opacity: 70%;
 }
 
 .term {

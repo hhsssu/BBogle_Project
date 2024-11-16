@@ -22,6 +22,8 @@ function ProjectInfoSection() {
 
   const settingIconRef = useRef<HTMLImageElement>(null);
 
+  const [isExpandOpen, setExpandOpen] = useState(false);
+
   const [isModalOpen, setModalOpen] = useState(false);
 
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -41,6 +43,10 @@ function ProjectInfoSection() {
     navigate(`update`);
   };
 
+  const handleExpand = () => {
+    setExpandOpen(!isExpandOpen);
+  };
+
   const onDeleteProject = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
     try {
@@ -54,6 +60,7 @@ function ProjectInfoSection() {
 
   useEffect(() => {
     getProject(Number(pjtId));
+    setExpandOpen(false);
   }, [getProject, pjtId]);
 
   useEffect(() => {
@@ -123,7 +130,14 @@ function ProjectInfoSection() {
         </div>
       </div>
 
-      <div className={style.description}>{PROJECT.description}</div>
+      <div
+        className={`${style.description} ${!isExpandOpen && style.descriptionUnexpand}`}
+      >
+        {PROJECT.description}
+      </div>
+      <p className={style.expandBtn} onClick={handleExpand}>
+        {isExpandOpen ? '접기' : '더보기'}
+      </p>
       <div className={style.term}>
         {PROJECT.startDate} ~ {PROJECT.endDate} / {PROJECT.memberCount} 명
       </div>

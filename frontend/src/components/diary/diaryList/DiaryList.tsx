@@ -29,7 +29,7 @@ function DiaryList() {
   return (
     <div className={style.container}>
       {diaryList.length !== 0 ? (
-        <div className={style.projectGrid}>
+        <div className={style.diaryGrid}>
           {(sortIdx === 0 ? diaryList.slice().reverse() : diaryList).map(
             (card, index) => (
               <div

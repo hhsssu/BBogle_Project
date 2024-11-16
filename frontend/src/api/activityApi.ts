@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
 import axiosInstance from './axiosInstance';
 
@@ -73,4 +74,23 @@ export const deleteActivity = async (activityId: number) => {
   } catch (error) {
     console.error('경험 삭제 실패: ', error);
   }
+};
+
+// 경험 AI 생성
+export const createActivityAi = async () => {
+  const data = await axiosInstance.get('/keywords');
+
+  console.log(data.data.keywords);
+
+  const response = await axios.post(
+    'https://bbogle.me/ai/generate/experience',
+    {
+      // 객체 따로 설정해줘야함
+      retrospective_content: 'retrospective',
+      keywords: data.data.keywords,
+    },
+  );
+
+  console.log(response.data);
+  // return response.data;
 };

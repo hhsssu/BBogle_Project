@@ -80,6 +80,6 @@
 .textLength {
   color: rgba(160, 160, 160, 1);
   position: absolute;
-  bottom: 30px;
-  right: 140px;
+  bottom: 4vh;
+  right: 10vw;
 }

@@ -11,7 +11,6 @@ import ActivityDetailStyles from './ActivityDetail.module.css';
 import EditIcon from '../../../assets/image/icon/Pencil.svg';
 import DeleteIcon from '../../../assets/image/icon/RedTrash.svg';
 import BackIcon from '../../../assets/image/icon/Back.svg';
-// TODO ID로 경험 찾기 구현 해야함
 import Loading from '../../common/loading/Loading';
 import Bubble from '../../../assets/lottie/Bubble.json';
 import Modal from '../../common/modal/Modal';

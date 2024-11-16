@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import EmptySummary from '../../assets/image/icon/EmptySummary.svg';
@@ -8,9 +8,26 @@ import SummaryDetail from './SummaryDetail';
 import SummaryUpdate from './SummaryUpdate';
 import SummaryCreate from './SummaryCreate';
 import { createSummaryAi } from '../../api/summaryApi';
+import useSummaryStore from '../../store/useSummaryStore';
+import useProjectStore from '../../store/useProjectStore';
+import Loading from '../common/loading/Loading';
+import Bubble from '../../assets/lottie/Bubble.json';
 
 function Summary() {
-  const [openSection] = useState(false);
+  const fetchSummaryInfo = useSummaryStore((state) => state.fetchSummaryInfo);
+  const summary = useSummaryStore((state) => state.summary);
+  const projectId = useProjectStore((state) => state.project.projectId);
+  const isSummaryLoading = useSummaryStore((state) => state.isSummaryLoading);
+
+  useEffect(() => {
+    fetchSummaryInfo(projectId);
+    console.log('summary', summary.summaryId);
+    if (summary.content !== '' && summary.summaryId !== undefined) {
+      setOpenSection(true);
+    }
+  }, [projectId]);
+
+  const [openSection, setOpenSection] = useState(false);
   const [detailSection, setDetailSection] = useState(true);
   const [createSection, setCreateSection] = useState(false);
 
@@ -42,15 +59,32 @@ function Summary() {
     }
   };
 
+  if (isSummaryLoading) {
+    return (
+      <Loading
+        isLoading={isSummaryLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
+
   return (
     <>
       {/* 회고가 있으면 */}
       {openSection ? (
         // 회고 버튼 수정 클릭 유무
         detailSection ? (
-          <SummaryDetail onEditClick={handleEdit} />
+          <SummaryDetail onEditClick={handleEdit} content={summary.content} />
         ) : (
-          <SummaryUpdate onCancleClick={handleCancleEdit} />
+          <SummaryUpdate
+            onCancleClick={handleCancleEdit}
+            onUpdateSuccess={() => {
+              setDetailSection(true), setCreateSection(false);
+            }}
+            projectId={projectId}
+            summary={summary}
+          />
         )
       ) : !createSection ? (
         <section>
@@ -72,7 +106,14 @@ function Summary() {
           </div>
         </section>
       ) : (
-        <SummaryCreate onCancleClick={handleCancleEdit} />
+        <SummaryCreate
+          onCancleClick={handleCancleEdit}
+          onUpdateSuccess={() => {
+            setDetailSection(true), setCreateSection(false);
+          }}
+          projectId={projectId}
+          summary={summary}
+        />
       )}
     </>
   );

@@ -102,7 +102,7 @@ class DevLogSummaryService:
             result = self._process_response(response)
             
             # 응답 정제
-            clean_title = self.clean_response(result["title"], max_length=30)
+            clean_title = self.clean_response(result["title"], max_length=35)
             
             end_time = time.time()
             execution_time = end_time - start_time

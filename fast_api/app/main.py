@@ -53,7 +53,7 @@ experience_service = ExperienceService(settings)
 
 입력/출력 형식
 - 입력: 질문과 답변의 리스트 (JSON)
-- 출력: 50자 이내의 요약된 제목
+- 출력: 35자 이내의 요약된 제목
 
 요청 예시:
 [

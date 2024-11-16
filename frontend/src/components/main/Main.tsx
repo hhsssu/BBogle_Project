@@ -51,12 +51,19 @@ function Main() {
         const isGranted = await requestPermission();
         // 알림 권한을 허용받은 경우이거나, 이미 알림 권한이 허용되어 있는 경우
         if (isGranted) {
-          const token = await getFCMToken(); // FCM 토큰 발급
-          // store에 저장된 fcm 토큰
-          // FCM 토큰을 발급 받음
-          if (token) {
-            // 백엔드로 토큰 전송
-            await transferToken(token);
+          try {
+            // 서비스 워커 준비 상태 보장
+            const registration = await navigator.serviceWorker.ready;
+            console.log('서비스 워커 활성화 완료:', registration);
+      
+            // FCM 토큰 발급
+            const token = await getFCMToken(registration);
+            if (token) {
+              console.log('FCM 토큰 발급 완료:', token);
+              await transferToken(token); // 백엔드로 전송
+            }
+          } catch (error) {
+            console.error('FCM 토큰 발급 중 오류 발생:', error);
           }
         }
       };

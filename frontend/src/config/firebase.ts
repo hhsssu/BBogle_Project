@@ -47,10 +47,11 @@ export const requestPermission = async () => {
 };
 
 // FCM 토큰 가져오기
-export const getFCMToken = async () => {
+export const getFCMToken = async (registration:ServiceWorkerRegistration) => {
   try {
     const token = await getToken(messaging, {
       vapidKey: vapidKey,
+      serviceWorkerRegistration: registration,
     }); // VAPID 키를 설정
 
     // 토큰이 있으면 반환

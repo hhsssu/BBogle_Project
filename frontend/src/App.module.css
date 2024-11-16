@@ -10,3 +10,39 @@
 .app-content.closed {
   margin-left: 70px;
 }
+
+.notification {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 312px;
+  background-color: #1C1516;
+  padding: 30px;
+  border-radius: 20px;
+  animation: fadeOut 12s forwards;
+  z-index: 1000;
+}
+
+.notification > h2 {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: white;
+}
+
+.notification > p {
+  font-size: 14px;
+  color: white;
+  /* color: #44444  4; */
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

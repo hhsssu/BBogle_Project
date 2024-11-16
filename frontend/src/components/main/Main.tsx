@@ -143,7 +143,7 @@ function Main() {
                   status={pjt.status}
                   term={pjt.startDate + ' ~ ' + pjt.endDate}
                   description={pjt.description}
-                  notificationStatus={false}
+                  notificationStatus={pjt.notificationStatus}
                 />
               </div>
             ))}

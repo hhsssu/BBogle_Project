@@ -34,6 +34,11 @@ function App() {
           title: payload.notification?.title ?? '제목 없음', // 메시지 제목
           body: payload.notification?.body ?? '내용 없음', // 메시지 내용
         });
+
+        // 5초 후 알림 숨김 처리
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000)
       })
       .catch((err) => console.log('메시지 수신 실패: ', err));
   }, []);
@@ -49,6 +54,7 @@ function App() {
       }
     }
   }, [location.pathname]);
+  
   return (
     <div className={style['app-container']}>
       {/* 현재 경로가 '/login'이 아닌 경우에만 SideBar를 표시 */}

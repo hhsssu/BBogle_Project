@@ -16,6 +16,8 @@ export interface Summary {
 interface SummaryState {
   // 회고 데이터 로딩 상태
   isSummaryLoading: boolean;
+  // 회고 ai생성 로딩 상태
+  isSummaryCreateLoading: boolean;
 
   // 회고 데이터
   summary: Summary;
@@ -56,6 +58,8 @@ const useSummaryStore = create<SummaryState>()(
     (set) => ({
       // 초기 로딩 상태
       isSummaryLoading: false,
+      // 회고 ai 로딩 상태
+      isSummaryCreateLoading: false,
 
       // 초기 회고 상태
       summary: {
@@ -104,10 +108,10 @@ const useSummaryStore = create<SummaryState>()(
 
       // 회고 AI 생성
       createSummaryAi: async (projectId: number) => {
-        set(() => ({ isSummaryLoading: true }));
+        set(() => ({ isSummaryCreateLoading: true }));
         const data = await createSummaryAiApi(projectId);
         await createSummaryApi(projectId, data);
-        set(() => ({ isSummaryLoading: false }));
+        set(() => ({ isSummaryCreateLoading: false }));
         window.location.reload();
       },
 

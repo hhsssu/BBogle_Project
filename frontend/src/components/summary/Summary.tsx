@@ -14,6 +14,9 @@ import Bubble from '../../assets/lottie/Bubble.json';
 function Summary() {
   const summary = useSummaryStore((state) => state.summary);
   const isSummaryLoading = useSummaryStore((state) => state.isSummaryLoading);
+  const isSummaryCreateLoading = useSummaryStore(
+    (state) => state.isSummaryCreateLoading,
+  );
   const { createSummaryAi } = useSummaryStore();
   const { pjtId } = useParams();
 
@@ -59,6 +62,17 @@ function Summary() {
       <Loading
         isLoading={isSummaryLoading}
         title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
+
+  // 회고 생성 로딩
+  if (isSummaryCreateLoading) {
+    return (
+      <Loading
+        isLoading={isSummaryLoading}
+        title="회고 생성 중 ..."
         animationData={Bubble}
       />
     );

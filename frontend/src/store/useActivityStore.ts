@@ -34,7 +34,7 @@ interface ActivityState {
   isActivityLoading: boolean;
 
   // 단일 경험
-  activity: Activity | NewActivity;
+  activity: Activity;
 
   // 경험 목록
   activities: Activity[];

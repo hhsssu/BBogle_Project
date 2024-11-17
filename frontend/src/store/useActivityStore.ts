@@ -217,6 +217,8 @@ const useActivityStore = create<ActivityState>()(
       partialize: (state) => ({
         activity: state.activity,
         activities: state.activities,
+        pjtActivities: state.pjtActivities,
+        newActivities: state.newActivities,
         isActivityLoading: state.isActivityLoading,
       }),
     },

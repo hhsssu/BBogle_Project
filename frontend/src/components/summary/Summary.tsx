@@ -10,11 +10,15 @@ import SummaryCreate from './SummaryCreate';
 import useSummaryStore from '../../store/useSummaryStore';
 import Loading from '../common/loading/Loading';
 import Bubble from '../../assets/lottie/Bubble.json';
+import useActivityStore from '../../store/useActivityStore';
 
 function Summary() {
   const fetchSummaryInfo = useSummaryStore((state) => state.fetchSummaryInfo);
   const summary = useSummaryStore((state) => state.summary);
   const isSummaryLoading = useSummaryStore((state) => state.isSummaryLoading);
+  const isActivityLoading = useActivityStore(
+    (state) => state.isActivityLoading,
+  );
   const { createSummaryAi } = useSummaryStore();
   const { pjtId } = useParams();
 
@@ -61,6 +65,16 @@ function Summary() {
     return (
       <Loading
         isLoading={isSummaryLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
+
+  if (isActivityLoading) {
+    return (
+      <Loading
+        isLoading={isActivityLoading}
         title="데이터 로딩 중 ..."
         animationData={Bubble}
       />

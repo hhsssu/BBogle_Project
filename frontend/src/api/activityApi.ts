@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
 import axiosInstance from './axiosInstance';
 
@@ -81,9 +82,10 @@ export const createActivityAi = async (content: string) => {
 
   // console.log(data.data.keywords);
 
-  const response = await axiosInstance.post(
-    '/rabbitmq/send/experience',
-    // 'https://bbogle.me/ai/generate/experience',
+  // const response = await axiosInstance.post(
+  const response = await axios.post(
+    // '/rabbitmq/send/experience',
+    'https://bbogle.me/ai/generate/experience',
     {
       retrospective_content: content,
       keywords: data.data.keywords,
@@ -92,5 +94,5 @@ export const createActivityAi = async (content: string) => {
   );
 
   console.log(response.data);
-  return response.data;
+  return response.data.experiences;
 };

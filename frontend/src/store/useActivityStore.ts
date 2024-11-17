@@ -6,6 +6,7 @@ import {
   fetchActivities as fetchActivitiesApi,
   fetchActivityById as fetchActivityByIdApi,
   updateActivity as updateActivityApi,
+  createActivityAi as CreateActivityAiApi,
 } from '../api/activityApi';
 
 export interface Activity {
@@ -35,6 +36,12 @@ interface ActivityState {
 
   // 경험 목록
   activities: Activity[];
+
+  // 해당 프로젝트의 경험 목록
+  pjtActivities: Activity[];
+
+  // 새로 생성된 프로젝트의 경험 목록
+  newActivities: Activity[];
 
   // 경험 수동 생성
   createActivity: (activity: Activity) => void;
@@ -70,6 +77,12 @@ interface ActivityState {
   // 경험 검색 데이터 설정
   setSearchCriteria: (criteria: SearchCriteria) => void;
 
+  // 경험 AI 생성
+  createActivityAi: (content: string) => void;
+
+  // 경험 AI에 쓰이는 프로젝트 관련 경험 리스트
+  fetchPjtActivities: (word: null, keywords: [], projects: number[]) => void;
+
   // 경험 생성/수정 필수 확인
   // 빈 제목 에러
   titleError: boolean;
@@ -101,6 +114,8 @@ const useActivityStore = create<ActivityState>()(
         keywords: [],
       },
       activities: [],
+      pjtActivities: [],
+      newActivities: [],
 
       // 경험 수동 생성
       createActivity: async (activity: Activity) => {
@@ -168,6 +183,24 @@ const useActivityStore = create<ActivityState>()(
         set(() => ({
           searchCriteria: { word: '', keywords: [], projects: [] },
         })),
+
+      // 경험 AI 생성
+      createActivityAi: async (content: string) => {
+        set(() => ({ isActivityLoading: true }));
+        const data = await CreateActivityAiApi(content);
+        set({ newActivities: data, isActivityLoading: false });
+      },
+
+      // 경험 AI 생성에서 필요한 해당 프로젝트 관련 경험 리스트
+      fetchPjtActivities: async (
+        word: null,
+        keywords: [],
+        projects: number[],
+      ) => {
+        set(() => ({ isActivityLoading: true }));
+        const data = await fetchActivitiesApi(word, keywords, projects);
+        set({ pjtActivities: data, isActivityLoading: false });
+      },
 
       // 경험 생성/수정 필수 확인
       titleError: false,

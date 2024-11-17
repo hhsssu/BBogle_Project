@@ -15,7 +15,7 @@ interface DiaryDetail {
   images: string[];
 }
 
-// 회고 가져오기
+// ✅회고 가져오기
 export const fetchSummaryInfo = async (projectId: number) => {
   try {
     const response = await axiosInstance.get(`/projects/${projectId}/summary`);
@@ -25,7 +25,7 @@ export const fetchSummaryInfo = async (projectId: number) => {
   }
 };
 
-// 회고 수동 생성
+// ✅회고 수동 생성
 export const createSummary = async (projectId: number, content: string) => {
   try {
     await axiosInstance.post(`/projects/${projectId}/summary`, {
@@ -36,7 +36,7 @@ export const createSummary = async (projectId: number, content: string) => {
   }
 };
 
-// 회고 수정
+// ✅회고 수정
 export const updateSummary = async (
   projectId: number,
   summaryId: number,
@@ -51,7 +51,7 @@ export const updateSummary = async (
   }
 };
 
-// 회고 AI 생성
+// ❗✅회고 AI 생성
 export const createSummaryAi = async (projectId: number) => {
   const data = await axiosInstance.get(
     `/projects/${projectId}/diaries/details`,
@@ -89,5 +89,5 @@ export const createSummaryAi = async (projectId: number) => {
 
   // console.log(ExResponse.data);
 
-  // return response.data.retrospective;
+  //   // return response.data.retrospective;
 };

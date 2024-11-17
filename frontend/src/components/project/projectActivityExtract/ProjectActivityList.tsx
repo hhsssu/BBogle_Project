@@ -27,8 +27,8 @@ function ProjectActivityList({
             <ActivityCard
               activityId={activityCard.activityId}
               title={activityCard.title}
-              startDate={activityCard.startDate}
-              endDate={activityCard.endDate}
+              startDate={new Date(activityCard.startDate)}
+              endDate={new Date(activityCard.endDate)}
               projectTitle={activityCard.projectTitle ?? ''}
               keywords={activityCard.keywords}
               isExtract={true}

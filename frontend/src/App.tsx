@@ -31,8 +31,8 @@ function App() {
       .then((payload) => {
         console.log('메시지를 수신했습니다: ', payload);
         setNotification({
-          title: payload.notification?.title ?? '제목 없음', // 메시지 제목
-          body: payload.notification?.body ?? '내용 없음', // 메시지 내용
+          title: payload.data?.title ?? '제목 없음', // 메시지 제목
+          body: payload.data?.body ?? '내용 없음', // 메시지 내용
         });
 
         // 5초 후 알림 숨김 처리

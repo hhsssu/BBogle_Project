@@ -7,7 +7,6 @@ import styles from './Summary.module.css';
 import SummaryDetail from './SummaryDetail';
 import SummaryUpdate from './SummaryUpdate';
 import SummaryCreate from './SummaryCreate';
-import { createSummaryAi } from '../../api/summaryApi';
 import useSummaryStore from '../../store/useSummaryStore';
 import useProjectStore from '../../store/useProjectStore';
 import Loading from '../common/loading/Loading';
@@ -18,6 +17,7 @@ function Summary() {
   const summary = useSummaryStore((state) => state.summary);
   const projectId = useProjectStore((state) => state.project.projectId);
   const isSummaryLoading = useSummaryStore((state) => state.isSummaryLoading);
+  const { createSummaryAi } = useSummaryStore();
 
   useEffect(() => {
     fetchSummaryInfo(projectId);

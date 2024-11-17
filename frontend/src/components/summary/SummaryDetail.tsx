@@ -1,7 +1,7 @@
 import Edit from '../../assets/image/icon/Pencil.svg';
 import styles from './Summary.module.css';
-import useProjectStore from '../../store/useProjectStore';
 import useActivityStore from '../../store/useActivityStore';
+import { useNavigate } from 'react-router-dom';
 
 interface SummaryDetailProps {
   onEditClick: () => void;
@@ -9,11 +9,14 @@ interface SummaryDetailProps {
 }
 
 function SummaryDetail({ onEditClick, content }: SummaryDetailProps) {
-  const project = useProjectStore((state) => state.project);
   const createActivityAi = useActivityStore((state) => state.createActivityAi);
+
+  const navigate = useNavigate();
+
   const requestCreateActivity = async () => {
     try {
       await createActivityAi(content);
+      navigate('extract');
     } catch (error) {
       console.error('경험 생성 오류 : ', error);
     }
@@ -28,13 +31,11 @@ function SummaryDetail({ onEditClick, content }: SummaryDetailProps) {
         </button>
         <div className={styles.content}>{content}</div>
       </section>
-      {!project.status && (
-        <div className={styles.center}>
-          <button className={styles.orangebtn} onClick={requestCreateActivity}>
-            경험 추출
-          </button>
-        </div>
-      )}
+      <div className={styles.center}>
+        <button className={styles.orangebtn} onClick={requestCreateActivity}>
+          경험 추출
+        </button>
+      </div>
     </>
   );
 }

@@ -1,14 +1,27 @@
 import useActivityStore, { Activity } from '../../../store/useActivityStore';
+import { NewActivity } from '../../../api/activityApi';
 import ActivityStyles from '../../activity/Activity.module.css';
 import styles from './ProjectActivity.module.css';
 import Extract from '../../../assets/image/icon/Extract.svg';
 import { useEffect } from 'react';
 
 interface ProjectActivityDetailProps {
-  activity: Activity | null;
+  activity: Activity | NewActivity | null;
 }
 
 function ProjectActivityDetail({ activity }: ProjectActivityDetailProps) {
+  const fetchSelectedActivity = useActivityStore(
+    (state) => state.fetchActivityById,
+  );
+  const selectedActivity = useActivityStore((state) => state.activity);
+
+  useEffect(() => {
+    // activity가 Activity 타입일 때만 activityId를 사용
+    if (activity && 'activityId' in activity) {
+      fetchSelectedActivity(activity.activityId);
+    }
+  }, [activity]);
+
   if (!activity) {
     return (
       <div className={ActivityStyles.nothing}>
@@ -19,14 +32,6 @@ function ProjectActivityDetail({ activity }: ProjectActivityDetailProps) {
       </div>
     );
   }
-
-  const fetchSelectedActivity = useActivityStore(
-    (state) => state.fetchActivityById,
-  );
-  const selectedActivity = useActivityStore((state) => state.activity);
-  useEffect(() => {
-    fetchSelectedActivity(activity.activityId);
-  }, [activity.activityId]);
 
   const startDate = activity.startDate ? new Date(activity.startDate) : '';
   const endDate = activity.endDate ? new Date(activity.endDate) : '';
@@ -64,7 +69,11 @@ function ProjectActivityDetail({ activity }: ProjectActivityDetailProps) {
             <div>-</div>
           )}
         </div>
-        <div className={styles.content}>{selectedActivity.content}</div>
+        <div className={styles.content}>
+          {'activityId' in activity
+            ? selectedActivity.content
+            : activity.content}
+        </div>
       </section>
     </div>
   );

@@ -33,7 +33,7 @@ function ProjectInfoSection() {
 
   const calculateLineCountFromNewlines = (text: string) => {
     const lines = text.split('\n'); // 줄바꿈 문자 기준으로 나누기
-    console.log(lines);
+
     setClamped(lines.length > 3);
   };
 
@@ -60,7 +60,7 @@ function ProjectInfoSection() {
       await deleteProject(Number(pjtId));
       navigate('/project');
     } catch (error) {
-      console.log('개발일지 삭제 실패');
+      console.log('프로젝트 삭제 실패');
       console.log(error);
     }
   };

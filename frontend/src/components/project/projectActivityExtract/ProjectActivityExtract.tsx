@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { Activity } from '../../../store/useActivityStore';
+import useActivityStore, { Activity } from '../../../store/useActivityStore';
 
 import ActivityStyles from '../../activity/Activity.module.css';
 import styles from './ProjectActivity.module.css';
@@ -8,10 +9,9 @@ import BackIcon from '../../../assets/image/icon/Back.svg';
 import ProjectActivityOrigin from './ProjectActivityOrigin';
 import ProjectActivityNew from './ProjectActivityNew';
 import ProjectActivityDetail from './ProjectActivityDetail';
-import { useState } from 'react';
-import { NewActivity, saveActivityAi } from '../../../api/activityApi';
-import { useParams } from 'react-router-dom';
 import Modal from '../../common/modal/Modal';
+import { NewActivity } from '../../../api/activityApi';
+import { useParams } from 'react-router-dom';
 
 function ProjectActivityExtract() {
   const navigate = useNavigate();
@@ -27,11 +27,13 @@ function ProjectActivityExtract() {
   >([]);
 
   // 선택된 데이터 저장할 상태
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
-    null,
-  );
+  const [selectedActivity, setSelectedActivity] = useState<
+    Activity | NewActivity | null
+  >(null);
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
+
+  const { saveActivity } = useActivityStore();
 
   // 돌아가기
   const handleGoBack = () => {
@@ -48,7 +50,7 @@ function ProjectActivityExtract() {
 
   const handleSaveActivities = async () => {
     try {
-      await saveActivityAi(
+      await saveActivity(
         Number(pjtId),
         selectedOriginActivities,
         selectedNewActivities,

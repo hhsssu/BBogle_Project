@@ -1,5 +1,6 @@
 import ActivityCard from '../../activity/ActivityCard';
 import { Activity } from '../../../store/useActivityStore';
+import { NewActivity } from '../../../api/activityApi';
 
 import styles from './ProjectActivity.module.css';
 import ActivityStyles from '../../activity/Activity.module.css';
@@ -7,7 +8,7 @@ import ActivityStyles from '../../activity/Activity.module.css';
 import EmptyFolder from '../../../assets/image/icon/EmptyFolder.svg';
 
 interface ProjectActivityProps {
-  activities: Activity[];
+  activities: Activity[] | NewActivity[];
   selectedActivities: { [key: number]: boolean };
   handleSelect: (activityId: number) => void;
   handlePreview: (activityId: number) => void;
@@ -22,31 +23,28 @@ function ProjectActivityList({
   return (
     <section className={styles.listbox}>
       {activities.length > 0 ? (
-        activities.map((activityCard, index) => (
-          <div key={index} className={styles.cardmargin}>
-            <ActivityCard
-              activityId={activityCard.activityId}
-              title={activityCard.title}
-              startDate={new Date(activityCard.startDate)}
-              endDate={new Date(activityCard.endDate)}
-              projectTitle={activityCard.projectTitle ?? ''}
-              keywords={activityCard.keywords}
-              isExtract={true}
-              isSelected={
-                activityCard.activityId !== undefined &&
-                !!selectedActivities[activityCard.activityId]
-              }
-              onClick={() =>
-                activityCard.activityId !== undefined &&
-                handleSelect(activityCard.activityId)
-              }
-              onPreviewClick={() =>
-                activityCard.activityId !== undefined &&
-                handlePreview(activityCard.activityId)
-              }
-            />
-          </div>
-        ))
+        activities.map((activityCard, index) => {
+          // `activityId`가 없으면 `-1`을 할당
+          const activityId =
+            'activityId' in activityCard ? activityCard.activityId : index;
+
+          return (
+            <div key={index} className={styles.cardmargin}>
+              <ActivityCard
+                activityId={activityId}
+                title={activityCard.title}
+                startDate={new Date(activityCard.startDate)}
+                endDate={new Date(activityCard.endDate)}
+                projectTitle={activityCard.projectTitle ?? ''}
+                keywords={activityCard.keywords}
+                isExtract={true}
+                isSelected={!!selectedActivities[activityId]}
+                onClick={() => handleSelect(activityId)}
+                onPreviewClick={() => handlePreview(activityId)}
+              />
+            </div>
+          );
+        })
       ) : (
         <>
           <div></div>

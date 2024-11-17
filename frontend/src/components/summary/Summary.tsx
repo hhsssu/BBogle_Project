@@ -71,7 +71,7 @@ function Summary() {
   if (isSummaryCreateLoading) {
     return (
       <Loading
-        isLoading={isSummaryLoading}
+        isLoading={isSummaryCreateLoading}
         title="회고 생성 중 ..."
         animationData={Bubble}
       />

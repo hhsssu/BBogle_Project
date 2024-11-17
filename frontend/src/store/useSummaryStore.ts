@@ -111,7 +111,7 @@ const useSummaryStore = create<SummaryState>()(
         set(() => ({ isSummaryCreateLoading: true }));
         const data = await createSummaryAiApi(projectId);
         await createSummaryApi(projectId, data);
-        set(() => ({ isSummaryLoading: false }));
+        set(() => ({ isSummaryCreateLoading: false }));
         window.location.reload();
       },
 

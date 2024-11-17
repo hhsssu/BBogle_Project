@@ -35,7 +35,7 @@ function SummaryForm({ content }: SummaryFormProps) {
   return (
     <textarea
       name="content"
-      rows={15}
+      rows={10}
       placeholder="내용을 입력하세요 (최소 300자 이상을 권장합니다.)"
       className={styles.editbox}
       value={content}

@@ -9,7 +9,7 @@ export interface NewActivity {
   startDate: Date;
   endDate: Date;
   projectTitle?: string;
-  keywords: ActivityKeyword[] | number;
+  keywords: ActivityKeyword[];
 }
 
 // 경험 수동 생성

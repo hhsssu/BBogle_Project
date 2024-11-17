@@ -13,7 +13,6 @@ import Bubble from '../../assets/lottie/Bubble.json';
 import useActivityStore from '../../store/useActivityStore';
 
 function Summary() {
-  const fetchSummaryInfo = useSummaryStore((state) => state.fetchSummaryInfo);
   const summary = useSummaryStore((state) => state.summary);
   const isSummaryLoading = useSummaryStore((state) => state.isSummaryLoading);
   const isActivityLoading = useActivityStore(
@@ -23,12 +22,10 @@ function Summary() {
   const { pjtId } = useParams();
 
   useEffect(() => {
-    fetchSummaryInfo(Number(pjtId));
-    console.log('summary', summary.summaryId);
     if (summary.content !== '' && summary.summaryId !== undefined) {
       setOpenSection(true);
     }
-  }, [pjtId]);
+  }, []);
 
   const [openSection, setOpenSection] = useState(false);
   const [detailSection, setDetailSection] = useState(true);

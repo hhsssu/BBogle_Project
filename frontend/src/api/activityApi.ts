@@ -2,6 +2,14 @@ import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
 import axiosInstance from './axiosInstance';
 
+export interface NewActivity {
+  title: string;
+  content: string;
+  startDate: Date;
+  endDate: Date;
+  keywords: number[];
+}
+
 // 경험 수동 생성
 export const createActivity = async (activity: Activity) => {
   try {
@@ -59,6 +67,7 @@ export const fetchActivities = async (
   }
 };
 
+// 경험 id 조회
 export const fetchActivityById = async (activityId: number) => {
   try {
     const response = await axiosInstance.get(`/activities/${activityId}`);
@@ -95,4 +104,20 @@ export const createActivityAi = async (content: string) => {
 
   console.log(response.data);
   return response.data.experiences;
+};
+
+// 추출된 경험 선택
+export const saveActivityAi = async (
+  projectId: number,
+  savedActivities: number[],
+  newActivities: NewActivity[],
+) => {
+  try {
+    await axiosInstance.post(`/projects/${projectId}/activities`, {
+      savedActivities: savedActivities,
+      newActivities: newActivities,
+    });
+  } catch (error) {
+    console.error('경험 선택 저장 실패: ', error);
+  }
 };

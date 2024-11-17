@@ -180,6 +180,7 @@ function ActivityForm({
   const handleProjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value); // 숫자로 변환
     updateActivityField('projectId', value);
+    updateActivityField('keywords', selectedKeywords); // ID 값만 전달
   };
 
   return (

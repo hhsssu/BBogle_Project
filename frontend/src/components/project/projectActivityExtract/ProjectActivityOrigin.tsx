@@ -5,6 +5,7 @@ import styles from './ProjectActivity.module.css';
 
 import { useEffect, useState } from 'react';
 import ProjectActivityList from './ProjectActivityList';
+import { useParams } from 'react-router-dom';
 
 interface ProjectActivityOriginProps {
   setSelectedActivity: (activity: Activity) => void;
@@ -13,18 +14,38 @@ interface ProjectActivityOriginProps {
 function ProjectActivityOrigin({
   setSelectedActivity,
 }: ProjectActivityOriginProps) {
-  // TODO 해당 프로젝트 기존 경험 가져오기
-  const { activities } = useActivityStore();
-  // const { pjtId } = useParams();
+  // 해당 프로젝트 기존 경험 가져오기
+  const pjtActivities = useActivityStore((state) => state.pjtActivities);
+  const fetchPjtActivities = useActivityStore(
+    (state) => state.fetchPjtActivities,
+  );
+  const { pjtId } = useParams();
   const [selectedActivities, setSelectedActivities] = useState<{
     [key: number]: boolean;
   }>({});
   // 모든 항목이 선택된 상태인지 여부를 저장
   const [isAllSelected, setIsAllSelected] = useState(false);
 
+  useEffect(() => {
+    // 원래 저장된 프로젝트 경험 가져오기
+    fetchPjtActivities(null, [], [Number(pjtId)]);
+    console.log(pjtActivities);
+  }, []);
+
+  useEffect(() => {
+    const allSelected =
+      pjtActivities.length > 0 &&
+      pjtActivities.every((activity) => {
+        return activity.activityId !== undefined
+          ? selectedActivities[activity.activityId]
+          : false;
+      });
+    setIsAllSelected(allSelected);
+  }, [selectedActivities]);
+
   // 미리보기 선택 처리 함수
   const handlePreview = (activityId: number) => {
-    const activity = activities.find(
+    const activity = pjtActivities.find(
       (activity) => activity.activityId === activityId,
     );
     if (activity) {
@@ -44,7 +65,7 @@ function ProjectActivityOrigin({
   const handleSelectAll = () => {
     // 선택 또는 해제된 상태에 따라 모든 활동을 선택하거나 해제
     const newSelectedState = !isAllSelected;
-    const updatedSelectedActivities = activities.reduce(
+    const updatedSelectedActivities = pjtActivities.reduce(
       (acc, activity) => {
         if (activity.activityId !== undefined)
           acc[activity.activityId] = newSelectedState;
@@ -57,17 +78,6 @@ function ProjectActivityOrigin({
     setIsAllSelected(newSelectedState);
   };
 
-  useEffect(() => {
-    const allSelected =
-      activities.length > 0 &&
-      activities.every((activity) => {
-        return activity.activityId !== undefined
-          ? selectedActivities[activity.activityId]
-          : false;
-      });
-    setIsAllSelected(allSelected);
-  }, [selectedActivities, activities]);
-
   return (
     <div className={styles.listcontainer}>
       <section className={styles.between}>
@@ -78,7 +88,7 @@ function ProjectActivityOrigin({
       </section>
 
       <ProjectActivityList
-        activities={activities}
+        activities={pjtActivities}
         selectedActivities={selectedActivities}
         handleSelect={handleSelect}
         handlePreview={handlePreview}

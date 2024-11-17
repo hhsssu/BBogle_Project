@@ -4,6 +4,7 @@ import { Activity } from '../../../store/useActivityStore';
 import styles from './ProjectActivity.module.css';
 import { useEffect, useState } from 'react';
 import ProjectActivityList from './ProjectActivityList';
+// import { useParams } from 'react-router-dom';
 
 interface ProjectActivityOriginProps {
   setSelectedActivity: (activity: Activity) => void;
@@ -13,7 +14,7 @@ function ProjectActivityNew({
   setSelectedActivity,
 }: ProjectActivityOriginProps) {
   // TODO 추출된 경험 선택 API 사용
-  const { activities } = useActivityStore();
+  const newActivities = useActivityStore((state) => state.newActivities);
   // const { pjtId } = useParams();
   const [selectedActivities, setSelectedActivities] = useState<{
     [key: number]: boolean;
@@ -24,7 +25,7 @@ function ProjectActivityNew({
 
   // 미리보기 선택 처리 함수
   const handlePreview = (activityId: number) => {
-    const activity = activities.find(
+    const activity = newActivities.find(
       (activity) => activity.activityId === activityId,
     );
     if (activity) {
@@ -46,7 +47,7 @@ function ProjectActivityNew({
   const handleSelectAll = () => {
     // 선택 또는 해제된 상태에 따라 모든 활동을 선택하거나 해제
     const newSelectedState = !isAllSelected;
-    const updatedSelectedActivities = activities.reduce(
+    const updatedSelectedActivities = newActivities.reduce(
       (acc, activity) => {
         if (activity.activityId !== undefined) {
           acc[activity.activityId] = newSelectedState;
@@ -62,14 +63,14 @@ function ProjectActivityNew({
 
   useEffect(() => {
     const allSelected =
-      activities.length > 0 &&
-      activities.every((activity) => {
+      newActivities.length > 0 &&
+      newActivities.every((activity) => {
         return activity.activityId !== undefined
           ? selectedActivities[activity.activityId]
           : false;
       });
     setIsAllSelected(allSelected);
-  }, [selectedActivities, activities]);
+  }, [selectedActivities, newActivities]);
 
   return (
     <div className={`${styles.listcontainer} ${styles.newcontainer}`}>
@@ -80,7 +81,7 @@ function ProjectActivityNew({
         </button>
       </section>
       <ProjectActivityList
-        activities={activities}
+        activities={newActivities}
         selectedActivities={selectedActivities}
         handleSelect={handleSelect}
         handlePreview={handlePreview}

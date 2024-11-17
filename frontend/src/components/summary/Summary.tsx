@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 import EmptySummary from '../../assets/image/icon/EmptySummary.svg';
 
@@ -31,7 +31,7 @@ function Summary() {
   const [detailSection, setDetailSection] = useState(true);
   const [createSection, setCreateSection] = useState(false);
 
-  const { pjtId } = useParams();
+  // const { pjtId } = useParams();
 
   // 수정 컴포넌트 보이기
   const handleEdit = () => {
@@ -52,7 +52,8 @@ function Summary() {
   //TODO 회고 AI 생성 API 연결
   const handleCreateAi = () => {
     try {
-      createSummaryAi(Number(pjtId));
+      createSummaryAi(p);
+      console.log('회고 생성 성공');
     } catch (error) {
       console.log('회고록 생성 실패');
       console.log(error);

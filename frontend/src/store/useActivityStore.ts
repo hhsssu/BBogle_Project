@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { ActivityKeyword } from './useActivityKeywordStore';
+import { NewActivity, saveActivityApi } from '../api/activityApi';
+import useProjectStore from './useProjectStore';
 import {
   createActivity as createActivityApi,
   fetchActivities as fetchActivitiesApi,
@@ -41,7 +43,7 @@ interface ActivityState {
   pjtActivities: Activity[];
 
   // 새로 생성된 프로젝트의 경험 목록
-  newActivities: Activity[];
+  newActivities: NewActivity[];
 
   // 경험 수동 생성
   createActivity: (activity: Activity) => void;
@@ -83,7 +85,12 @@ interface ActivityState {
   // 경험 AI에 쓰이는 프로젝트 관련 경험 리스트 뽑아오기
   fetchPjtActivities: (word: null, keywords: [], projects: number[]) => void;
 
-  // 경험 저장
+  // 경험 저장 -> 추출된 경험 선택
+  saveActivity: (
+    projectId: number,
+    savedActivities: number[],
+    newActivities: NewActivity[],
+  ) => void;
 
   // 경험 생성/수정 필수 확인
   // 빈 제목 에러
@@ -188,9 +195,43 @@ const useActivityStore = create<ActivityState>()(
 
       // 경험 AI 생성
       createActivityAi: async (content: string) => {
+        // useProjectStore로부터 프로젝트 정보를 가져옵니다.
+        const project = useProjectStore.getState().project;
         set(() => ({ isActivityLoading: true }));
         const data = await CreateActivityAiApi(content);
-        set({ newActivities: data, isActivityLoading: false });
+
+        // 새로 생성된 activities에서 startDate와 endDate를 프로젝트 정보로 덮어씁니다.
+        const newActivitiesWithDates = data.map((activity: NewActivity) => ({
+          ...activity,
+          startDate: project.startDate, // 프로젝트에서 startDate 가져오기
+          endDate: project.endDate, // 프로젝트에서 endDate 가져오기
+          projectTitle: project.title,
+
+          // keywords 배열에서 id가 10 이상인 항목의 type을 true로 설정
+          keywords: activity.keywords.map((keyword) => ({
+            ...keyword,
+            type: keyword.id >= 10 ? true : keyword.type, // id가 10 이상이면 type을 true로 변경
+          })),
+        }));
+
+        set({
+          newActivities: newActivitiesWithDates,
+          isActivityLoading: false,
+        });
+      },
+
+      // 경험 저장 -> 추출된 경험 선택
+      saveActivity: async (
+        projectId: number,
+        savedActivities: number[],
+        newActivities: NewActivity[],
+      ) => {
+        set(() => ({ isActivityLoading: true }));
+        await saveActivityApi(projectId, savedActivities, newActivities);
+        set(() => ({
+          newActivities: [],
+          isActivityLoading: false,
+        }));
       },
 
       // 경험 AI 생성에서 필요한 해당 프로젝트 관련 경험 리스트
@@ -219,6 +260,8 @@ const useActivityStore = create<ActivityState>()(
       partialize: (state) => ({
         activity: state.activity,
         activities: state.activities,
+        pjtActivities: state.pjtActivities,
+        newActivities: state.newActivities,
         isActivityLoading: state.isActivityLoading,
       }),
     },

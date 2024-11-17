@@ -41,11 +41,6 @@ function ProjectDetail() {
     // setFinLoadingOpen(false);
   };
 
-  const requestCreateActivity = async () => {
-    // TODO 추후 연결 예정
-    // await createActivityAi();
-  };
-
   return (
     <div className={style.container}>
       <div>
@@ -60,12 +55,6 @@ function ProjectDetail() {
           {project.status && (
             <button className={style.pjtEndBtn} onClick={handleFinModal}>
               프로젝트 종료
-            </button>
-          )}
-
-          {!project.status && (
-            <button className={style.pjtEndBtn} onClick={requestCreateActivity}>
-              경험 추출
             </button>
           )}
         </div>

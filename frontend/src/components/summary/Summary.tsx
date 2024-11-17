@@ -8,30 +8,27 @@ import SummaryDetail from './SummaryDetail';
 import SummaryUpdate from './SummaryUpdate';
 import SummaryCreate from './SummaryCreate';
 import useSummaryStore from '../../store/useSummaryStore';
-import useProjectStore from '../../store/useProjectStore';
 import Loading from '../common/loading/Loading';
 import Bubble from '../../assets/lottie/Bubble.json';
 
 function Summary() {
   const fetchSummaryInfo = useSummaryStore((state) => state.fetchSummaryInfo);
   const summary = useSummaryStore((state) => state.summary);
-  const projectId = useProjectStore((state) => state.project.projectId);
   const isSummaryLoading = useSummaryStore((state) => state.isSummaryLoading);
   const { createSummaryAi } = useSummaryStore();
+  const { pjtId } = useParams();
 
   useEffect(() => {
-    fetchSummaryInfo(projectId);
+    fetchSummaryInfo(Number(pjtId));
     console.log('summary', summary.summaryId);
     if (summary.content !== '' && summary.summaryId !== undefined) {
       setOpenSection(true);
     }
-  }, [projectId]);
+  }, [pjtId]);
 
   const [openSection, setOpenSection] = useState(false);
   const [detailSection, setDetailSection] = useState(true);
   const [createSection, setCreateSection] = useState(false);
-
-  const { pjtId } = useParams();
 
   // 수정 컴포넌트 보이기
   const handleEdit = () => {
@@ -53,6 +50,7 @@ function Summary() {
   const handleCreateAi = () => {
     try {
       createSummaryAi(Number(pjtId));
+      console.log('회고 생성 성공');
     } catch (error) {
       console.log('회고록 생성 실패');
       console.log(error);
@@ -82,7 +80,7 @@ function Summary() {
             onUpdateSuccess={() => {
               setDetailSection(true), setCreateSection(false);
             }}
-            projectId={projectId}
+            projectId={Number(pjtId)}
             summary={summary}
           />
         )
@@ -111,7 +109,7 @@ function Summary() {
           onUpdateSuccess={() => {
             setDetailSection(true), setCreateSection(false);
           }}
-          projectId={projectId}
+          projectId={Number(pjtId)}
           summary={summary}
         />
       )}

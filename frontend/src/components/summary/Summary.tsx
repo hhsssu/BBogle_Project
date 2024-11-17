@@ -18,6 +18,9 @@ function Summary() {
   const isActivityLoading = useActivityStore(
     (state) => state.isActivityLoading,
   );
+  const isSummaryCreateLoading = useSummaryStore(
+    (state) => state.isSummaryCreateLoading,
+  );
   const { createSummaryAi } = useSummaryStore();
   const { pjtId } = useParams();
 
@@ -73,6 +76,17 @@ function Summary() {
       <Loading
         isLoading={isActivityLoading}
         title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
+
+  // 회고 생성 로딩
+  if (isSummaryCreateLoading) {
+    return (
+      <Loading
+        isLoading={isSummaryCreateLoading}
+        title="회고 생성 중 ..."
         animationData={Bubble}
       />
     );

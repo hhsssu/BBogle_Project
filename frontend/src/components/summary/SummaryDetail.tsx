@@ -1,6 +1,7 @@
 import Edit from '../../assets/image/icon/Pencil.svg';
 import styles from './Summary.module.css';
 import useProjectStore from '../../store/useProjectStore';
+import useActivityStore from '../../store/useActivityStore';
 
 interface SummaryDetailProps {
   onEditClick: () => void;
@@ -9,10 +10,13 @@ interface SummaryDetailProps {
 
 function SummaryDetail({ onEditClick, content }: SummaryDetailProps) {
   const project = useProjectStore((state) => state.project);
-
+  const createActivityAi = useActivityStore((state) => state.createActivityAi);
   const requestCreateActivity = async () => {
-    // TODO 추후 연결 예정
-    // await createActivityAi();
+    try {
+      await createActivityAi(content);
+    } catch (error) {
+      console.error('경험 생성 오류 : ', error);
+    }
   };
 
   return (

@@ -13,9 +13,8 @@ import useProjectStore from '../../../store/useProjectStore';
 function ProjectList() {
   const [onlyProgress, setOnlyProgress] = useState(false);
 
-  const isProjectLoading = useProjectStore((state) => state.isProjectLoading);
-  const projectList = useProjectStore((state) => state.projectList);
-  const getProjectList = useProjectStore((state) => state.getProjectList);
+  const { isProjectLoading, projectList, getProjectList, setTabIdx } =
+    useProjectStore();
 
   const navigate = useNavigate();
 
@@ -33,6 +32,7 @@ function ProjectList() {
 
   useEffect(() => {
     getProjectList();
+    setTabIdx(0);
   }, []);
 
   if (isProjectLoading) {

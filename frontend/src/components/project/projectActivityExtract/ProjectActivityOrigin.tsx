@@ -9,10 +9,12 @@ import { useParams } from 'react-router-dom';
 
 interface ProjectActivityOriginProps {
   setSelectedActivity: (activity: Activity) => void;
+  setSelectedOriginActivities: (activities: number[]) => void;
 }
 
 function ProjectActivityOrigin({
   setSelectedActivity,
+  setSelectedOriginActivities,
 }: ProjectActivityOriginProps) {
   // 해당 프로젝트 기존 경험 가져오기
   const pjtActivities = useActivityStore((state) => state.pjtActivities);
@@ -20,16 +22,16 @@ function ProjectActivityOrigin({
     (state) => state.fetchPjtActivities,
   );
   const { pjtId } = useParams();
-  const [selectedActivities, setSelectedActivities] = useState<{
+  const [isSelectedActivities, setIsSelectedActivities] = useState<{
     [key: number]: boolean;
   }>({});
+
   // 모든 항목이 선택된 상태인지 여부를 저장
   const [isAllSelected, setIsAllSelected] = useState(false);
 
   useEffect(() => {
     // 원래 저장된 프로젝트 경험 가져오기
     fetchPjtActivities(null, [], [Number(pjtId)]);
-    console.log(pjtActivities);
   }, []);
 
   useEffect(() => {
@@ -37,11 +39,17 @@ function ProjectActivityOrigin({
       pjtActivities.length > 0 &&
       pjtActivities.every((activity) => {
         return activity.activityId !== undefined
-          ? selectedActivities[activity.activityId]
+          ? isSelectedActivities[activity.activityId]
           : false;
       });
     setIsAllSelected(allSelected);
-  }, [selectedActivities]);
+
+    // 부모로 선택된 활동 ID 전달
+    const selectedIds = Object.entries(isSelectedActivities)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([id]) => Number(id));
+    setSelectedOriginActivities(selectedIds);
+  }, [isSelectedActivities]);
 
   // 미리보기 선택 처리 함수
   const handlePreview = (activityId: number) => {
@@ -55,7 +63,7 @@ function ProjectActivityOrigin({
 
   // 경험 단일 선택/해제 처리 함수
   const handleSelect = (activityId: number) => {
-    setSelectedActivities((prevSelected) => ({
+    setIsSelectedActivities((prevSelected) => ({
       ...prevSelected,
       [activityId]: !prevSelected[activityId], // 선택 상태를 토글
     }));
@@ -74,7 +82,7 @@ function ProjectActivityOrigin({
       {} as { [key: number]: boolean },
     );
 
-    setSelectedActivities(updatedSelectedActivities);
+    setIsSelectedActivities(updatedSelectedActivities);
     setIsAllSelected(newSelectedState);
   };
 
@@ -89,7 +97,7 @@ function ProjectActivityOrigin({
 
       <ProjectActivityList
         activities={pjtActivities}
-        selectedActivities={selectedActivities}
+        selectedActivities={isSelectedActivities}
         handleSelect={handleSelect}
         handlePreview={handlePreview}
       />

@@ -80,8 +80,10 @@ interface ActivityState {
   // 경험 AI 생성
   createActivityAi: (content: string) => void;
 
-  // 경험 AI에 쓰이는 프로젝트 관련 경험 리스트
+  // 경험 AI에 쓰이는 프로젝트 관련 경험 리스트 뽑아오기
   fetchPjtActivities: (word: null, keywords: [], projects: number[]) => void;
+
+  // 경험 저장
 
   // 경험 생성/수정 필수 확인
   // 빈 제목 에러

@@ -31,6 +31,8 @@
   font-size: 0.875rem;
   color: #a5a5a5;
   margin-bottom: 24px;
+  white-space: pre-wrap;
+  line-height: 130%;
 }
 
 .actions {

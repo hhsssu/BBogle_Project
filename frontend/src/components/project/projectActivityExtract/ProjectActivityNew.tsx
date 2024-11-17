@@ -4,14 +4,17 @@ import { Activity } from '../../../store/useActivityStore';
 import styles from './ProjectActivity.module.css';
 import { useEffect, useState } from 'react';
 import ProjectActivityList from './ProjectActivityList';
+import { NewActivity } from '../../../api/activityApi';
 // import { useParams } from 'react-router-dom';
 
 interface ProjectActivityOriginProps {
   setSelectedActivity: (activity: Activity) => void;
+  setSelectedNewActivities: (activities: NewActivity[]) => void;
 }
 
 function ProjectActivityNew({
   setSelectedActivity,
+  setSelectedNewActivities,
 }: ProjectActivityOriginProps) {
   // TODO 추출된 경험 선택 API 사용
   const newActivities = useActivityStore((state) => state.newActivities);
@@ -70,6 +73,17 @@ function ProjectActivityNew({
           : false;
       });
     setIsAllSelected(allSelected);
+
+    const selectedNewActivities = newActivities
+      .filter((activity) => selectedActivities[activity.activityId])
+      .map((activity) => ({
+        title: activity.title,
+        content: activity.content,
+        startDate: activity.startDate,
+        endDate: activity.endDate,
+        keywords: activity.keywords.map((keyword) => keyword.id),
+      }));
+    setSelectedNewActivities(selectedNewActivities);
   }, [selectedActivities, newActivities]);
 
   return (

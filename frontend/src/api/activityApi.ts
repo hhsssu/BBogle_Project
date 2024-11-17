@@ -1,5 +1,6 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
+import { ActivityKeyword } from '../store/useActivityKeywordStore';
 import axiosInstance from './axiosInstance';
 
 export interface NewActivity {
@@ -7,7 +8,8 @@ export interface NewActivity {
   content: string;
   startDate: Date;
   endDate: Date;
-  keywords: number[];
+  projectTitle?: string;
+  keywords: ActivityKeyword[] | number;
 }
 
 // 경험 수동 생성
@@ -91,15 +93,15 @@ export const createActivityAi = async (content: string) => {
 
   // console.log(data.data.keywords);
 
-  // const response = await axiosInstance.post(
-  const response = await axios.post(
-    // '/rabbitmq/send/experience',
-    'https://bbogle.me/ai/generate/experience',
+  const response = await axiosInstance.post(
+    '/rabbitmq/send/experience',
+    // const response = await axios.post(
+    //   'https://bbogle.me/ai/generate/experience',
     {
       retrospective_content: content,
       keywords: data.data.keywords,
     },
-    { timeout: 180000 }, // 3분 타임아웃
+    { timeout: 300000 }, // 3분 타임아웃
   );
 
   console.log(response.data);
@@ -107,15 +109,20 @@ export const createActivityAi = async (content: string) => {
 };
 
 // 추출된 경험 선택
-export const saveActivityAi = async (
+export const saveActivityApi = async (
   projectId: number,
   savedActivities: number[],
   newActivities: NewActivity[],
 ) => {
   try {
+    const transformedActivities = newActivities.map((activity) => ({
+      ...activity,
+      keywords: activity.keywords[0].id, // keywords를 id만 포함
+    }));
+
     await axiosInstance.post(`/projects/${projectId}/activities`, {
       savedActivities: savedActivities,
-      newActivities: newActivities,
+      newActivities: transformedActivities,
     });
   } catch (error) {
     console.error('경험 선택 저장 실패: ', error);

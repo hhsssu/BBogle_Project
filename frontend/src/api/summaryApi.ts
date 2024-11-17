@@ -68,26 +68,10 @@ export const createSummaryAi = async (projectId: number) => {
     // const response = await axios.post(
     //   'https://bbogle.me/api/rabbitmq/send/retrospective',
     request,
-    { timeout: 180000 }, // 3분 타임아웃
+    { timeout: 300000 }, // 5분 타임아웃
   );
 
   // console.log(response.data.retrospective);
 
   return response.data.retrospective;
-
-  // TODO 경험 생성부분 테스트용
-  // const keywords = await axiosInstance.get('/keywords');
-
-  // const ExResponse = await axiosInstance.post(
-  //   '/rabbitmq/send/experience',
-  //   {
-  //     retrospective_content: response.data.retrospective,
-  //     keywords: keywords.data.keywords,
-  //   },
-  //   { timeout: 180000 }, // 30초 타임아웃
-  // );
-
-  // console.log(ExResponse.data);
-
-  //   // return response.data.retrospective;
 };

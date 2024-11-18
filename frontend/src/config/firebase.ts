@@ -47,7 +47,7 @@ export const requestPermission = async () => {
 };
 
 // FCM 토큰 가져오기
-export const getFCMToken = async (registration:ServiceWorkerRegistration) => {
+export const getFCMToken = async (registration: ServiceWorkerRegistration) => {
   try {
     const token = await getToken(messaging, {
       vapidKey: vapidKey,
@@ -71,6 +71,7 @@ export const getFCMToken = async (registration:ServiceWorkerRegistration) => {
 export const onMessageListener = () =>
   new Promise<MessagePayload>((resolve) => {
     onMessage(messaging, (payload) => {
+      console.log('포그라운드 메시지 수신:', payload);
       resolve(payload); // 수신된 메시지를 전달
     });
   });

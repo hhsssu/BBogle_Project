@@ -262,7 +262,6 @@ const useActivityStore = create<ActivityState>()(
         activities: state.activities,
         pjtActivities: state.pjtActivities,
         newActivities: state.newActivities,
-        isActivityLoading: state.isActivityLoading,
       }),
     },
   ),

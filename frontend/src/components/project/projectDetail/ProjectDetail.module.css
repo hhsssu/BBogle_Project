@@ -44,7 +44,7 @@
 }
 
 .modalContainer {
-  min-width: 12%;
+  min-width: 20%;
   background-color: #ffffff;
   border-radius: 20px;
   padding: 30px 28px;
@@ -62,7 +62,7 @@
 
 .content {
   font-size: 0.875rem;
-  color: #a5a5a5;
+  color: #7f7f7f;
   margin-bottom: 24px;
 }
 

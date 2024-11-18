@@ -41,6 +41,9 @@ interface ProjectState {
   // 프로젝트 데이터 로딩 상태
   isProjectLoading: boolean;
 
+  // 데이터 찾기 상태
+  isProjectNotFound: boolean;
+
   // 프로젝트 리스트
   projectList: ProjectCard[];
   getProjectList: () => void;
@@ -77,7 +80,8 @@ const useProjectStore = create<ProjectState>()(
     (set) => ({
       // 프로젝트 데이터 로딩 상태
       isProjectLoading: false,
-
+      // 데이터 찾기 상태
+      isProjectNotFound: false,
       // 프로젝트 리스트
       projectList: [],
       getProjectList: async () => {

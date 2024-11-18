@@ -10,6 +10,7 @@ import MyPage from '../pages/MyPage';
 // 페이지 접근 제한
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
+import NotFoundPage from '../pages/NotFoundPage';
 
 function AppRouter() {
   return (
@@ -28,6 +29,7 @@ function AppRouter() {
         <Route path="activity/*" element={<ActivityPage />} />
         {/* 마이 페이지 */}
         <Route path="my" element={<MyPage />}></Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

@@ -10,6 +10,7 @@ import ActivityCreateStyles from './ActivityCreate.module.css';
 import AlertTriangle from '../../../assets/image/icon/AlertTriangle.svg';
 import BackIcon from '../../../assets/image/icon/Back.svg';
 import Modal from '../../common/modal/Modal';
+import NotFoundPage from '../../../pages/NotFoundPage';
 
 // 경험 수정 컴포넌트
 function ActivityUpdate() {
@@ -100,6 +101,11 @@ function ActivityUpdate() {
     setTermError(false);
     setErrMsgOn(false);
   }, []);
+
+  // 유효하지 않은 경험일 경우 NotFoundPage 렌더링
+  if (!activity || activity.activityId !== numericActivityId) {
+    return <NotFoundPage />;
+  }
 
   return (
     <>

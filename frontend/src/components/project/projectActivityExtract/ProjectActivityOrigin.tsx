@@ -32,6 +32,10 @@ function ProjectActivityOrigin({
   useEffect(() => {
     // 원래 저장된 프로젝트 경험 가져오기
     fetchPjtActivities(null, [], [Number(pjtId)]);
+    // 처음 진입 시 모두 선택되게 함
+    if (!isAllSelected) {
+      handleSelectAll();
+    }
   }, []);
 
   useEffect(() => {
@@ -43,6 +47,7 @@ function ProjectActivityOrigin({
           : false;
       });
     setIsAllSelected(allSelected);
+    console.log('isAllSelected', isSelectedActivities);
 
     // 부모로 선택된 활동 ID 전달
     const selectedIds = Object.entries(isSelectedActivities)

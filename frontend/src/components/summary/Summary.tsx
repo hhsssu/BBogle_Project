@@ -27,8 +27,14 @@ function Summary() {
   const { pjtId } = useParams();
 
   useEffect(() => {
-    if (summary.content !== '' && summary.summaryId !== undefined) {
+    fetchSummaryInfo(Number(pjtId));
+  }, [pjtId]);
+
+  useEffect(() => {
+    if (summary.summaryId !== -1 && summary.content !== '') {
       setOpenSection(true);
+    } else {
+      setOpenSection(false); // 회고가 없으면 섹션을 닫기
     }
   }, [summary]);
 
@@ -56,10 +62,6 @@ function Summary() {
   const handleCreateAi = () => {
     createSummaryAi(Number(pjtId));
   };
-
-  useEffect(() => {
-    fetchSummaryInfo(Number(pjtId));
-  }, [pjtId]);
 
   if (isSummaryLoading) {
     return (

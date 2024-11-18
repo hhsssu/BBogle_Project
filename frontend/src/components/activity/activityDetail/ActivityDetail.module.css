@@ -12,6 +12,9 @@
   line-height: 1.7;
   margin: 4vh 0 6vh;
   user-select: text;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .margin {

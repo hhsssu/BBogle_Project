@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
 import { ActivityKeyword } from '../store/useActivityKeywordStore';
 import axiosInstance from './axiosInstance';

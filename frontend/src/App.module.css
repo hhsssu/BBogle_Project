@@ -16,10 +16,10 @@
   bottom: 20px;
   right: 20px;
   width: 312px;
-  background-color: #1C1516;
+  background-color: #1c1516;
   padding: 30px;
   border-radius: 20px;
-  animation: fadeOut 12s forwards;
+  animation: fadeOut 5s forwards;
   z-index: 1000;
 }
 
@@ -35,11 +35,13 @@
 .notification > p {
   font-size: 14px;
   color: white;
-  /* color: #44444  4; */
 }
 
 @keyframes fadeOut {
   0% {
+    opacity: 1;
+  }
+  90% {
     opacity: 1;
   }
   100% {

@@ -79,12 +79,23 @@ const useSummaryStore = create<SummaryState>()(
       fetchSummaryInfo: async (projectId: number) => {
         set(() => ({ isSummaryLoading: true }));
         const data = await fetchSummaryInfoApi(projectId);
-        set({ summary: data, isSummaryLoading: false });
+        if (data !== '') {
+          set(() => ({ summary: data }));
+        } else {
+          set(() => ({
+            summary: {
+              summaryId: -1,
+              content: '',
+            },
+          }));
+        }
+        set(() => ({ isSummaryLoading: false }));
       },
 
       // 회고 수동 생성
       createSummary: async (projectId: number, content: string) => {
         await createSummaryApi(projectId, content);
+        window.location.reload();
       },
 
       // 회고 수정

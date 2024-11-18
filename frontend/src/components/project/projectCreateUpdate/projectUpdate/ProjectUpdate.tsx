@@ -2,6 +2,7 @@ import style from '../ProjectCreateUpdate.module.css';
 
 import AlertTriangle from '../../../../assets/image/icon/AlertTriangle.svg';
 import Back from '../../../../assets/image/icon/Back.svg';
+import Bubble from '../../../../assets/lottie/Bubble.json';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -9,6 +10,7 @@ import { useEffect, useState } from 'react';
 import useProjectStore from '../../../../store/useProjectStore';
 
 import ProjectForm from '../projectForm/ProjectForm';
+import Loading from '../../../common/loading/Loading';
 import Modal from '../../../common/modal/Modal';
 import { patchProject } from '../../../../api/projectApi';
 
@@ -16,9 +18,8 @@ function ProjectUpdate() {
   const { pjtId } = useParams();
   const navigate = useNavigate();
 
-  const project = useProjectStore((state) => state.project);
-  const projectImage = useProjectStore((state) => state.projectImage);
-  const getProject = useProjectStore((state) => state.getProject);
+  const { project, projectImage, getProject, isProjectLoading } =
+    useProjectStore();
 
   const {
     titleError,
@@ -78,6 +79,16 @@ function ProjectUpdate() {
     setTermError(false);
     setErrMsgOn(false);
   }, []);
+
+  if (isProjectLoading) {
+    return (
+      <Loading
+        isLoading={isProjectLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
 
   return (
     <div>

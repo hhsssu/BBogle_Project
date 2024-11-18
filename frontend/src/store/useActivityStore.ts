@@ -60,6 +60,9 @@ interface ActivityState {
   // 경험 데이터 초기화
   resetActivity: () => void;
 
+  // 새로 추출된 경험 리스트 초기화
+  resetNewActivities: () => void;
+
   // 검색 데이터 초기화
   resetSearchCriteria: () => void;
 
@@ -161,6 +164,9 @@ const useActivityStore = create<ActivityState>()(
             keywords: [],
           },
         })),
+
+      // 새로 추출된 경험 리스트 초기화
+      resetNewActivities: () => set(() => ({ newActivities: [] })),
 
       // 경험 전체 리스트 & 검색
       fetchActivities: async (

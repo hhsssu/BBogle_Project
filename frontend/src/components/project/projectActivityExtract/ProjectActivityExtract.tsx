@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import useActivityStore, { Activity } from '../../../store/useActivityStore';
 
@@ -33,7 +33,7 @@ function ProjectActivityExtract() {
   const [isBackModalOpen, setBackModalOpen] = useState(false);
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
 
-  const { saveActivity } = useActivityStore();
+  const { saveActivity, resetNewActivities } = useActivityStore();
 
   // 돌아가기
   const handleGoBack = () => {
@@ -56,6 +56,12 @@ function ProjectActivityExtract() {
     );
     navigate('/activity');
   };
+
+  useEffect(() => {
+    return () => {
+      resetNewActivities();
+    };
+  }, []);
 
   return (
     <>

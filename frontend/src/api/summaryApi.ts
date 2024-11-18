@@ -65,13 +65,9 @@ export const createSummaryAi = async (projectId: number) => {
 
   const response = await axiosInstance.post(
     '/rabbitmq/send/retrospective',
-    // const response = await axios.post(
-    //   'https://bbogle.me/api/rabbitmq/send/retrospective',
     request,
     { timeout: 300000 }, // 5분 타임아웃
   );
-
-  // console.log(response.data.retrospective);
 
   return response.data.retrospective;
 };

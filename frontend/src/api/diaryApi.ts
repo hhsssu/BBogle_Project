@@ -27,11 +27,6 @@ export const getDiary = async (projectId: number, diaryId: number) => {
   try {
     const response = await axiosInstance.get(
       `/projects/${projectId}/diaries/${diaryId}`,
-      // {
-      //   headers: {
-      //     'Cache-Control': 'no-cache',
-      //   },
-      // },
     );
 
     return response.data;
@@ -65,10 +60,10 @@ export const getDiaryTitle = async (
       { question: questions[2].question, answer: answers[2] },
     ],
     {
-      timeout: 300000, // 3분 타임아웃
+      timeout: 300000, // 5분 타임아웃
     },
   );
-  console.log(response);
+
   return response.data.result;
 };
 

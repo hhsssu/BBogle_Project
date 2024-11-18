@@ -13,12 +13,14 @@ import { deleteProject } from '../../../../api/projectApi';
 import ImageWithDefault from '../../../my/ImageWithDefault';
 import Modal from '../../../common/modal/Modal';
 import Loading from '../../../common/loading/Loading';
+import useSummaryStore from '../../../../store/useSummaryStore';
 
 function ProjectInfoSection() {
   const { pjtId } = useParams();
   const PROJECT = useProjectStore((state) => state.project);
   const getProject = useProjectStore((state) => state.getProject);
   const isProjectLoading = useProjectStore((state) => state.isProjectLoading);
+  const { isSummaryLoading } = useSummaryStore();
 
   const settingIconRef = useRef<HTMLImageElement>(null);
 
@@ -56,13 +58,9 @@ function ProjectInfoSection() {
 
   const onDeleteProject = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
-    try {
-      await deleteProject(Number(pjtId));
-      navigate('/project');
-    } catch (error) {
-      console.log('프로젝트 삭제 실패');
-      console.log(error);
-    }
+
+    await deleteProject(Number(pjtId));
+    navigate('/project');
   };
 
   useEffect(() => {
@@ -96,6 +94,16 @@ function ProjectInfoSection() {
     return (
       <Loading
         isLoading={isProjectLoading}
+        title="데이터 로딩 중 ..."
+        animationData={Bubble}
+      />
+    );
+  }
+
+  if (isSummaryLoading) {
+    return (
+      <Loading
+        isLoading={isSummaryLoading}
         title="데이터 로딩 중 ..."
         animationData={Bubble}
       />

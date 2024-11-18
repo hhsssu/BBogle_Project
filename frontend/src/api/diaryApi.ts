@@ -12,38 +12,23 @@ interface Question {
 }
 
 export const getDiaryList = async (projectId: number) => {
-  try {
-    const response = await axiosInstance.get(`/projects/${projectId}/diaries`);
+  const response = await axiosInstance.get(`/projects/${projectId}/diaries`);
 
-    return response.data.diaryList;
-  } catch (error) {
-    console.log('개발일지 목록 가져오기 실패');
-    console.log(error);
-  }
+  return response.data.diaryList;
 };
 
 export const getDiary = async (projectId: number, diaryId: number) => {
-  try {
-    const response = await axiosInstance.get(
-      `/projects/${projectId}/diaries/${diaryId}`,
-    );
+  const response = await axiosInstance.get(
+    `/projects/${projectId}/diaries/${diaryId}`,
+  );
 
-    return response.data;
-  } catch (error) {
-    console.log('개발일지 가져오기 실패');
-    console.log(error);
-  }
+  return response.data;
 };
 
 export const getQuestion = async () => {
-  try {
-    const response = await axiosInstance.get('/diaries/questions');
+  const response = await axiosInstance.get('/diaries/questions');
 
-    return response.data;
-  } catch (error) {
-    console.log('질문 목록 가져오기 실패');
-    console.log(error);
-  }
+  return response.data;
 };
 
 // 개발일지 TITLE 생성 API
@@ -131,37 +116,23 @@ export const patchDiary = async (
     });
   }
 
-  try {
-    await axiosInstance.patch(
-      `/projects/${projectId}/diaries/${diaryId}`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+  await axiosInstance.patch(
+    `/projects/${projectId}/diaries/${diaryId}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    );
-  } catch (error) {
-    console.log('개발일지 수정 실패');
-    console.log(error);
-  }
+    },
+  );
 };
 
 export const deleteDiary = async (projectId: number, diaryId: number) => {
-  try {
-    await axiosInstance.delete(`/projects/${projectId}/diaries/${diaryId}`);
-  } catch (error) {
-    console.log('개발일지 삭제 실패');
-    console.log(error);
-  }
+  await axiosInstance.delete(`/projects/${projectId}/diaries/${diaryId}`);
 };
 
 // 오늘 작성한 개발일지 조회 API
 export const fetchTodayDiary = async () => {
-  try {
-    const response = await axiosInstance.get('/diaries/today');
-    return response.data.diaries;
-  } catch (error) {
-    console.error('오늘 작성한 개발일지 조회 중 문제 발생', error);
-  }
+  const response = await axiosInstance.get('/diaries/today');
+  return response.data.diaries;
 };

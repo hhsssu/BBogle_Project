@@ -23,14 +23,14 @@ function Summary() {
   const isSummaryCreateLoading = useSummaryStore(
     (state) => state.isSummaryCreateLoading,
   );
-  const { createSummaryAi } = useSummaryStore();
+  const { fetchSummaryInfo, createSummaryAi } = useSummaryStore();
   const { pjtId } = useParams();
 
   useEffect(() => {
     if (summary.content !== '' && summary.summaryId !== undefined) {
       setOpenSection(true);
     }
-  }, []);
+  }, [summary]);
 
   const [openSection, setOpenSection] = useState(false);
   const [detailSection, setDetailSection] = useState(true);
@@ -54,14 +54,12 @@ function Summary() {
 
   //TODO 회고 AI 생성 API 연결
   const handleCreateAi = () => {
-    try {
-      createSummaryAi(Number(pjtId));
-      console.log('회고 생성 성공');
-    } catch (error) {
-      console.log('회고록 생성 실패');
-      console.log(error);
-    }
+    createSummaryAi(Number(pjtId));
   };
+
+  useEffect(() => {
+    fetchSummaryInfo(Number(pjtId));
+  }, [pjtId]);
 
   if (isSummaryLoading) {
     return (

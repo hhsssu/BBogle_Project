@@ -116,9 +116,6 @@ function ProfileImageUploader({
 
           // a 태그 제거
           link.remove();
-        })
-        .catch((e) => {
-          console.log(e);
         });
     }
   };
@@ -144,14 +141,9 @@ function ProfileImageUploader({
     const formData = new FormData();
     formData.append('profileImage', file);
 
-    try {
-      updateUserProfile(formData || null);
-      updateProfile(previewImage);
-    } catch (error) {
-      console.log(error);
-    }
+    updateUserProfile(formData || null);
+    updateProfile(previewImage);
 
-    console.log('이미지 업데이트');
     onComplete(); // 수정 완료 후 모달 닫기
   };
 

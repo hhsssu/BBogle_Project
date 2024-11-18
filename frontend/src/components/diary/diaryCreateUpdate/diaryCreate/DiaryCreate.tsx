@@ -51,16 +51,12 @@ function DiaryCreate() {
       setErrMsgOn(true);
     } else {
       setFinLoadingOpen(true);
-      try {
-        const title = await getDiaryTitle(questionList, answerList);
 
-        setErrMsgOn(false);
-        console.log(title);
-        updateTitle(title);
-      } catch (error) {
-        console.log('개발일지 제목 생성 실패');
-        console.log(error);
-      }
+      const title = await getDiaryTitle(questionList, answerList);
+
+      setErrMsgOn(false);
+      updateTitle(title);
+
       setFinLoadingOpen(false);
       setTitleModalOpen(true);
     }
@@ -83,19 +79,14 @@ function DiaryCreate() {
       return;
     }
 
-    try {
-      await addDiary(project.projectId, {
-        title: title,
-        answers: answerList,
-        images: imageList,
-      });
-      setTextLengthErr(true);
-      alert('개발일지 저장 완료');
-      navigate(`/project/${project.projectId}`);
-    } catch (error) {
-      console.log('개발일지 등록 실패');
-      console.log(error);
-    }
+    await addDiary(project.projectId, {
+      title: title,
+      answers: answerList,
+      images: imageList,
+    });
+    setTextLengthErr(true);
+    alert('개발일지 저장 완료');
+    navigate(`/project/${project.projectId}`);
   };
 
   const checkTotalLength = () => {

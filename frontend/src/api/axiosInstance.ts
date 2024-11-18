@@ -32,19 +32,15 @@ const addRefreshSubscriber = (callback: (token: string) => void) => {
 // 요청 인터셉터로 인증 헤더 추가
 axiosInstance.interceptors.request.use(
   async (config) => {
-    console.log('API 요청 URL:', API_LINK + config.url);
-
     // localStorage에서 accessToken 가져오기
     let token = localStorage.getItem('accessToken');
 
     // accessToken이 없으면 refresh로 새 토큰 요청
     if (!token) {
       try {
-        console.log('accessToken이 없어 새 토큰 요청');
         token = await refreshAccessToken();
         localStorage.setItem('accessToken', token!);
       } catch (error) {
-        console.error('Access Token을 가져오는 데 실패했습니다:', error);
         return Promise.reject(error);
       }
     }
@@ -56,7 +52,6 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.error('요청 인터셉터 오류');
     return Promise.reject(error);
   },
 );
@@ -64,15 +59,11 @@ axiosInstance.interceptors.request.use(
 // 응답 인터셉터 : 401 오류 발생 시 토큰 갱신 및 재요청 처리
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log('응답 인터셉터 방문');
     return response;
   },
   async (error) => {
-    console.error('응답 인터셉터 오류 catch');
-
     // 네트워크 오류 또는 서버 미응답에 대한 처리
     if (!error.response) {
-      console.error('네트워크 오류 또는 서버가 응답하지 않습니다.');
       return Promise.reject(error);
     }
 

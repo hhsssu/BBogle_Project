@@ -6,7 +6,6 @@ import useProjectStore from '../../../../store/useProjectStore';
 import DiaryList from '../../../diary/diaryList/DiaryList';
 import useDiaryStore from '../../../../store/useDiaryStore';
 import Summary from '../../../summary/Summary';
-import { useEffect } from 'react';
 
 function ProjectLogSection() {
   const navigate = useNavigate();
@@ -17,11 +16,6 @@ function ProjectLogSection() {
 
   const PROJECT = useProjectStore((state) => state.project);
   const diaryCnt = useDiaryStore((state) => state.diaryList.length);
-
-  useEffect(() => {
-    // 프로젝트 상세 진입 시 먼저 개발일지로 진입
-    setTabIdx(0);
-  }, []);
 
   const changeTab = (idx: number) => {
     setTabIdx(idx);
@@ -90,7 +84,7 @@ function ProjectLogSection() {
           <DiaryList />
         </div>
       ) : (
-        !PROJECT.status && <Summary />
+        <Summary />
       )}
     </div>
   );

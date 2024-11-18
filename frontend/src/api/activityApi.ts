@@ -13,20 +13,16 @@ export interface NewActivity {
 
 // 경험 수동 생성
 export const createActivity = async (activity: Activity) => {
-  try {
-    const response = await axiosInstance.post('/activities', {
-      title: activity.title,
-      content: activity.content,
-      startDate: activity.startDate,
-      endDate: activity.endDate,
-      keywords: activity.keywords,
-      projectId: activity.projectId,
-    });
-    console.log('경험 수동 생성 성공: ', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('경험 수동 생성 실패: ', error);
-  }
+  const response = await axiosInstance.post('/activities', {
+    title: activity.title,
+    content: activity.content,
+    startDate: activity.startDate,
+    endDate: activity.endDate,
+    keywords: activity.keywords,
+    projectId: activity.projectId,
+  });
+
+  return response.data;
 };
 
 // 경험 수정
@@ -34,19 +30,15 @@ export const updateActivity = async (
   activityId: number,
   activity: Activity,
 ) => {
-  try {
-    const response = await axiosInstance.patch(`/activities/${activityId}`, {
-      title: activity.title,
-      content: activity.content,
-      startDate: activity.startDate,
-      endDate: activity.endDate,
-      keywords: activity.keywords,
-      projectId: activity.projectId,
-    });
-    return response.data;
-  } catch (error) {
-    console.error('경험 수정 실패: ', error);
-  }
+  const response = await axiosInstance.patch(`/activities/${activityId}`, {
+    title: activity.title,
+    content: activity.content,
+    startDate: activity.startDate,
+    endDate: activity.endDate,
+    keywords: activity.keywords,
+    projectId: activity.projectId,
+  });
+  return response.data;
 };
 
 // 경험 목록 조회
@@ -55,35 +47,23 @@ export const fetchActivities = async (
   keywords: number[],
   projects: number[],
 ) => {
-  try {
-    const response = await axiosInstance.post('/activities/search', {
-      word: word,
-      keywords: keywords,
-      projects: projects,
-    });
+  const response = await axiosInstance.post('/activities/search', {
+    word: word,
+    keywords: keywords,
+    projects: projects,
+  });
 
-    return response.data.activities;
-  } catch (error) {
-    console.error('경험 목록 조회 실패: ', error);
-  }
+  return response.data.activities;
 };
 
 // 경험 id 조회
 export const fetchActivityById = async (activityId: number) => {
-  try {
-    const response = await axiosInstance.get(`/activities/${activityId}`);
-    return response.data;
-  } catch (error) {
-    console.error('경험 상세 조회 실패: ', error);
-  }
+  const response = await axiosInstance.get(`/activities/${activityId}`);
+  return response.data;
 };
 
 export const deleteActivity = async (activityId: number) => {
-  try {
-    await axiosInstance.delete(`/activities/${activityId}`);
-  } catch (error) {
-    console.error('경험 삭제 실패: ', error);
-  }
+  await axiosInstance.delete(`/activities/${activityId}`);
 };
 
 // 경험 AI 생성
@@ -99,7 +79,6 @@ export const createActivityAi = async (content: string) => {
     { timeout: 300000 }, // 5분 타임아웃
   );
 
-  console.log(response.data);
   return response.data.experiences;
 };
 
@@ -109,17 +88,13 @@ export const saveActivityApi = async (
   savedActivities: number[],
   newActivities: NewActivity[],
 ) => {
-  try {
-    const transformedActivities = newActivities.map((activity) => ({
-      ...activity,
-      keywords: activity.keywords[0].id, // keywords를 id만 포함
-    }));
+  const transformedActivities = newActivities.map((activity) => ({
+    ...activity,
+    keywords: activity.keywords[0].id, // keywords를 id만 포함
+  }));
 
-    await axiosInstance.post(`/projects/${projectId}/activities`, {
-      savedActivities: savedActivities,
-      newActivities: transformedActivities,
-    });
-  } catch (error) {
-    console.error('경험 선택 저장 실패: ', error);
-  }
+  await axiosInstance.post(`/projects/${projectId}/activities`, {
+    savedActivities: savedActivities,
+    newActivities: transformedActivities,
+  });
 };

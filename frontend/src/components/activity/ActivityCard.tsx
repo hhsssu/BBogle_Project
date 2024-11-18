@@ -74,14 +74,12 @@ function ActivityCard({
   // 삭제
   const handleDeleteActivity = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
-    try {
-      if (activityId) {
-        await deleteActivity(activityId);
-      }
-      navigate(0);
-    } catch (error) {
-      console.error('경험 삭제 실패: ', error);
+
+    if (activityId) {
+      await deleteActivity(activityId);
     }
+
+    navigate(0);
   };
 
   // 경험 수정 페이지로 이동

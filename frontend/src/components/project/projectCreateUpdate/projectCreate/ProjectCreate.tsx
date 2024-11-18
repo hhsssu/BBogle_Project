@@ -62,14 +62,8 @@ function ProjectCreate() {
   const createProject = async () => {
     setCreateModalOpen(!isCreateModalOpen);
 
-    try {
-      await addProject(project, projectImage);
-      navigate('/project');
-    } catch (error) {
-      alert('프로젝트 생성에 실패하였습니다');
-      console.log('프로젝트 생성 실패');
-      console.log(error);
-    }
+    await addProject(project, projectImage);
+    navigate('/project');
   };
 
   useEffect(() => {

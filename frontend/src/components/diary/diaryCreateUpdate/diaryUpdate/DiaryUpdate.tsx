@@ -84,13 +84,11 @@ function DiaryUpdate() {
   };
 
   useEffect(() => {
-    console.log('초기  길이 확인');
     checkTotalLength();
     setTitleErr(false);
   }, [answerList]);
 
   useEffect(() => {
-    console.log('diary detail 상태 초기화');
     getDiaryDetail(Number(pjtId), Number(diaryId));
   }, []);
 

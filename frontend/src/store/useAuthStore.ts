@@ -21,19 +21,14 @@ const useAuthStore = create<AuthStore>()(
       setLoading: (status) => set({ loading: status }),
 
       logout: async () => {
-        try {
-          await logoutUser();
-          set({ isAuthenticated: false });
-          console.log('로그아웃 성공');
+        await logoutUser();
+        set({ isAuthenticated: false });
 
-          // accessToken 및 기타 인증 관련 데이터를 localStorage에서 삭제
-          localStorage.clear();
+        // accessToken 및 기타 인증 관련 데이터를 localStorage에서 삭제
+        localStorage.clear();
 
-          // 쿠키에서 인증 관련 쿠키 제거
-          Cookies.remove('accessToken');
-        } catch (error) {
-          console.error('로그아웃 처리 중 문제 발생 : ', error);
-        }
+        // 쿠키에서 인증 관련 쿠키 제거
+        Cookies.remove('accessToken');
       },
     }),
     {

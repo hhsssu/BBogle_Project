@@ -49,16 +49,12 @@ function ProjectActivityExtract() {
   };
 
   const handleSaveActivities = async () => {
-    try {
-      await saveActivity(
-        Number(pjtId),
-        selectedOriginActivities,
-        selectedNewActivities,
-      );
-      navigate('/activity');
-    } catch (error) {
-      console.error('경험 저장 오류 발생: ', error);
-    }
+    await saveActivity(
+      Number(pjtId),
+      selectedOriginActivities,
+      selectedNewActivities,
+    );
+    navigate('/activity');
   };
 
   return (

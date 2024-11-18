@@ -30,9 +30,6 @@ function DiaryImgView({ index, question, circleRef }: Props) {
 
         // a 태그 제거
         link.remove();
-      })
-      .catch((e) => {
-        console.log(e);
       });
   };
 

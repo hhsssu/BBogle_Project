@@ -2,8 +2,8 @@ import style from './ProjectDetail.module.css';
 
 import Back from '../../../assets/image/icon/Back.svg';
 
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import useProjectStore from '../../../store/useProjectStore';
 
@@ -11,24 +11,16 @@ import ProjectInfoSection from './projectInfoSection/ProjectInfoSection';
 import ProjectLogSection from './projectLogSection/ProjectLogSection';
 import Modal from '../../common/modal/Modal';
 import { finishProject } from '../../../api/projectApi';
-import useSummaryStore from '../../../store/useSummaryStore';
 import useDiaryStore from '../../../store/useDiaryStore';
 
 function ProjectDetail() {
   const project = useProjectStore((state) => state.project);
   const diaryCnt = useDiaryStore((state) => state.diaryList.length);
-  const fetchSummaryInfo = useSummaryStore((state) => state.fetchSummaryInfo);
 
   const navigate = useNavigate();
 
   const [isLessModalOpen, setLessModalOpen] = useState(false);
   const [isFinModalOpen, setFinModalOpen] = useState(false);
-  const { pjtId } = useParams();
-
-  // 프로젝트 상세 진입 시 바로 회고 불러오기
-  useEffect(() => {
-    fetchSummaryInfo(Number(pjtId));
-  }, [pjtId]);
 
   const navPjtList = () => {
     navigate('/project');

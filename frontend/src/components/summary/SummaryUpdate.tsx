@@ -50,12 +50,9 @@ function SummaryUpdate({
   // 회고 수정
   const handleUpdateSummary = async () => {
     setCreateModalOpen(!isCreateModalOpen);
-    try {
-      await updateSummary(projectId, summary.summaryId, summary.content);
-      onUpdateSuccess();
-    } catch (error) {
-      console.error('회고 수정 실패: ', error);
-    }
+
+    await updateSummary(projectId, summary.summaryId, summary.content);
+    onUpdateSuccess();
   };
 
   return (

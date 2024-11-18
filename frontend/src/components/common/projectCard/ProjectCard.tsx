@@ -54,15 +54,10 @@ function ProjectCard({
 
     setRequestPending(true);
 
-    try {
-      await changeNotificationStatus(pjtId, !isAlarmOn);
-      setAlarmOn(!isAlarmOn);
-    } catch (error) {
-      console.log('알림 ON/OFF 설정 변경 실패');
-      console.log(error);
-    } finally {
-      setRequestPending(false);
-    }
+    await changeNotificationStatus(pjtId, !isAlarmOn);
+    setAlarmOn(!isAlarmOn);
+
+    setRequestPending(false);
   };
 
   const navPjtUpdate = (e: React.MouseEvent) => {
@@ -78,13 +73,8 @@ function ProjectCard({
   const onDeleteProject = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
 
-    try {
-      await deleteProject(pjtId);
-      navigate(0);
-    } catch (error) {
-      console.log('개발일지 삭제 실패');
-      console.log(error);
-    }
+    await deleteProject(pjtId);
+    navigate(0);
   };
 
   useEffect(() => {

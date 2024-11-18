@@ -31,7 +31,6 @@ function DiaryCard({ diaryId, title, date }: Props) {
   };
 
   const handleDeleteModal = () => {
-    console.log('닫기');
     setModalOpen(false);
     setDeleteModalOpen(!isDeleteModalOpen);
   };
@@ -62,10 +61,7 @@ function DiaryCard({ diaryId, title, date }: Props) {
     <div>
       <div className={style.card}>
         <section className={style.cardContents}>
-          <span className={style.title}>
-            {/* {title.length > 15 ? title.substring(0, 16) + '...' : title} */}
-            {title}
-          </span>
+          <span className={style.title}>{title}</span>
           <div className={style.date}>{date}</div>
         </section>
         <div

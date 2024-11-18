@@ -92,12 +92,8 @@ function ActivityCreate() {
   const handleCreateActivity = async () => {
     setCreateModalOpen(!isCreateModalOpen);
 
-    try {
-      await createActivity(activity);
-      nav('/activity');
-    } catch (error) {
-      // console.error('경험 생성 오류 발생: ', error);
-    }
+    await createActivity(activity);
+    nav('/activity');
   };
 
   return (

@@ -20,8 +20,6 @@ export const getProjectList = async () => {
 
     return response.data.projectList;
   } catch (error) {
-    console.log('프로젝트 목록 가져오기 실패');
-    console.log(error);
     if (axios.isAxiosError(error)) {
       if (error.response!.status) {
         return [];
@@ -32,27 +30,17 @@ export const getProjectList = async () => {
 
 // 진행중인 프로젝트 조회 API
 export const getProgressProjectList = async () => {
-  try {
-    const response = await axiosInstance.get('/projects/in-progress');
-    return response?.data.projectList;
-  } catch (error) {
-    console.error('진행 중인 프로젝트 목록 조회 중 문제 발생 : ', error);
-  }
+  const response = await axiosInstance.get('/projects/in-progress');
+  return response?.data.projectList;
 };
 
 export const getProject = async (projectId: number) => {
-  try {
-    const response = await axiosInstance.get(`/projects/${projectId}`);
+  const response = await axiosInstance.get(`/projects/${projectId}`);
 
-    return response.data;
-  } catch (error) {
-    console.log('프로젝트 가져오기 실패');
-    console.log(error);
-  }
+  return response.data;
 };
 
 export const addProject = async (project: Project, file: File | null) => {
-  console.log(project);
   const formData = new FormData();
 
   // JSON 데이터를 FormData에 추가
@@ -104,8 +92,6 @@ export const patchProject = async (
   project: Project,
   file: File | null,
 ) => {
-  console.log(project);
-
   const formData = new FormData();
 
   // JSON 데이터를 FormData에 추가
@@ -147,20 +133,11 @@ export const deleteProject = async (projectId: number) => {
 };
 
 export const finishProject = async (projectId: number) => {
-  try {
-    await axiosInstance.patch(`/projects/${projectId}/end`);
-  } catch (error) {
-    console.log('프로젝트 종료 실패');
-    console.log(error);
-  }
+  await axiosInstance.patch(`/projects/${projectId}/end`);
 };
 
 // 프로젝트 조회 - 검색 조건용 (프로젝트 id, 제목만 나옴)
 export const getProjectTitles = async () => {
-  try {
-    const response = await axiosInstance.get('/projects/title');
-    return response.data.projects;
-  } catch (error) {
-    console.error('경험 제목 불러오기 실패: ', error);
-  }
+  const response = await axiosInstance.get('/projects/title');
+  return response.data.projects;
 };

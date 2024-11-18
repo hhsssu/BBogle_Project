@@ -86,12 +86,8 @@ function ActivityUpdate() {
   const handleUpdateActivity = async () => {
     setCreateModalOpen(!isCreateModalOpen);
 
-    try {
-      await updateActivity(numericActivityId, activity);
-      nav(`/activity/${activityId}`);
-    } catch (error) {
-      // console.error('경험 수정 오류 발생: ', error);
-    }
+    await updateActivity(numericActivityId, activity);
+    nav(`/activity/${activityId}`);
   };
 
   useEffect(() => {

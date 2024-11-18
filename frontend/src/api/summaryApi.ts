@@ -16,23 +16,15 @@ interface DiaryDetail {
 
 // ✅회고 가져오기
 export const fetchSummaryInfo = async (projectId: number) => {
-  try {
-    const response = await axiosInstance.get(`/projects/${projectId}/summary`);
-    return response.data;
-  } catch (error) {
-    console.error('프로젝트 회고 가져오기 실패: ', error);
-  }
+  const response = await axiosInstance.get(`/projects/${projectId}/summary`);
+  return response.data;
 };
 
 // ✅회고 수동 생성
 export const createSummary = async (projectId: number, content: string) => {
-  try {
-    await axiosInstance.post(`/projects/${projectId}/summary`, {
-      content: content,
-    });
-  } catch (error) {
-    console.error('프로젝트 회고 수동 생성 실패: ', error);
-  }
+  await axiosInstance.post(`/projects/${projectId}/summary`, {
+    content: content,
+  });
 };
 
 // ✅회고 수정
@@ -41,13 +33,9 @@ export const updateSummary = async (
   summaryId: number,
   content: string,
 ) => {
-  try {
-    await axiosInstance.patch(`/projects/${projectId}/summary/${summaryId}`, {
-      content: content,
-    });
-  } catch (error) {
-    console.error('프로젝트 회고 수정 실패: ', error);
-  }
+  await axiosInstance.patch(`/projects/${projectId}/summary/${summaryId}`, {
+    content: content,
+  });
 };
 
 // ❗✅회고 AI 생성

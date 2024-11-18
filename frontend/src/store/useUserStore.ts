@@ -36,43 +36,35 @@ const useUserStore = create<UserStore>()(
       // 유저 닉네임 가져오는 함수
       fetchUserNickname: async () => {
         const { setAuthenticated } = useAuthStore.getState();
-        try {
-          const nickname = await fetchUserNickname();
 
-          set({
-            user: {
-              id: null,
-              nickname: nickname,
-              email: null,
-              profileImage: null,
-            },
-          });
-          setAuthenticated(true);
-          console.log('닉네임 가져오기 성공:', nickname);
-        } catch (e) {
-          console.error('닉네임 가져오기 실패 : ', e);
-        }
+        const nickname = await fetchUserNickname();
+
+        set({
+          user: {
+            id: null,
+            nickname: nickname,
+            email: null,
+            profileImage: null,
+          },
+        });
+        setAuthenticated(true);
       },
 
       // 유저 정보 가져오는 함수
       fetchUser: async () => {
         const { setAuthenticated } = useAuthStore.getState();
-        try {
-          const user = await fetchUserDetail();
 
-          set({
-            user: {
-              id: null,
-              nickname: user.nickname,
-              email: user.email,
-              profileImage: user.profileImage,
-            },
-          });
-          setAuthenticated(true);
-          console.log('정보 가져오기 성공:', user);
-        } catch (e) {
-          console.error('닉네임 가져오기 실패 : ', e);
-        }
+        const user = await fetchUserDetail();
+
+        set({
+          user: {
+            id: null,
+            nickname: user.nickname,
+            email: user.email,
+            profileImage: user.profileImage,
+          },
+        });
+        setAuthenticated(true);
       },
 
       // 닉네임 편집 모드 상태 관리 함수

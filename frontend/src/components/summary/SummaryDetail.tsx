@@ -54,12 +54,8 @@ function SummaryDetail({ onEditClick, content }: SummaryDetailProps) {
   };
 
   const requestCreateActivity = async () => {
-    try {
-      await createActivityAi(content);
-      navigate('extract');
-    } catch (error) {
-      console.error('경험 생성 오류 : ', error);
-    }
+    await createActivityAi(content);
+    navigate('extract');
   };
 
   useEffect(() => {

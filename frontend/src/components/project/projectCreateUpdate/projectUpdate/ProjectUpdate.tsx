@@ -64,13 +64,8 @@ function ProjectUpdate() {
   const updateProject = async () => {
     setUpdateModalOpen(!isUpdateModalOpen);
 
-    try {
-      await patchProject(Number(pjtId), project, projectImage);
-      navigate(`/project/${pjtId}`);
-    } catch (error) {
-      console.log('개발일지 수정 실패');
-      console.log(error);
-    }
+    await patchProject(Number(pjtId), project, projectImage);
+    navigate(`/project/${pjtId}`);
   };
 
   useEffect(() => {

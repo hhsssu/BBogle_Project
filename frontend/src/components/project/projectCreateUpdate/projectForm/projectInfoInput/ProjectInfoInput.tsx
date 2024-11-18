@@ -20,7 +20,6 @@ function ProjectInfoInput({ image, title, description }: Props) {
   const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
   const SUPPORTED_FORMATS = ['image/jpeg', 'image/png']; // 지원하는 파일 형식
 
-  // const [imgSrc, setImgSrc] = useState(project.imgSrc);
   const imgInputRef = useRef<HTMLInputElement>(null);
 
   const handleImgClick = () => {
@@ -56,7 +55,6 @@ function ProjectInfoInput({ image, title, description }: Props) {
     };
 
     reader.readAsDataURL(file);
-    console.log(file);
   };
 
   const handleTitleError = (value: boolean) => {

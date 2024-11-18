@@ -17,7 +17,6 @@ export const useAuth = () => {
           if (axios.isAxiosError(error) && error.response?.status === 401) {
             setAuthenticated(false);
           } else {
-            console.error('알 수 없는 오류:', error);
             setAuthenticated(false);
           }
         } finally {

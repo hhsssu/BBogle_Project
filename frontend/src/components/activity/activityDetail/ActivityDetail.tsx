@@ -44,12 +44,9 @@ function ActivityDetail() {
   // 삭제
   const handleDeleteActivity = async () => {
     setDeleteModalOpen(!isDeleteModalOpen);
-    try {
-      await deleteActivity(numericActivityId);
-      navigate('/activity');
-    } catch (error) {
-      console.error('경험 삭제 실패: ', error);
-    }
+
+    await deleteActivity(numericActivityId);
+    navigate('/activity');
   };
 
   // 돌아가기

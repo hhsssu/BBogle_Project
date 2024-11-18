@@ -61,12 +61,9 @@ function SummaryCreate({
   // 회고 등록
   const handleCreateSummary = async () => {
     setCreateModalOpen(!isCreateModalOpen);
-    try {
-      await createSummary(projectId, summary.content);
-      onUpdateSuccess();
-    } catch (error) {
-      console.error('회고 생성 실패: ', error);
-    }
+
+    await createSummary(projectId, summary.content);
+    onUpdateSuccess();
   };
 
   return (

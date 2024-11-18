@@ -15,64 +15,38 @@ export const refreshAccessToken = async () => {
     const response = await refreshInstance.get('/auth/refresh');
     return response.data.accessToken;
   } catch (error) {
-    console.error('Access Token 재발급 실패:', error);
     return Promise.reject(error);
   }
 };
 
 // 유저 정보를 가져오는 API
 export const fetchUserDetail = async () => {
-  try {
-    const response = await axiosInstance.get('/users');
-    return response.data;
-  } catch (error) {
-    console.error('유저 정보를 가져오는 중 문제 발생 : ', error);
-    throw error;
-  }
+  const response = await axiosInstance.get('/users');
+  return response.data;
 };
 
 // 유저 닉네임을 가져오는 API
 export const fetchUserNickname = async () => {
-  try {
-    const response = await axiosInstance.get('/users/nickname');
-    return response.data.nickname;
-  } catch (error) {
-    console.error('유저 닉네임을 가져오는 중 문제 발생 : ', error);
-    throw error;
-  }
+  const response = await axiosInstance.get('/users/nickname');
+  return response.data.nickname;
 };
 
 // 유저 닉네임을 수정하는 API
 export const updateUserNickName = async (nickname: string) => {
-  try {
-    await axiosInstance.patch('/users/nickname', { nickname });
-  } catch (error) {
-    console.error('유저 닉네임을 수정 중 문제 발생 : ', error);
-    throw error;
-  }
+  await axiosInstance.patch('/users/nickname', { nickname });
 };
 
 // 유저 프로필 이미지를 수정하는 API
 export const updateUserProfile = async (profile: FormData) => {
-  try {
-    // 서버에 이미지 업로드 요청
-    await axiosInstance.patch('/users/profile', profile, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  } catch (error) {
-    console.error('프로필 이미지 업로드 중 문제 발생', error);
-    throw error;
-  }
+  // 서버에 이미지 업로드 요청
+  await axiosInstance.patch('/users/profile', profile, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 // 로그아웃 API
 export const logoutUser = async () => {
-  try {
-    await axiosInstance.post('/users/logout');
-  } catch (error) {
-    console.error('로그아웃 중 문제 발생 : ', error);
-    throw error;
-  }
+  await axiosInstance.post('/users/logout');
 };

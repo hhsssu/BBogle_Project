@@ -27,20 +27,17 @@ function App() {
 
   useEffect(() => {
     // 메시지 수신 리스너 설정
-    onMessageListener()
-      .then((payload) => {
-        console.log('메시지를 수신했습니다: ', payload);
-        setNotification({
-          title: payload.data?.title ?? '제목 없음', // 메시지 제목
-          body: payload.data?.body ?? '내용 없음', // 메시지 내용
-        });
+    onMessageListener().then((payload) => {
+      setNotification({
+        title: payload.data?.title ?? '제목 없음', // 메시지 제목
+        body: payload.data?.body ?? '내용 없음', // 메시지 내용
+      });
 
-        // 5초 후 알림 숨김 처리
-        setTimeout(() => {
-          setNotification(null);
-        }, 5000)
-      })
-      .catch((err) => console.log('메시지 수신 실패: ', err));
+      // 5초 후 알림 숨김 처리
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    });
   }, []);
 
   useEffect(() => {
@@ -54,7 +51,7 @@ function App() {
       }
     }
   }, [location.pathname]);
-  
+
   return (
     <div className={style['app-container']}>
       {/* 현재 경로가 '/login'이 아닌 경우에만 SideBar를 표시 */}

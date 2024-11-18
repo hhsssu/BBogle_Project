@@ -56,7 +56,6 @@ function My() {
   // 닉네임 업데이트 함수
   const handleUpdate = () => {
     updateNickname(newNickname);
-    console.log(newNickname);
   };
 
   // 엔터 입력 시 닉네임 업데이트

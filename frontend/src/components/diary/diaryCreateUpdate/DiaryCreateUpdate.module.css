@@ -112,6 +112,7 @@
 }
 
 .titleInput {
+  min-width: 90%;
   border: solid;
   border-radius: 8px;
   border-color: rgba(160, 160, 160, 1);

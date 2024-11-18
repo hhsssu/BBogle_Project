@@ -125,7 +125,6 @@ const useSummaryStore = create<SummaryState>()(
       name: 'summaryStorage',
       partialize: (state) => ({
         summary: state.summary,
-        isSummaryLoading: state.isSummaryLoading,
       }),
     },
   ),

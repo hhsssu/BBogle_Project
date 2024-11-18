@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import { Activity } from './../store/useActivityStore';
 import { ActivityKeyword } from '../store/useActivityKeywordStore';
 import axiosInstance from './axiosInstance';
@@ -91,17 +90,13 @@ export const deleteActivity = async (activityId: number) => {
 export const createActivityAi = async (content: string) => {
   const data = await axiosInstance.get('/keywords');
 
-  // console.log(data.data.keywords);
-
   const response = await axiosInstance.post(
     '/rabbitmq/send/experience',
-    // const response = await axios.post(
-    //   'https://bbogle.me/ai/generate/experience',
     {
       retrospective_content: content,
       keywords: data.data.keywords,
     },
-    { timeout: 300000 }, // 3분 타임아웃
+    { timeout: 300000 }, // 5분 타임아웃
   );
 
   console.log(response.data);

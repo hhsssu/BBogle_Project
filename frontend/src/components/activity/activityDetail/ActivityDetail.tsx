@@ -14,6 +14,7 @@ import BackIcon from '../../../assets/image/icon/Back.svg';
 import Loading from '../../common/loading/Loading';
 import Bubble from '../../../assets/lottie/Bubble.json';
 import Modal from '../../common/modal/Modal';
+import NotFoundPage from '../../../pages/NotFoundPage';
 
 function ActivityDetail() {
   const navigate = useNavigate();
@@ -72,8 +73,17 @@ function ActivityDetail() {
     );
   }
 
+  // 유효하지 않은 경험일 경우 NotFoundPage 렌더링
+  if (!activity || activity.activityId !== numericActivityId) {
+    return <NotFoundPage />;
+  }
+
   const startDate = activity.startDate ? new Date(activity.startDate) : null;
   const endDate = activity.endDate ? new Date(activity.endDate) : null;
+  if (!activity) {
+    return <NotFoundPage />;
+  }
+
   return (
     <>
       <div className={ActivityStyles.backBtn} onClick={handleGoBack}>

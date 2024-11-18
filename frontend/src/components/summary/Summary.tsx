@@ -9,7 +9,9 @@ import SummaryUpdate from './SummaryUpdate';
 import SummaryCreate from './SummaryCreate';
 import useSummaryStore from '../../store/useSummaryStore';
 import Loading from '../common/loading/Loading';
+import Activity from '../../assets/lottie/Activity.json';
 import Bubble from '../../assets/lottie/Bubble.json';
+import Retrospect from '../../assets/lottie/Retrospect.json';
 import useActivityStore from '../../store/useActivityStore';
 
 function Summary() {
@@ -71,12 +73,13 @@ function Summary() {
     );
   }
 
+  // 경험 추출 로딩
   if (isActivityLoading) {
     return (
       <Loading
         isLoading={isActivityLoading}
-        title="데이터 로딩 중 ..."
-        animationData={Bubble}
+        title="경험 추출 중 ..."
+        animationData={Activity}
       />
     );
   }
@@ -87,7 +90,7 @@ function Summary() {
       <Loading
         isLoading={isSummaryCreateLoading}
         title="회고 생성 중 ..."
-        animationData={Bubble}
+        animationData={Retrospect}
       />
     );
   }

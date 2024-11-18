@@ -95,6 +95,7 @@
   scrollbar-width: none;
   gap: 1.5rem 1rem;
   padding: 12px;
+  overflow: visible;
 }
 
 .card {

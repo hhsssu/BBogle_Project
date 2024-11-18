@@ -47,7 +47,6 @@ function ProjectActivityOrigin({
           : false;
       });
     setIsAllSelected(allSelected);
-    console.log('isAllSelected', isSelectedActivities);
 
     // 부모로 선택된 활동 ID 전달
     const selectedIds = Object.entries(isSelectedActivities)

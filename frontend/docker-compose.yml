@@ -4,6 +4,7 @@ services:
     container_name: bbogle-frontend
     environment:
       - TZ=Asia/Seoul
+        frontend/docker-compose.yml
     networks:
       - front-network
     # restart: unless-stopped

@@ -23,6 +23,10 @@ RUN ls
 FROM nginx:latest
 
 WORKDIR /
+# 한국 시간대로 설정
+ENV TZ=Asia/Seoul
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+frontend/Dockerfile
 
 COPY --from=build /react/dist /usr/share/nginx/html
 

@@ -1,16 +1,66 @@
-# app/services/retrospective_service.py
-import boto3
 import json
+import boto3
 import logging
-from typing import List
+import threading
+import time
 from botocore.config import Config
 from fastapi import HTTPException
-from ..schemas.retrospective_schema import DailyLog
+from typing import List
+from app.schemas.retrospective_schema import DailyLog  # Ensure DailyLog is correctly imported
 
+# 로깅 설정
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+MODEL_ID = "anthropic.claude-3-haiku-20240307-v1:0"
+MAX_TOKENS = 8000
+
+PROMPT_TEMPLATE = """
+다음은 프로젝트 개발 기간 동안의 상세한 개발일지입니다.
+각 일자별로 진행된 작업, 문제, 해결 방안이 기록되어 있습니다.
+이를 바탕으로 개발 과정을 상세히 정리해주세요.
+"""
+
+SUMMARY_INSTRUCTIONS = """
+개발일지를 바탕으로 아래 세 가지 섹션으로 구분하여 회고록을 작성해주세요.
+각 섹션은 약 650-700자로 작성하여, 전체 약 2000자가 되도록 합니다.
+
+[잘한 점 & 성과]
+- 프로젝트의 시작부터 끝까지 시간 순서대로 진행한 작업 나열
+- 각 단계에서 실제로 완료한 작업과 그 내용
+- 구체적인 기술 스택과 도구 사용 결과
+
+[어려웠던 점 & 해결 과정]
+- 발생한 문제점들을 시간 순서대로 나열
+- 각 문제에 적용한 구체적인 해결 방법
+- 해결 과정에서 사용한 기술과 그 결과
+
+[기술 스택 & 의사결정]
+- 사용한 각 기술의 선택 이유
+- 기술 적용 과정의 구체적 내용
+- 실제 적용 결과와 기술적 의의
+
+작성 시 필수 준수사항:
+1. 개발일지에 있는 내용만 사용할 것
+2. 미래형 표현 사용하지 않을 것 (예: "~할 예정", "~기대된다")
+3. 추상적 표현 사용하지 않을 것 (예: "향상되었다", "개선하였다")
+4. 각 문단은 구체적인 작업 내용으로만 구성할 것
+5. 섹션 제목 외 다른 제목이나 부연 설명 없이 바로 본문 시작할 것
+6. 마지막 문단에서 미래 계획이나 기대 효과를 언급하지 않을 것
+
+글쓰기 스타일:
+1. 명확한 시작과 끝이 있는 완성된 문장 사용
+2. 개조식이 아닌 서술형 문장으로 작성
+3. 비교적 긴 문단으로 구성 (3-4문장 이상)
+4. 각 섹션 내에서 자연스러운 문장 연결
+"""
 
 class RetrospectiveService:
     def __init__(self, settings):
+        """
+        RetrospectiveService 초기화
+        :param settings: AWS 관련 설정
+        """
         try:
             session = boto3.Session(
                 aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
@@ -19,80 +69,77 @@ class RetrospectiveService:
             )
             config = Config(retries={"max_attempts": 3, "mode": "adaptive"})
             self.client = session.client("bedrock-runtime", config=config)
-            self.model_id = "anthropic.claude-3-haiku-20240307-v1:0"
-            logger.info("Bedrock 클라이언트 초기화 성공!")
+            self.model_id = MODEL_ID
+            logger.info("AWS Bedrock 클라이언트 초기화 성공")
         except Exception as e:
-            logger.error(f"Bedrock 클라이언트 초기화 실패: {e}")
-            raise
+            logger.error(f"AWS Bedrock 클라이언트 초기화 실패: {e}")
+            raise HTTPException(status_code=500, detail="AWS Bedrock 클라이언트 초기화 실패")
 
-    async def generate_retrospective(self, dev_logs: List[DailyLog]) -> str:
+    async def generate_retrospective(self, dev_logs: List[DailyLog], max_tokens=MAX_TOKENS) -> str:
+        """
+        개발일지 기반 회고록 생성 함수
+        :param dev_logs: DailyLog 객체의 리스트
+        :param max_tokens: 최대 토큰 수
+        :return: 생성된 회고록 텍스트
+        """
+        prompt_parts = [PROMPT_TEMPLATE]
+
+        # 개발일지에서 날짜를 제외하고 내용을 그대로 출력
+        for log in dev_logs:
+            prompt_parts.append(f"\n제목: {log.summary}")
+            for qa in log.daily_log:
+                question = qa.question
+                answer = qa.answer
+                prompt_parts.append(f"- {question}: {answer}")
+
+        prompt_parts.append(SUMMARY_INSTRUCTIONS)
+        prompt = "\n".join(prompt_parts)
+
+        # 모델 요청 데이터 생성
+        messages = [{"role": "user", "content": prompt}]
+        payload = {
+            "anthropic_version": "bedrock-2023-05-31",
+            "max_tokens": max_tokens,
+            "messages": messages,
+            "temperature": 0.3,
+            "top_p": 0.8,
+        }
+
+        # 진행 상황 표시
+        def show_progress():
+            start_time = time.time()
+            while not stop_event.is_set():
+                elapsed_time = time.time() - start_time
+                print(f"\r회고록 생성 중 ... {elapsed_time:.2f}초 경과", end="")
+                time.sleep(1)
+
+        stop_event = threading.Event()
+        progress_thread = threading.Thread(target=show_progress)
+
         try:
-            # 프롬프트 생성
-            prompt_parts = [
-                """
-                다음은 프로젝트 개발 기간 동안의 상세한 개발일지입니다.
-                각 일자별로 진행된 작업, 발생한 문제, 해결 방안을 기록했습니다.
-                이 내용을 바탕으로 프로젝트 회고록을 작성해주세요.
-
-                [개발일지 목록]
-                """
-            ]
-            
-            for log in dev_logs:
-                prompt_parts.append(f"\n날짜: {log.date}\n제목: {log.summary}\n\n[상세 내용]")
-                for qa in log.daily_log:
-                    prompt_parts.append(f"\n{qa.question}\n{qa.answer}")
-            
-            prompt_parts.append(
-                """
-                개발일지를 바탕으로 구체적이고 완성도 높은 프로젝트 회고록을 작성해주세요.
-                각 섹션은 아래의 가이드라인을 참고하여 구체적 사례와 팀원 협업을 언급하고, 수치적 성과를 포함해주세요:
-
-                1. [잘한 점 & 성과]
-                - 프로젝트 기간 동안 성공적으로 달성된 작업 및 개선 사항
-                - 주요 성과와 성과 수치(예: 비용 절감, 속도 향상 등)
-                - 전체 시스템 아키텍처 개선 및 구현 사례
-
-                2. [어려웠던 점 & 해결 과정]
-                - 작업 중 발생한 구체적인 문제 상황과 해결을 위한 시도들
-                - 문제를 극복하기 위한 대안 및 각 선택의 결과
-                - 협업이 중요한 역할을 했던 사례 (예: Git 충돌 해결 등)
-
-                3. [기술 스택 & 아키텍처]
-                - 이번 프로젝트에서 활용한 주요 기술 스택 및 모델들
-                - 시스템 아키텍처와 그로 인한 성능 개선
-                - 보안 처리, 인증 방식, 데이터 처리 효율성 등
-
-                5. 작성 지침
-                - 글자 수 2000자 내외
-                - 기술 용어는 개발일지에 기록된 그대로 사용
-                """
-            )
-            
-            prompt = "".join(prompt_parts)
-            
-            messages = [{"role": "user", "content": prompt}]
-            payload = {
-                "anthropic_version": "bedrock-2023-05-31",
-                "max_tokens": 2500,
-                "messages": messages
-            }
-            
+            progress_thread.start()
             response = self.client.invoke_model(
                 modelId=self.model_id,
                 contentType="application/json",
                 accept="application/json",
                 body=json.dumps(payload)
             )
-            return self._process_response(response)
-        except Exception as e:
-            logger.error(f"회고록 생성 중 오류 발생: {e}")
-            raise HTTPException(status_code=500, detail=str(e))
+            stop_event.set()
+            progress_thread.join()
+            print("\n회고록 생성 완료!")
 
-    def _process_response(self, response: dict) -> str:
-        try:
+            # 결과 처리
             result = json.loads(response['body'].read().decode("utf-8"))
-            return result.get('content', [{}])[0].get('text', "").strip()
+            content = result.get('content', [{"text": "응답을 확인할 수 없습니다."}])
+
+            if isinstance(content, list) and len(content) > 0:
+                retrospective = content[0].get('text', "응답을 확인할 수 없습니다.")
+                return retrospective.strip()
+            else:
+                return "응답을 확인할 수 없습니다."
+
         except Exception as e:
-            logger.error(f"응답 처리 중 오류 발생: {e}")
-            raise HTTPException(status_code=500, detail="모델 응답 처리 실패")
+            stop_event.set()
+            progress_thread.join()
+            logger.error(f"회고록 생성 중 오류 발생: {e}")
+            raise HTTPException(status_code=500, detail="회고록 생성 중 오류가 발생했습니다.")

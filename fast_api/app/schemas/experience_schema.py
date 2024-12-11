@@ -8,17 +8,17 @@ class Keyword(BaseModel):
 
 class ExperienceRequest(BaseModel):
     retrospective_content: str = Field(
-        ...,
+        ..., 
         description="회고 내용"
     )
     keywords: List[Keyword] = Field(
-        ...,
+        ..., 
         description="선택 가능한 키워드 목록"
     )
 
 class ExtractedExperience(BaseModel):
     title: str = Field(
-        ...,
+        ..., 
         description="추출된 경험의 요약 제목 (20자 이내)"
     )
     content: str = Field(
